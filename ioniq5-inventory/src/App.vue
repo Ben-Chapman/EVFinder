@@ -1,19 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <b-container>
+    <div>
+      <Header/>
+      <FormSelector/>
+      <InventoryGrid/>
+    </div>
+  </b-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import InventoryGrid from './components/InventoryGrid.vue'
+import FormSelector from './components/FormSelector.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    InventoryGrid,
+    FormSelector
   }
 }
+
 </script>
 
 <style>

@@ -1,0 +1,1975 @@
+[
+  {
+    "dealerInfo": [
+      {
+        "IsPMADealer": 1, 
+        "address1": "14848 Stonecroft Center Court", 
+        "address2": "", 
+        "city": "Chantilly", 
+        "dealerCd": "VA051", 
+        "dealerEmail": "", 
+        "dealerNm": "Hyundai Of Chantilly", 
+        "dealerUrl": "www.hyundaiofchantilly.com", 
+        "distance": 6.19, 
+        "fax": "703-553-8435", 
+        "latitude": 38.8997954, 
+        "longitude": -77.4617376, 
+        "phone": "703-480-9000", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "VA", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-01-05T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF6NU055944"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-10T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,685.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU056710"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-06T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,620.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF9NU048936"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-05T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF9NU056017"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-03T05:48:43", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$56,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAFXNU063983"
+          }
+        ], 
+        "zip": "20151"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "10925 Fairfax Boulevard", 
+        "address2": "", 
+        "city": "Fairfax", 
+        "dealerCd": "VA006", 
+        "dealerEmail": "crmleads@fairfaxhyundaiinc.com", 
+        "dealerNm": "Fairfax Hyundai", 
+        "dealerUrl": "www.fairfaxhyundai.com", 
+        "distance": 7.05, 
+        "fax": "703-591-0646", 
+        "latitude": 38.8569633, 
+        "longitude": -77.3106796, 
+        "phone": "703-352-0444", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "VA", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-02-01T06:00:20", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "REAR WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412REZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$45,240.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KM4AE9NU054391"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-01T06:00:24", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF5NU054655"
+          }
+        ], 
+        "zip": "22030"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "7615 Loisdale Road", 
+        "address2": "", 
+        "city": "Springfield", 
+        "dealerCd": "VA052", 
+        "dealerEmail": "slee@saffordauto.com", 
+        "dealerNm": "Safford Hyundai Of Springfield", 
+        "dealerUrl": "www.saffordhyundai.com", 
+        "distance": 16.9, 
+        "fax": "703-776-9971", 
+        "latitude": 38.7501327, 
+        "longitude": -77.183688, 
+        "phone": "703-776-9040", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "VA", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "REAR WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412REZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$46,090.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KM4AE6NU051819"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF3NU055996"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF3NU057926"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF5NU055580"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-13T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "IT", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF5NU057118"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF6NU055068"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF7NU057265"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU056272"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,790.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU056322"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,590.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU057339"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T22:13:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,040.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF4NU056457"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-26T07:54:07", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "TN", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,040.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF5NU058153"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$56,940.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF2NU065596"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-02T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$56,910.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF5NU063941"
+          }
+        ], 
+        "zip": "22150"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "1707 Mount Vernon Ave.", 
+        "address2": "", 
+        "city": "Alexandria", 
+        "dealerCd": "VA028", 
+        "dealerEmail": "KPREILLY@AOL.COM", 
+        "dealerNm": "Alexandria Hyundai", 
+        "dealerUrl": "www.alexandriahyundai.com", 
+        "distance": 18.78, 
+        "fax": "703-535-1532", 
+        "latitude": 38.821834, 
+        "longitude": -77.057545, 
+        "phone": "703-535-6840", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "VA", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-01-25T14:54:21", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF4NU056431"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-25T14:53:47", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF4NU056719"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-01T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU054214"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-08T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU055685"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-01T05:39:58", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU054683"
+          }
+        ], 
+        "zip": "22301"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "9500 Baltimore Ave", 
+        "address2": "", 
+        "city": "College Park", 
+        "dealerCd": "MD017", 
+        "dealerEmail": "sales@collegeparkhyundai.dealerspace.com", 
+        "dealerNm": "College Park Hyundai", 
+        "dealerUrl": "www.collegeparkhyundai.com", 
+        "distance": 23.78, 
+        "fax": "301-345-1342", 
+        "latitude": 39.0098673, 
+        "longitude": -76.9296997, 
+        "phone": "301-441-1313", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2021-12-23T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF0NU052697"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-31T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF3NU051432"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-28T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF5NU052579"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-29T07:35:54", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU053788"
+          }
+        ], 
+        "zip": "20740"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "1770 Ritchie Station Court", 
+        "address2": "", 
+        "city": "Capitol Heights", 
+        "dealerCd": "MD006", 
+        "dealerEmail": "dderencin@pohanka.com", 
+        "dealerNm": "Pohanka Hyundai", 
+        "dealerUrl": "", 
+        "distance": 28.33, 
+        "fax": "240-838-7451", 
+        "latitude": 38.8653882, 
+        "longitude": -76.8499931, 
+        "phone": "301-423-1100", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-01-08T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF1NU051686"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-06T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,400.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF3NU051219"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-05T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF4NU055862"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-24T14:55:16", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,175.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU056819"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-24T10:16:03", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "TN", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU057257"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-05T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,715.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF9NU055176"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-08T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/shooting-star/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "SHOOTING STAR", 
+                "SAPExterioColorCode": "T5R"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "T5R", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$52,820.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF5NU053339"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-08T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF7NU057909"
+          }
+        ], 
+        "zip": "20743"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "12440 Auto Drive", 
+        "address2": "", 
+        "city": "Clarksville", 
+        "dealerCd": "MD032", 
+        "dealerEmail": "fmcarthur@antwerpenauto.com", 
+        "dealerNm": "Antwerpen Hyundai Columbia", 
+        "dealerUrl": "www.antwerpenhyundaiclarksville.com", 
+        "distance": 28.94, 
+        "fax": "443-367-4125", 
+        "latitude": 39.211042, 
+        "longitude": -76.943965, 
+        "phone": "443-367-4100", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-01-26T14:34:27", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF2NU057920"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-29T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF9NU052665"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-07T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU060418"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-29T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF4NU053008"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-24T17:04:21", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF5NU058069"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-07T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/shooting-star/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "SHOOTING STAR", 
+                "SAPExterioColorCode": "T5R"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "T5R", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$53,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF6NU049705"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-01T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$55,940.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF7NU064511"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-01T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/shooting-star/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "SHOOTING STAR", 
+                "SAPExterioColorCode": "T5R"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "T5R", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$57,970.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF9NU064283"
+          }
+        ], 
+        "zip": "21029"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "5871 Urbana Pike", 
+        "address2": "", 
+        "city": "Frederick", 
+        "dealerCd": "MD013", 
+        "dealerEmail": "mmcgoldrick@idealcarstrucks.com", 
+        "dealerNm": "Ideal Hyundai", 
+        "dealerUrl": "www.idealhyundai.com", 
+        "distance": 30.65, 
+        "fax": "301-663-6260", 
+        "latitude": 39.3924102, 
+        "longitude": -77.4056842, 
+        "phone": "301-663-3121", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-02-01T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$56,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF0NU064432"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-02-01T13:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/limited/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "AA", 
+            "modelCd": "50462AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$56,110.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "LIMITED", 
+            "vin": "KM8KRDAF9NU065515"
+          }
+        ], 
+        "zip": "21701"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "3516 Laurel Fort Meade Rd", 
+        "address2": "", 
+        "city": "Laurel", 
+        "dealerCd": "MD038", 
+        "dealerEmail": "bstark@ourisman.co", 
+        "dealerNm": "Ourisman Hyundai", 
+        "dealerUrl": "www.ourismanhyundai.com", 
+        "distance": 30.91, 
+        "fax": "301-725-9599", 
+        "latitude": 39.1016625, 
+        "longitude": -76.8240678, 
+        "phone": "301-725-4400", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2022-01-26T08:42:18", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/digital-teal/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "DIGITAL TEAL", 
+                "SAPExterioColorCode": "M9U"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "M9U", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF0NU053977"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-21T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF1NU051235"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-27T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF2NU053074"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-31T05:29:12", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,740.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF6NU054003"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-31T05:37:46", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF8NU053841"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-07T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF9NU056747"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-31T07:50:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF2NU054030"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-23T08:42:12", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/shooting-star/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "SHOOTING STAR", 
+                "SAPExterioColorCode": "T5R"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "T5R", 
+            "interiorColorCd": "VKE", 
+            "inventoryStatus": "TN", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$52,990.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF5NU057441"
+          }
+        ], 
+        "zip": "20724"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "7117 North Ritchie Hwy", 
+        "address2": "", 
+        "city": "Glen Burnie", 
+        "dealerCd": "MD022", 
+        "dealerEmail": "jglascoe@bobbell.com", 
+        "dealerNm": "Bob Bell Hyundai", 
+        "dealerUrl": "www.bobbellhyundai.com", 
+        "distance": 43.37, 
+        "fax": "410-768-4183", 
+        "latitude": 39.1802898, 
+        "longitude": -76.6134376, 
+        "phone": "410-766-3600", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": null, 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$0.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF1NU052756"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-07T18:09:59", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/cyber-gray/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "CYBER GRAY", 
+                "SAPExterioColorCode": "C5G"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "C5G", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "TN", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU048351"
+          }, 
+          {
+            "PlannedDeliveryDate": "2021-12-30T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAFXNU053467"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-31T07:38:21", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/sel/exterior/base/phantom-black/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "PHANTOM BLACK", 
+                "SAPExterioColorCode": "MZH"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "MZH", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50442AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$51,020.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SEL", 
+            "vin": "KM8KNDAF0NU054737"
+          }
+        ], 
+        "zip": "21061"
+      }, 
+      {
+        "IsPMADealer": 0, 
+        "address1": "935 West Street", 
+        "address2": "", 
+        "city": "Annapolis", 
+        "dealerCd": "MD040", 
+        "dealerEmail": "ah-sm@annapolishyundai.com", 
+        "dealerNm": "Annapolis Hyundai", 
+        "dealerUrl": "www.annapolishyundai.com", 
+        "distance": 46.02, 
+        "fax": "410-295-1231", 
+        "latitude": 38.975955, 
+        "longitude": -76.509512, 
+        "phone": "410-295-1234", 
+        "region": "MA", 
+        "shopperAssurance": "Y", 
+        "state": "MD", 
+        "vehicles": [
+          {
+            "PlannedDeliveryDate": "2021-12-28T08:00:00", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/lucid-blue/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "LUCID BLUE", 
+                "SAPExterioColorCode": "U3P"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "U3P", 
+            "interiorColorCd": "YGN", 
+            "inventoryStatus": "DS", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$48,770.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF3NU053620"
+          }, 
+          {
+            "PlannedDeliveryDate": "2022-01-31T07:38:30", 
+            "TotalOptions": 0, 
+            "TotalPackages": 0, 
+            "colors": [
+              {
+                "360ImagePaths": [
+                  {
+                    "ImagePath": "/content/dam/hyundai/us/com/image/2022/ioniq5/se/exterior/base/atlas-white/360/", 
+                    "PackageID": "P1"
+                  }
+                ], 
+                "ExtColorLongDesc": "ATLAS WHITE", 
+                "SAPExterioColorCode": "SAW"
+              }
+            ], 
+            "drivetrainDesc": "ALL WHEEL DRIVE", 
+            "exteriorColorCd": "SAW", 
+            "interiorColorCd": "NNB", 
+            "inventoryStatus": "PA", 
+            "modelCd": "50412AEZ", 
+            "modelNm": "Ioniq 5", 
+            "packages": null, 
+            "price": "$49,570.00", 
+            "transmissionDesc": "AUTO", 
+            "trimDesc": "SE", 
+            "vin": "KM8KMDAF7NU053796"
+          }
+        ], 
+        "zip": "21401"
+      }
+    ], 
+    "modelYear": 2022, 
+    "yrSerCd": "20225"
+  }
+]
