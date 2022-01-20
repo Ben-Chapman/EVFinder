@@ -47,7 +47,7 @@ def get_inventory():
   ### End Prod
 
 
-  ### For testing
+  ### Dev section
   with open('test_data.json', 'r') as f:
       test_data = json.loads(f.read())
   print(f'\n\n\t{request}')

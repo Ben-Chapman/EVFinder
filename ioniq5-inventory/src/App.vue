@@ -5,10 +5,6 @@
     </b-row>
 
     <b-row>
-      <FormSelector/>
-    </b-row>
-
-    <b-row>
       <InventoryGrid/>
     </b-row>
   </b-container>
@@ -17,14 +13,14 @@
 <script>
 import Header from './components/Header.vue'
 import InventoryGrid from './components/InventoryGrid.vue'
-import FormSelector from './components/FormSelector.vue'
+// import FormSelector from './components/FormSelector.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
     InventoryGrid,
-    FormSelector
+    // FormSelector
   }
 }
 
