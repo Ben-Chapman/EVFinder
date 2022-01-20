@@ -1,20 +1,28 @@
 <template>
   <b-container>
-    <div>
+    <b-row>
       <Header/>
+    </b-row>
+
+    <b-row>
       <FormSelector/>
+    </b-row>
+
+    <b-row>
       <InventoryGrid/>
-    </div>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import Header from './components/Header.vue'
 import InventoryGrid from './components/InventoryGrid.vue'
 import FormSelector from './components/FormSelector.vue'
 
 export default {
   name: 'App',
   components: {
+    Header,
     InventoryGrid,
     FormSelector
   }

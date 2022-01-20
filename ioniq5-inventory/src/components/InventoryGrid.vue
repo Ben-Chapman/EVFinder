@@ -1,21 +1,14 @@
 <template>
   <b-container>
     <b-row>
-      Results Grid Here 🐼
+      <b-table striped hover
+        :items="this.inventory"
+        :fields="this.fields"
+        ></b-table>
     </b-row>
-    <b-row>
-    </b-row>
-    <b-row>
-      <ul id="array-rendering">
-        <li v-for="item in this.inventory[0].dealerInfo" :key="item.dealerCd">
-          {{ item.address1 }}
-          <br>
-        </li>
-      </ul>
-    </b-row>
-
   </b-container>
 </template>
+
 <script>
 export default {
   mounted() {
@@ -23,8 +16,19 @@ export default {
   },
   data() {
     return {
-      items: [{ message: 'Foo' }, { message: 'Bar' }],
       inventory: [],
+      fields: [
+        { key: 'dealerNm', label: 'Dealer Name', sortable: true, sortDirection: 'desc' },
+        { key: 'city', label: 'City', sortable: true, sortDirection: 'desc'},
+        { key: 'state', label: 'State', sortable: true, sortDirection: 'desc'},
+        { key: 'vin', label: 'VIN', sortable: true, sortDirection: 'desc'},
+        { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc'},
+        // { key: 'interiorColor', label: 'Interior Color', sortable: true, sortDirection: 'desc'},
+        { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
+        { key: 'trimDesc', label: 'Trim Level', sortable: true, sortDirection: 'desc'},
+        // { key: 'deliveryDate', label: 'Planned Delivery Date', sortable: true, sortDirection: 'desc'},
+      ],
+      
     }
   },
   methods: {
@@ -41,15 +45,10 @@ export default {
         })
       
       this.inventory = await response.json();
-      // this.inventory = data
-      // console.log("Data here: ")
-      // console.log(data)
-      
     }
   }, // methods
 
   computed: {
-
   }, // computed
 }  // default
 

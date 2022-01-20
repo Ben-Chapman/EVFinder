@@ -1,6 +1,5 @@
 <template>
-<div>
-  <b-form @submit="onSubmit">
+  <b-form inline @submit="onSubmit">
   <b-row>
     <b-col>
       <b-form-input v-model="zip" type="text" placeholder="Enter your zip code"></b-form-input>
@@ -18,7 +17,6 @@
     </b-col>
   </b-row>
   </b-form>
-</div>
 </template>
 <script>
 export default {
@@ -43,8 +41,7 @@ export default {
     },
 methods: {
   onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+        console.log(event)
       },
 },
 }
