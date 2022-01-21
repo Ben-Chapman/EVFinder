@@ -2,7 +2,7 @@
   <b-container fluid>
     <div>
       <b-row>
-                <!-- Year -->
+        <!-- Year -->
         <b-col cols=2>
           <b-form-group
             id="form-year"
@@ -97,14 +97,42 @@
                 Please enter {{ invalidFormMessage() }}
               </b-tooltip>
           </div>
-
-    </b-row>
+      </b-row>
     </div>
+
+    <!-- Table here -->
     <b-row>
-      <b-table striped hover
+      <b-table
+        striped
+        hover
+        sticky-header="100vh"
+        :busy="tableBusy"
         :items="this.inventory"
         :fields="this.fields"
-        ></b-table>
+        :sort-compare="customSort"
+        >
+        <!-- Virtual Columns -->
+        <template #cell(delivery-date)="data">
+          {{ formatDate(data.item.PlannedDeliveryDate) }}
+        </template>
+
+        <template #cell(dealer-name-address)="data">
+           <b-link
+            :href="'https://' + data.item.dealerUrl"
+            target="_blank"
+            >
+              {{ data.item.dealerNm }}
+            </b-link> - {{ data.item.address1 }} {{ data.item.city }}, {{ data.item.state }}
+        </template>
+        
+            <!-- Table Busy Indicator -->
+            <template #table-busy>
+              <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Loading...</strong>
+              </div>
+          </template>
+        </b-table>
     </b-row>
   </b-container>
 </template>
@@ -112,22 +140,28 @@
 <script>
 export default {
   mounted() {
-    // this.getCurrentInventory()
+    this.getCurrentInventory()
     // this.logMe()
   },
   data() {
     return {
+      tableBusy: false,
       inventory: [],
       fields: [
-        { key: 'dealerNm', label: 'Dealer Name', sortable: true, sortDirection: 'desc' },
-        { key: 'city', label: 'City', sortable: true, sortDirection: 'desc'},
-        { key: 'state', label: 'State', sortable: true, sortDirection: 'desc'},
-        { key: 'vin', label: 'VIN', sortable: true, sortDirection: 'desc'},
         { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc'},
-        // { key: 'interiorColor', label: 'Interior Color', sortable: true, sortDirection: 'desc'},
-        { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
         { key: 'trimDesc', label: 'Trim Level', sortable: true, sortDirection: 'desc'},
-        // { key: 'deliveryDate', label: 'Planned Delivery Date', sortable: true, sortDirection: 'desc'},
+        { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
+        { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+        // Virtual Column
+        { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
+    
+        // Virtual Column
+  
+      // Combine dealer name and address, with a link to full informatio / their website
+      // VIN URL: https://www.globalhyundainj.com/api/legacy/pse/windowsticker/hyundai?vin=KMHRB8A3XNU155272
+
+
+        
       ],
 
       modelOptions: [
@@ -151,6 +185,9 @@ export default {
   methods: {
     async getCurrentInventory() {
       // console.log(this.form.zipcode + ' ' + this.form.radius)
+      // Show users that we're fetching data
+      this.tableBusy = true
+
       const response = await fetch('http://127.0.0.1:5000/inventory?' + new URLSearchParams({
           zip: this.form.zipcode,
           year: this.form.year,
@@ -163,6 +200,9 @@ export default {
         })
       
       this.inventory = await response.json();
+
+      // Remove the table busy indicator
+      this.tableBusy = false
     }, 
 
     invalidFormMessage() {
@@ -177,6 +217,42 @@ export default {
       if (this.isValidRadius != true) {
         return 'a search radius.'
       }      
+    },
+
+    formatDate(isoDate) {
+      // console.log(isoDate)
+      if (isoDate) {  // Checking for null values
+        return new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+      }
+
+      return ''
+    },
+
+    customSort(a, b, key) {
+      // Only apply this custom sort to date columns
+      // Return either
+      // -1 for a[key] < b[key]
+      //  0 for a[key] === b[key]
+      //  1  for a[key] > b[key].
+
+      if (key == 'PlannedDeliveryDate') {
+        const _a = new Date(a[key])  // New Date object
+        const _b = new Date(b[key])
+        const aDate = Date.parse(_a)  // Convert Date object to epoch
+        const bDate = Date.parse(_b)
+
+        if (aDate < bDate ){
+          return -1
+        } 
+        else if (aDate === bDate) {
+          return 0
+        }
+        else {
+          return 1
+        }
+      }
+      // Fall back to the built-in sort-compare routine for all other keys
+      return false
     },
   }, // methods
 
@@ -209,10 +285,11 @@ export default {
   watch: {
   }, // End of watch
 }  // End of default
-
-
 </script>
 
-<style lang="">
+<style>
+  table.b-table[aria-busy='true'] {
+    opacity: 0.6;
+  }
   
 </style>
