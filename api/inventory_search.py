@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 
@@ -134,5 +135,5 @@ def flatten_api_results(input_data: str):
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
