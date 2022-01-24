@@ -13,7 +13,7 @@
               v-model="form.year"
               :options="yearOptions"
               required
-            >
+            >e
             </b-form-select>
           </b-form-group>
         </b-col>
@@ -110,21 +110,51 @@
         :items="this.inventory"
         :fields="this.fields"
         :sort-compare="customSort"
+        @row-clicked="toggleDetails"
         >
-        <!-- Virtual Columns -->
+        <!-- Virtual Column -->
         <template #cell(delivery-date)="data">
           {{ formatDate(data.item.PlannedDeliveryDate) }}
         </template>
 
+        
+        <!-- Dealer Information -->
         <template #cell(dealer-name-address)="data">
            <b-link
-            :href="'https://' + data.item.dealerUrl"
+            :href="`https://${data.item.dealerUrl}`"
             target="_blank"
             >
               {{ data.item.dealerNm }}
-            </b-link> - {{ data.item.address1 }} {{ data.item.city }}, {{ data.item.state }}
+            </b-link>
+            - {{ data.item.city }}, {{ data.item.state }}
         </template>
-        
+
+        <!-- More Details Section -->
+        <template #cell(vin-with-more-details)="row">
+          <b-button size="sm" @click="toggleDetails(row.item)" class="mr-2">
+            {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
+          </b-button>
+        </template>
+
+        <template #row-details="row">
+        <b-card :busy="tableBusy">
+          <b-row>
+            <div>
+              <b-list-group
+                horizontal
+                v-for="(item, key) in vinDetail" :key=key
+              >
+                <b-col cols=3>
+                  <b-list-group-item class="border-0">{{ key }}</b-list-group-item>
+                </b-col>
+                  <b-list-group-item class="border-0">{{ item }}</b-list-group-item>
+            </b-list-group>
+            </div>
+          </b-row>
+
+          <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+        </b-card>
+      </template>
             <!-- Table Busy Indicator -->
             <template #table-busy>
               <div class="text-center text-danger my-2">
@@ -140,33 +170,30 @@
 <script>
 export default {
   mounted() {
-    this.getCurrentInventory()
-    // this.logMe()
+    // this.getCurrentInventory()
   },
   data() {
     return {
       tableBusy: false,
+      vinTableBusy: false,
       inventory: [],
+      vinDetail: {},
+
       fields: [
         { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc'},
         { key: 'trimDesc', label: 'Trim Level', sortable: true, sortDirection: 'desc'},
         { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
         { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+
         // Virtual Column
         { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
-    
-        // Virtual Column
-  
-      // Combine dealer name and address, with a link to full informatio / their website
-      // VIN URL: https://www.globalhyundainj.com/api/legacy/pse/windowsticker/hyundai?vin=KMHRB8A3XNU155272
 
-
-        
+        { key: 'vin-with-more-details', label: "VIN", sortable: false }
       ],
 
       modelOptions: [
          { value: 'IONIQ5', text: 'Ioniq5' },
-         { value: 'KONA', text: 'Kona'}
+        //  { value: 'KONA', text: 'Kona'}
       ],
 
       yearOptions: [
@@ -183,8 +210,25 @@ export default {
     } // End of return
   },
   methods: {
+    logMe(input) {
+      console.log(`Log me here: ${input}`)
+    },
+
+    toggleDetails(item) {
+      // Inject _showDetails into the row items
+      if (item["_showDetails"]) item["_showDetails"] = false;
+      else this.$set(item, "_showDetails", true);
+
+      // Now get VIN details
+      this.getVinDetail(item.vin)
+    },
+
+    rowDetails() {
+      console.log("recompute");
+      return new Date().toString();
+    },
+
     async getCurrentInventory() {
-      // console.log(this.form.zipcode + ' ' + this.form.radius)
       // Show users that we're fetching data
       this.tableBusy = true
 
@@ -200,9 +244,29 @@ export default {
         })
       
       this.inventory = await response.json();
-
       // Remove the table busy indicator
       this.tableBusy = false
+    }, 
+
+    async getVinDetail(vin) {
+      // Show users that we're fetching data
+      this.vinTableBusy = true
+
+      const response = await fetch('http://127.0.0.1:5000/vin?' + new URLSearchParams({
+          model: this.form.model,
+          year: this.form.year,
+          vin: vin,
+        }),
+        {
+        method: 'GET',
+        mode: 'cors', 
+        })
+      
+      const vinData = await response.json();
+      this.vinDetail = vinData['data'][0]['vehicle'][0]
+  
+      // Remove the table busy indicator
+      this.vinTableBusy = false
     }, 
 
     invalidFormMessage() {
@@ -291,5 +355,9 @@ export default {
   table.b-table[aria-busy='true'] {
     opacity: 0.6;
   }
+
+  /* .no-click {
+    pointer-events: none;
+  } */
   
 </style>
