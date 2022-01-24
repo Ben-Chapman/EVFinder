@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    Hey! A header goes here!
+    <br><br>
   </div>
 </template>
 <script>
