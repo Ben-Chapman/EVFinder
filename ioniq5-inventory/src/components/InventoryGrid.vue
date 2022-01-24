@@ -102,6 +102,7 @@
 
     <!-- Table here -->
     <b-row>
+      <b-col fluid>
       <b-table
         striped
         hover
@@ -137,15 +138,21 @@
         </template>
 
         <template #row-details="row">
-        <b-card :busy="tableBusy">
-          <b-row>
+        <b-card>
+          <b-row class="justify-content-md-center">
+            <!-- <b-col cols=1> -->
+            <div v-if="vinTableBusy">
+              <b-spinner variant="secondary" label="Loading..."></b-spinner>
+              Loading...
+            </div>
+            <!-- </b-col> -->
             <div>
               <b-list-group
                 horizontal
-                v-for="(item, key) in vinDetail" :key=key
+                v-for="(item, key) in vinDetail[row.item.vin]" :key=key
               >
                 <b-col cols=3>
-                  <b-list-group-item class="border-0">{{ key }}</b-list-group-item>
+                  <b-list-group-item class="border-0"><b>{{ key }}</b></b-list-group-item>
                 </b-col>
                   <b-list-group-item class="border-0">{{ item }}</b-list-group-item>
             </b-list-group>
@@ -163,6 +170,7 @@
               </div>
           </template>
         </b-table>
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -223,16 +231,11 @@ export default {
       this.getVinDetail(item.vin)
     },
 
-    rowDetails() {
-      console.log("recompute");
-      return new Date().toString();
-    },
-
     async getCurrentInventory() {
       // Show users that we're fetching data
       this.tableBusy = true
 
-      const response = await fetch('http://127.0.0.1:5000/inventory?' + new URLSearchParams({
+      const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/inventory?' + new URLSearchParams({
           zip: this.form.zipcode,
           year: this.form.year,
           model: this.form.model,
@@ -252,7 +255,7 @@ export default {
       // Show users that we're fetching data
       this.vinTableBusy = true
 
-      const response = await fetch('http://127.0.0.1:5000/vin?' + new URLSearchParams({
+      const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/vin?' + new URLSearchParams({
           model: this.form.model,
           year: this.form.year,
           vin: vin,
@@ -263,7 +266,11 @@ export default {
         })
       
       const vinData = await response.json();
-      this.vinDetail = vinData['data'][0]['vehicle'][0]
+
+      // Store a new record for each VIN we fetch
+      // this.$set is needed to enable reactive properties on an existing object
+      // without this.$set, the nested table will not auto-refresh with this info
+      this.$set(this.vinDetail, vin, vinData['data'][0]['vehicle'][0])
   
       // Remove the table busy indicator
       this.vinTableBusy = false
