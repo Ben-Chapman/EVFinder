@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import VueHead from 'vue-head'
+import { VuePlausible } from 'vue-plausible'
+
 import App from './App.vue'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -11,6 +14,15 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+
+Vue.use(VueHead)
+
+Vue.use(VuePlausible, {
+  domain: 'theevfinder.com',
+  trackLocalhost: false,
+  enableAutoPageviews: true,
+  enableAutoOutboundTracking: true,
+})
 
 Vue.config.productionTip = false
 
