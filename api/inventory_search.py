@@ -40,8 +40,6 @@ def get_inventory():
   try:
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
-
-    print(type(data))
   except requests.exceptions.RequestException as e:
     return f'An error occured: {e}', 500
 
@@ -100,8 +98,6 @@ def get_vin_details():
   try:
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
-
-    print(type(data))
   except requests.exceptions.RequestException as e:
     return f'An error occured: {e}', 500
 
@@ -120,19 +116,21 @@ def get_vin_details():
 
 def flatten_api_results(input_data: str):
   tmp = []
-  # print(type(input_data))
   input_data = input_data['data'][0]['dealerInfo']
-  for dealer in range(0, len(input_data)):
-    for k, v in input_data[dealer].items():
-      if 'vehicles' in k and v is not None:
-        for i in range(0, len(v)):
-          tmp.append({**input_data[dealer], **input_data[dealer]['vehicles'][i]})
 
-  for i in range(0, len(tmp)):
-      del tmp[i]['vehicles']
+  if input_data:
+    for dealer in range(0, len(input_data)):
+      for k, v in input_data[dealer].items():
+        if 'vehicles' in k and v is not None:
+          for i in range(0, len(v)):
+            tmp.append({**input_data[dealer], **input_data[dealer]['vehicles'][i]})
 
-  return json.dumps(tmp)
+    for i in range(0, len(tmp)):
+        del tmp[i]['vehicles']
 
+    return json.dumps(tmp)
+  else:
+    return json.dumps({})
 
 
 if __name__ == "__main__":
