@@ -13,7 +13,6 @@
 <script>
 import Header from './components/Header.vue'
 import InventoryGrid from './components/InventoryGrid.vue'
-// import FormSelector from './components/FormSelector.vue'
 
 export default {
   name: 'App',
@@ -21,9 +20,15 @@ export default {
     Header,
     InventoryGrid,
     // FormSelector
+  },
+
+  // Vue.head config here
+  head: {
+    title: {
+      inner: 'EV Finder'
+    },
   }
 }
-
 </script>
 
 <style>
