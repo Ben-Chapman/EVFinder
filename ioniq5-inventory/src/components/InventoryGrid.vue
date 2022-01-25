@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container class="px-0">
     <div>
       <b-row>
         <!-- Year -->
@@ -35,7 +35,7 @@
         </b-col>
 
         <!-- Zip Code -->
-        <b-col cols=3>
+        <b-col cols=2>
           <b-form-group
             id="form-zipcode"
             description="Enter a 5-digit US zip code"
@@ -102,21 +102,26 @@
 
     <!-- Table here -->
     <b-row>
-      <b-col fluid>
       <b-table
         striped
         hover
-        sticky-header="100vh"
+        sticky-header="85vh"
         :busy="tableBusy"
         :items="this.inventory"
         :fields="this.fields"
         :sort-compare="customSort"
         @row-clicked="toggleDetails"
         >
-        <!-- Virtual Column -->
-        <template #cell(delivery-date)="data">
-          {{ formatDate(data.item.PlannedDeliveryDate) }}
+
+        <!-- Exterior Color -->
+        <template #cell(exterior-color)="data">
+          {{ titleCase(data.item.colors[0].ExtColorLongDesc) }}
         </template>
+
+        <!-- Delivery Date -->
+        <!-- <template #cell(delivery-date)="data">
+          {{ formatDate(data.item.PlannedDeliveryDate) }}
+        </template> -->
 
         
         <!-- Dealer Information -->
@@ -140,12 +145,10 @@
         <template #row-details="row">
         <b-card>
           <b-row class="justify-content-md-center">
-            <!-- <b-col cols=1> -->
             <div v-if="vinTableBusy">
               <b-spinner variant="secondary" label="Loading..."></b-spinner>
               Loading...
             </div>
-            <!-- </b-col> -->
             <div>
               <b-list-group
                 horizontal
@@ -170,192 +173,200 @@
               </div>
           </template>
         </b-table>
-      </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-export default {
-  mounted() {
-    // this.getCurrentInventory()
-  },
-  data() {
-    return {
-      tableBusy: false,
-      vinTableBusy: false,
-      inventory: [],
-      vinDetail: {},
+  import {startCase, camelCase} from 'lodash';
 
-      fields: [
-        { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc'},
-        { key: 'trimDesc', label: 'Trim Level', sortable: true, sortDirection: 'desc'},
-        { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
-        { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
-
-        // Virtual Column
-        { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
-
-        { key: 'vin-with-more-details', label: "VIN", sortable: false }
-      ],
-
-      modelOptions: [
-         { value: 'IONIQ5', text: 'Ioniq5' },
-        //  { value: 'KONA', text: 'Kona'}
-      ],
-
-      yearOptions: [
-         { value: '2022', text: '2022' },
-      ],
-
-      form: {
-        zipcode: '',
-        year: '2022',
-        model: 'IONIQ5',
-        radius: '',
-      }
-      
-    } // End of return
-  },
-  methods: {
-    logMe(input) {
-      console.log(`Log me here: ${input}`)
+  export default {
+    mounted() {
+      // this.getCurrentInventory()
     },
+    data() {
+      return {
+        tableBusy: false,
+        vinTableBusy: false,
+        inventory: [],
+        vinDetail: {},
 
-    toggleDetails(item) {
-      // Inject _showDetails into the row items
-      if (item["_showDetails"]) item["_showDetails"] = false;
-      else this.$set(item, "_showDetails", true);
+        fields: [
+          
+          { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
 
-      // Now get VIN details
-      this.getVinDetail(item.vin)
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
+          { key: 'drivetrainDesc', label: 'Drive Train', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
+          { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+
+          // Virtual Column
+          { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
+
+          { key: 'vin-with-more-details', label: "VIN", sortable: false }
+        ],
+
+        modelOptions: [
+          { value: 'IONIQ5', text: 'Ioniq5' },
+          //  { value: 'KONA', text: 'Kona'}
+        ],
+
+        yearOptions: [
+          { value: '2022', text: '2022' },
+        ],
+
+        form: {
+          zipcode: '',
+          year: '2022',
+          model: 'IONIQ5',
+          radius: '',
+        }
+        
+      } // End of return
     },
+    methods: {
+      logMe(input) {
+        console.log(`Log me here: ${input}`)
+      },
 
-    async getCurrentInventory() {
-      // Show users that we're fetching data
-      this.tableBusy = true
+      titleCase(item) {
+        return startCase(camelCase(item))
+      },
 
-      const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/inventory?' + new URLSearchParams({
-          zip: this.form.zipcode,
-          year: this.form.year,
-          model: this.form.model,
-          radius: this.form.radius,
-        }),
-        {
-        method: 'GET',
-        mode: 'cors', 
-        })
-      
-      this.inventory = await response.json();
-      // Remove the table busy indicator
-      this.tableBusy = false
-    }, 
+      toggleDetails(item) {
+        // Inject _showDetails into the row items
+        if (item["_showDetails"]) item["_showDetails"] = false;
+        else this.$set(item, "_showDetails", true);
 
-    async getVinDetail(vin) {
-      // Show users that we're fetching data
-      this.vinTableBusy = true
+        // Now get VIN details
+        this.getVinDetail(item.vin)
+      },
 
-      const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/vin?' + new URLSearchParams({
-          model: this.form.model,
-          year: this.form.year,
-          vin: vin,
-        }),
-        {
-        method: 'GET',
-        mode: 'cors', 
-        })
-      
-      const vinData = await response.json();
+      async getCurrentInventory() {
+        // Show users that we're fetching data
+        this.tableBusy = true
 
-      // Store a new record for each VIN we fetch
-      // this.$set is needed to enable reactive properties on an existing object
-      // without this.$set, the nested table will not auto-refresh with this info
-      this.$set(this.vinDetail, vin, vinData['data'][0]['vehicle'][0])
-  
-      // Remove the table busy indicator
-      this.vinTableBusy = false
-    }, 
+        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/inventory?' + new URLSearchParams({
+            zip: this.form.zipcode,
+            year: this.form.year,
+            model: this.form.model,
+            radius: this.form.radius,
+          }),
+          {
+          method: 'GET',
+          mode: 'cors', 
+          })
+        
+        this.inventory = await response.json();
+        // Remove the table busy indicator
+        this.tableBusy = false
+      }, 
 
-    invalidFormMessage() {
-      if (this.isValidZipCode != true) {
+      async getVinDetail(vin) {
+        // Show users that we're fetching data
+        this.vinTableBusy = true
+
+        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/vin?' + new URLSearchParams({
+            model: this.form.model,
+            year: this.form.year,
+            vin: vin,
+          }),
+          {
+          method: 'GET',
+          mode: 'cors', 
+          })
+        
+        const vinData = await response.json();
+
+        // Store a new record for each VIN we fetch
+        // this.$set is needed to enable reactive properties on an existing object
+        // without this.$set, the nested table will not auto-refresh with this info
+        this.$set(this.vinDetail, vin, vinData['data'][0]['vehicle'][0])
+    
+        // Remove the table busy indicator
+        this.vinTableBusy = false
+      }, 
+
+      invalidFormMessage() {
+        if (this.isValidZipCode != true) {
+          if (this.isValidRadius != true) {
+            return 'a valid zip code and a search radius.'
+          }
+        }
+        if (this.isValidZipCode != true) {
+          return 'a valid zip code.'
+        }
         if (this.isValidRadius != true) {
-          return 'a valid zip code and a search radius.'
+          return 'a search radius.'
+        }      
+      },
+
+      formatDate(isoDate) {
+        // console.log(isoDate)
+        if (isoDate) {  // Checking for null values
+          return new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
         }
-      }
-      if (this.isValidZipCode != true) {
-        return 'a valid zip code.'
-      }
-      if (this.isValidRadius != true) {
-        return 'a search radius.'
-      }      
-    },
 
-    formatDate(isoDate) {
-      // console.log(isoDate)
-      if (isoDate) {  // Checking for null values
-        return new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
-      }
+        return ''
+      },
 
-      return ''
-    },
+      customSort(a, b, key) {
+        // Only apply this custom sort to date columns
+        // Return either
+        // -1 for a[key] < b[key]
+        //  0 for a[key] === b[key]
+        //  1  for a[key] > b[key].
 
-    customSort(a, b, key) {
-      // Only apply this custom sort to date columns
-      // Return either
-      // -1 for a[key] < b[key]
-      //  0 for a[key] === b[key]
-      //  1  for a[key] > b[key].
+        if (key == 'PlannedDeliveryDate') {
+          const _a = new Date(a[key])  // New Date object
+          const _b = new Date(b[key])
+          const aDate = Date.parse(_a)  // Convert Date object to epoch
+          const bDate = Date.parse(_b)
 
-      if (key == 'PlannedDeliveryDate') {
-        const _a = new Date(a[key])  // New Date object
-        const _b = new Date(b[key])
-        const aDate = Date.parse(_a)  // Convert Date object to epoch
-        const bDate = Date.parse(_b)
-
-        if (aDate < bDate ){
-          return -1
-        } 
-        else if (aDate === bDate) {
-          return 0
+          if (aDate < bDate ){
+            return -1
+          } 
+          else if (aDate === bDate) {
+            return 0
+          }
+          else {
+            return 1
+          }
         }
-        else {
-          return 1
+        // Fall back to the built-in sort-compare routine for all other keys
+        return false
+      },
+    }, // methods
+
+    computed: {
+      isValidZipCode() {
+        // Hide the error indicator when this field is blank
+        if(this.form.zipcode.length == 0) {
+            return null
         }
-      }
-      // Fall back to the built-in sort-compare routine for all other keys
-      return false
-    },
-  }, // methods
+        return /^\d{5}(-\d{4})?$/.test(this.form.zipcode)
+      },
 
-  computed: {
-    isValidZipCode() {
-      // Hide the error indicator when this field is blank
-      if(this.form.zipcode.length == 0) {
-          return null
-      }
-      return /^\d{5}(-\d{4})?$/.test(this.form.zipcode)
-    },
-
-    isValidRadius() {
-      // Hide the error indicator when this field is blank
-      if(this.form.radius.length == 0) {
-          return null
-      }
-      return /^\d{1,3}$/.test(this.form.radius)
-    },
-
-    validateSubmitButton() {
-      if (this.form.zipcode && this.form.year && this.form.model && this.form.radius != '') {
-        if (this.isValidZipCode && this.isValidRadius) {
-          return true
+      isValidRadius() {
+        // Hide the error indicator when this field is blank
+        if(this.form.radius.length == 0) {
+            return null
         }
-      }
-      return false
-    },
-  },  // End of computed
-  watch: {
-  }, // End of watch
-}  // End of default
+        return /^\d{1,3}$/.test(this.form.radius)
+      },
+
+      validateSubmitButton() {
+        if (this.form.zipcode && this.form.year && this.form.model && this.form.radius != '') {
+          if (this.isValidZipCode && this.isValidRadius) {
+            return true
+          }
+        }
+        return false
+      },
+    },  // End of computed
+    watch: {
+    }, // End of watch
+  }  // End of default
 </script>
 
 <style>
@@ -363,8 +374,8 @@ export default {
     opacity: 0.6;
   }
 
-  /* .no-click {
-    pointer-events: none;
-  } */
+  .no-margin {
+    margin: 0
+  }
   
 </style>

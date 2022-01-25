@@ -1,13 +1,13 @@
 <template>
-  <b-container>
+<div>
     <b-row>
       <Header/>
     </b-row>
 
-    <b-row>
+    <b-row >
       <InventoryGrid/>
     </b-row>
-  </b-container>
+</div>
 </template>
 
 <script>
