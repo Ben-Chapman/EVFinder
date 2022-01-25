@@ -1,15 +1,23 @@
 import json
-import os
-
 import requests
 
 from flask import Flask, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app)  # Enable CORS app-wide
+CORS(
+  app, 
+  resources=r'/api/*',
+  origins=[
+    # "http://localhost:8080",
+    "https://theevfinder.com",
+    "https://www.theevfinder.com",
+    
+  ],
+  methods="GET"
+  )
 
-@app.route('/inventory')
+@app.route('/api/inventory')
 def get_inventory():
   
   request_args = request.args
@@ -57,7 +65,7 @@ def get_inventory():
   # return flatten_api_results(test_data), 200, {"Content-Type": "application/json"}
   ### End testing
 
-@app.route('/vin')
+@app.route('/api/vin')
 def get_vin_details():
   """
   curl 'https://www.hyundaiusa.com/var/hyundai/services/inventory/vehicleDetails.vin.json?vin=KM8KRDAF7NU064539&brand=hyundai' \
@@ -134,4 +142,9 @@ def flatten_api_results(input_data: str):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+  # Flask CORS logging
+  import logging
+  logging.basicConfig(level=logging.INFO)
+  logging.getLogger('flask_cors').level = logging.DEBUG
+
+  app.run(debug=True, host="0.0.0.0", port=8081)

@@ -246,7 +246,7 @@
         // Show users that we're fetching data
         this.tableBusy = true
 
-        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/inventory?' + new URLSearchParams({
+        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
             zip: this.form.zipcode,
             year: this.form.year,
             model: this.form.model,
@@ -265,8 +265,7 @@
       async getVinDetail(vin) {
         // Show users that we're fetching data
         this.vinTableBusy = true
-
-        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/vin?' + new URLSearchParams({
+        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/vin?' + new URLSearchParams({
             model: this.form.model,
             year: this.form.year,
             vin: vin,
