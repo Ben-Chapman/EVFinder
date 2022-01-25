@@ -1,7 +1,7 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300;500&display=swap');
 
-$font-family-sans-serif: 'Encode Sans Condensed';
+$font-family-sans-serif: 'Encode Sans Condensed', Helvetica, Arial, sans-serif;
 $font-family-base: $font-family-sans-serif;
 
 // Include Bootstrap and BootstrapVue SCSS files
