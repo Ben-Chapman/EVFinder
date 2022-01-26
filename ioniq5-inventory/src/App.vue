@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <b-row>
       <Header/>
     </b-row>
@@ -7,7 +7,7 @@
     <b-row >
       <InventoryGrid/>
     </b-row>
-</div>
+  </div>
 </template>
 
 <script>
@@ -19,7 +19,6 @@ export default {
   components: {
     Header,
     InventoryGrid,
-    // FormSelector
   },
 
   // Vue.head config here

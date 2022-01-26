@@ -1,7 +1,7 @@
 <template>
-  <b-container class="px-0">
+  <b-container>
     <div>
-      <b-row>
+      <b-row class="d-flex justify-content-center">
         <!-- Year -->
         <b-col cols=2>
           <b-form-group
@@ -13,7 +13,7 @@
               v-model="form.year"
               :options="yearOptions"
               required
-            >e
+            >
             </b-form-select>
           </b-form-group>
         </b-col>
@@ -100,16 +100,39 @@
       </b-row>
     </div>
 
+    <!-- Let's filter -->
+    <div v-if="this.inventory.length > 0">
+      <b-row class="d-flex justify-content-center">
+        <b-col cols="6" xs="12" md="4" align-self="center">
+          <!-- <b-form-group
+            class="mb-0"
+          > -->
+            <!-- <b-input-group size="sm"> -->
+              <b-form-input
+                id="filter-input"
+                v-model="filter"
+                type="search"
+                placeholder="Filter Vehicles"
+                size="sm"
+                
+              ></b-form-input>
+            <!-- </b-input-group> -->
+          <!-- </b-form-group> -->
+        </b-col>
+      </b-row>
+    </div>
     <!-- Table here -->
-    <b-row>
+    <b-row class="d-flex justify-content-center mt-3">
       <b-table
         striped
         hover
-        sticky-header="85vh"
+        sticky-header="78vh"
+        stacked="md"
         :busy="tableBusy"
         :items="this.inventory"
         :fields="this.fields"
         :sort-compare="customSort"
+        :filter="filter"
         @row-clicked="toggleDetails"
         >
 
@@ -117,12 +140,6 @@
         <template #cell(exterior-color)="data">
           {{ titleCase(data.item.colors[0].ExtColorLongDesc) }}
         </template>
-
-        <!-- Delivery Date -->
-        <!-- <template #cell(delivery-date)="data">
-          {{ formatDate(data.item.PlannedDeliveryDate) }}
-        </template> -->
-
         
         <!-- Dealer Information -->
         <template #cell(dealer-name-address)="data">
@@ -190,6 +207,7 @@
         vinTableBusy: false,
         inventory: [],
         vinDetail: {},
+        filter: null,
 
         fields: [
           
@@ -368,13 +386,11 @@
   }  // End of default
 </script>
 
-<style>
+<style lang="scss">
+  @import '../assets/app_style.scss';
+
   table.b-table[aria-busy='true'] {
     opacity: 0.6;
-  }
-
-  .no-margin {
-    margin: 0
   }
   
 </style>
