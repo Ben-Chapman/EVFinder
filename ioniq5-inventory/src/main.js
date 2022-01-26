@@ -23,7 +23,8 @@ Vue.use(VuePlausible, {
   enableAutoPageviews: true,
   enableAutoOutboundTracking: true,
 })
- import './assets/app_style.scss'
+
+import './assets/app_style.scss'
 Vue.config.productionTip = false
 
 new Vue({
