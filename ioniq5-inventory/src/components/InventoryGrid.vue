@@ -156,6 +156,7 @@
           </b-button>
         </template>
 
+        <!-- Vin Details Section -->
         <template #row-details="row">
         <b-card>
           <b-row class="justify-content-md-center">
@@ -163,19 +164,37 @@
               <b-spinner variant="secondary" label="Loading..."></b-spinner>
               Loading...
             </div>
-            <div>
+          </b-row>
+
+            <!-- Vin Details List Group -->
+            <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
+              <b-row class="justify-content-md-center py-2">
+                <b-button
+                  size="sm"
+                  target="_blank"
+                  :href="`${vinDetail[row.item.vin]['DI']['DealerVDPURL']}`"
+                  class="mr-2 align-middle">
+                Dealer's Website for This Vehicle
+                <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
+          </b-button>
+              </b-row>
+            </div>
+            
               <b-list-group
                 horizontal
                 v-for="(item, key) in vinDetail[row.item.vin]" :key=key
-                class="flex-fill"
               >
-                <b-col cols=4>
+              
+                <b-col cols=4 v-if="key != 'DI'">
                   <b-list-group-item class="border-0"><b>{{ key }}</b></b-list-group-item>
                 </b-col>
+                <div v-if="key != 'DI'">
                   <b-list-group-item class="border-0">{{ item }}</b-list-group-item>
+                </div>
+              
             </b-list-group>
-            </div>
-          </b-row>
+            
+          
 
           <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
         </b-card>
@@ -370,17 +389,17 @@
         var tmp = {}
         var deleteKeys = [
           'colors',
-          'DI'
         ]
 
         for (let i in input) {
           const key = i
           const value = input[i]
           
-          if (key == 'DI') {
-            tmp['Vehicle Link'] = value["DealerVDPURL"]
-          }
-          else if (value === null || value == '') {
+          // if (key == 'DI') {
+          //   tmp['Vehicle Link'] = value["DealerVDPURL"]
+          // }
+          // else 
+          if (value === null || value == '') {
             tmp[key] = 'N/A'
           }
           else tmp[key] = value
