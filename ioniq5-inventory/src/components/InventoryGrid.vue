@@ -104,7 +104,7 @@
     <div v-if="this.inventory.length > 0">
       <b-row class="d-flex justify-content-center">
         <b-col cols="6" xs="12" md="4" align-self="center">
-          <p class="text-center mb-0 attention"><b>{{ this.inventoryCount}}</b> Vehicles Found</p>
+          <p class="text-center mb-0 attention"><b>{{ this.inventoryCount }}</b> Vehicles Found</p>
           <b-form-input
             id="filter-input"
             v-model="filter"
@@ -167,8 +167,9 @@
               <b-list-group
                 horizontal
                 v-for="(item, key) in vinDetail[row.item.vin]" :key=key
+                class="flex-fill"
               >
-                <b-col cols=3>
+                <b-col cols=4>
                   <b-list-group-item class="border-0"><b>{{ key }}</b></b-list-group-item>
                 </b-col>
                   <b-list-group-item class="border-0">{{ item }}</b-list-group-item>
@@ -367,14 +368,30 @@
 
       formatVinDetails(input) {
         var tmp = {}
-        for (const i in input) {
+        var deleteKeys = [
+          'colors',
+          'DI'
+        ]
+
+        for (let i in input) {
           const key = i
           const value = input[i]
           
-          if (key != 'colors') {
-            tmp[key] = value
+          if (key == 'DI') {
+            tmp['Vehicle Link'] = value["DealerVDPURL"]
           }
+          else if (value === null || value == '') {
+            tmp[key] = 'N/A'
+          }
+          else tmp[key] = value
         }
+
+        // Delete elements no longer needed
+        for (let j = 0; j < deleteKeys.length; j++) {
+          const element = deleteKeys[j]
+          delete tmp[element]
+        }
+
       return tmp
       },
     }, // methods
