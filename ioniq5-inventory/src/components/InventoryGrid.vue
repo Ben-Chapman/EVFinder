@@ -387,10 +387,30 @@
         this.inventoryCount = filteredItems.length
       },
 
+      convertToCurrency(item) {
+        var formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 0,
+          })
+        return formatter.format(item)
+      },
+
       formatVinDetails(input) {
         var tmp = {}
         var keysToDelete = [
           'colors',
+        ]
+        var needsCurrencyConversion = [
+          'freight',
+          'msrp',
+          'rbcSavings',
+          'totalAccessoryPrice',
+          'totalExtColorPrice',
+          'totalIntColotPrice',
+          'totalOptions',
+          'totalPackageOptionPrice',
+          'totalPackagePrice',
         ]
 
         for (let i in input) {
@@ -404,9 +424,12 @@
             var aTmp = []
             for (var a=0; a<input[key].length; a++) {
               aTmp.push(
-                `${this.titleCase(input[key][a]['accessoryNm'])}: $${input[key][a]['accessoryPrice']}`)
+                `${this.titleCase(input[key][a]['accessoryNm'])}: ${this.convertToCurrency(input[key][a]['accessoryPrice'])}`)
             }
             tmp['Accessories'] = aTmp.join(',  ')
+          }
+          else if (needsCurrencyConversion.includes(key)) {
+            tmp[key] = this.convertToCurrency(value)
           }
           else tmp[key] = value
         }
