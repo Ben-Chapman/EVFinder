@@ -167,16 +167,18 @@
           </b-row>
 
             <!-- Vin Details List Group -->
+            <!-- Dealer Website Button -->
             <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
               <b-row class="justify-content-md-center py-2">
                 <b-button
-                  size="sm"
+                  size="md"
                   target="_blank"
                   :href="`${vinDetail[row.item.vin]['DI']['DealerVDPURL']}`"
-                  class="mr-2 align-middle">
-                Dealer's Website for This Vehicle
-                <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
-          </b-button>
+                  class="mr-2 align-middle"
+                  >
+                  Dealer's Website for This Vehicle
+                  <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
+                </b-button>
               </b-row>
             </div>
             
@@ -184,12 +186,12 @@
                 horizontal
                 v-for="(item, key) in vinDetail[row.item.vin]" :key=key
               >
-              
+              <!-- We're displaying the Dealer URL above, don't display it here -->
                 <b-col cols=4 v-if="key != 'DI'">
-                  <b-list-group-item class="border-0"><b>{{ key }}</b></b-list-group-item>
+                  <b-list-group-item class="border-0 py-1"><b>{{ key }}</b></b-list-group-item>
                 </b-col>
                 <div v-if="key != 'DI'">
-                  <b-list-group-item class="border-0">{{ item }}</b-list-group-item>
+                  <b-list-group-item class="border-0 py-1">{{ item }}</b-list-group-item>
                 </div>
               
             </b-list-group>
@@ -387,7 +389,7 @@
 
       formatVinDetails(input) {
         var tmp = {}
-        var deleteKeys = [
+        var keysToDelete = [
           'colors',
         ]
 
@@ -395,19 +397,23 @@
           const key = i
           const value = input[i]
           
-          // if (key == 'DI') {
-          //   tmp['Vehicle Link'] = value["DealerVDPURL"]
-          // }
-          // else 
           if (value === null || value == '') {
             tmp[key] = 'N/A'
+          }
+          else if (key == 'accessories') {
+            var aTmp = []
+            for (var a=0; a<input[key].length; a++) {
+              aTmp.push(
+                `${this.titleCase(input[key][a]['accessoryNm'])}: $${input[key][a]['accessoryPrice']}`)
+            }
+            tmp['Accessories'] = aTmp.join(',  ')
           }
           else tmp[key] = value
         }
 
         // Delete elements no longer needed
-        for (let j = 0; j < deleteKeys.length; j++) {
-          const element = deleteKeys[j]
+        for (let j = 0; j < keysToDelete.length; j++) {
+          const element = keysToDelete[j]
           delete tmp[element]
         }
 
