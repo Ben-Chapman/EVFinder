@@ -104,23 +104,19 @@
     <div v-if="this.inventory.length > 0">
       <b-row class="d-flex justify-content-center">
         <b-col cols="6" xs="12" md="4" align-self="center">
-          <!-- <b-form-group
-            class="mb-0"
-          > -->
-            <!-- <b-input-group size="sm"> -->
-              <b-form-input
-                id="filter-input"
-                v-model="filter"
-                type="search"
-                placeholder="Filter Vehicles"
-                size="sm"
-                
-              ></b-form-input>
-            <!-- </b-input-group> -->
-          <!-- </b-form-group> -->
+          <p class="text-center mb-0 attention"><b>{{ this.inventoryCount}}</b> Vehicles Found</p>
+          <b-form-input
+            id="filter-input"
+            v-model="filter"
+            type="search"
+            placeholder="Filter Vehicles"
+            size="sm"
+            
+          ></b-form-input>
         </b-col>
       </b-row>
     </div>
+
     <!-- Table here -->
     <b-row class="d-flex justify-content-center mt-3">
       <b-table
@@ -134,6 +130,7 @@
         :sort-compare="customSort"
         :filter="filter"
         @row-clicked="toggleDetails"
+        @filtered="onFiltered"
         >
 
         <!-- Exterior Color -->
@@ -154,7 +151,7 @@
 
         <!-- More Details Section -->
         <template #cell(vin-with-more-details)="row">
-          <b-button size="sm" @click="toggleDetails(row.item)" class="mr-2">
+          <b-button size="sm" @click="toggleDetails(row.item)" class="mr-2 align-middle vin">
             {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
           </b-button>
         </template>
@@ -199,7 +196,6 @@
 
   export default {
     mounted() {
-      // this.getCurrentInventory()
     },
     data() {
       return {
@@ -208,6 +204,7 @@
         inventory: [],
         vinDetail: {},
         filter: null,
+        inventoryCount: 0,
 
         fields: [
           
@@ -276,6 +273,11 @@
           })
         
         this.inventory = await response.json();
+
+        // inventoryCount is used to display the $num Vehicles Found message
+        // Populating that prop with the number of vehicles returned from the API
+        this.inventoryCount = this.inventory.length
+
         // Remove the table busy indicator
         this.tableBusy = false
       }, 
@@ -352,6 +354,11 @@
         }
         // Fall back to the built-in sort-compare routine for all other keys
         return false
+      },
+      
+      onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.inventoryCount = filteredItems.length
       },
     }, // methods
 
