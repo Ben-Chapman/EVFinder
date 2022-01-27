@@ -296,11 +296,15 @@
           })
         
         const vinData = await response.json();
-
+        
         // Store a new record for each VIN we fetch
         // this.$set is needed to enable reactive properties on an existing object
         // without this.$set, the nested table will not auto-refresh with this info
-        this.$set(this.vinDetail, vin, vinData['data'][0]['vehicle'][0])
+        this.$set(
+          this.vinDetail,
+          vin,
+          this.formatVinDetails(vinData['data'][0]['vehicle'][0]),
+          )
     
         // Remove the table busy indicator
         this.vinTableBusy = false
@@ -355,10 +359,23 @@
         // Fall back to the built-in sort-compare routine for all other keys
         return false
       },
-      
+
       onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.inventoryCount = filteredItems.length
+      },
+
+      formatVinDetails(input) {
+        var tmp = {}
+        for (const i in input) {
+          const key = i
+          const value = input[i]
+          
+          if (key != 'colors') {
+            tmp[key] = value
+          }
+        }
+      return tmp
       },
     }, // methods
 
