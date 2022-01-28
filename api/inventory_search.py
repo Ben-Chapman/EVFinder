@@ -9,7 +9,7 @@ CORS(
   app, 
   resources=r'/api/*',
   origins=[
-    # "http://localhost:8080",
+    "http://localhost:8080",
     "https://theevfinder.com",
     "https://www.theevfinder.com",
     
@@ -57,7 +57,7 @@ def get_inventory():
 
 
   ### Dev section
-  # with open('tests/vehicles_data.json', 'r') as f:
+  # with open('../tests/vehicles_data.json', 'r') as f:
   #     test_data = json.loads(f.read())
   # print(f'\n\n\t{request}')
   # print(f'\nUser agent for this request is: {user_agent}\n')
@@ -67,17 +67,6 @@ def get_inventory():
 
 @app.route('/api/vin')
 def get_vin_details():
-  """
-  curl 'https://www.hyundaiusa.com/var/hyundai/services/inventory/vehicleDetails.vin.json?vin=KM8KRDAF7NU064539&brand=hyundai' \
-  -H 'authority: www.hyundaiusa.com' \
-  -H 'accept: application/json, text/plain, */*' \
-  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36' \
-  -H 'sec-gpc: 1' \
-  -H 'sec-fetch-site: same-origin' \
-  -H 'sec-fetch-mode: cors' \
-  -H 'sec-fetch-dest: empty' \
-  -H 'referer: https://www.hyundaiusa.com/us/en/inventory-search/details?model=Kona&year=2022&vin=KM8K3CA3XNU859036' \
-  """
   request_args = request.args
 
   model = request_args['model']
@@ -114,7 +103,7 @@ def get_vin_details():
   ### End Prod
 
   ### Dev section
-  # with open('tests/vin_data.json', 'r') as f:
+  # with open('../tests/vin_data.json', 'r') as f:
   #     test_data = json.loads(f.read())
   # print(f'\n\n\t{request}')
   # print(f'\nUser agent for this request is: {user_agent}\n')
