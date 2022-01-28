@@ -1,9 +1,9 @@
 <template>
   <b-container>
     <div>
-      <b-row class="d-flex justify-content-center">
+      <b-row class="d-flex" align-h="center">
         <!-- Year -->
-        <b-col cols=2>
+        <b-col cols=4 md=2>
           <b-form-group
             id="form-year"
             description="Select a Model Year"
@@ -19,7 +19,7 @@
         </b-col>
 
         <!-- Model -->
-        <b-col cols=3>
+        <b-col cols=5 md=3>
           <b-form-group
             id="form-model"
             description="Select a Model"
@@ -35,7 +35,7 @@
         </b-col>
 
         <!-- Zip Code -->
-        <b-col cols=2>
+        <b-col cols=5 md=2>
           <b-form-group
             id="form-zipcode"
             description="Enter a 5-digit US zip code"
@@ -53,7 +53,7 @@
         </b-col>
 
         <!-- Radius -->
-        <b-col cols=2>
+        <b-col cols=3 md=2>
           <b-form-group
             id="form-radius"
             description="Search Radius in Miles"
@@ -169,7 +169,7 @@
             <!-- Vin Details List Group -->
             <!-- Dealer Website Button -->
             <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
-              <b-row class="justify-content-md-center py-2">
+              <b-row class="py-2" align-h="center">
                 <b-button
                   size="md"
                   @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
