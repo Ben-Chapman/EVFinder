@@ -172,8 +172,7 @@
               <b-row class="justify-content-md-center py-2">
                 <b-button
                   size="md"
-                  target="_blank"
-                  :href="`${vinDetail[row.item.vin]['DI']['DealerVDPURL']}`"
+                  @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
                   class="mr-2 align-middle"
                   >
                   Dealer's Website for This Vehicle
@@ -196,8 +195,7 @@
               
             </b-list-group>
             
-          
-
+        
           <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
         </b-card>
       </template>
@@ -396,6 +394,10 @@
         return formatter.format(item)
       },
 
+      openUrlInNewWindow(url) {
+        window.open(url, '_blank')
+      },
+
       formatVinDetails(input) {
         var tmp = {}
         var keysToDelete = [
@@ -412,13 +414,58 @@
           'totalPackageOptionPrice',
           'totalPackagePrice',
         ]
+        var nameMapping = {
+          'DI': 'DI',
+          'colors': 'colors',
+          'MAPPrice': 'MAP Price',
+          'accessories': 'Accessories',
+          'cityMpg': 'City MPG',
+          'classDesc': 'Class Description',
+          'colorDesc': 'Color Description',
+          'cylinders': 'Cylinders',
+          'dealerCd': 'Dealer Code',
+          'doorCd': 'Door Code',
+          'drivetrain': 'Drivetrain',
+          'drivetrainDesc': 'Drivetrain Description',
+          'engineDesc': 'Engine Description',
+          'engineDisplacement': 'Engine Displacement',
+          'epaClassDesc': 'EPA Class Description',
+          'epaEstAvgMpg': 'EPA Estimated Average MPG',
+          'extColorDesc': 'External Color Description',
+          'freight': 'Freight Charge',
+          'fuelDesc': 'Fuel Description',
+          'highwayMpg': 'Highway MPG',
+          'horsepower': 'Horsepower',
+          'intColorDesc': 'Interior Color Description',
+          'inventoryStatus': 'Inventory Status',
+          'mileage': 'Mileage',
+          'modelCd': 'Model Code',
+          'modelGroupCd': 'Model Group Code',
+          'modelNm': 'Model Number',
+          'modelYear': 'Model Year',
+          'msrp': 'MSRP',
+          'packages': 'Packages',
+          'plannedDeliveryDate': 'Planned Delivery Date',
+          'rbcSavings': 'RBC Savings',
+          'sortableMileage': 'Vehicle Mileage',
+          'totalAccessoryPrice': 'Total Accessory Price',
+          'totalExtColorPrice': 'Total Exterior Color Price',
+          'totalIntColorPrice': 'Total Interior Color Price',
+          'totalOptions': 'Total Options Price',
+          'totalPackageOptionPrice': 'Total Package Options Price',
+          'totalPackagePrice': 'Total Package Price',
+          'totalPackages': 'Total Packages',
+          'transmissionDesc': 'Transmission Description',
+          'trimDesc': 'Trim Description',
+          'vin': 'VIN'}
 
+        // console.log(nameMapping['mileage'])
         for (let i in input) {
           const key = i
           const value = input[i]
           
           if (value === null || value == '') {
-            tmp[key] = 'N/A'
+            tmp[nameMapping[key]] = 'N/A'
           }
           else if (key == 'accessories') {
             var aTmp = []
@@ -429,9 +476,9 @@
             tmp['Accessories'] = aTmp.join(',  ')
           }
           else if (needsCurrencyConversion.includes(key)) {
-            tmp[key] = this.convertToCurrency(value)
+            tmp[nameMapping[key]] = this.convertToCurrency(value)
           }
-          else tmp[key] = value
+          else tmp[nameMapping[key]] = value
         }
 
         // Delete elements no longer needed
