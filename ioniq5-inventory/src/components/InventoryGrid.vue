@@ -58,7 +58,11 @@
             id="form-radius"
             description="Search Radius in Miles"
           >
+            <!-- name="search" autocomplete="off" was recommended to hint to
+            1Password that this field isn't a password, or something similar  -->
             <b-form-input
+              autocomplete="off"
+              name="search"
               id="form-radius"
               v-model="form.radius"
               :state="isValidRadius"
