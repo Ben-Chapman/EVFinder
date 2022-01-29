@@ -233,15 +233,13 @@
         fields: [
           
           { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
-
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drive Train', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
-
           // Virtual Column
           { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
-
+          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc' },
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
         ],
 
