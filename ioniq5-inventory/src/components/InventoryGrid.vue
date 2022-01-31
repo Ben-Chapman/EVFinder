@@ -103,9 +103,19 @@
           </div>
       </b-row>
     </div>
-
+<!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
-    <div v-if="this.inventory.length > 0">
+    <div >
+      <b-row class="d-flex justify-content-center">
+        <b-col cols="6" xs="12" md="4" align-self="center">
+          <b-icon icon="filter" aria-hidden="true"></b-icon>
+          <b-dd id="trim-dd" text="Trim" size="sm" variant="outline-primary">
+            <b-dropdown-form v-for="(item, key) in this.inventory" :key=key>
+              <b-form-checkbox class="mb-3">{{ [...new Set(item['trimDesc'])] }}</b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        </b-col>
+      </b-row>
       <b-row class="d-flex justify-content-center">
         <b-col cols="6" xs="12" md="4" align-self="center">
           <p class="text-center mb-0 attention"><b>{{ this.inventoryCount }}</b> Vehicles Found</p>
@@ -229,6 +239,7 @@
         vinDetail: {},
         filter: null,
         inventoryCount: 0,
+        filterOptions: {},
 
         fields: [
           
@@ -303,6 +314,8 @@
 
         // Remove the table busy indicator
         this.tableBusy = false
+
+        this.populateFilterOptions()
       }, 
 
       async getVinDetail(vin) {
@@ -492,6 +505,21 @@
         }
 
       return tmp
+      },
+
+      populateFilterOptions() {
+        this.inventory.forEach(foo => {
+          Object.entries(foo).forEach(([key, value]) => {
+            if (key in this.filterOptions) {
+              if (!(this.filterOptions[key].includes(value))) {
+                this.filterOptions[key].push(value)
+              }
+            }
+            else {
+              this.filterOptions[key] = [value]
+            }
+          })
+          })
       },
     }, // methods
 
