@@ -107,14 +107,69 @@
     <!-- Let's filter -->
     <div >
       <b-row class="d-flex justify-content-center">
-        <b-col cols="6" xs="12" md="4" align-self="center">
-          <b-icon icon="filter" aria-hidden="true"></b-icon>
-          <b-dd id="trim-dd" text="Trim" size="sm" variant="outline-primary">
-            <b-dropdown-form v-for="(item, key) in this.inventory" :key=key>
-              <b-form-checkbox class="mb-3">{{ [...new Set(item['trimDesc'])] }}</b-form-checkbox>
-            </b-dropdown-form>
-          </b-dd>
-        </b-col>
+        <b-icon icon="filter" aria-hidden="true" class="mr-2"></b-icon>
+        
+          <!-- Filter Options -->
+          <!-- Trim Filter -->
+          <b-col>
+            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+              <template #button-content>
+                Trim
+                <span v-if="filterSelection.trim.length > 0">
+                  <b-badge variant="light">
+                    {{ filterSelection.trim.length }}
+                  </b-badge>
+                </span>
+              </template>
+
+              <b-dropdown-form>
+                <b-form-checkbox
+                  v-for="item in this.filterOptions.trimDesc" :key=item
+                  :value="item"
+                  v-model="filterSelection.trim"
+                  name="name-here"
+                  class="mb-3"
+                  >
+                  {{ item }}
+                </b-form-checkbox>
+              </b-dropdown-form>
+            </b-dd>
+          </b-col>
+
+          <!-- Color Filter -->
+          <b-col>
+            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+              <template #button-content>
+                Color
+                <span v-if="filterSelection.colors.length > 0">
+                  <b-badge variant="light">
+                    {{ filterSelection.colors.length }}
+                  </b-badge>
+                </span>
+              </template>
+
+              <b-dropdown-form>
+                <b-form-checkbox
+                  v-for="item in this.filterOptions.colors" :key=item
+                  :value="item"
+                  v-model="filterSelection.colors"
+                  name="name-here"
+                  class="mb-3"
+                  >
+                  {{ titleCase(item) }}
+                </b-form-checkbox>
+              </b-dropdown-form>
+            </b-dd>
+          </b-col>
+
+          <!-- Drivetrain Filter -->
+          <b-col>
+            <b-dd id="drivetrain-dd" text="Drivetrain" size="sm" variant="outline-primary">
+              <b-dropdown-form v-for="item in this.filterOptions.drivetrainDesc" :key=item>
+                <b-form-checkbox class="mb-3">{{ titleCase(item) }}</b-form-checkbox>
+              </b-dropdown-form>
+            </b-dd>
+          </b-col>
       </b-row>
       <b-row class="d-flex justify-content-center">
         <b-col cols="6" xs="12" md="4" align-self="center">
@@ -145,6 +200,8 @@
         :filter="filter"
         @row-clicked="toggleDetails"
         @filtered="onFiltered"
+        :filter-function="filterFunction"
+        debounce="250"
         >
 
         <!-- Exterior Color -->
@@ -240,6 +297,12 @@
         filter: null,
         inventoryCount: 0,
         filterOptions: {},
+        filterSelection: {
+          'trim': [],
+          'drivetrain': [],
+          'colors': [],
+          'price': [],
+        },
 
         fields: [
           
@@ -508,11 +571,24 @@
       },
 
       populateFilterOptions() {
+        // TODO: Fix this nonsense
+        this.filterOptions['colors'] = []
+
         this.inventory.forEach(foo => {
           Object.entries(foo).forEach(([key, value]) => {
+            if (key == 'colors') {
+              value.forEach(color => {
+                var colorName = color['ExtColorLongDesc']
+                if (!(this.filterOptions[key].includes(colorName))) {
+                  this.filterOptions[key].push(colorName)
+                }
+              })
+            }
             if (key in this.filterOptions) {
               if (!(this.filterOptions[key].includes(value))) {
+                if (typeof(value) != 'object') {
                 this.filterOptions[key].push(value)
+                }
               }
             }
             else {
@@ -521,6 +597,14 @@
           })
           })
       },
+
+      filterFunction(rowRecord, filterProp) {
+        if (rowRecord['dealerCd'] == "NJ049") {
+          console.log(rowRecord, filterProp)
+          return true
+        }
+        // console.log(rowRecord, filterProp)
+      }
     }, // methods
 
     computed: {
