@@ -115,9 +115,9 @@
             <b-dd id="trim-dd" size="sm" variant="outline-primary">
               <template #button-content>
                 Trim
-                <span v-if="filterSelection.trim.length > 0">
+                <span v-if="filterSelection.trimDesc.length > 0">
                   <b-badge variant="light">
-                    {{ filterSelection.trim.length }}
+                    {{ filterSelection.trimDesc.length }}
                   </b-badge>
                 </span>
               </template>
@@ -126,7 +126,7 @@
                 <b-form-checkbox
                   v-for="item in this.filterOptions.trimDesc" :key=item
                   :value="item"
-                  v-model="filterSelection.trim"
+                  v-model="filterSelection.trimDesc"
                   name="name-here"
                   class="mb-3"
                   >
@@ -197,7 +197,7 @@
         :items="this.inventory"
         :fields="this.fields"
         :sort-compare="customSort"
-        :filter="filter"
+        :filter="filterSelection"
         @row-clicked="toggleDetails"
         @filtered="onFiltered"
         :filter-function="filterFunction"
@@ -297,15 +297,15 @@
         filter: null,
         inventoryCount: 0,
         filterOptions: {},
+        // Keys in filterSelection need to match the source JSON data keys
         filterSelection: {
-          'trim': [],
-          'drivetrain': [],
+          'trimDesc': [],
+          'drivetrainDesc': [],
           'colors': [],
           'price': [],
         },
 
         fields: [
-          
           { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drive Train', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
@@ -598,13 +598,119 @@
           })
       },
 
-      filterFunction(rowRecord, filterProp) {
-        if (rowRecord['dealerCd'] == "NJ049") {
-          console.log(rowRecord, filterProp)
+      filterFunction(rowRecord, filterSelections) {
+        /*
+          If we have a single filter category, match.some filter value(s) against the rowRecord, and if a match, return true
+
+          If we have multiple categories
+            For each category
+              If there is a category filter
+              match.some against the row record (OR match)
+              push onto the matchedRow stack
+          
+          Now build an array for all filter values ['LIMITED', 'LUCID Blue']
+          match.every against the matchedRow array
+          return true / false for that row
+          */
+        console.log(rowRecord)
+        console.log(filterSelections)
+
+        // isMatch = false
+        matchedRow = []
+
+        // filterValues looks like ['trimDesc', ['LIMITED', 'SEL]]
+        var filterValues = Object.entries(filterSelections).filter(f => f[1].length > 0)
+        var filterValuesCount = filterValues.length
+
+        if (filterValuesCount == 0) {
+          console.log("No filter")
+          // No filters are selected
           return true
         }
-        // console.log(rowRecord, filterProp)
-      }
+        else if (filterValuesCount == 1) {
+          // 1 or more filters in a single category were selected
+          console.log('1 Filter')
+            return filterValues[0][1].some(val => Object.values(rowRecord).includes(val))
+        }
+        else if (filterValuesCount > 1) {
+          // 1 or more filters in multiple categories were selected
+          filterValues.forEach(value => {
+            if (value[1].some(val => Object.values(rowRecord).includes(val))) {
+              matchedRow.push(rowRecord)
+            }
+          })
+
+          
+
+          }
+
+        }
+
+        // Object.entries(filterSelections).forEach(selection => {
+          
+
+
+        //   // const key = selection[0]
+        //   const values = selection[1]
+        //   console.log(`Filtering on: ${values}`)
+          
+        //   if (values.length == 0) {
+        //     console.log('values length 0')
+        //     return
+        //   }
+        //   else if (values.length == 1) {
+        //     console.log("values length 1")
+        //     return values.some(val => Object.values(rowRecord).includes(val))
+        //   }
+        //   else if (values.length > 1) {
+        //     console.log('values > 2')
+        //     matchedRow.push(values.some(val => Object.values(rowRecord).includes(val)))
+        //   }
+
+
+        // })
+
+   
+
+        // These are filter selections
+        // Object.entries(filterSelections).forEach(([key, value]) => {
+        //       if ([rowRecord].some( foo => foo[key] == value )) {
+        //         console.log(`FOUND SOMETHING!!!  ${rowRecord['vin']}`)
+        //       }
+        //   })
+        // const filterText = Object.keys(filterSelections)
+        //   .every(key => filterText[key])
+
+        //   console.log(filterText)
+
+
+        // This works:
+        // console.log(filterSelections)
+        // const filtered = [rowRecord].filter(item => {
+        //   return Object.keys(filterSelections)  // trimDesc, color
+        //   .every(key => String(item[key]) // for every value
+        //   .includes(filterSelections[key])  // does rowRecord include it
+        //   )})
+          
+        // return filtered.length > 0 ? filtered : false
+
+        // For a rowRecord, if any of the filter values match, return true
+        // const allFilters = [].concat(...Object.values(filterSelections)) // filter objects to array
+
+        // for (f in allFilters) {
+
+        // }
+        // const isFound = conditions.some(arrVal => Object.values(rowRecord).includes(arrVal))
+
+        // if (isFound) {
+        //   return true
+        // }
+        // else {
+        //   return false
+        // }
+        
+      
+      },
     }, // methods
 
     computed: {
