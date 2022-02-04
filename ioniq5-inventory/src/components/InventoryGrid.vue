@@ -321,6 +321,7 @@
           'colors': [],
           'price': [],
         },
+        filterMatches: [],
 
         fields: [
           { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
@@ -629,14 +630,16 @@
           match.every against the matchedRow array
           return true / false for that row
           */
-        console.log(rowRecord)
-        console.log(filterSelections)
+        // console.log(rowRecord)
+        // console.log(filterSelections)
 
         // isMatch = false
 
         // filterArray looks like ['trimDesc', ['LIMITED', 'SEL]]
         var filterArray = Object.entries(filterSelections).filter(f => f[1].length > 0)
         var filterArrayCount = filterArray.length
+
+        console.log(`${filterArrayCount} Filter Type`)
 
         if (filterArrayCount == 0) {
           console.log("No filter")
@@ -645,22 +648,51 @@
         }
         else if (filterArrayCount == 1) {
           // 1 or more filters in a single category were selected
-          console.log('1 Filter')
-            return filterArray[0][1].some(val => Object.values(rowRecord).includes(val))
+            if (filterArray[0][1].some(val => Object.values(rowRecord).includes(val))) {
+              return true
+            }
+            else {
+              return false
+              }
         }
         else if (filterArrayCount > 1) {
           // 1 or more filters in multiple categories were selected
-          // Merge the selected filter values
-          console.log(`FilterArray: ${filterArray}`)
-          console.log(`Object values: ${Object.values(filterArray).filter(f => f.length > 0)}`)
-          var mergedFilters = [].concat.apply([], Object.values(filterArray).filter(f => f.length > 0))
-          console.log(`Merged filter: ${mergedFilters}`)
+          let  filterValues = []
+          var isMatch = false
+          // var categoryMatch = false
+          
+          filterArray.forEach(foo => filterValues.push(foo[1]))
+          console.log(filterValues)
+          
+          var perms = this.allPossibleCases(filterValues)
 
-          var m = []
-          filterArray.forEach(f => {
-            m.push(f[1][0])
+          perms.forEach(foo => {
+            isMatch = foo.every(val => Object.values(rowRecord).includes(val))
           })
-          return m.every(val => Object.values(rowRecord).includes(val))
+
+          return isMatch
+
+            
+          }
+          
+
+          // while (isMatch == false) {
+            // Loop through all filter categories and see if there's a match within a single category
+            
+        // }
+
+        //   // Merge the selected filter values
+        //   console.log(`FilterArray: ${filterArray}`)
+        //   console.log(`Object values: ${Object.values(filterArray).filter(f => f.length > 0)}`)
+        //   // var mergedFilters = [].concat.apply([], Object.values(filterArray).filter(f => f.length > 0))
+          
+
+        //   var m = []
+        //   filterArray.forEach(f => {
+        //     m.push(f[1][0])
+        //   })
+        //   console.log(`Merged filter: ${m}`)
+        //   return m.every(val => Object.values(rowRecord).includes(val))
           
           // filterArray.forEach(value => {
           //   if (value[1].some(val => Object.values(rowRecord).includes(val))) {
@@ -671,8 +703,7 @@
 
           
 
-          }
-        },
+          // }
 
         // Object.entries(filterSelections).forEach(selection => {
           
@@ -736,6 +767,23 @@
         // else {
         //   return false
         // }
+      },
+
+      allPossibleCases(arr) {
+        if (arr.length == 1) {
+          return arr[0];
+        } else {
+          var result = [];
+          var allCasesOfRest = this.allPossibleCases(arr.slice(1)); // recur with the rest of array
+          for (var i = 0; i < allCasesOfRest.length; i++) {
+            for (var j = 0; j < arr[0].length; j++) {
+              result.push([].concat(arr[0][j], allCasesOfRest[i]));
+            }
+          }
+          return result;
+        }
+
+      },
     }, // methods
 
     computed: {
