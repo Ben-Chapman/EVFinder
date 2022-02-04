@@ -618,28 +618,23 @@
 
       filterFunction(rowRecord, filterSelections) {
         /*
-          If we have a single filter category, match.some filter value(s) against the rowRecord, and if a match, return true
+          If we have a single filter category, match.some (OR) filter value(s)
+          against the rowRecord, and if a match, return true
 
           If we have multiple categories
-            For each category
-              If there is a category filter
-              match.some against the row record (OR match)
-              push onto the matchedRow stack
-          
-          Now build an array for all filter values ['LIMITED', 'LUCID Blue']
-          match.every against the matchedRow array
-          return true / false for that row
+            - Build an array for all filter values ['LIMITED', 'LUCID BLUE', 'ALL WHEEL DRIVE']
+            - Build a cartesian product for all filter values
+            - For each combination, match.every against the rowRecord
+            - return true / false for that row
           */
         // console.log(rowRecord)
         // console.log(filterSelections)
 
-        // isMatch = false
-
-        // filterArray looks like ['trimDesc', ['LIMITED', 'SEL]]
+        // filterArray looks like ['trimDesc', ['LIMITED', 'SEL']]
         var filterArray = Object.entries(filterSelections).filter(f => f[1].length > 0)
         var filterArrayCount = filterArray.length
 
-        console.log(`${filterArrayCount} Filter Type`)
+        // console.log(`${filterArrayCount} Filter Type`)
 
         if (filterArrayCount == 0) {
           console.log("No filter")
@@ -648,128 +643,34 @@
         }
         else if (filterArrayCount == 1) {
           // 1 or more filters in a single category were selected
-            if (filterArray[0][1].some(val => Object.values(rowRecord).includes(val))) {
-              return true
+          if (filterArray[0][1].some(val => Object.values(rowRecord).includes(val))) {
+            return true
+          }
+          else {
+            return false
             }
-            else {
-              return false
-              }
         }
         else if (filterArrayCount > 1) {
           // 1 or more filters in multiple categories were selected
-          let  filterValues = []
+          let filterValues = []
           var isMatch = false
-          // var categoryMatch = false
           
           filterArray.forEach(foo => filterValues.push(foo[1]))
           console.log(filterValues)
           
-          var perms = this.allPossibleCases(filterValues)
+          // Build a list of filter combinations
+          var combinations = this.cartesianProduct(filterValues)
 
-          perms.forEach(foo => {
+          // For each combination, do all values match rowRecord
+          combinations.forEach(foo => {
             isMatch = foo.every(val => Object.values(rowRecord).includes(val))
           })
 
           return isMatch
-
-            
-          }
-          
-
-          // while (isMatch == false) {
-            // Loop through all filter categories and see if there's a match within a single category
-            
-        // }
-
-        //   // Merge the selected filter values
-        //   console.log(`FilterArray: ${filterArray}`)
-        //   console.log(`Object values: ${Object.values(filterArray).filter(f => f.length > 0)}`)
-        //   // var mergedFilters = [].concat.apply([], Object.values(filterArray).filter(f => f.length > 0))
-          
-
-        //   var m = []
-        //   filterArray.forEach(f => {
-        //     m.push(f[1][0])
-        //   })
-        //   console.log(`Merged filter: ${m}`)
-        //   return m.every(val => Object.values(rowRecord).includes(val))
-          
-          // filterArray.forEach(value => {
-          //   if (value[1].some(val => Object.values(rowRecord).includes(val))) {
-          //     console.log(`Matched something: ${Object.values(rowRecord)}`)
-          //     this.matchedRows.push(rowRecord)
-          //   }
-          // })
-
-          
-
-          // }
-
-        // Object.entries(filterSelections).forEach(selection => {
-          
-
-
-        //   // const key = selection[0]
-        //   const values = selection[1]
-        //   console.log(`Filtering on: ${values}`)
-          
-        //   if (values.length == 0) {
-        //     console.log('values length 0')
-        //     return
-        //   }
-        //   else if (values.length == 1) {
-        //     console.log("values length 1")
-        //     return values.some(val => Object.values(rowRecord).includes(val))
-        //   }
-        //   else if (values.length > 1) {
-        //     console.log('values > 2')
-        //     matchedRow.push(values.some(val => Object.values(rowRecord).includes(val)))
-        //   }
-
-
-        // })
-
-   
-
-        // These are filter selections
-        // Object.entries(filterSelections).forEach(([key, value]) => {
-        //       if ([rowRecord].some( foo => foo[key] == value )) {
-        //         console.log(`FOUND SOMETHING!!!  ${rowRecord['vin']}`)
-        //       }
-        //   })
-        // const filterText = Object.keys(filterSelections)
-        //   .every(key => filterText[key])
-
-        //   console.log(filterText)
-
-
-        // This works:
-        // console.log(filterSelections)
-        // const filtered = [rowRecord].filter(item => {
-        //   return Object.keys(filterSelections)  // trimDesc, color
-        //   .every(key => String(item[key]) // for every value
-        //   .includes(filterSelections[key])  // does rowRecord include it
-        //   )})
-          
-        // return filtered.length > 0 ? filtered : false
-
-        // For a rowRecord, if any of the filter values match, return true
-        // const allFilters = [].concat(...Object.values(filterSelections)) // filter objects to array
-
-        // for (f in allFilters) {
-
-        // }
-        // const isFound = conditions.some(arrVal => Object.values(rowRecord).includes(arrVal))
-
-        // if (isFound) {
-        //   return true
-        // }
-        // else {
-        //   return false
-        // }
+        }
       },
 
-      allPossibleCases(arr) {
+      cartesianProduct(arr) {
         if (arr.length == 1) {
           return arr[0];
         } else {
