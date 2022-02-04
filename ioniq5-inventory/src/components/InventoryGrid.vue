@@ -164,9 +164,26 @@
 
           <!-- Drivetrain Filter -->
           <b-col>
-            <b-dd id="drivetrain-dd" text="Drivetrain" size="sm" variant="outline-primary">
-              <b-dropdown-form v-for="item in this.filterOptions.drivetrainDesc" :key=item>
-                <b-form-checkbox class="mb-3">{{ titleCase(item) }}</b-form-checkbox>
+            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+              <template #button-content>
+                Drivetrain
+                <span v-if="filterSelection.drivetrainDesc.length > 0">
+                  <b-badge variant="light">
+                    {{ filterSelection.drivetrainDesc.length }}
+                  </b-badge>
+                </span>
+              </template>
+
+              <b-dropdown-form>
+                <b-form-checkbox
+                  v-for="item in this.filterOptions.drivetrainDesc" :key=item
+                  :value="item"
+                  v-model="filterSelection.drivetrainDesc"
+                  name="name-here"
+                  class="mb-3"
+                  >
+                  {{ titleCase(item) }}
+                </b-form-checkbox>
               </b-dropdown-form>
             </b-dd>
           </b-col>
@@ -616,35 +633,46 @@
         console.log(filterSelections)
 
         // isMatch = false
-        matchedRow = []
 
-        // filterValues looks like ['trimDesc', ['LIMITED', 'SEL]]
-        var filterValues = Object.entries(filterSelections).filter(f => f[1].length > 0)
-        var filterValuesCount = filterValues.length
+        // filterArray looks like ['trimDesc', ['LIMITED', 'SEL]]
+        var filterArray = Object.entries(filterSelections).filter(f => f[1].length > 0)
+        var filterArrayCount = filterArray.length
 
-        if (filterValuesCount == 0) {
+        if (filterArrayCount == 0) {
           console.log("No filter")
           // No filters are selected
           return true
         }
-        else if (filterValuesCount == 1) {
+        else if (filterArrayCount == 1) {
           // 1 or more filters in a single category were selected
           console.log('1 Filter')
-            return filterValues[0][1].some(val => Object.values(rowRecord).includes(val))
+            return filterArray[0][1].some(val => Object.values(rowRecord).includes(val))
         }
-        else if (filterValuesCount > 1) {
+        else if (filterArrayCount > 1) {
           // 1 or more filters in multiple categories were selected
-          filterValues.forEach(value => {
-            if (value[1].some(val => Object.values(rowRecord).includes(val))) {
-              matchedRow.push(rowRecord)
-            }
+          // Merge the selected filter values
+          console.log(`FilterArray: ${filterArray}`)
+          console.log(`Object values: ${Object.values(filterArray).filter(f => f.length > 0)}`)
+          var mergedFilters = [].concat.apply([], Object.values(filterArray).filter(f => f.length > 0))
+          console.log(`Merged filter: ${mergedFilters}`)
+
+          var m = []
+          filterArray.forEach(f => {
+            m.push(f[1][0])
           })
+          return m.every(val => Object.values(rowRecord).includes(val))
+          
+          // filterArray.forEach(value => {
+          //   if (value[1].some(val => Object.values(rowRecord).includes(val))) {
+          //     console.log(`Matched something: ${Object.values(rowRecord)}`)
+          //     this.matchedRows.push(rowRecord)
+          //   }
+          // })
 
           
 
           }
-
-        }
+        },
 
         // Object.entries(filterSelections).forEach(selection => {
           
@@ -708,9 +736,6 @@
         // else {
         //   return false
         // }
-        
-      
-      },
     }, // methods
 
     computed: {
