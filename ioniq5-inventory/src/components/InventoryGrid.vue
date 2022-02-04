@@ -338,7 +338,7 @@
         modelOptions: [
           { value: 'IONIQ5', text: 'Ioniq5' },
           { value: 'Sonata-Hev', text: 'Sonata Hybrid'},
-          //  { value: 'KONA', text: 'Kona'}
+           { value: 'Kona-Ev', text: 'KONA Electric'}
         ],
 
         yearOptions: [
