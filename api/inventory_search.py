@@ -1,15 +1,28 @@
+import logging
 import json
 import requests
 
 from flask import Flask, request
 from flask_cors import CORS
+from http.client import HTTPConnection
+
+# Requests Debugging
+# requests_log = logging.getLogger('urllib3')
+# requests_log.setLevel(logging.DEBUG)
+
+# # logging from urllib3 to console
+# ch = logging.StreamHandler()
+# ch.setLevel(logging.DEBUG)
+# requests_log.addHandler(ch)
+
+# HTTPConnection.debuglevel = 1
 
 app = Flask(__name__)
 CORS(
   app, 
   resources=r'/api/*',
   origins=[
-    "http://localhost:8080",
+    # "http://localhost:8080",
     "https://theevfinder.com",
     "https://www.theevfinder.com",
     
@@ -49,7 +62,20 @@ def get_inventory():
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
   except requests.exceptions.RequestException as e:
-    return f'An error occured: {e}', 500
+    print(f'Request Error: {e}')
+    request_debug = {
+      'Content': r.content, 
+      'Elapsed': r.elapsed, 
+      'Headers': r.headers, 
+      'Is_OK': r.ok, 
+      'Reason': r.reason, 
+      'Request_Type': r.request, 
+      'Status_Code': r.status_code, 
+      'Request_URL': r.url,
+    }
+    print(request_debug)
+
+    return '{}', 500
 
   if 'SUCCESS' in data['status']:
       return flatten_api_results(data), 200, {"Content-Type": "application/json"}
@@ -96,7 +122,19 @@ def get_vin_details():
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
   except requests.exceptions.RequestException as e:
-    return f'An error occured: {e}', 500
+    print(f'Request Error: {e}')
+    request_debug = {
+      'Content': r.content, 
+      'Elapsed': r.elapsed, 
+      'Headers': r.headers, 
+      'Is_OK': r.ok, 
+      'Reason': r.reason, 
+      'Request_Type': r.request, 
+      'Status_Code': r.status_code, 
+      'Request_URL': r.url
+    }
+    print(request_debug)
+    return '{}', 500
 
   if 'SUCCESS' in data['status']:
       return data, 200, {"Content-Type": "application/json"}
@@ -125,6 +163,8 @@ def flatten_api_results(input_data: str):
     for i in range(0, len(tmp)):
         del tmp[i]['vehicles']
 
+        tmp[i]['ExtColorLongDesc'] = tmp[i]['colors'][0]['ExtColorLongDesc']
+
     return json.dumps(tmp)
   else:
     return json.dumps({})
@@ -132,8 +172,8 @@ def flatten_api_results(input_data: str):
 
 if __name__ == "__main__":
   # Flask CORS logging
-  import logging
-  logging.basicConfig(level=logging.INFO)
-  logging.getLogger('flask_cors').level = logging.DEBUG
+  # logging.basicConfig(level=logging.INFO)
+  # logging.getLogger('flask_cors').level = logging.DEBUG
+
 
   app.run(debug=True, host="0.0.0.0", port=8081)
