@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <!-- Form Fields -->
     <div>
       <b-row class="d-flex" align-h="center">
         <!-- Year -->
@@ -141,18 +142,18 @@
             <b-dd id="trim-dd" size="sm" variant="outline-primary">
               <template #button-content>
                 Color
-                <span v-if="filterSelection.colors.length > 0">
+                <span v-if="filterSelection.ExtColorLongDesc.length > 0">
                   <b-badge variant="light">
-                    {{ filterSelection.colors.length }}
+                    {{ filterSelection.ExtColorLongDesc.length }}
                   </b-badge>
                 </span>
               </template>
 
               <b-dropdown-form>
                 <b-form-checkbox
-                  v-for="item in this.filterOptions.colors" :key=item
+                  v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
                   :value="item"
-                  v-model="filterSelection.colors"
+                  v-model="filterSelection.ExtColorLongDesc"
                   name="name-here"
                   class="mb-3"
                   >
@@ -191,14 +192,6 @@
       <b-row class="d-flex justify-content-center">
         <b-col cols="6" xs="12" md="4" align-self="center">
           <p class="text-center mb-0 attention"><b>{{ this.inventoryCount }}</b> Vehicles Found</p>
-          <b-form-input
-            id="filter-input"
-            v-model="filter"
-            type="search"
-            placeholder="Filter Vehicles"
-            size="sm"
-            
-          ></b-form-input>
         </b-col>
       </b-row>
     </div>
@@ -223,7 +216,7 @@
 
         <!-- Exterior Color -->
         <template #cell(exterior-color)="data">
-          {{ titleCase(data.item.colors[0].ExtColorLongDesc) }}
+          {{ titleCase(data.item.ExtColorLongDesc) }}
         </template>
         
         <!-- Dealer Information -->
@@ -318,13 +311,13 @@
         filterSelection: {
           'trimDesc': [],
           'drivetrainDesc': [],
-          'colors': [],
+          'ExtColorLongDesc': [],
           'price': [],
         },
         filterMatches: [],
 
         fields: [
-          { key: 'colors[0].ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
+          { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drive Train', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
@@ -337,8 +330,8 @@
 
         modelOptions: [
           { value: 'IONIQ5', text: 'Ioniq5' },
+          { value: 'Kona-Ev', text: 'KONA Electric'},
           { value: 'Sonata-Hev', text: 'Sonata Hybrid'},
-           { value: 'Kona-Ev', text: 'KONA Electric'}
         ],
 
         yearOptions: [
@@ -589,19 +582,8 @@
       },
 
       populateFilterOptions() {
-        // TODO: Fix this nonsense
-        this.filterOptions['colors'] = []
-
         this.inventory.forEach(foo => {
           Object.entries(foo).forEach(([key, value]) => {
-            if (key == 'colors') {
-              value.forEach(color => {
-                var colorName = color['ExtColorLongDesc']
-                if (!(this.filterOptions[key].includes(colorName))) {
-                  this.filterOptions[key].push(colorName)
-                }
-              })
-            }
             if (key in this.filterOptions) {
               if (!(this.filterOptions[key].includes(value))) {
                 if (typeof(value) != 'object') {
@@ -630,44 +612,125 @@
         // console.log(rowRecord)
         // console.log(filterSelections)
 
-        // filterArray looks like ['trimDesc', ['LIMITED', 'SEL']]
-        var filterArray = Object.entries(filterSelections).filter(f => f[1].length > 0)
-        var filterArrayCount = filterArray.length
-
-        // console.log(`${filterArrayCount} Filter Type`)
-
-        if (filterArrayCount == 0) {
+        // selectedFilterItems looks like ['trimDesc', ['LIMITED', 'SEL']]
+        var selectedFilterItems = Object.entries(filterSelections).filter(f => f[1].length > 0)
+        var selectedFilterItemsCount = selectedFilterItems.length
+        // console.log(selectedFilterItems)
+        console.log(`\n\n${selectedFilterItemsCount} Filter Type`)
+        
+        if (selectedFilterItemsCount == 0) {
           console.log("No filter")
           // No filters are selected
           return true
         }
-        else if (filterArrayCount == 1) {
+        else if (selectedFilterItemsCount == 1) {
+          return (selectedFilterItems[0][1].some(val => Object.values(rowRecord).includes(val)))
+        }
+
+        else if (selectedFilterItemsCount > 1) {
           // 1 or more filters in a single category were selected
-          if (filterArray[0][1].some(val => Object.values(rowRecord).includes(val))) {
-            return true
+          var justFilterValues = []
+          selectedFilterItems.forEach(foo => justFilterValues.push(foo[1]))
+          var combinations = this.cartesianProduct(justFilterValues)
+
+          console.log(`Just filter values: ${typeof(justFilterValues)} | ${justFilterValues}`)
+          /*
+          This works for a single selection in each category, so need to
+          for each rowRecord check if a field
+          */
+         
+          var isMatch = []
+          combinations.forEach(combination => {
+            isMatch.push(combination.every(comb => Object.values(rowRecord).includes(comb)))
+          })
+          console.log(`${rowRecord.vin}: isMatch: ${isMatch}`)
+          
+          if (isMatch.includes(false)) {
+            return false
           }
           else {
-            return false
-            }
-        }
-        else if (filterArrayCount > 1) {
-          // 1 or more filters in multiple categories were selected
-          let filterValues = []
-          var isMatch = false
+            return true
+          }
           
-          filterArray.forEach(foo => filterValues.push(foo[1]))
-          console.log(filterValues)
           
-          // Build a list of filter combinations
-          var combinations = this.cartesianProduct(filterValues)
-
-          // For each combination, do all values match rowRecord
-          combinations.forEach(foo => {
-            isMatch = foo.every(val => Object.values(rowRecord).includes(val))
-          })
-
-          return isMatch
         }
+        //   
+        //   
+
+        //   var isMatch = []
+        //   console.log(`Filter Array: ${selectedFilterItems}`)
+        //   selectedFilterItems.forEach(foo => {
+        //     // For each category with a filter entry (['BLUE', 'BLACK']), match against that
+        //     if (foo[1].some(val => Object.values(rowRecord).includes(val))) {
+        //       // If we match in a single category, AND match other categories
+        //       console.log(`${rowRecord.vin} Matched a single filter: ${foo[1]}`)
+
+        //       combinations.forEach(bar => {
+        //         console.log(`Combination: ${bar}`)
+        //         console.log(`${rowRecord.vin}, ${rowRecord.trimDesc}, ${rowRecord.ExtColorLongDesc}`)
+
+        //         isMatch.push(bar.every(val1 => Object.values(rowRecord).includes(val1)))
+        //       })
+        //     }
+        //     // else {
+        //     //   // We didn't match in a single category
+        //     //   console.log('False return here, didnt match anything ---------')
+        //     //   return false
+        //     // }
+        //   console.log(isMatch)
+        //   return true
+        //   // if (isMatch.includes(false)) {
+        //   //   console.log('Returning false for this record')
+        //   //   return false
+        //   // }
+        //   // else {
+        //   //   console.log('Returning true for this record')
+        //   //   return true
+        //   // }
+            
+        //   }) // end of filter matching
+
+        // } //end of elseif filterarraycount > 1
+        // return isMatch
+          
+          // if (selectedFilterItems[0][1].some(val => Object.values(rowRecord).includes(val))) {
+          //   return true
+          // }
+          // else {
+          //   return false
+          //   }
+        
+        // else if (selectedFilterItemsCount > 1) {
+        //   // 1 or more filters in multiple categories were selected
+        //   let justFilterValues = []
+        //   var isMatch = false
+          
+        //   selectedFilterItems.forEach(foo => justFilterValues.push(foo[1]))
+        //   // console.log(`Filter Values: ${justFilterValues}`)
+          
+          
+        //   // console.log(`Combinations: ${combinations}`)
+
+        //   // Does this rowRecord match a single category
+        //   selectedFilterItems.forEach(foo => {
+        //     isMatch = (foo[1].some(val => Object.values(rowRecord).includes(val)))
+        //   })
+          
+        //   if (isMatch) {
+        //     // Build a list of filter combinations
+        //     var combinations = this.cartesianProduct(justFilterValues)
+        //     // For each combination, do all values match rowRecord
+        //     combinations.forEach(foo => {
+        //       console.log(foo)
+        //       isMatch = foo.every(val => Object.values(rowRecord).includes(val))
+        //       if (isMatch) {
+        //         console.log(`Comb is: ${foo}, isMatch: ${isMatch}, rowRecord is ${Object.values(rowRecord)}`)
+        //       }
+        //     })
+        //   }
+          
+        //     return isMatch
+        // }
       },
 
       cartesianProduct(arr) {
@@ -675,7 +738,7 @@
           return arr[0];
         } else {
           var result = [];
-          var allCasesOfRest = this.allPossibleCases(arr.slice(1)); // recur with the rest of array
+          var allCasesOfRest = this.cartesianProduct(arr.slice(1)); // recur with the rest of array
           for (var i = 0; i < allCasesOfRest.length; i++) {
             for (var j = 0; j < arr[0].length; j++) {
               result.push([].concat(arr[0][j], allCasesOfRest[i]));
