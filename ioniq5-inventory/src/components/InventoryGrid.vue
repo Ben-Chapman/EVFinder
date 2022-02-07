@@ -612,45 +612,89 @@
         // console.log(rowRecord)
         // console.log(filterSelections)
 
-        // selectedFilterItems looks like ['trimDesc', ['LIMITED', 'SEL']]
-        var selectedFilterItems = Object.entries(filterSelections).filter(f => f[1].length > 0)
-        var selectedFilterItemsCount = selectedFilterItems.length
-        // console.log(selectedFilterItems)
-        console.log(`\n\n${selectedFilterItemsCount} Filter Type`)
+        // selectedCategories looks like ['trimDesc', ['LIMITED', 'SEL']]
+        var selectedCategories = Object.entries(filterSelections).filter(f => f[1].length > 0)
+        var selectedCategoriesCount = selectedCategories.length
+        var isMatch = []
+        // console.log(selectedCategories)
+        console.log(`\n\n${selectedCategoriesCount} Filter Type`)
         
-        if (selectedFilterItemsCount == 0) {
+        if (selectedCategoriesCount == 0) {
           console.log("No filter")
           // No filters are selected
           return true
         }
-        else if (selectedFilterItemsCount == 1) {
-          return (selectedFilterItems[0][1].some(val => Object.values(rowRecord).includes(val)))
+        else if (selectedCategoriesCount == 1) {
+          return (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val)))
         }
 
-        else if (selectedFilterItemsCount > 1) {
+        else if (selectedCategoriesCount > 1) {
           // 1 or more filters in a single category were selected
-          var justFilterValues = []
-          selectedFilterItems.forEach(foo => justFilterValues.push(foo[1]))
-          var combinations = this.cartesianProduct(justFilterValues)
+          // var justFilterValues = []
+          // selectedCategories.forEach(foo => justFilterValues.push(foo[1]))
+          // var combinations = this.cartesianProduct(justFilterValues)
 
-          console.log(`Just filter values: ${typeof(justFilterValues)} | ${justFilterValues}`)
+          // console.log(`Just filter values: ${typeof(justFilterValues)} | ${justFilterValues}`)
           /*
           This works for a single selection in each category, so need to
           for each rowRecord check if a field
           */
          
-          var isMatch = []
-          combinations.forEach(combination => {
-            isMatch.push(combination.every(comb => Object.values(rowRecord).includes(comb)))
-          })
-          console.log(`${rowRecord.vin}: isMatch: ${isMatch}`)
+         for (var item of selectedCategories) {
+          //  var category = item[0]
+           var selectedItems = item[1]
+           console.log(`Selected Items are: ${selectedItems}`)
+
+          // For this loop (category) do we have an OR match for the selected filter items?
+          isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
+          console.log(`${selectedItems} | ${isMatch}`)
+         }
+         
+         if (isMatch.includes(false)) {
+           return false
+         }
+         else {
+           return true
+         }
+         
+        //  for (var i=0; i<selectedCategories.length; i++) {
+        //    var category = selectedCategories[i][0]
+        //    var selectedItems = selectedCategories[i][1]
+           
+        //   //  for (var c=0; c<category.length; c++) {}
+        //   //  console.log(`category: ${category} | selectedItems: ${selectedItems}`)
+
+        //    if (selectedItems.some(s => Object.values(rowRecord).includes(s))) {
+        //      console.log(`${rowRecord.vin} matches ${selectedItems}`)
+        //      selectedItems.forEach(f => andArray.push(f))
+        //      console.log(`andArray in if statement: ${andArray}`)
+
+             
+        //   //  console.log('for loop here')
+        //   //  console.log(category, selectedItems)
+        //  }
+          // console.log(`And Array here: ${andArray}`)
+        //  var isMatch = andArray.every(bar => Object.values(rowRecord).includes(bar))
+
+        //  if (isMatch) {
+        //    console.log(`Match: ${rowRecord.vin} | andArray: ${andArray}`)
+        //    return true
+        //  } 
+        //  else {
+        //    return false
+        //  }
+          // var isMatch = []
+          // combinations.forEach(combination => {
+          //   isMatch.push(combination.every(comb => Object.values(rowRecord).includes(comb)))
+          // })
+          // console.log(`${rowRecord.vin}: isMatch: ${isMatch}`)
           
-          if (isMatch.includes(false)) {
-            return false
-          }
-          else {
-            return true
-          }
+          // if (isMatch.includes(false)) {
+          //   return false
+          // }
+          // else {
+          //   return true
+          // }
           
           
         }
@@ -658,8 +702,8 @@
         //   
 
         //   var isMatch = []
-        //   console.log(`Filter Array: ${selectedFilterItems}`)
-        //   selectedFilterItems.forEach(foo => {
+        //   console.log(`Filter Array: ${selectedCategories}`)
+        //   selectedCategories.forEach(foo => {
         //     // For each category with a filter entry (['BLUE', 'BLACK']), match against that
         //     if (foo[1].some(val => Object.values(rowRecord).includes(val))) {
         //       // If we match in a single category, AND match other categories
@@ -693,26 +737,26 @@
         // } //end of elseif filterarraycount > 1
         // return isMatch
           
-          // if (selectedFilterItems[0][1].some(val => Object.values(rowRecord).includes(val))) {
+          // if (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val))) {
           //   return true
           // }
           // else {
           //   return false
           //   }
         
-        // else if (selectedFilterItemsCount > 1) {
+        // else if (selectedCategoriesCount > 1) {
         //   // 1 or more filters in multiple categories were selected
         //   let justFilterValues = []
         //   var isMatch = false
           
-        //   selectedFilterItems.forEach(foo => justFilterValues.push(foo[1]))
+        //   selectedCategories.forEach(foo => justFilterValues.push(foo[1]))
         //   // console.log(`Filter Values: ${justFilterValues}`)
           
           
         //   // console.log(`Combinations: ${combinations}`)
 
         //   // Does this rowRecord match a single category
-        //   selectedFilterItems.forEach(foo => {
+        //   selectedCategories.forEach(foo => {
         //     isMatch = (foo[1].some(val => Object.values(rowRecord).includes(val)))
         //   })
           
