@@ -107,13 +107,12 @@
 <!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
     <div >
-      <b-row class="d-flex justify-content-center">
-        <b-icon icon="filter" aria-hidden="true" class="mr-2"></b-icon>
+      <b-row align-h="center" class="d-flex justify-content-center" align-v="center">
+        <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
         
-          <!-- Filter Options -->
           <!-- Trim Filter -->
-          <b-col>
-            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+          <!-- <b-col cols=3 md=1> -->
+            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
               <template #button-content>
                 Trim
                 <span v-if="filterSelection.trimDesc.length > 0">
@@ -135,11 +134,11 @@
                 </b-form-checkbox>
               </b-dropdown-form>
             </b-dd>
-          </b-col>
+          <!-- </b-col> -->
 
           <!-- Color Filter -->
-          <b-col>
-            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+          <!-- <b-col cols=3 md=1> -->
+            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
               <template #button-content>
                 Color
                 <span v-if="filterSelection.ExtColorLongDesc.length > 0">
@@ -161,11 +160,11 @@
                 </b-form-checkbox>
               </b-dropdown-form>
             </b-dd>
-          </b-col>
+          <!-- </b-col> -->
 
           <!-- Drivetrain Filter -->
-          <b-col>
-            <b-dd id="trim-dd" size="sm" variant="outline-primary">
+          <!-- <b-col cols=3 md=2> -->
+            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
               <template #button-content>
                 Drivetrain
                 <span v-if="filterSelection.drivetrainDesc.length > 0">
@@ -187,17 +186,59 @@
                 </b-form-checkbox>
               </b-dropdown-form>
             </b-dd>
-          </b-col>
+          <!-- </b-col> -->
+
+          <!-- Price Filter -->
+          <!-- <b-col cols=3 md=1> -->
+            <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
+              <template #button-content>
+                MSRP
+                <span v-if="filterSelection.price.length > 0">
+                  <b-badge variant="light">
+                    {{ 1 }}
+                  </b-badge>
+                </span>
+              </template>
+
+              <!-- We have to cast filterSelection.price to an array to match
+              the other filter options, hence the .price[0] -->
+              <b-dropdown-form>
+                <b-form-input
+                  lazy
+                  id="price"
+                  v-model="filterSelection.price[0]"
+                  type="range"
+                  :min="calculateMinPrice"
+                  :max="calculateMaxPrice"
+                  >
+                  </b-form-input>
+                  <div
+                    class="mt-2"
+                    v-if="filterSelection.price.length == 0"
+                    >
+                    Select to filter by MSRP
+                  </div>
+                  <div
+                    class="mt-2"
+                    v-else
+                    >
+                    MSRP Is Less-Than {{ `${convertToCurrency(filterSelection.price[0])}` }}
+                    <b-icon icon="x-square" class="pl-1" @click="filterSelection.price[0] = '0'"></b-icon>
+                  </div>
+              </b-dropdown-form>
+            </b-dd>
+          <!-- </b-col> -->
       </b-row>
-      <b-row class="d-flex justify-content-center">
+      
+      <b-row class="d-flex justify-content-center mt-3" align-v="center">
         <b-col cols="6" xs="12" md="4" align-self="center">
-          <p class="text-center mb-0 attention"><b>{{ this.inventoryCount }}</b> Vehicles Found</p>
+          <p class="text-center attention"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
         </b-col>
       </b-row>
     </div>
 
     <!-- Table here -->
-    <b-row class="d-flex justify-content-center mt-3">
+    <b-row class="d-flex justify-content-center">
       <b-table
         striped
         hover
@@ -314,12 +355,11 @@
           'ExtColorLongDesc': [],
           'price': [],
         },
-        filterMatches: [],
 
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drive Train', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
           // Virtual Column
@@ -365,6 +405,22 @@
         this.getVinDetail(item.vin)
       },
 
+      calculateMinMaxPrice(inputData) {
+        console.log("Calculating Min Max Here")
+        var numberData = []
+        // console.log(this.inventory)
+        Object.values(inputData).forEach(input => {
+          // console.log(`${input.vin}: ${input.price}`)
+          numberData.push(
+            Number(parseFloat(input.price.replace('$', '').replace(',', '')))
+          )
+        })
+        this.filterSelections.price.min = Math.min(...numberData)
+        this.filterSelections.price.max = Math.max(...numberData)
+
+        return
+        },
+
       async getCurrentInventory() {
         // Show users that we're fetching data
         this.tableBusy = true
@@ -389,6 +445,10 @@
         // Remove the table busy indicator
         this.tableBusy = false
 
+        // Set the min / max price for future filtering
+        // this.calculateMinMaxPrice(this.inventory)
+
+        // Finally populate the filter options
         this.populateFilterOptions()
       }, 
 
@@ -599,198 +659,42 @@
       },
 
       filterFunction(rowRecord, filterSelections) {
-        /*
-          If we have a single filter category, match.some (OR) filter value(s)
-          against the rowRecord, and if a match, return true
-
-          If we have multiple categories
-            - Build an array for all filter values ['LIMITED', 'LUCID BLUE', 'ALL WHEEL DRIVE']
-            - Build a cartesian product for all filter values
-            - For each combination, match.every against the rowRecord
-            - return true / false for that row
-          */
-        // console.log(rowRecord)
-        // console.log(filterSelections)
-
         // selectedCategories looks like ['trimDesc', ['LIMITED', 'SEL']]
         var selectedCategories = Object.entries(filterSelections).filter(f => f[1].length > 0)
         var selectedCategoriesCount = selectedCategories.length
         var isMatch = []
         // console.log(selectedCategories)
-        console.log(`\n\n${selectedCategoriesCount} Filter Type`)
+        // console.log(`\n\n${selectedCategoriesCount} Filter Type`)
         
         if (selectedCategoriesCount == 0) {
-          console.log("No filter")
           // No filters are selected
+          // console.log("No filter")
           return true
         }
+
         else if (selectedCategoriesCount == 1) {
+          // Multiple selections in a single category
           return (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val)))
         }
 
         else if (selectedCategoriesCount > 1) {
-          // 1 or more filters in a single category were selected
-          // var justFilterValues = []
-          // selectedCategories.forEach(foo => justFilterValues.push(foo[1]))
-          // var combinations = this.cartesianProduct(justFilterValues)
-
-          // console.log(`Just filter values: ${typeof(justFilterValues)} | ${justFilterValues}`)
-          /*
-          This works for a single selection in each category, so need to
-          for each rowRecord check if a field
-          */
-         
+          // One or more selections across multiple categories
          for (var item of selectedCategories) {
-          //  var category = item[0]
            var selectedItems = item[1]
-           console.log(`Selected Items are: ${selectedItems}`)
+          //  console.log(`Selected Items are: ${selectedItems}`)
 
-          // For this loop (category) do we have an OR match for the selected filter items?
+          // Each loop is a category. Do we have an OR match for the selected filter items?
+          // e.g. Blue OR Black OR White
           isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
-          console.log(`${selectedItems} | ${isMatch}`)
-         }
+          // console.log(`${selectedItems} | ${isMatch}`)
+          }
          
          if (isMatch.includes(false)) {
            return false
-         }
-         else {
+         } else {
            return true
-         }
-         
-        //  for (var i=0; i<selectedCategories.length; i++) {
-        //    var category = selectedCategories[i][0]
-        //    var selectedItems = selectedCategories[i][1]
-           
-        //   //  for (var c=0; c<category.length; c++) {}
-        //   //  console.log(`category: ${category} | selectedItems: ${selectedItems}`)
-
-        //    if (selectedItems.some(s => Object.values(rowRecord).includes(s))) {
-        //      console.log(`${rowRecord.vin} matches ${selectedItems}`)
-        //      selectedItems.forEach(f => andArray.push(f))
-        //      console.log(`andArray in if statement: ${andArray}`)
-
-             
-        //   //  console.log('for loop here')
-        //   //  console.log(category, selectedItems)
-        //  }
-          // console.log(`And Array here: ${andArray}`)
-        //  var isMatch = andArray.every(bar => Object.values(rowRecord).includes(bar))
-
-        //  if (isMatch) {
-        //    console.log(`Match: ${rowRecord.vin} | andArray: ${andArray}`)
-        //    return true
-        //  } 
-        //  else {
-        //    return false
-        //  }
-          // var isMatch = []
-          // combinations.forEach(combination => {
-          //   isMatch.push(combination.every(comb => Object.values(rowRecord).includes(comb)))
-          // })
-          // console.log(`${rowRecord.vin}: isMatch: ${isMatch}`)
-          
-          // if (isMatch.includes(false)) {
-          //   return false
-          // }
-          // else {
-          //   return true
-          // }
-          
-          
+         } 
         }
-        //   
-        //   
-
-        //   var isMatch = []
-        //   console.log(`Filter Array: ${selectedCategories}`)
-        //   selectedCategories.forEach(foo => {
-        //     // For each category with a filter entry (['BLUE', 'BLACK']), match against that
-        //     if (foo[1].some(val => Object.values(rowRecord).includes(val))) {
-        //       // If we match in a single category, AND match other categories
-        //       console.log(`${rowRecord.vin} Matched a single filter: ${foo[1]}`)
-
-        //       combinations.forEach(bar => {
-        //         console.log(`Combination: ${bar}`)
-        //         console.log(`${rowRecord.vin}, ${rowRecord.trimDesc}, ${rowRecord.ExtColorLongDesc}`)
-
-        //         isMatch.push(bar.every(val1 => Object.values(rowRecord).includes(val1)))
-        //       })
-        //     }
-        //     // else {
-        //     //   // We didn't match in a single category
-        //     //   console.log('False return here, didnt match anything ---------')
-        //     //   return false
-        //     // }
-        //   console.log(isMatch)
-        //   return true
-        //   // if (isMatch.includes(false)) {
-        //   //   console.log('Returning false for this record')
-        //   //   return false
-        //   // }
-        //   // else {
-        //   //   console.log('Returning true for this record')
-        //   //   return true
-        //   // }
-            
-        //   }) // end of filter matching
-
-        // } //end of elseif filterarraycount > 1
-        // return isMatch
-          
-          // if (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val))) {
-          //   return true
-          // }
-          // else {
-          //   return false
-          //   }
-        
-        // else if (selectedCategoriesCount > 1) {
-        //   // 1 or more filters in multiple categories were selected
-        //   let justFilterValues = []
-        //   var isMatch = false
-          
-        //   selectedCategories.forEach(foo => justFilterValues.push(foo[1]))
-        //   // console.log(`Filter Values: ${justFilterValues}`)
-          
-          
-        //   // console.log(`Combinations: ${combinations}`)
-
-        //   // Does this rowRecord match a single category
-        //   selectedCategories.forEach(foo => {
-        //     isMatch = (foo[1].some(val => Object.values(rowRecord).includes(val)))
-        //   })
-          
-        //   if (isMatch) {
-        //     // Build a list of filter combinations
-        //     var combinations = this.cartesianProduct(justFilterValues)
-        //     // For each combination, do all values match rowRecord
-        //     combinations.forEach(foo => {
-        //       console.log(foo)
-        //       isMatch = foo.every(val => Object.values(rowRecord).includes(val))
-        //       if (isMatch) {
-        //         console.log(`Comb is: ${foo}, isMatch: ${isMatch}, rowRecord is ${Object.values(rowRecord)}`)
-        //       }
-        //     })
-        //   }
-          
-        //     return isMatch
-        // }
-      },
-
-      cartesianProduct(arr) {
-        if (arr.length == 1) {
-          return arr[0];
-        } else {
-          var result = [];
-          var allCasesOfRest = this.cartesianProduct(arr.slice(1)); // recur with the rest of array
-          for (var i = 0; i < allCasesOfRest.length; i++) {
-            for (var j = 0; j < arr[0].length; j++) {
-              result.push([].concat(arr[0][j], allCasesOfRest[i]));
-            }
-          }
-          return result;
-        }
-
       },
     }, // methods
 
@@ -819,6 +723,33 @@
         }
         return false
       },
+
+      calculateMinPrice() {
+        var inputData = this.inventory
+        var numberData = []
+        Object.values(inputData).forEach(input => {
+          var price = Number(parseFloat(input.price.replace('$', '').replace(',', '')))
+          if (price > 0) {
+            numberData.push(price)
+          }
+        })
+        return Math.min(...numberData)
+        },
+
+        calculateMaxPrice() {
+        var inputData = this.inventory
+        // console.log("Computed Calculating Min Max Here")
+        var numberData = []
+        // console.log(inputData)
+        Object.values(inputData).forEach(input => {
+          // console.log(`${input.vin}: ${input.price}`)
+          numberData.push(
+            Number(parseFloat(input.price.replace('$', '').replace(',', '')))
+          )
+        })
+        // console.log(`Min Price: ${Math.max(...numberData)}`)
+        return Math.max(...numberData)
+        },
     },  // End of computed
     watch: {
     }, // End of watch
