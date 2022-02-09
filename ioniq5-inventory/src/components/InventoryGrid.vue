@@ -204,7 +204,6 @@
               the other filter options, hence the .price[0] -->
               <b-dropdown-form>
                 <b-form-input
-                  lazy
                   id="price"
                   v-model="filterSelection.price[0]"
                   type="range"
@@ -216,14 +215,20 @@
                     class="mt-2"
                     v-if="filterSelection.price.length == 0"
                     >
-                    Select to filter by MSRP
+                    Slide to Filter by MSRP
                   </div>
                   <div
                     class="mt-2"
                     v-else
                     >
-                    MSRP Is Less-Than {{ `${convertToCurrency(filterSelection.price[0])}` }}
-                    <b-icon icon="x-square" class="pl-1" @click="filterSelection.price[0] = '0'"></b-icon>
+                    MSRP Is Less-Than <b>{{ `${convertToCurrency(filterSelection.price[0])}` }}</b>
+                    <b-icon
+                      icon="x-circle"
+                      class="ml-2"
+                      @click="resetPriceFilter()"
+                      font-scale="1"
+                      >
+                      </b-icon>
                   </div>
               </b-dropdown-form>
             </b-dd>
@@ -405,21 +410,15 @@
         this.getVinDetail(item.vin)
       },
 
-      calculateMinMaxPrice(inputData) {
-        console.log("Calculating Min Max Here")
-        var numberData = []
-        // console.log(this.inventory)
-        Object.values(inputData).forEach(input => {
-          // console.log(`${input.vin}: ${input.price}`)
-          numberData.push(
-            Number(parseFloat(input.price.replace('$', '').replace(',', '')))
-          )
-        })
-        this.filterSelections.price.min = Math.min(...numberData)
-        this.filterSelections.price.max = Math.max(...numberData)
-
-        return
-        },
+      resetPriceFilter() {
+        // This nulls out the filterSelection.price prop, thereby 'removing'
+        // any filtering the user has selected.
+        this.filterSelection.price = []
+      },
+      
+      priceStringToNumber(priceString) {
+        return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
+      },
 
       async getCurrentInventory() {
         // Show users that we're fetching data
@@ -444,9 +443,6 @@
 
         // Remove the table busy indicator
         this.tableBusy = false
-
-        // Set the min / max price for future filtering
-        // this.calculateMinMaxPrice(this.inventory)
 
         // Finally populate the filter options
         this.populateFilterOptions()
@@ -674,18 +670,31 @@
 
         else if (selectedCategoriesCount == 1) {
           // Multiple selections in a single category
-          return (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val)))
+          if (selectedCategories[0][0] == 'price') {
+            let selectedPrice = selectedCategories[0][1]
+            return this.filterByPrice(rowRecord, selectedPrice)
+          }
+          else {
+            return (selectedCategories[0][1].some(val => Object.values(rowRecord).includes(val)))
+          }
         }
 
         else if (selectedCategoriesCount > 1) {
           // One or more selections across multiple categories
          for (var item of selectedCategories) {
+           var category = item[0]
            var selectedItems = item[1]
           //  console.log(`Selected Items are: ${selectedItems}`)
 
+          if (category == 'price') {
+            isMatch.push(this.filterByPrice(rowRecord, selectedItems[0]))
+            // console.log(category, selectedItems)
+          }
+          else {
           // Each loop is a category. Do we have an OR match for the selected filter items?
           // e.g. Blue OR Black OR White
           isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
+          }
           // console.log(`${selectedItems} | ${isMatch}`)
           }
          
@@ -696,6 +705,11 @@
          } 
         }
       },
+
+      filterByPrice(rowRecord, selectedPrice) {
+        // console.log(`filterByPrice: ${rowRecord.price}, ${selectedPrice}`)
+        return this.priceStringToNumber(rowRecord.price) < selectedPrice
+      }
     }, // methods
 
     computed: {
@@ -728,7 +742,7 @@
         var inputData = this.inventory
         var numberData = []
         Object.values(inputData).forEach(input => {
-          var price = Number(parseFloat(input.price.replace('$', '').replace(',', '')))
+          var price = this.priceStringToNumber(input.price)
           if (price > 0) {
             numberData.push(price)
           }
@@ -744,7 +758,7 @@
         Object.values(inputData).forEach(input => {
           // console.log(`${input.vin}: ${input.price}`)
           numberData.push(
-            Number(parseFloat(input.price.replace('$', '').replace(',', '')))
+            this.priceStringToNumber(input.price)
           )
         })
         // console.log(`Min Price: ${Math.max(...numberData)}`)
