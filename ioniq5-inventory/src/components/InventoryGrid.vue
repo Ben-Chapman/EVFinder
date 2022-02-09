@@ -106,133 +106,138 @@
     </div>
 <!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
-    <div >
+    <div v-if="this.inventory.length > 0">
+      <hr>
       <b-row align-h="center" class="d-flex justify-content-center" align-v="center">
         <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
         
-          <!-- Trim Filter -->
-          <!-- <b-col cols=3 md=1> -->
-            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-              <template #button-content>
-                Trim
-                <span v-if="filterSelection.trimDesc.length > 0">
-                  <b-badge variant="light">
-                    {{ filterSelection.trimDesc.length }}
-                  </b-badge>
-                </span>
-              </template>
+        <!-- Trim Filter -->
+          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+            <template #button-content>
+              Trim
+              <span v-if="filterSelection.trimDesc.length > 0">
+                <b-badge variant="success">
+                  {{ filterSelection.trimDesc.length }}
+                </b-badge>
+              </span>
+            </template>
 
-              <b-dropdown-form>
-                <b-form-checkbox
-                  v-for="item in this.filterOptions.trimDesc" :key=item
-                  :value="item"
-                  v-model="filterSelection.trimDesc"
-                  name="name-here"
-                  class="mb-3"
+            <b-dropdown-form>
+              <b-form-checkbox
+                v-for="item in this.filterOptions.trimDesc" :key=item
+                :value="item"
+                v-model="filterSelection.trimDesc"
+                name="name-here"
+                class="mb-3"
+                >
+                {{ item }}
+              </b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        
+        <!-- Color Filter -->
+          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+            <template #button-content>
+              Color
+              <span v-if="filterSelection.ExtColorLongDesc.length > 0">
+                <b-badge variant="success">
+                  {{ filterSelection.ExtColorLongDesc.length }}
+                </b-badge>
+              </span>
+            </template>
+
+            <b-dropdown-form>
+              <b-form-checkbox
+                v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
+                :value="item"
+                v-model="filterSelection.ExtColorLongDesc"
+                name="name-here"
+                class="mb-3"
+                >
+                {{ titleCase(item) }}
+              </b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        
+        <!-- Drivetrain Filter -->
+          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+            <template #button-content>
+              Drivetrain
+              <span v-if="filterSelection.drivetrainDesc.length > 0">
+                <b-badge variant="success">
+                  {{ filterSelection.drivetrainDesc.length }}
+                </b-badge>
+              </span>
+            </template>
+
+            <b-dropdown-form>
+              <b-form-checkbox
+                v-for="item in this.filterOptions.drivetrainDesc" :key=item
+                :value="item"
+                v-model="filterSelection.drivetrainDesc"
+                name="name-here"
+                class="mb-3"
+                >
+                {{ titleCase(item) }}
+              </b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        
+        <!-- Price Filter -->
+          <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
+            <template #button-content>
+              MSRP
+              <span v-if="filterSelection.price.length > 0">
+                <b-badge variant="success">
+                  {{ 1 }}
+                </b-badge>
+              </span>
+            </template>
+
+            <!-- We have to cast filterSelection.price to an Array to match
+            the other filter options, hence the .price[0] -->
+            <b-dropdown-form>
+              <b-form-input
+                id="price"
+                v-model="filterSelection.price[0]"
+                type="range"
+                :min="calculateMinPrice"
+                :max="calculateMaxPrice"
+                >
+                </b-form-input>
+                <div
+                  class="mt-2"
+                  v-if="filterSelection.price.length == 0"
                   >
-                  {{ item }}
-                </b-form-checkbox>
-              </b-dropdown-form>
-            </b-dd>
-          <!-- </b-col> -->
-
-          <!-- Color Filter -->
-          <!-- <b-col cols=3 md=1> -->
-            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-              <template #button-content>
-                Color
-                <span v-if="filterSelection.ExtColorLongDesc.length > 0">
-                  <b-badge variant="light">
-                    {{ filterSelection.ExtColorLongDesc.length }}
-                  </b-badge>
-                </span>
-              </template>
-
-              <b-dropdown-form>
-                <b-form-checkbox
-                  v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
-                  :value="item"
-                  v-model="filterSelection.ExtColorLongDesc"
-                  name="name-here"
-                  class="mb-3"
+                  Slide to Filter by MSRP
+                </div>
+                <div
+                  class="mt-2"
+                  v-else
                   >
-                  {{ titleCase(item) }}
-                </b-form-checkbox>
-              </b-dropdown-form>
-            </b-dd>
-          <!-- </b-col> -->
-
-          <!-- Drivetrain Filter -->
-          <!-- <b-col cols=3 md=2> -->
-            <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-              <template #button-content>
-                Drivetrain
-                <span v-if="filterSelection.drivetrainDesc.length > 0">
-                  <b-badge variant="light">
-                    {{ filterSelection.drivetrainDesc.length }}
-                  </b-badge>
-                </span>
-              </template>
-
-              <b-dropdown-form>
-                <b-form-checkbox
-                  v-for="item in this.filterOptions.drivetrainDesc" :key=item
-                  :value="item"
-                  v-model="filterSelection.drivetrainDesc"
-                  name="name-here"
-                  class="mb-3"
-                  >
-                  {{ titleCase(item) }}
-                </b-form-checkbox>
-              </b-dropdown-form>
-            </b-dd>
-          <!-- </b-col> -->
-
-          <!-- Price Filter -->
-          <!-- <b-col cols=3 md=1> -->
-            <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
-              <template #button-content>
-                MSRP
-                <span v-if="filterSelection.price.length > 0">
-                  <b-badge variant="light">
-                    {{ 1 }}
-                  </b-badge>
-                </span>
-              </template>
-
-              <!-- We have to cast filterSelection.price to an array to match
-              the other filter options, hence the .price[0] -->
-              <b-dropdown-form>
-                <b-form-input
-                  id="price"
-                  v-model="filterSelection.price[0]"
-                  type="range"
-                  :min="calculateMinPrice"
-                  :max="calculateMaxPrice"
-                  >
-                  </b-form-input>
-                  <div
-                    class="mt-2"
-                    v-if="filterSelection.price.length == 0"
+                  MSRP Is Less-Than <b>{{ `${convertToCurrency(filterSelection.price[0])}` }}</b>
+                  <b-icon
+                    icon="x-circle"
+                    class="ml-2"
+                    @click="resetPriceFilter()"
+                    font-scale="1"
+                    v-b-tooltip="{ title: 'Reset MSRP Filter', placement: 'bottom', variant: 'info' }"
                     >
-                    Slide to Filter by MSRP
-                  </div>
-                  <div
-                    class="mt-2"
-                    v-else
-                    >
-                    MSRP Is Less-Than <b>{{ `${convertToCurrency(filterSelection.price[0])}` }}</b>
-                    <b-icon
-                      icon="x-circle"
-                      class="ml-2"
-                      @click="resetPriceFilter()"
-                      font-scale="1"
-                      >
-                      </b-icon>
-                  </div>
-              </b-dropdown-form>
-            </b-dd>
-          <!-- </b-col> -->
+                    </b-icon>
+                </div>
+            </b-dropdown-form>
+          </b-dd>
+        <!-- If filters are selected, show the clear filter icon -->
+        <div v-if="Object.values(filterSelection).filter(f => f.length > 0).length">
+          <b-icon
+            icon="x"
+            class="ml-1"
+            font-scale="1.5"
+            @click="resetFilterSelections()"
+            v-b-tooltip="{ title: 'Clear Filters', placement: 'bottom', variant: 'info' }"
+            >
+          </b-icon>
+        </div>
       </b-row>
       
       <b-row class="d-flex justify-content-center mt-3" align-v="center">
@@ -257,7 +262,6 @@
         @row-clicked="toggleDetails"
         @filtered="onFiltered"
         :filter-function="filterFunction"
-        debounce="250"
         >
 
         <!-- Exterior Color -->
@@ -393,10 +397,6 @@
       } // End of return
     },
     methods: {
-      logMe(input) {
-        console.log(`Log me here: ${input}`)
-      },
-
       titleCase(item) {
         return startCase(camelCase(item))
       },
@@ -709,7 +709,16 @@
       filterByPrice(rowRecord, selectedPrice) {
         // console.log(`filterByPrice: ${rowRecord.price}, ${selectedPrice}`)
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
-      }
+      },
+
+      resetFilterSelections() {
+        this.filterSelection = {
+          'trimDesc': [],
+          'drivetrainDesc': [],
+          'ExtColorLongDesc': [],
+          'price': [],
+        }
+      },
     }, // methods
 
     computed: {
