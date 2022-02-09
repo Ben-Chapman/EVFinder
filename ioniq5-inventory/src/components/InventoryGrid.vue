@@ -378,9 +378,12 @@
         ],
 
         modelOptions: [
-          { value: 'IONIQ5', text: 'Ioniq5' },
-          { value: 'Kona-Ev', text: 'KONA Electric'},
-          { value: 'Sonata-Hev', text: 'Sonata Hybrid'},
+          { value: 'Ioniq%205', text: 'Ioniq 5'},
+          { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
+          { value: 'Kona%20Ev', text: 'Kona Electric'},
+          { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
+          { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
+          { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
         ],
 
         yearOptions: [
@@ -390,7 +393,7 @@
         form: {
           zipcode: '',
           year: '2022',
-          model: 'IONIQ5',
+          model: 'Ioniq 5',
           radius: '',
         }
         
