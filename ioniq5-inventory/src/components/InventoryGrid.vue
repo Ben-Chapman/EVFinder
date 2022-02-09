@@ -393,7 +393,7 @@
         form: {
           zipcode: '',
           year: '2022',
-          model: 'Ioniq 5',
+          model: 'Ioniq%205',
           radius: '',
         }
         
@@ -448,7 +448,9 @@
         this.tableBusy = false
 
         // Finally populate the filter options
-        this.populateFilterOptions()
+        if (this.inventoryCount > 0) {
+          this.populateFilterOptions()
+        }
       }, 
 
       async getVinDetail(vin) {
