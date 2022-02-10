@@ -5,6 +5,9 @@ WORKDIR $APP_HOME
 COPY requirements.txt .
 COPY inventory_search.py main.py
 
+# For Dev build
+# COPY ./tests ./tests/
+
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Run the web service on container startup. Here we use the gunicorn
