@@ -2,7 +2,7 @@ import logging
 import json
 import requests
 
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask_cors import CORS
 from http.client import HTTPConnection
 
@@ -22,7 +22,7 @@ CORS(
   app, 
   resources=r'/api/*',
   origins=[
-    # "http://localhost:8080",
+    "http://localhost:8080",
     "https://theevfinder.com",
     "https://www.theevfinder.com",
     
@@ -148,6 +148,54 @@ def get_vin_details():
 
   # return test_data, 200, {"Content-Type": "application/json"}
   ### End testing
+
+@app.route('/api/ws')
+def get_window_sticker():
+  request_args = request.args
+
+  model = request_args['model']
+  year = request_args['year']
+  vin = request_args['vin']
+
+  # Fetches data from the Hyundai API
+  api_url = 'https://www.hyundaiusa.com/var/hyundai/services/inventory/monroney.pdf'
+
+  # We'll use the requesting UA to make the request to the Hyundai APIs
+  user_agent = request.headers['User-Agent']
+
+  headers = {
+      'User-Agent': user_agent,
+      'Referer': f'https://www.hyundaiusa.com/us/en/inventory-search/details?model={model}&year={year}&vin={vin}'
+  }
+
+  params = {
+      'model': model.replace(' ', '-'),
+      'vin': vin,
+  }
+  
+  try:
+    r = requests.get(api_url, params=params, headers=headers, verify=False)
+    window_sticker_pdf = r.content
+  except requests.exceptions.RequestException as e:
+    print(f'Request Error: {e}')
+    # request_debug = {
+    #   'Elapsed': r.elapsed, 
+    #   'Headers': r.headers, 
+    #   'Is_OK': r.ok,
+    #   'Reason': r.reason, 
+    #   'Request_Type': r.request, 
+    #   'Status_Code': r.status_code, 
+    #   'Request_URL': r.url
+    # }
+    # print(request_debug)
+    return '', 500
+
+  if r.status_code == 200:
+    response = make_response(window_sticker_pdf)
+    response.headers.set('Content-Type', 'application/pdf')
+    return response
+
+
 
 def flatten_api_results(input_data: str):
   tmp = []
