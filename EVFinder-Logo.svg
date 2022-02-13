@@ -23,15 +23,22 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.1857573"
-     inkscape:cx="375.84228"
-     inkscape:cy="507.37564"
-     inkscape:window-width="1512"
+     inkscape:zoom="1"
+     inkscape:cx="365.5"
+     inkscape:cy="386"
+     inkscape:window-width="1312"
      inkscape:window-height="916"
      inkscape:window-x="0"
      inkscape:window-y="38"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="41.275,299.11667"
+       orientation="1,0"
+       id="guide893" />
+  </sodipodi:namedview>
   <defs
      id="defs2">
     <filter
@@ -106,66 +113,29 @@
          values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
          in="fbSourceGraphic" />
     </filter>
+    <filter
+       id="mask-powermask-path-effect7828_inverse"
+       inkscape:label="filtermask-powermask-path-effect7828"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect7828_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect7828_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.239719"
-       id="rect31"
-       width="10"
-       height="46.116634"
-       x="85.341629"
-       y="116.64594"
-       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <path
-       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.264583"
-       id="rect99"
-       width="41.967392"
-       height="8.070652"
-       x="84.729225"
-       y="117.14767"
-       transform="rotate(-0.31889794)"
-       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96"
-       mask="none"
-       sodipodi:type="rect" />
-    <path
-       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.264583"
-       id="rect99-9"
-       width="41.967392"
-       height="8.070652"
-       x="-127.29056"
-       y="154.7016"
-       transform="matrix(-0.99999999,1.1343237e-4,1.1343237e-4,0.99999999,0,0)"
-       sodipodi:type="rect"
-       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96"
-       clip-path="none" />
-    <rect
-       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.169868"
-       id="rect99-9-8"
-       width="21.351049"
-       height="6.5387917"
-       x="-124.75784"
-       y="135.86011"
-       transform="matrix(-0.9999794,-0.00641832,-0.00253075,0.9999968,0,0)"
-       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-       id="rect4571-8"
-       width="11.615627"
-       height="11.615627"
-       x="203.57483"
-       y="16.761608"
-       transform="rotate(45.46581)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -178,12 +148,151 @@
          x="6.1543708"
          y="21.691288">https://coolors.co/palette/004b23-006400-007200-008000-38b000-70e000-9ef01a-ccff33</tspan></text>
     <rect
+       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.239719"
+       id="rect31-4"
+       width="10"
+       height="46.116634"
+       x="66.910515"
+       y="56.238018"
+       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <path
+       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.264583"
+       id="rect99-0"
+       width="34.038528"
+       height="8.0706091"
+       x="66.694321"
+       y="56.724598"
+       transform="matrix(0.99997645,-0.00686227,0.00451424,0.99998981,0,0)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001"
+       mask="none"
+       sodipodi:type="rect"
+       d="m 66.694321,56.724598 h 34.038529 v 8.070609 H 66.694321 Z" />
+    <path
+       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.264583"
+       id="rect99-9-5"
+       width="33.971817"
+       height="8.070652"
+       x="-100.87275"
+       y="94.293373"
+       transform="matrix(-0.99999999,1.4012972e-4,9.1821372e-5,1,0,0)"
+       sodipodi:type="rect"
+       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001"
+       clip-path="none"
+       d="m -100.87275,94.293373 h 33.971818 v 8.070657 h -33.971818 z" />
+    <rect
+       style="fill:#9ef01a;fill-opacity:0.8;stroke-width:0.140851"
+       id="rect99-9-8-6"
+       width="14.679667"
+       height="6.5387807"
+       x="-96.798798"
+       y="75.348999"
+       transform="matrix(-0.99995643,-0.00933522,-0.00173995,0.99999849,0,0)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/theevfinder.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <rect
        style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-       id="rect4571"
+       id="rect4571-8-8"
        width="11.615627"
        height="11.615627"
-       x="166.17433"
-       y="-19.261724"
+       x="147.58774"
+       y="-12.466279"
        transform="rotate(45.46581)" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+       id="rect4571-5"
+       width="11.615627"
+       height="11.615627"
+       x="107.21824"
+       y="-45.471943"
+       transform="rotate(45.46581)" />
+    <rect
+       style="fill:#78f01a;fill-opacity:1;stroke-width:0.239719"
+       id="rect31-4-5"
+       width="10"
+       height="46.116634"
+       x="69.750679"
+       y="155.64375"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <path
+       style="fill:#78f01a;fill-opacity:1;stroke-width:0.264583"
+       id="rect99-0-6"
+       width="41.967392"
+       height="8.070652"
+       x="68.921463"
+       y="156.05811"
+       transform="rotate(-0.31889794)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001"
+       mask="none"
+       sodipodi:type="rect"
+       d="m 68.921463,156.05811 h 41.967387 v 8.07065 H 68.921463 Z" />
+    <path
+       style="fill:#78f01a;fill-opacity:1;stroke-width:0.264583"
+       id="rect99-9-5-7"
+       width="41.967392"
+       height="8.070652"
+       x="-111.69518"
+       y="193.69765"
+       transform="matrix(-0.99999999,1.1343237e-4,1.1343237e-4,0.99999999,0,0)"
+       sodipodi:type="rect"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001"
+       clip-path="none"
+       d="m -111.69518,193.69765 h 41.967389 v 8.07065 h -41.967389 z" />
+    <rect
+       style="fill:#78f01a;fill-opacity:1;stroke-width:0.159861"
+       id="rect99-9-8-6-8"
+       width="18.909578"
+       height="6.5387874"
+       x="-106.04028"
+       y="174.89023"
+       transform="matrix(-0.99997374,-0.00724701,-0.00224135,0.99999749,0,0)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+       id="rect4571-8-8-0"
+       width="11.615627"
+       height="11.615627"
+       x="220.43924"
+       y="55.225861"
+       transform="rotate(45.46581)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+       id="rect4571-5-6"
+       width="11.615627"
+       height="11.615627"
+       x="183.03874"
+       y="19.202528"
+       transform="rotate(45.46581)"
+       inkscape:export-filename="/Users/ben/src/EVFinder/favicon.png"
+       inkscape:export-xdpi="181.21001"
+       inkscape:export-ydpi="181.21001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="9.3319721"
+       y="183.39343"
+       id="text6914"><tspan
+         sodipodi:role="line"
+         id="tspan6912"
+         style="stroke-width:0.264583"
+         x="9.3319721"
+         y="183.39343">Favicon</tspan></text>
   </g>
 </svg>
