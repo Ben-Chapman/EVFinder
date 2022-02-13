@@ -27,6 +27,7 @@ import {
   CardPlugin,
   ListGroupPlugin,
   SpinnerPlugin,
+  ImagePlugin,
 } from 'bootstrap-vue'
 
 [
@@ -45,6 +46,7 @@ import {
   CardPlugin,
   ListGroupPlugin,
   SpinnerPlugin,
+  ImagePlugin
 ].forEach(x => Vue.use(x));
 
 Vue.component('BIconSliders', BIconSliders)

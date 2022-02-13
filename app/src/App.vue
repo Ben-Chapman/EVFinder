@@ -1,9 +1,5 @@
 <template>
   <div>
-    <b-row>
-      <Header/>
-    </b-row>
-
     <b-row >
       <InventoryGrid/>
     </b-row>
@@ -11,13 +7,13 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
+// import Header from './components/Header.vue'
 import InventoryGrid from './components/InventoryGrid.vue'
 
 export default {
   name: 'App',
   components: {
-    Header,
+    // Header,
     InventoryGrid,
   },
 

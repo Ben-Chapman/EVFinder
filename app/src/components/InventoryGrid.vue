@@ -2,7 +2,16 @@
   <b-container>
     <!-- Form Fields -->
     <div>
-      <b-row class="d-flex" align-h="center">
+      <!-- Only show this version of the logo on xs screens -->
+      <b-row class="d-flex" align-h="center py-2 d-md-none d-sm-block">
+        <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
+      </b-row>
+      <!-- For all other screen sizes, show this logo -->
+      <b-row class="d-flex mt-3" align-h="center">
+        <b-col cols="1" cols-sm="2" class="pl-0 d-none d-sm-block">
+          <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
+        </b-col>
+        
         <!-- Year -->
         <b-col cols=4 md=2>
           <b-form-group
