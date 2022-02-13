@@ -1,0 +1,30 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300;500&family=Inconsolata:wght@300&display=swap');
+
+$font-family-sans-serif: 'Encode Sans Condensed', Helvetica, Arial, sans-serif;
+$font-family-monospace: 'Inconsolata', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$font-family-base: $font-family-sans-serif;
+
+$font-weight-normal:          300;
+$font-weight-bold:            500;
+
+$attention: #DB5461;
+$soothing-green: #93C0A4;
+$persian-green: #00A896;
+$electric-blue: #38AECC;
+$grey: #605F5E;
+
+
+.attention {
+  color: $grey;
+}
+
+.vin {
+  font-family: $font-family-monospace;
+  font-size: 1rem !important;
+}
+
+// Include Bootstrap and BootstrapVue SCSS files
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
