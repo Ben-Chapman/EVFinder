@@ -4,6 +4,8 @@ import { VuePlausible } from 'vue-plausible'
 
 import App from './App.vue'
 
+import router from './router'
+
 import {
   BIconX,
   BIconXCircle,
@@ -74,5 +76,6 @@ import './assets/app_style.scss'
 Vue.config.productionTip = false
 
 new Vue({
+  router,
   render: h => h(App),
 }).$mount('#app')
