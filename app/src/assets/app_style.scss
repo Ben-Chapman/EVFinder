@@ -15,6 +15,22 @@ $persian-green: #00A896;
 $electric-blue: #38AECC;
 $grey: #605F5E;
 
+// https://coolors.co/d0ccd0-2d82b7-f06543-70e000-3d3d3d-fbfcff
+$green-blue: #2D82B7;
+$orange-soda: #F06543;
+$logo-green: #70E000;
+$light-gray: #D0CCD0;
+$primary-blue: #1976d2;
+
+// Customized Variants
+$primary:       $primary-blue;
+// $secondary:     $gray-600 !default;
+$success:       $logo-green;
+$info:          $green-blue;
+// $warning:       $yellow !default;
+// $danger:        $red !default;
+$light:         $light-gray;
+// $dark:          $gray-800 !default;
 
 .attention {
   color: $grey;
