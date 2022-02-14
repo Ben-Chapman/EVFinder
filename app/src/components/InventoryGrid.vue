@@ -318,35 +318,7 @@
         return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
       },
 
-      async getCurrentInventory() {
-        // Show users that we're fetching data
-        this.updateState({'tableBusy': true})
-
-        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
-            zip: this.form.zipcode,
-            year: this.form.year,
-            model: this.form.model,
-            radius: this.form.radius,
-          }),
-          {
-          method: 'GET',
-          mode: 'cors', 
-          })
-        
-        this.updateState({'inventory': await response.json()})
-
-        // inventoryCount is used to display the $num Vehicles Found message
-        // Populating that prop with the number of vehicles returned from the API
-        this.updateState({
-          'inventoryCount': this.inventory.length,
-          'tableBusy': false  // Remove the table busy indicator
-          })
-
-        // Finally populate the filter options
-        if (this.inventoryCount > 0) {
-          this.populateFilterOptions()
-        }
-      }, 
+      
 
       async getVinDetail(vin) {
         // Show users that we're fetching data
@@ -665,8 +637,8 @@
         return Math.max(...numberData)
         },
     },  // End of computed
-    watch: {
-    }, // End of watch
+    
+    watch: {},
   }  // End of default
 </script>
 
