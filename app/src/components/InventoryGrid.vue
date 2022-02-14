@@ -1,118 +1,6 @@
 <template>
   <b-container>
-    <!-- Form Fields -->
-    <div>
-      <!-- Only show this version of the logo on xs screens -->
-      <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
-        <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
-      </b-row>
-      <!-- For all other screen sizes, show this logo -->
-      <b-row class="d-flex mt-3" align-h="center">
-        <b-col cols="1" cols-sm="2" class="pl-0 d-none d-sm-block">
-          <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
-        </b-col>
-        
-        <!-- Year -->
-        <b-col cols=4 md=2>
-          <b-form-group
-            id="form-year"
-            description="Select a Model Year"
-          >
-            <b-form-select
-              id="form-year"
-              v-model="form.year"
-              :options="yearOptions"
-              required
-            >
-            </b-form-select>
-          </b-form-group>
-        </b-col>
-
-        <!-- Model -->
-        <b-col cols=5 md=3>
-          <b-form-group
-            id="form-model"
-            description="Select a Model"
-          >
-            <b-form-select
-              id="form-model"
-              v-model="form.model"
-              :options="modelOptions"
-              required
-            >
-            </b-form-select>
-          </b-form-group>
-        </b-col>
-
-        <!-- Zip Code -->
-        <b-col cols=5 md=2>
-          <b-form-group
-            id="form-zipcode"
-            description="Enter a 5-digit US zip code"
-          >
-            <b-form-input
-              id="form-zipcode"
-              v-model="form.zipcode"
-              :state="isValidZipCode"
-              trim
-              debounce="250"
-              required
-            >
-            </b-form-input>
-          </b-form-group>
-        </b-col>
-
-        <!-- Radius -->
-        <b-col cols=3 md=2>
-          <b-form-group
-            id="form-radius"
-            description="Search Radius in Miles"
-          >
-            <!-- name="search" autocomplete="off" was recommended to hint to
-            1Password that this field isn't a password  -->
-            <b-form-input
-              autocomplete="off"
-              name="search"
-              id="form-radius"
-              v-model="form.radius"
-              :state="isValidRadius"
-              trim
-              debounce="250"
-              required
-            >
-            </b-form-input>
-          </b-form-group>
-        </b-col>
-        
-        <!-- Enabled Button -->
-        <div>
-            <span id="enabled-wrapper" class="d-inline-block" tabindex="0">
-              <b-button
-                v-if="validateSubmitButton"
-                id="submit-button"
-                variant="primary"
-                @click="getCurrentInventory()"
-                >Submit</b-button>
-            </span>
-        </div>
-
-          <!-- Disabled Button -->
-          <div>
-            <span id="disabled-wrapper" class="d-inline-block" tabindex="0">
-              <b-button
-                v-if="validateSubmitButton == false"
-                disabled
-                id="invalid-submit-button"
-                variant="outline-primary"
-                @click="getCurrentInventory()"
-                >Submit</b-button>
-              </span>
-            <b-tooltip target="disabled-wrapper" triggers="hover">
-                Please enter {{ invalidFormMessage() }}
-              </b-tooltip>
-          </div>
-      </b-row>
-    </div>
+   
 <!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
     <div v-if="this.inventory.length > 0">
@@ -395,13 +283,8 @@
         yearOptions: [
           { value: '2022', text: '2022' },
         ],
-        // ZZZ: This can live with the form component
-        form: {
-          zipcode: '',
-          year: '2022',
-          model: 'Ioniq%205',
-          radius: '',
-        }
+
+        
         
       } // End of return
     },
@@ -753,30 +636,7 @@
         // 'filterOptions',
       ]),
 
-      isValidZipCode() {
-        // Hide the error indicator when this field is blank
-        if(this.form.zipcode.length == 0) {
-            return null
-        }
-        return /^\d{5}(-\d{4})?$/.test(this.form.zipcode)
-      },
-
-      isValidRadius() {
-        // Hide the error indicator when this field is blank
-        if(this.form.radius.length == 0) {
-            return null
-        }
-        return /^\d{1,3}$/.test(this.form.radius)
-      },
-
-      validateSubmitButton() {
-        if (this.form.zipcode && this.form.year && this.form.model && this.form.radius != '') {
-          if (this.isValidZipCode && this.isValidRadius) {
-            return true
-          }
-        }
-        return false
-      },
+      
 
       calculateMinPrice() {
         var inputData = this.inventory
