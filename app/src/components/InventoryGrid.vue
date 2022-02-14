@@ -69,7 +69,7 @@
             description="Search Radius in Miles"
           >
             <!-- name="search" autocomplete="off" was recommended to hint to
-            1Password that this field isn't a password, or something similar  -->
+            1Password that this field isn't a password  -->
             <b-form-input
               autocomplete="off"
               name="search"
@@ -352,6 +352,7 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash';
 
   export default {
@@ -359,21 +360,17 @@
     },
     data() {
       return {
-        tableBusy: false,
-        vinTableBusy: false,
-        inventory: [],
         vinDetail: {},
         filter: null,
-        inventoryCount: 0,
         filterOptions: {},
-        // Keys in filterSelection need to match the source JSON data keys
+        // Keys in filterSelection need to match the source JSON data keys, and should live with the table component
         filterSelection: {
           'trimDesc': [],
           'drivetrainDesc': [],
           'ExtColorLongDesc': [],
           'price': [],
         },
-
+        // ZZZ: These need to live with each manufacturer's table component, not in the store
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
@@ -385,7 +382,7 @@
           { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc' },
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
         ],
-
+        // ZZZ: This can probably live with the form component
         modelOptions: [
           { value: 'Ioniq%205', text: 'Ioniq 5'},
           { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
@@ -394,11 +391,11 @@
           { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
           { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
         ],
-
+        // ZZZ: This can live with the form component
         yearOptions: [
           { value: '2022', text: '2022' },
         ],
-
+        // ZZZ: This can live with the form component
         form: {
           zipcode: '',
           year: '2022',
@@ -409,12 +406,18 @@
       } // End of return
     },
     methods: {
+      ...mapActions([
+        'updateState'
+        ]),
+
+      // TODO: This should probably be a filter
       titleCase(item) {
         return startCase(camelCase(item))
       },
 
       toggleDetails(item) {
-        // Inject _showDetails into the row items
+        // Inject _showDetails into the row items. Vue expects this to be present
+        // to know this row has additional detail to display upon click
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
 
@@ -434,7 +437,7 @@
 
       async getCurrentInventory() {
         // Show users that we're fetching data
-        this.tableBusy = true
+        this.updateState({'tableBusy': true})
 
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
             zip: this.form.zipcode,
@@ -447,14 +450,14 @@
           mode: 'cors', 
           })
         
-        this.inventory = await response.json();
+        this.updateState({'inventory': await response.json()})
 
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
-        this.inventoryCount = this.inventory.length
-
-        // Remove the table busy indicator
-        this.tableBusy = false
+        this.updateState({
+          'inventoryCount': this.inventory.length,
+          'tableBusy': false  // Remove the table busy indicator
+          })
 
         // Finally populate the filter options
         if (this.inventoryCount > 0) {
@@ -464,7 +467,8 @@
 
       async getVinDetail(vin) {
         // Show users that we're fetching data
-        this.vinTableBusy = true
+        this.updateState({vinTableBusy: true})
+
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/vin?' + new URLSearchParams({
             model: this.form.model,
             year: this.form.year,
@@ -475,6 +479,7 @@
           mode: 'cors', 
           })
         
+        // Get VIN detail data for a single vehicle
         const vinData = await response.json();
         
         // Store a new record for each VIN we fetch
@@ -487,7 +492,7 @@
           )
     
         // Remove the table busy indicator
-        this.vinTableBusy = false
+        this.updateState({vinTableBusy: false})
       }, 
 
       invalidFormMessage() {
@@ -541,10 +546,11 @@
       },
 
       onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.inventoryCount = filteredItems.length
+        // Updating the $num Vehicles Found text due to filtering
+        this.updateState({'inventoryCount': filteredItems.length})
       },
 
+      // TODO: Move this to a filter
       convertToCurrency(item) {
         var formatter = new Intl.NumberFormat('en-US', {
           style: 'currency',
@@ -736,6 +742,17 @@
     }, // methods
 
     computed: {
+      // Vuex
+      ...mapState([
+        'tableBusy',
+        'vinTableBusy',
+        'inventory',
+        'inventoryCount',
+        // 'vinDetail',
+        // 'filter',
+        // 'filterOptions',
+      ]),
+
       isValidZipCode() {
         // Hide the error indicator when this field is blank
         if(this.form.zipcode.length == 0) {
