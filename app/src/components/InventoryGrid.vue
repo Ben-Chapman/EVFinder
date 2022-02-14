@@ -352,6 +352,7 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash';
 
   export default {
@@ -373,7 +374,7 @@
           'ExtColorLongDesc': [],
           'price': [],
         },
-
+        // ZZZ: These need to live with each manufacturer's component, not in the store
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
@@ -385,7 +386,7 @@
           { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc' },
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
         ],
-
+        // ZZZ: This can probablty live with the form component
         modelOptions: [
           { value: 'Ioniq%205', text: 'Ioniq 5'},
           { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
@@ -394,11 +395,11 @@
           { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
           { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
         ],
-
+        // ZZZ: This can live with the form component
         yearOptions: [
           { value: '2022', text: '2022' },
         ],
-
+        // ZZZ: This can live with the form component
         form: {
           zipcode: '',
           year: '2022',
@@ -409,6 +410,11 @@
       } // End of return
     },
     methods: {
+      ...mapActions([
+        'updateVuexStore'
+        ]),
+
+      // TODO: This should probably be a filter
       titleCase(item) {
         return startCase(camelCase(item))
       },
@@ -449,10 +455,15 @@
         
         this.inventory = await response.json();
 
+        this.updateVuexStore({
+          inventoryV: this.inventory,
+        })
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.inventoryCount = this.inventory.length
-
+        this.updateVuexStore({
+          inventoryCountV: this.inventoryCount,
+        })
         // Remove the table busy indicator
         this.tableBusy = false
 
@@ -545,6 +556,7 @@
         this.inventoryCount = filteredItems.length
       },
 
+      // TODO: Move this to a filter
       convertToCurrency(item) {
         var formatter = new Intl.NumberFormat('en-US', {
           style: 'currency',
@@ -736,6 +748,12 @@
     }, // methods
 
     computed: {
+      // Vuex
+      ...mapState([
+        'inventoryV',
+        'inventoryCountV',
+      ]),
+
       isValidZipCode() {
         // Hide the error indicator when this field is blank
         if(this.form.zipcode.length == 0) {
