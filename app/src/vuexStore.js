@@ -20,9 +20,10 @@ const state = {
 // for debugging purposes.
 const mutations = {
   updateState(state, payload) {
-    console.log(payload)
     Object.getOwnPropertyNames(payload).forEach(val => {
+      console.log(val)
       if (payload[val] !== undefined) {
+        console.log(payload[val])
         state[val] = payload[val]
       }
     })
@@ -32,17 +33,13 @@ const mutations = {
 // actions are functions that cause side effects and can involve
 // asynchronous operations
 const actions = {
-  updateVuexStore({ commit }, payload) {
+  updateState({ commit }, payload) {
     commit('updateState', payload)
   }
 }
 
 // getters are functions
-const getters = {
-  inventoryCount: state => {
-    return state.todos.filter(todo => todo.done)
-  }
-}
+const getters = {}
 
 // A Vuex instance is created by combining the state, mutations, actions,
 // and getters.
