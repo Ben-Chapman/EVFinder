@@ -1,5 +1,4 @@
 <template>
-   <!-- Form Fields -->
     <div>
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
@@ -90,7 +89,7 @@
                 v-if="validateSubmitButton"
                 id="submit-button"
                 variant="primary"
-                @click="submitToVuex()"
+                @click="getCurrentInventory()"
                 >Submit</b-button>
             </span>
         </div>
@@ -121,6 +120,9 @@
 
     data() {
       return {
+        /*
+        Storing the form data in Vuex, so this is used to store the form values locally, which is then used to call the inventory API. Doing this mostly to get around the limitations with Vuex and form fields. In the inventory API call, these local values are committed to the Vuex store.
+        */
         localForm: {
           zipcode: '',
           year: '2022',
@@ -162,15 +164,45 @@
         }      
       },
 
-      submitToVuex() {
-        this.updateState({'form': this.localForm})
-      }
+      async getCurrentInventory() {
+        // Show users that we're fetching data
+        this.updateState({'tableBusy': true})
+
+        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
+            zip: this.localForm.zipcode,
+            year: this.localForm.year,
+            model: this.localForm.model,
+            radius: this.localForm.radius,
+          }),
+          {
+          method: 'GET',
+          mode: 'cors', 
+          })
+        
+        this.updateState({'inventory': await response.json()})
+
+        // inventoryCount is used to display the $num Vehicles Found message
+        // Populating that prop with the number of vehicles returned from the API
+        this.updateState({
+          'inventoryCount': this.inventory.length,
+          'tableBusy': false,  // Remove the table busy indicator
+          'form': this.localForm,
+          })
+
+        // Finally populate the filter options
+        // if (this.inventoryCount > 0) {
+        //   this.populateFilterOptions()
+        // }
+      }, 
     },  //methods
 
     computed: {
       // Vuex
       ...mapState([
-        'form'
+        'form',
+        'inventory',
+        'inventoryCount',
+        'tableBusy',
       ]),
 
       isValidZipCode() {
@@ -200,3 +232,7 @@
     },  // computed 
   } // export
 </script>
+
+<style scoped>
+
+</style>
