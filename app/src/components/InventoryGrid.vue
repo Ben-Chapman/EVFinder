@@ -360,10 +360,8 @@
     },
     data() {
       return {
-        inventory: [],
         vinDetail: {},
         filter: null,
-        inventoryCount: 0,
         filterOptions: {},
         // Keys in filterSelection need to match the source JSON data keys
         filterSelection: {
@@ -451,11 +449,11 @@
           mode: 'cors', 
           })
         
-        this.inventory = await response.json();
+        this.updateState({'inventory': await response.json()})
 
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
-        this.inventoryCount = this.inventory.length
+        this.updateState({'inventoryCount': this.inventory.length})
 
         // Remove the table busy indicator
         this.updateState({'tableBusy': false})
@@ -545,8 +543,8 @@
       },
 
       onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.inventoryCount = filteredItems.length
+        // Updating the $num Vehicles Found text due to filtering
+        this.updateState({'inventoryCount': filteredItems.length})
       },
 
       // TODO: Move this to a filter
@@ -745,10 +743,10 @@
       ...mapState([
         'tableBusy',
         'vinTableBusy',
-        // 'inventory',
+        'inventory',
+        'inventoryCount',
         // 'vinDetail',
         // 'filter',
-        // 'inventoryCount',
         // 'filterOptions',
       ]),
 
