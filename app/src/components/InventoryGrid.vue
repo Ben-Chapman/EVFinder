@@ -3,7 +3,7 @@
     <!-- Form Fields -->
     <div>
       <!-- Only show this version of the logo on xs screens -->
-      <b-row class="d-flex" align-h="center py-2 d-md-none d-sm-block">
+      <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
         <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
@@ -259,7 +259,6 @@
     <!-- Table here -->
     <b-row class="d-flex justify-content-center">
       <b-table
-        striped
         hover
         sticky-header="78vh"
         stacked="md"
@@ -291,7 +290,7 @@
 
         <!-- More Details Section -->
         <template #cell(vin-with-more-details)="row">
-          <b-button size="sm" @click="toggleDetails(row.item)" class="mr-2 align-middle vin">
+          <b-button size="sm" variant="light" @click="toggleDetails(row.item)" class="mr-2 align-middle vin">
             {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
           </b-button>
         </template>
@@ -301,7 +300,7 @@
         <b-card>
           <b-row class="justify-content-md-center">
             <div v-if="vinTableBusy">
-              <b-spinner variant="secondary" label="Loading..."></b-spinner>
+              <b-spinner variant="info" label="Loading..."></b-spinner>
               Loading...
             </div>
           </b-row>
@@ -312,6 +311,7 @@
               <b-row class="py-2" align-h="center">
                 <b-button
                   size="md"
+                  variant="light"
                   @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
                   class="mr-2 align-middle"
                   >
@@ -799,5 +799,13 @@
   table.b-table[aria-busy='true'] {
     opacity: 0.6;
   }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F5FFEB !important;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: $highlight-bluegreen !important;
+}
   
 </style>
