@@ -360,7 +360,6 @@
     },
     data() {
       return {
-        vinTableBusy: false,
         inventory: [],
         vinDetail: {},
         filter: null,
@@ -469,7 +468,7 @@
 
       async getVinDetail(vin) {
         // Show users that we're fetching data
-        this.vinTableBusy = true
+        this.updateState({vinTableBusy: true})
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/vin?' + new URLSearchParams({
             model: this.form.model,
             year: this.form.year,
@@ -492,7 +491,7 @@
           )
     
         // Remove the table busy indicator
-        this.vinTableBusy = false
+        this.updateState({vinTableBusy: false})
       }, 
 
       invalidFormMessage() {
@@ -745,7 +744,7 @@
       // Vuex
       ...mapState([
         'tableBusy',
-        // 'vinTableBusy',
+        'vinTableBusy',
         // 'inventory',
         // 'vinDetail',
         // 'filter',
