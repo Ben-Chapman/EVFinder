@@ -11,6 +11,14 @@ const state = {
   filter: null,
   inventoryCount: 0,
   filterOptions: {},
+
+  form: {
+    zipcode: '',
+    year: '2022',
+    model: 'Ioniq%205',
+    radius: '',
+  }
+  
 }
 
 // mutations are operations that actually mutate the state.
@@ -21,13 +29,19 @@ const state = {
 const mutations = {
   updateState(state, payload) {
     Object.getOwnPropertyNames(payload).forEach(val => {
-      console.log(val)
+      // console.log(val)
       if (payload[val] !== undefined) {
-        console.log(payload[val])
+        // console.log(payload[val])
         state[val] = payload[val]
       }
     })
   },
+
+  updateForm(state, formInput) {
+    console.log(state, formInput)
+    // state.form.message = message
+    }
+  
 }
 
 // actions are functions that cause side effects and can involve
