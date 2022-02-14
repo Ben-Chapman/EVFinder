@@ -360,7 +360,6 @@
     },
     data() {
       return {
-        tableBusy: false,
         vinTableBusy: false,
         inventory: [],
         vinDetail: {},
@@ -411,7 +410,7 @@
     },
     methods: {
       ...mapActions([
-        'updateVuexStore'
+        'updateState'
         ]),
 
       // TODO: This should probably be a filter
@@ -440,7 +439,7 @@
 
       async getCurrentInventory() {
         // Show users that we're fetching data
-        this.tableBusy = true
+        this.updateState({'tableBusy': true})
 
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
             zip: this.form.zipcode,
@@ -455,17 +454,12 @@
         
         this.inventory = await response.json();
 
-        this.updateVuexStore({
-          inventoryV: this.inventory,
-        })
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.inventoryCount = this.inventory.length
-        this.updateVuexStore({
-          inventoryCountV: this.inventoryCount,
-        })
+
         // Remove the table busy indicator
-        this.tableBusy = false
+        this.updateState({'tableBusy': false})
 
         // Finally populate the filter options
         if (this.inventoryCount > 0) {
@@ -750,8 +744,13 @@
     computed: {
       // Vuex
       ...mapState([
-        'inventoryV',
-        'inventoryCountV',
+        'tableBusy',
+        // 'vinTableBusy',
+        // 'inventory',
+        // 'vinDetail',
+        // 'filter',
+        // 'inventoryCount',
+        // 'filterOptions',
       ]),
 
       isValidZipCode() {
