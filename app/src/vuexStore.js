@@ -11,7 +11,13 @@ const state = {
   filter: null,
   inventoryCount: 0,
   filterOptions: {},
-
+  // TODO: These need to be normalized, and not tied to a specific JSON key name
+  filterSelections: {
+    'trimDesc': [],
+    'drivetrainDesc': [],
+    'ExtColorLongDesc': [],
+    'price': [],
+  },
   form: {
     zipcode: '',
     year: '2022',
@@ -27,7 +33,7 @@ const state = {
 // mutations must be synchronous and can be recorded by plugins
 // for debugging purposes.
 const mutations = {
-  updateState(state, payload) {
+  mutateState(state, payload) {
     Object.getOwnPropertyNames(payload).forEach(val => {
       // console.log(val)
       if (payload[val] !== undefined) {
@@ -37,22 +43,30 @@ const mutations = {
     })
   },
 
-  updateForm(state, formInput) {
-    console.log(state, formInput)
-    // state.form.message = message
-    }
-  
+  // Filter Selections Here
+  mutateFilterSelections(state, payload) {
+    state['filterSelections'] = payload
+    },
 }
 
 // actions are functions that cause side effects and can involve
 // asynchronous operations
 const actions = {
-  updateState({ commit }, payload) {
-    commit('updateState', payload)
+  updateStore({ commit }, payload) {
+    commit('mutateState', payload)
+  },
+
+  updateFilterSelections({ commit }, payload) {
+    // console.log(payload)
+    commit('mutateFilterSelections', payload)
   }
 }
 
-// getters are functions
+/*
+Getters are computed properties for stores. Like computed properties, a getter's
+result is cached based on its dependencies, and will only re-evaluate when some
+of its dependencies have changed.
+*/
 const getters = {}
 
 // A Vuex instance is created by combining the state, mutations, actions,

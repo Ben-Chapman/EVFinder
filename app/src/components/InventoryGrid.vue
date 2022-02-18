@@ -3,146 +3,7 @@
    
 <!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
-    <div v-if="this.inventory.length > 0">
-      <hr>
-      <b-row align-h="center" class="d-flex justify-content-center" align-v="center">
-        <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
-        
-        <!-- Trim Filter -->
-          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-            <template #button-content>
-              Trim
-              <span v-if="filterSelection.trimDesc.length > 0">
-                <b-badge variant="success">
-                  {{ filterSelection.trimDesc.length }}
-                </b-badge>
-              </span>
-            </template>
-
-            <b-dropdown-form>
-              <b-form-checkbox
-                v-for="item in this.filterOptions.trimDesc" :key=item
-                :value="item"
-                v-model="filterSelection.trimDesc"
-                name="name-here"
-                class="mb-3"
-                >
-                {{ item }}
-              </b-form-checkbox>
-            </b-dropdown-form>
-          </b-dd>
-        
-        <!-- Color Filter -->
-          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-            <template #button-content>
-              Color
-              <span v-if="filterSelection.ExtColorLongDesc.length > 0">
-                <b-badge variant="success">
-                  {{ filterSelection.ExtColorLongDesc.length }}
-                </b-badge>
-              </span>
-            </template>
-
-            <b-dropdown-form>
-              <b-form-checkbox
-                v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
-                :value="item"
-                v-model="filterSelection.ExtColorLongDesc"
-                name="name-here"
-                class="mb-3"
-                >
-                {{ titleCase(item) }}
-              </b-form-checkbox>
-            </b-dropdown-form>
-          </b-dd>
-        
-        <!-- Drivetrain Filter -->
-          <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
-            <template #button-content>
-              Drivetrain
-              <span v-if="filterSelection.drivetrainDesc.length > 0">
-                <b-badge variant="success">
-                  {{ filterSelection.drivetrainDesc.length }}
-                </b-badge>
-              </span>
-            </template>
-
-            <b-dropdown-form>
-              <b-form-checkbox
-                v-for="item in this.filterOptions.drivetrainDesc" :key=item
-                :value="item"
-                v-model="filterSelection.drivetrainDesc"
-                name="name-here"
-                class="mb-3"
-                >
-                {{ titleCase(item) }}
-              </b-form-checkbox>
-            </b-dropdown-form>
-          </b-dd>
-        
-        <!-- Price Filter -->
-          <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
-            <template #button-content>
-              MSRP
-              <span v-if="filterSelection.price.length > 0">
-                <b-badge variant="success">
-                  {{ 1 }}
-                </b-badge>
-              </span>
-            </template>
-
-            <!-- We have to cast filterSelection.price to an Array to match
-            the other filter options, hence the .price[0] -->
-            <b-dropdown-form>
-              <b-form-input
-                id="price"
-                v-model="filterSelection.price[0]"
-                type="range"
-                :min="calculateMinPrice"
-                :max="calculateMaxPrice"
-                >
-                </b-form-input>
-                <div
-                  class="mt-2"
-                  v-if="filterSelection.price.length == 0"
-                  >
-                  Slide to Filter by MSRP
-                </div>
-                <div
-                  class="mt-2"
-                  v-else
-                  >
-                  MSRP Is Less-Than <b>{{ `${convertToCurrency(filterSelection.price[0])}` }}</b>
-                  <b-icon
-                    icon="x-circle"
-                    class="ml-2"
-                    @click="resetPriceFilter()"
-                    font-scale="1"
-                    v-b-tooltip="{ title: 'Reset MSRP Filter', placement: 'bottom', variant: 'info' }"
-                    >
-                    </b-icon>
-                </div>
-            </b-dropdown-form>
-          </b-dd>
-        <!-- If filters are selected, show the clear filter icon -->
-        <div v-if="Object.values(filterSelection).filter(f => f.length > 0).length">
-          <b-icon
-            icon="x"
-            class="ml-1"
-            font-scale="1.5"
-            @click="resetFilterSelections()"
-            v-b-tooltip="{ title: 'Clear Filters', placement: 'bottom', variant: 'info' }"
-            >
-          </b-icon>
-        </div>
-      </b-row>
-      
-      <b-row class="d-flex justify-content-center mt-3" align-v="center">
-        <b-col cols="6" xs="12" md="4" align-self="center">
-          <p class="text-center attention"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
-        </b-col>
-      </b-row>
-    </div>
+    <Filters/>
 
     <!-- Table here -->
     <b-row class="d-flex justify-content-center">
@@ -240,12 +101,19 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import Filters from './Filters.vue'
+
+  import { mapActions, mapState,  } from 'vuex'
   import {startCase, camelCase} from 'lodash';
 
   export default {
+    components: {
+      Filters
+      },
+
     mounted() {
     },
+
     data() {
       return {
         vinDetail: {},
@@ -270,30 +138,14 @@
           { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc' },
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
         ],
-        // ZZZ: This can probably live with the form component
-        modelOptions: [
-          { value: 'Ioniq%205', text: 'Ioniq 5'},
-          { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
-          { value: 'Kona%20Ev', text: 'Kona Electric'},
-          { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
-          { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
-          { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
-        ],
-        // ZZZ: This can live with the form component
-        yearOptions: [
-          { value: '2022', text: '2022' },
-        ],
-
-        
-        
       } // End of return
     },
     methods: {
       ...mapActions([
-        'updateState'
+        'updateStore'
         ]),
 
-      // TODO: This should probably be a filter
+      // This is also a global filter, but as the table fields prop needs this function, we're using it throughout this component, instead of the filter. No real reason, aside from I suppose DRY.
       titleCase(item) {
         return startCase(camelCase(item))
       },
@@ -307,22 +159,14 @@
         // Now get VIN details
         this.getVinDetail(item.vin)
       },
-
-      resetPriceFilter() {
-        // This nulls out the filterSelection.price prop, thereby 'removing'
-        // any filtering the user has selected.
-        this.filterSelection.price = []
-      },
       
       priceStringToNumber(priceString) {
         return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
       },
 
-      
-
       async getVinDetail(vin) {
         // Show users that we're fetching data
-        this.updateState({vinTableBusy: true})
+        this.updateStore({vinTableBusy: true})
 
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/vin?' + new URLSearchParams({
             model: this.form.model,
@@ -347,21 +191,7 @@
           )
     
         // Remove the table busy indicator
-        this.updateState({vinTableBusy: false})
-      }, 
-
-      invalidFormMessage() {
-        if (this.isValidZipCode != true) {
-          if (this.isValidRadius != true) {
-            return 'a valid zip code and a search radius.'
-          }
-        }
-        if (this.isValidZipCode != true) {
-          return 'a valid zip code.'
-        }
-        if (this.isValidRadius != true) {
-          return 'a search radius.'
-        }      
+        this.updateStore({vinTableBusy: false})
       },
 
       formatDate(isoDate) {
@@ -402,7 +232,7 @@
 
       onFiltered(filteredItems) {
         // Updating the $num Vehicles Found text due to filtering
-        this.updateState({'inventoryCount': filteredItems.length})
+        this.updateStore({'inventoryCount': filteredItems.length})
       },
 
       // TODO: Move this to a filter
@@ -512,22 +342,6 @@
       return tmp
       },
 
-      populateFilterOptions() {
-        this.inventory.forEach(foo => {
-          Object.entries(foo).forEach(([key, value]) => {
-            if (key in this.filterOptions) {
-              if (!(this.filterOptions[key].includes(value))) {
-                if (typeof(value) != 'object') {
-                this.filterOptions[key].push(value)
-                }
-              }
-            }
-            else {
-              this.filterOptions[key] = [value]
-            }
-          })
-          })
-      },
 
       filterFunction(rowRecord, filterSelections) {
         // selectedCategories looks like ['trimDesc', ['LIMITED', 'SEL']]
@@ -586,58 +400,16 @@
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
 
-      resetFilterSelections() {
-        this.filterSelection = {
-          'trimDesc': [],
-          'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
-          'price': [],
-        }
-      },
+      
     }, // methods
-
+    
     computed: {
-      // Vuex
       ...mapState([
         'tableBusy',
         'vinTableBusy',
         'inventory',
-        'inventoryCount',
-        // 'vinDetail',
-        // 'filter',
-        // 'filterOptions',
-      ]),
-
-      
-
-      calculateMinPrice() {
-        var inputData = this.inventory
-        var numberData = []
-        Object.values(inputData).forEach(input => {
-          var price = this.priceStringToNumber(input.price)
-          if (price > 0) {
-            numberData.push(price)
-          }
-        })
-        return Math.min(...numberData)
-        },
-
-        calculateMaxPrice() {
-        var inputData = this.inventory
-        // console.log("Computed Calculating Min Max Here")
-        var numberData = []
-        // console.log(inputData)
-        Object.values(inputData).forEach(input => {
-          // console.log(`${input.vin}: ${input.price}`)
-          numberData.push(
-            this.priceStringToNumber(input.price)
-          )
-        })
-        // console.log(`Min Price: ${Math.max(...numberData)}`)
-        return Math.max(...numberData)
-        },
-    },  // End of computed
-    
+      ])
+    },
     watch: {},
   }  // End of default
 </script>
