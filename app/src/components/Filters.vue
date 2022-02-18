@@ -1,0 +1,269 @@
+<template>
+  <div v-if="this.inventory.length > 0">
+    <hr>
+    <b-row align-h="center" class="d-flex justify-content-center" align-v="center">
+      <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
+      
+      <!-- Trim Filter -->
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Trim
+            <span v-if="localFilterSelections.trimDesc.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.trimDesc.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.trimDesc" :key=item
+              :value="item"
+              v-model="localFilterSelections.trimDesc"
+              name="trim-description"
+              class="mb-3"
+              >
+              {{ item }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
+      
+      <!-- Color Filter -->
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Color
+            <span v-if="localFilterSelections.ExtColorLongDesc.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.ExtColorLongDesc.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
+              :value="item"
+              v-model="localFilterSelections.ExtColorLongDesc"
+              name="name-here"
+              class="mb-3"
+              >
+              {{ item | titleCase }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
+      
+      <!-- Drivetrain Filter -->
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Drivetrain
+            <span v-if="localFilterSelections.drivetrainDesc.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.drivetrainDesc.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.drivetrainDesc" :key=item
+              :value="item"
+              v-model="localFilterSelections.drivetrainDesc"
+              name="name-here"
+              class="mb-3"
+              >
+              {{ item | titleCase }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
+      
+      <!-- Price Filter -->
+        <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            MSRP
+            <span v-if="localFilterSelections.price.length > 0">
+              <b-badge variant="success">
+                {{ 1 }}
+              </b-badge>
+            </span>
+          </template>
+
+          <!-- We have to cast localFilterSelections.price to an Array to match
+          the other filter options, hence the .price[0] -->
+          <b-dropdown-form>
+            <b-form-input
+              id="price"
+              v-model="localFilterSelections.price[0]"
+              type="range"
+              :min="calculateMinPrice"
+              :max="calculateMaxPrice"
+              >
+              </b-form-input>
+              <div
+                class="mt-2"
+                v-if="localFilterSelections.price.length == 0"
+                >
+                Slide to Filter by MSRP
+              </div>
+              <div
+                class="mt-2"
+                v-else
+                >
+                MSRP Is Less-Than <b>{{ localFilterSelections.price[0] | convertToCurrency() }}</b>
+                <b-icon
+                  icon="x-circle"
+                  class="ml-2"
+                  @click="resetPriceFilter()"
+                  font-scale="1"
+                  v-b-tooltip="{ title: 'Reset MSRP Filter', placement: 'bottom', variant: 'info' }"
+                  >
+                  </b-icon>
+              </div>
+          </b-dropdown-form>
+        </b-dd>
+      <!-- If filters are selected, show the clear filter icon -->
+      <div v-if="Object.values(filterSelections).filter(f => f.length > 0).length">
+        <b-icon
+          icon="x"
+          class="ml-1"
+          font-scale="1.5"
+          @click="resetFilterSelections()"
+          v-b-tooltip="{ title: 'Clear Filters', placement: 'bottom', variant: 'info' }"
+          >
+        </b-icon>
+      </div>
+    </b-row>
+    
+    <b-row class="d-flex justify-content-center mt-3" align-v="center">
+      <b-col cols="6" xs="12" md="4" align-self="center">
+        <p class="text-center attention"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
+      </b-col>
+    </b-row>
+  </div>
+</template>
+
+<script>
+  import { mapActions, mapState } from 'vuex'
+
+  export default {
+    mounted() {},
+
+    data() {
+      return {
+        /*
+        There doesn't seem to be a reasonable way to store form checkbox data in
+        a Vuex store. So I'm using a store and forward pattern to address this.
+        The form data is initially stored in this local data object, which is
+        being watched. When this data object changes, the watcher will commit
+        this entire object into the Vuex store.
+        */
+        localFilterSelections: {
+          'trimDesc': [],
+          'drivetrainDesc': [],
+          'ExtColorLongDesc': [],
+          'price': [],
+        },
+      }
+    },
+
+    methods: {
+      ...mapActions([
+        'updateFilterSelections',
+          ]),
+      
+      populateFilterOptions() {
+        this.inventory.forEach(foo => {
+          Object.entries(foo).forEach(([key, value]) => {
+            if (key in this.filterOptions) {
+              if (!(this.filterOptions[key].includes(value))) {
+                if (typeof(value) != 'object') {
+                this.filterOptions[key].push(value)
+                }
+              }
+            }
+            else {
+              this.filterOptions[key] = [value]
+            }
+          })
+        })
+      },
+
+      resetFilterSelections() {
+        this.localFilterSelections = {
+          'trimDesc': [],
+          'drivetrainDesc': [],
+          'ExtColorLongDesc': [],
+          'price': [],
+        }
+      },
+
+      resetPriceFilter() {
+        // This nulls out the localFilterSelections.price prop, thereby 'removing'
+        // any filtering the user has selected.
+        this.localFilterSelections.price = []
+      },
+
+      priceStringToNumber(priceString) {
+        return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
+      },
+    },  // methods
+
+    computed: {
+      // Vuex
+      ...mapState([
+        'inventory',
+        'filterSelections',
+        'filterOptions',
+        'inventoryCount'
+      ]),
+
+      calculateMinPrice() {
+        var inputData = this.inventory
+        var numberData = []
+        Object.values(inputData).forEach(input => {
+          var price = this.priceStringToNumber(input.price)
+          if (price > 0) {
+            numberData.push(price)
+          }
+        })
+        return Math.min(...numberData)
+        },
+
+        calculateMaxPrice() {
+        var inputData = this.inventory
+        // console.log("Computed Calculating Min Max Here")
+        var numberData = []
+        // console.log(inputData)
+        Object.values(inputData).forEach(input => {
+          // console.log(`${input.vin}: ${input.price}`)
+          numberData.push(
+            this.priceStringToNumber(input.price)
+          )
+        })
+        // console.log(`Min Price: ${Math.max(...numberData)}`)
+        return Math.max(...numberData)
+        },
+    },  // computed
+
+    watch: {
+      // When the inventory Vuex store is updated, build the filter options
+      inventory: function () {
+        this.populateFilterOptions()
+      },
+
+      // Watching this local data and when it updates, writing the data into the
+      // Vuex store
+      localFilterSelections: {
+        handler: function (val) {
+          this.updateFilterSelections(val)
+        },
+        // The callback will be called whenever any of the watched object properties
+        // change regardless of their nested depth
+        deep: true
+      },
+    },  // watch
+  } // default
+</script>
+
+<style>
+
+</style>

@@ -3,6 +3,7 @@
     <div>
       <FormOptions/>
     </div>
+
     <b-row >
       <InventoryGrid/>
     </b-row>
