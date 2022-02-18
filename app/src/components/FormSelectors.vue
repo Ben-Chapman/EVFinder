@@ -147,7 +147,7 @@
 
     methods: {
       ...mapActions([
-        'updateState'
+        'updateStore'
         ]),
 
       invalidFormMessage() {
@@ -166,7 +166,7 @@
 
       async getCurrentInventory() {
         // Show users that we're fetching data
-        this.updateState({'tableBusy': true})
+        this.updateStore({'tableBusy': true})
 
         const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
             zip: this.localForm.zipcode,
@@ -179,11 +179,11 @@
           mode: 'cors', 
           })
         
-        this.updateState({'inventory': await response.json()})
+        this.updateStore({'inventory': await response.json()})
 
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
-        this.updateState({
+        this.updateStore({
           'inventoryCount': this.inventory.length,
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
