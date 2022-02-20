@@ -1,7 +1,5 @@
 <template>
   <b-container>
-   
-<!-- v-if="this.inventory.length > 0" -->
     <!-- Let's filter -->
     <Filters/>
 
@@ -15,7 +13,7 @@
         :items="this.inventory"
         :fields="this.fields"
         :sort-compare="customSort"
-        :filter="filterSelection"
+        :filter="this.filterSelections"
         @row-clicked="toggleDetails"
         @filtered="onFiltered"
         :filter-function="filterFunction"
@@ -103,8 +101,8 @@
 <script>
   import Filters from './Filters.vue'
 
-  import { mapActions, mapState,  } from 'vuex'
-  import {startCase, camelCase} from 'lodash';
+  import { mapActions, mapState } from 'vuex'
+  import {startCase, camelCase} from 'lodash'
 
   export default {
     components: {
@@ -117,16 +115,8 @@
     data() {
       return {
         vinDetail: {},
-        filter: null,
-        filterOptions: {},
-        // Keys in filterSelection need to match the source JSON data keys, and should live with the table component
-        filterSelection: {
-          'trimDesc': [],
-          'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
-          'price': [],
-        },
-        // ZZZ: These need to live with each manufacturer's table component, not in the store
+
+        // TODO: Normalize these keys, so they're not manufacturer specific
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
@@ -145,7 +135,10 @@
         'updateStore'
         ]),
 
-      // This is also a global filter, but as the table fields prop needs this function, we're using it throughout this component, instead of the filter. No real reason, aside from I suppose DRY.
+      /*
+      titleCase is also a global filter. The table fields array references this
+      function, so it's duplicated here also
+      */
       titleCase(item) {
         return startCase(camelCase(item))
       },
@@ -204,12 +197,13 @@
       },
 
       customSort(a, b, key) {
-        // Only apply this custom sort to date columns
-        // Return either
-        // -1 for a[key] < b[key]
-        //  0 for a[key] === b[key]
-        //  1  for a[key] > b[key].
-
+        /*
+         Only apply this custom sort to date columns
+         Return either
+         -1 for a[key] < b[key]
+          0 for a[key] === b[key]
+          1  for a[key] > b[key].
+        */
         if (key == 'PlannedDeliveryDate') {
           const _a = new Date(a[key])  // New Date object
           const _b = new Date(b[key])
@@ -231,7 +225,7 @@
       },
 
       onFiltered(filteredItems) {
-        // Updating the $num Vehicles Found text due to filtering
+        // Updating the "$num Vehicles Found" text due to filtering
         this.updateStore({'inventoryCount': filteredItems.length})
       },
 
@@ -408,6 +402,8 @@
         'tableBusy',
         'vinTableBusy',
         'inventory',
+        'filterSelections',
+        'form'
       ])
     },
     watch: {},
