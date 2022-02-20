@@ -116,7 +116,13 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    mounted() {},
+    mounted() {
+      if (this.parseQueryParams(this.$route.query)) {
+          if (this.validateSubmitButton) {
+            this.getCurrentInventory()
+          }
+        }
+    },
 
     data() {
       return {
@@ -180,7 +186,6 @@
           })
         
         this.updateStore({'inventory': await response.json()})
-
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
@@ -188,12 +193,54 @@
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
+        
+        // Push form fields to the Vue router as query params
+        this.$router.push({
+          query: {
+            y: this.localForm.year,
+            m: this.localForm.model,
+            z: this.localForm.zipcode,
+            r: this.localForm.radius,
+          }
+          }).catch(error => {
+            if (
+              error.name !== 'NavigationDuplicated' &&
+              !error.message.includes('Avoided redundant navigation to current location')
+            ) {
+              console.log(error)
+              }
+            })
+      },
 
-        // Finally populate the filter options
-        // if (this.inventoryCount > 0) {
-        //   this.populateFilterOptions()
-        // }
-      }, 
+      parseQueryParams(inputParams) {
+        if (Object.keys(inputParams).length > 0) {
+          const paramMapping = {
+            'z': 'zipcode',
+            'y': 'year',
+            'm': 'model',
+            'r': 'radius',
+          }
+
+          const queryParams = inputParams  // z, y, m, r
+
+          // Write query params to local data store
+          Object.keys(queryParams).forEach(k => {
+            const key = k
+            const longName = paramMapping[k]
+            const value = queryParams[k]
+
+            // console.log(`blah  ${k}: ${queryParams[k]}`)
+            if (Object.keys(paramMapping).includes(key)) {
+              console.log('writing qps')
+              this.localForm[longName] = value
+            }
+          })
+          return true  // Successfully parsed query params
+        }
+        else {
+          return false
+        }
+    },
     },  //methods
 
     computed: {
@@ -230,6 +277,17 @@
         return false
       },
     },  // computed 
+    watch: {
+      $route(to) {
+        // If someone directly edits the URL query parameters, this will catch
+        // the changes and update the components as needed
+        if (this.parseQueryParams(to.query)) {
+          if (this.validateSubmitButton) {
+            this.getCurrentInventory()
+          }
+        }
+      }
+    },
   } // export
 </script>
 

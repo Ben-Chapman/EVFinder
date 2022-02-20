@@ -4,7 +4,7 @@ import { VuePlausible } from 'vue-plausible'
 
 import App from './App.vue'
 
-import router from './router'
+import router from './router/routes.js'
 import store from './vuexStore'
 
 import './vueFilters.js'
