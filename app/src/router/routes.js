@@ -2,19 +2,24 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from '../App.vue'
 
+// import store from '../vuexStore'
+
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: App,
     props: route => ({
-      // query: route.query.q,
-      zipcode: route.zipcode.z,  // url/?z=90210
-      // year: '2022',
-      // model: 'Ioniq%205',
-      // radius: '',
+      // These are the available query params
+      zipcode: route.query.z,  // ?z=90210
+      year: route.query.y,  // ?y=2022
+      model: route.query.m,
+      radius: route.query.r,
+      trim: route.query.t,
+      color: route.query.c,
+      drivetrain: route.query.d,
+      msrp: route.query.mp,
     })
   },
 ]
