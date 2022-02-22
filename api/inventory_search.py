@@ -1,5 +1,6 @@
 import logging
 import json
+import os
 import requests
 
 from flask import Flask, request, make_response
@@ -74,11 +75,16 @@ def get_inventory():
       'Request_URL': r.url,
     }
     print(request_debug)
-
+    
     return '{}', 500
 
   if 'SUCCESS' in data['status']:
-      return flatten_api_results(data), 200, {"Content-Type": "application/json"}
+    return send_response(flatten_api_results(data), 'application/json', 3600)
+      # return (flatten_api_results(data),
+      # 200,
+      # {
+      #   "Content-Type": "application/json"
+      #   })
   ### End Prod
 
 
@@ -137,7 +143,8 @@ def get_vin_details():
     return '{}', 500
 
   if 'SUCCESS' in data['status']:
-      return data, 200, {"Content-Type": "application/json"}
+    return send_response(data, 'application/json', 3600)
+      # return data, 200, {"Content-Type": "application/json"}
   ### End Prod
 
   ### Dev section
@@ -191,9 +198,10 @@ def get_window_sticker():
     return '', 500
 
   if r.status_code == 200:
-    response = make_response(window_sticker_pdf)
-    response.headers.set('Content-Type', 'application/pdf')
-    return response
+    return send_response(window_sticker_pdf, 'application/pdf', 86400)
+    # response = make_response(window_sticker_pdf)
+    # response.headers.set('Content-Type', 'application/pdf')
+    # return response
 
 
 
@@ -218,10 +226,17 @@ def flatten_api_results(input_data: str):
     return json.dumps({})
 
 
+def send_response(response_data, content_type, cache_control_age):
+  response = make_response(response_data)
+  response.headers = {
+    'Content-Type': content_type,
+    'Cache-Control': f'public, max-age={cache_control_age}, immutable',
+  }
+  return response
+
 if __name__ == "__main__":
   # Flask CORS logging
   # logging.basicConfig(level=logging.INFO)
   # logging.getLogger('flask_cors').level = logging.DEBUG
-
 
   app.run(debug=True, host="0.0.0.0", port=8081)
