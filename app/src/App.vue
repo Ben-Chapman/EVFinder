@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div>
+      <FormOptions/>
+    </div>
+
     <b-row >
       <InventoryGrid/>
     </b-row>
@@ -7,13 +11,13 @@
 </template>
 
 <script>
-// import Header from './components/Header.vue'
+import FormOptions from './components/FormSelectors.vue'
 import InventoryGrid from './components/InventoryGrid.vue'
 
 export default {
   name: 'App',
   components: {
-    // Header,
+    FormOptions,
     InventoryGrid,
   },
 
