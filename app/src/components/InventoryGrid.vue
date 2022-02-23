@@ -35,11 +35,20 @@
             - {{ data.item.city }}, {{ data.item.state }}
         </template>
 
-        <!-- More Details Section -->
+        <!-- VIN Column -->
         <template #cell(vin-with-more-details)="row">
-          <b-button size="sm" variant="light" @click="toggleDetails(row.item)" class="mr-2 align-middle vin">
-            {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
-          </b-button>
+          <!-- If we've already made the API call and stored the VIN data, just show it -->
+          <div v-if="row.item.vin in vinDetail">
+            <b-button size="sm" variant="light" @click="row.toggleDetails" class="mr-2 align-middle vin">
+              {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
+            </b-button>
+          </div>
+          <!-- Otherwise, make the VIN data API call -->
+          <div v-else>
+            <b-button size="sm" variant="light" @click="toggleDetails(row.item)" class="mr-2 align-middle vin">
+              {{ row.item.vin }} <b-icon-chevron-down aria-hidden="true"></b-icon-chevron-down>
+            </b-button>
+          </div>
         </template>
 
         <!-- Vin Details Section -->
@@ -104,6 +113,8 @@
   import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash'
 
+  const apiBase = 'https://api-rylxnyu4dq-uc.a.run.app'
+  
   export default {
     components: {
       Filters
@@ -115,6 +126,7 @@
     data() {
       return {
         vinDetail: {},
+        vinTableBusy: false,
 
         // TODO: Normalize these keys, so they're not manufacturer specific
         fields: [
@@ -159,9 +171,9 @@
 
       async getVinDetail(vin) {
         // Show users that we're fetching data
-        this.updateStore({vinTableBusy: true})
+        this.vinTableBusy = true
 
-        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/vin?' + new URLSearchParams({
+        const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
             model: this.form.model,
             year: this.form.year,
             vin: vin,
@@ -174,7 +186,7 @@
         // Get VIN detail data for a single vehicle
         const vinData = await response.json();
         
-        // Store a new record for each VIN we fetch
+        // Store a new record for each VIN we fetch.
         // this.$set is needed to enable reactive properties on an existing object
         // without this.$set, the nested table will not auto-refresh with this info
         this.$set(
@@ -184,7 +196,7 @@
           )
     
         // Remove the table busy indicator
-        this.updateStore({vinTableBusy: false})
+        this.vinTableBusy = false
       },
 
       formatDate(isoDate) {
@@ -400,7 +412,6 @@
     computed: {
       ...mapState([
         'tableBusy',
-        'vinTableBusy',
         'inventory',
         'filterSelections',
         'form'
