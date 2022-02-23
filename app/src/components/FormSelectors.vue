@@ -89,7 +89,7 @@
                 v-if="validateSubmitButton"
                 id="submit-button"
                 variant="primary"
-                @click="getCurrentInventory()"
+                @click="routePushandGo()"
                 >Submit</b-button>
             </span>
         </div>
@@ -127,7 +127,10 @@
     data() {
       return {
         /*
-        Storing the form data in Vuex, so this is used to store the form values locally, which is then used to call the inventory API. Doing this mostly to get around the limitations with Vuex and form fields. In the inventory API call, these local values are committed to the Vuex store.
+        Storing the form data in Vuex, so this is used to store the form values
+        locally, which is then used to call the inventory API. Doing this mostly
+        to get around the limitations with Vuex and form fields. In the
+        inventory API call, these local values are committed to the Vuex store.
         */
         localForm: {
           zipcode: '',
@@ -169,6 +172,29 @@
           return 'a search radius.'
         }      
       },
+      
+      routePushandGo() {
+        /*
+        Push form fields to the Vue router as query params. We have a watch()
+        configured which monitors for changes to the routes, and will triger an
+        API call if they're valid.
+        */
+        this.$router.push({
+          query: {
+            y: this.localForm.year,
+            m: this.localForm.model,
+            z: this.localForm.zipcode,
+            r: this.localForm.radius,
+          }
+          }).catch(error => {
+            if (
+              error.name !== 'NavigationDuplicated' &&
+              !error.message.includes('Avoided redundant navigation to current location')
+            ) {
+              console.log(error)
+              }
+            })
+      },
 
       async getCurrentInventory() {
         // Show users that we're fetching data
@@ -193,23 +219,6 @@
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
-        
-        // Push form fields to the Vue router as query params
-        this.$router.push({
-          query: {
-            y: this.localForm.year,
-            m: this.localForm.model,
-            z: this.localForm.zipcode,
-            r: this.localForm.radius,
-          }
-          }).catch(error => {
-            if (
-              error.name !== 'NavigationDuplicated' &&
-              !error.message.includes('Avoided redundant navigation to current location')
-            ) {
-              console.log(error)
-              }
-            })
       },
 
       // TODO: Convert this to a mixin
@@ -278,8 +287,11 @@
     },  // computed 
     watch: {
       $route(to) {
-        // If someone directly edits the URL query parameters, this will catch
-        // the changes and update the components as needed
+        /*
+        This watches for route changes, and if valid will call getCurrentInventory()
+        If someone directly edits the URL query parameters, this will catch the
+        changes and update the components as needed
+        */
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
             this.getCurrentInventory()
