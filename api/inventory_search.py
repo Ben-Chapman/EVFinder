@@ -1,21 +1,11 @@
 import logging
 import json
+import os
 import requests
 
 from flask import Flask, request, make_response
 from flask_cors import CORS
 from http.client import HTTPConnection
-
-# Requests Debugging
-# requests_log = logging.getLogger('urllib3')
-# requests_log.setLevel(logging.DEBUG)
-
-# # logging from urllib3 to console
-# ch = logging.StreamHandler()
-# ch.setLevel(logging.DEBUG)
-# requests_log.addHandler(ch)
-
-# HTTPConnection.debuglevel = 1
 
 app = Flask(__name__)
 CORS(
@@ -57,7 +47,14 @@ def get_inventory():
       'User-Agent': user_agent,
       'referer': 'https://www.hyundaiusa.com/us/en/vehicles'
   }
-  ### Prod section
+  # For local/offline testing
+  if os.environ.get('API_ENV'):
+    with open('./tests/vehicles_data.json', 'r') as f:
+      data = json.loads(f.read())
+
+    print(f'\nUser agent for this request is: {user_agent}')
+    return send_response(flatten_api_results(data), 'application/json', 0)
+
   try:
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
@@ -74,34 +71,21 @@ def get_inventory():
       'Request_URL': r.url,
     }
     print(request_debug)
-
+    
     return '{}', 500
 
   if 'SUCCESS' in data['status']:
-      return flatten_api_results(data), 200, {"Content-Type": "application/json"}
-  ### End Prod
-
-
-  ### Dev section
-  # with open('../tests/vehicles_data.json', 'r') as f:
-  #     test_data = json.loads(f.read())
-  # print(f'\n\n\t{request}')
-  # print(f'\nUser agent for this request is: {user_agent}\n')
-
-  # return flatten_api_results(test_data), 200, {"Content-Type": "application/json"}
-  ### End testing
+    return send_response(flatten_api_results(data), 'application/json', 3600)
 
 @app.route('/api/vin')
 def get_vin_details():
   request_args = request.args
-
   model = request_args['model']
   year = request_args['year']
   vin = request_args['vin']
 
   # Fetches data from the Hyundai API
   api_url = 'https://www.hyundaiusa.com/var/hyundai/services/inventory/vehicleDetails.vin.json'
-
   params = {
       'model': model,
       'year': year,
@@ -111,13 +95,20 @@ def get_vin_details():
 
   # We'll use the requesting UA to make the request to the Hyundai APIs
   user_agent = request.headers['User-Agent']
-
   headers = {
       'authority': 'www.hyundaiusa.com',
       'User-Agent': user_agent,
       'referer': f'https://www.hyundaiusa.com/us/en/inventory-search/details?model={model.capitalize()}&year={year}&vin={vin}',
   }
-  ### Prod section
+
+  # For local/offline testing
+  if os.environ.get('API_ENV'):
+    with open('./tests/vin_data.json', 'r') as f:
+      data = json.loads(f.read())
+
+    print(f'\nUser agent for this request is: {user_agent}')
+    return send_response(data, 'application/json', 0)
+
   try:
     r = requests.get(api_url, params=params, headers=headers)
     data = r.json()
@@ -137,17 +128,7 @@ def get_vin_details():
     return '{}', 500
 
   if 'SUCCESS' in data['status']:
-      return data, 200, {"Content-Type": "application/json"}
-  ### End Prod
-
-  ### Dev section
-  # with open('../tests/vin_data.json', 'r') as f:
-  #     test_data = json.loads(f.read())
-  # print(f'\n\n\t{request}')
-  # print(f'\nUser agent for this request is: {user_agent}\n')
-
-  # return test_data, 200, {"Content-Type": "application/json"}
-  ### End testing
+    return send_response(data, 'application/json', 3600)
 
 @app.route('/api/ws')
 def get_window_sticker():
@@ -191,11 +172,7 @@ def get_window_sticker():
     return '', 500
 
   if r.status_code == 200:
-    response = make_response(window_sticker_pdf)
-    response.headers.set('Content-Type', 'application/pdf')
-    return response
-
-
+    return send_response(window_sticker_pdf, 'application/pdf', 86400)
 
 def flatten_api_results(input_data: str):
   tmp = []
@@ -217,11 +194,28 @@ def flatten_api_results(input_data: str):
   else:
     return json.dumps({})
 
+def send_response(response_data, content_type, cache_control_age):
+  response = make_response(response_data)
+  response.headers = {
+    'Content-Type': content_type,
+    'Cache-Control': f'public, max-age={cache_control_age}, immutable',
+  }
+  return response
+
+if os.environ.get('API_ENV_DEBUG'):
+    # Requests Debugging
+    requests_log = logging.getLogger('urllib3')
+    requests_log.setLevel(logging.DEBUG)
+
+    # logging from urllib3 to console
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    requests_log.addHandler(ch)
+    HTTPConnection.debuglevel = 1
+
+    # Flask CORS logging
+    logging.basicConfig(level=logging.INFO)
+    logging.getLogger('flask_cors').level = logging.DEBUG
 
 if __name__ == "__main__":
-  # Flask CORS logging
-  # logging.basicConfig(level=logging.INFO)
-  # logging.getLogger('flask_cors').level = logging.DEBUG
-
-
   app.run(debug=True, host="0.0.0.0", port=8081)
