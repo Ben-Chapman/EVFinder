@@ -10,6 +10,7 @@ import store from './vuexStore'
 import './vueFilters.js'
 
 import {
+  AlertPlugin,
   BIconX,
   BIconXCircle,
   BIconChevronDown,
@@ -34,6 +35,7 @@ import {
 } from 'bootstrap-vue'
 
 [
+  AlertPlugin,
   LayoutPlugin,
   IconsPlugin,
   FormGroupPlugin,
