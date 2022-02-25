@@ -1,3 +1,4 @@
+from codecs import ignore_errors
 import logging
 import json
 import os
@@ -39,43 +40,54 @@ def get_inventory():
       'model': model,
       'radius': radius,
   }
+  valid_request = True
+  for k, v in params.items():
+    if not validate_request(k, v):
+      valid_request = False
+      break
+  
+  if valid_request:
+    # We'll use the requesting UA to make the request to the Hyundai APIs
+    user_agent = request.headers['User-Agent']
 
-  # We'll use the requesting UA to make the request to the Hyundai APIs
-  user_agent = request.headers['User-Agent']
-
-  headers = {
-      'User-Agent': user_agent,
-      'referer': 'https://www.hyundaiusa.com/us/en/vehicles'
-  }
-  # For local/offline testing
-  if os.environ.get('API_ENV'):
-    with open('./tests/vehicles_data.json', 'r') as f:
-      data = json.loads(f.read())
-
-    print(f'\nUser agent for this request is: {user_agent}')
-    return send_response(flatten_api_results(data), 'application/json', 0)
-
-  try:
-    r = requests.get(api_url, params=params, headers=headers)
-    data = r.json()
-  except requests.exceptions.RequestException as e:
-    print(f'Request Error: {e}')
-    request_debug = {
-      'Content': r.content, 
-      'Elapsed': r.elapsed, 
-      'Headers': r.headers, 
-      'Is_OK': r.ok, 
-      'Reason': r.reason, 
-      'Request_Type': r.request, 
-      'Status_Code': r.status_code, 
-      'Request_URL': r.url,
+    headers = {
+        'User-Agent': user_agent,
+        'referer': 'https://www.hyundaiusa.com/us/en/vehicles'
     }
-    print(request_debug)
-    
-    return '{}', 500
+    # For local/offline testing
+    if os.environ.get('API_ENV'):
+      with open('./tests/vehicles_data.json', 'r') as f:
+        data = json.loads(f.read())
 
-  if 'SUCCESS' in data['status']:
-    return send_response(flatten_api_results(data), 'application/json', 3600)
+      print(f'\nUser agent for this request is: {user_agent}')
+      return send_response(flatten_api_results(data), 'application/json', 0)
+
+    try:
+      r = requests.get(api_url, params=params, headers=headers)
+      data = r.json()
+    except requests.exceptions.RequestException as e:
+      print(f'Request Error: {e}')
+      request_debug = {
+        'Content': r.content, 
+        'Elapsed': r.elapsed, 
+        'Headers': r.headers, 
+        'Is_OK': r.ok, 
+        'Reason': r.reason, 
+        'Request_Type': r.request, 
+        'Status_Code': r.status_code, 
+        'Request_URL': r.url,
+      }
+      print(request_debug)
+      
+      return '{}', 500
+
+    if 'SUCCESS' in data['status']:
+      return send_response(data, 'application/json', 3600)
+  else:  # Invalid request
+    return json.dumps({'message': 'Invalid Request'}), 500
+
+    
+    
 
 @app.route('/api/vin')
 def get_vin_details():
@@ -129,6 +141,7 @@ def get_vin_details():
 
   if 'SUCCESS' in data['status']:
     return send_response(data, 'application/json', 3600)
+  
 
 @app.route('/api/ws')
 def get_window_sticker():
@@ -201,6 +214,48 @@ def send_response(response_data, content_type, cache_control_age):
     'Cache-Control': f'public, max-age={cache_control_age}, immutable',
   }
   return response
+
+def validate_request(validation_type, validation_data):
+  # https://facts.usps.com/42000-zip-codes/
+  valid_zip_codes = [501, 99950]  # Starting zip code is 00501
+  valid_years = ['2022']
+  valid_models = [
+    'Ioniq%205',
+    'Ioniq%20Phev',
+    'Kona%20Ev',
+    'Santa%20Fe%20Phev',
+    'Sonata%20Hev',
+    'Tucson%20Phev'
+    ]
+  valid_radii = [1, 999]
+  valid_vins = []
+
+  if validation_type == 'zip':
+    # Can zip be cast to an int
+    try:
+      int(validation_data)
+    except ValueError as e:
+      return False
+
+    if len(validation_data) != 5:  # Zip too short
+      return False
+    
+    return (int(validation_data) >= valid_zip_codes[0] and int(validation_data) <= valid_zip_codes[1])
+
+  elif validation_type == 'year':
+    return validation_data in valid_years
+
+  elif validation_type == 'model':
+    return validation_data in valid_models
+
+  elif validation_type == 'radius':
+    # Can radius be cast to an int
+    try:
+      int(validation_data)
+    except ValueError as e:
+      return False
+    return (int(validation_data) >= valid_radii[0] and int(validation_data) <= valid_radii[1])
+
 
 if os.environ.get('API_ENV_DEBUG'):
     # Requests Debugging
