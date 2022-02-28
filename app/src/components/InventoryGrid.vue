@@ -5,7 +5,7 @@
 
     <!-- Table here -->
     <b-row class="d-flex justify-content-center">
-      <div v-if="!tableBusy && Object.values(this.inventory).length == 0" class="mt-5">
+      <div v-if="showInventoryAlert" class="mt-5">
         <b-alert show variant="success" class="no-inventory px-5">
           No Vehicles Were Found. Adjust your search parameters and try again.
         </b-alert>
@@ -422,7 +422,19 @@
         'inventory',
         'filterSelections',
         'form'
-      ])
+      ]),
+
+      showInventoryAlert() {
+        if (
+          !this.tableBusy
+          && Object.values(this.inventory).length == 0
+          && Object.values(this.form).filter(f => f.length > 0).length == 4){
+          return true
+        }
+        else {
+          return false
+        }
+      },
     },
     watch: {},
   }  // End of default
