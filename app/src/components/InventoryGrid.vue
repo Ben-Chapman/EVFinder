@@ -120,20 +120,29 @@
   import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash'
 
-  const apiBase = 'https://api-rylxnyu4dq-uc.a.run.app'
+  const apiBase = 'https://api.theevfinder.com'
   
   export default {
     components: {
       Filters
       },
 
-    mounted() {
-    },
+      created() {
+        window.addEventListener('beforeunload', this.beforeWindowUnload)
+      },
+
+      mounted() {
+      },
+
+      beforeDestroy() {
+        window.removeEventListener('beforeunload', this.beforeWindowUnload)
+      },
 
     data() {
       return {
         vinDetail: {},
         vinTableBusy: false,
+        vinDetailClickedCount: 0,
 
         // TODO: Normalize these keys, so they're not manufacturer specific
         fields: [
@@ -167,6 +176,9 @@
         // to know this row has additional detail to display upon click
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
+        
+        // Increment the counter
+        this.vinDetailClickedCount += 1
 
         // Now get VIN details
         this.getVinDetail(item.vin)
@@ -412,6 +424,12 @@
         // console.log(`filterByPrice: ${rowRecord.price}, ${selectedPrice}`)
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
+      // Before the browser quits, or the browser tab is closed, fire our Plausible call
+      beforeWindowUnload() {
+        this.$plausible.trackEvent(
+          'VIN Detail', {props: {count: this.vinDetailClickedCount}}
+          )
+      }
 
       
     }, // methods
