@@ -200,7 +200,7 @@
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
 
-        const response = await fetch('https://api-rylxnyu4dq-uc.a.run.app/api/inventory?' + new URLSearchParams({
+        const response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
             zip: this.localForm.zipcode,
             year: this.localForm.year,
             model: this.localForm.model,
