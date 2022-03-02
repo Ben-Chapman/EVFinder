@@ -46,6 +46,13 @@ def get_inventory():
       valid_request = False
       break
   
+  # Ensure we only serve traffic sourced from Cloudflare
+  try:
+    request.headers['CF-RAY']
+  except KeyError as e:
+    print(f'Non-CF Access - {request.headers}')
+    return json.dumps({}), 418
+
   if valid_request:
     # We'll use the requesting UA to make the request to the Hyundai APIs
     user_agent = request.headers['User-Agent']
@@ -82,12 +89,10 @@ def get_inventory():
       return '{}', 500
 
     if 'SUCCESS' in data['status']:
-      return send_response(data, 'application/json', 3600)
+      return send_response(flatten_api_results(data), 'application/json', 3600)
   else:  # Invalid request
     return json.dumps({'message': 'Invalid Request'}), 500
 
-    
-    
 
 @app.route('/api/vin')
 def get_vin_details():
