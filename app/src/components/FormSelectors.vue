@@ -215,39 +215,12 @@
         this.updateStore({'tableBusy': true})
         
         if (this.localForm.model == 'N') {
-          // TODO: Move this to a function
-           var response = await fetch('http://localhost:8081/api/inventory/kia?' + new URLSearchParams({
-            zip: this.localForm.zipcode,
-            year: this.localForm.year,
-            model: this.localForm.model,
-            // radius: this.localForm.radius,  # Not sure if this is used
-          }),
-          {
-          method: 'GET',
-          mode: 'cors', 
-          })
-          var x = await response.json()
-          var y = normalizeJson(x['vehicles'], kiaJsonMapping)
-          this.updateStore({'inventory': y})
+          this.getKiaInventory()
         }
-        // else {
-        //   var response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
-        //       zip: this.localForm.zipcode,
-        //       year: this.localForm.year,
-        //       model: this.localForm.model,
-        //       radius: this.localForm.radius,
-        //     }),
-        //     {
-        //     method: 'GET',
-        //     mode: 'cors', 
-        //     })
-        // }
-        
-        // if (this.localForm.model == 'EV6') {
-        //   const inv = normalizeJson(await response.json, keyMap = kia.js)
-        // }
-        // else {
-        // this.updateStore({'inventory': await response.json()})
+        else {
+          this.getHyundaiInventory()
+        }
+
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
@@ -258,6 +231,37 @@
         // }
       },
     
+      async getKiaInventory() {
+        const response = await fetch('http://localhost:8081/api/inventory/kia?' + new URLSearchParams({
+        zip: this.localForm.zipcode,
+        year: this.localForm.year,
+        model: this.localForm.model,
+        // radius: this.localForm.radius,  # Not sure if this is used
+      }),
+        {
+        method: 'GET',
+        mode: 'cors', 
+        })
+
+        var x = await response.json()
+        var y = normalizeJson(x['vehicles'], kiaJsonMapping)
+        this.updateStore({'inventory': y})
+      },
+
+      async getHyundaiInventory() {
+        const response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
+          zip: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+        }),
+        {
+        method: 'GET',
+        mode: 'cors', 
+        })
+        
+        this.updateStore({'inventory': await response.json()})
+      },
 
       // TODO: Convert this to a mixin
       parseQueryParams(inputParams) {
