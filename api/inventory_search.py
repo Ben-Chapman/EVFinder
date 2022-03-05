@@ -1,4 +1,3 @@
-from codecs import ignore_errors
 import logging
 import json
 import os
@@ -192,6 +191,100 @@ def get_window_sticker():
   if r.status_code == 200:
     return send_response(window_sticker_pdf, 'application/pdf', 86400)
 
+
+@app.route('/api/inventory/kia')
+def get_kia_inventory():
+  request_args = request.args
+
+  zip_code = request_args['zip']
+  year = request_args['year']
+  series = request_args['model']
+  # radius = request_args['radius']  # Not sure if this is used
+
+  # Status:
+  # DS = In Stock
+  # IT = Coming Soon
+
+  # Fetches data from the Kia Inventory API
+  api_url = 'https://www.kia.com/us/services/en/inventory/initial'
+
+  post_data = {
+      'zipCode': zip_code,
+      'year': year,
+      'series': series,
+      # 'radius': radius,
+  }
+# Have to post this data to get range results
+#   {
+#   "filterSet": {
+#     "seriesName": "EV6",
+#     "series": "N",
+#     "year": "2022",
+#     "zipCode": "07946",
+#     "currentRange": 15,
+#     "selectedRange": 50,
+#     "isInitialRequest": false,
+#     "status": [
+#       "DS",
+#       "IT"
+#     ]
+#   }
+# }
+  valid_request = True
+  for k, v in post_data.items():
+    if not validate_request(k, v):
+      valid_request = False
+      break
+  
+  # Ensure we only serve traffic sourced from Cloudflare
+  # try:
+  #   request.headers['CF-RAY']
+  # except KeyError as e:
+  #   print(f'Non-CF Access - {request.headers}')
+  #   return json.dumps({}), 418
+
+  if valid_request:
+    # We'll use the requesting UA to make the request to the Kia APIs
+    user_agent = request.headers['User-Agent']
+
+    headers = {
+        'User-Agent': user_agent,
+        'Referer': f'https://www.kia.com/us/en/inventory/result?zipCode={post_data["zipCode"]}&seriesId={post_data["series"]}&year={post_data["year"]}',
+        'Content-Type': 'application/json;charset=UTF-8',
+    }
+    # For local/offline testing
+    # if os.environ.get('API_ENV'):
+    #   with open('./tests/vehicles_data.json', 'r') as f:
+    #     data = json.loads(f.read())
+
+    #   print(f'\nUser agent for this request is: {user_agent}')
+    #   return send_response(flatten_api_results(data), 'application/json', 0)
+
+    try:
+      r = requests.post(api_url, data=json.dumps(post_data), headers=headers)
+      data = r.json()
+    except requests.exceptions.RequestException as e:
+      print(f'Request Error: {e}')
+      request_debug = {
+        'Content': r.content, 
+        'Elapsed': r.elapsed, 
+        'Headers': r.headers, 
+        'Is_OK': r.ok, 
+        'Reason': r.reason, 
+        'Request_Type': r.request, 
+        'Status_Code': r.status_code, 
+        'Request_URL': r.url,
+      }
+      print(request_debug)
+      
+      return '{}', 500
+
+    return send_response(data, 'application/json', 3600)
+  else:  # Invalid request
+    return json.dumps({'message': 'Invalid Request'}), 500
+
+
+# TODO: Move to libs directory
 def flatten_api_results(input_data: str):
   tmp = []
   input_data = input_data['data'][0]['dealerInfo']
@@ -235,7 +328,7 @@ def validate_request(validation_type, validation_data):
   valid_radii = [1, 999]
   valid_vins = []
 
-  if validation_type == 'zip':
+  if 'zip' in validation_type:  # Capture variations of zip code
     # Can zip be cast to an int
     try:
       int(validation_data)
@@ -260,6 +353,9 @@ def validate_request(validation_type, validation_data):
     except ValueError as e:
       return False
     return (int(validation_data) >= valid_radii[0] and int(validation_data) <= valid_radii[1])
+  
+  elif validation_type == 'series':
+    return validation_data == 'N'
 
 
 if os.environ.get('API_ENV_DEBUG'):

@@ -114,6 +114,8 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import normalizeJson from '../libs'
+  import {kiaJsonMapping} from '../json_mappings/kia'
 
   export default {
     mounted() {
@@ -140,12 +142,24 @@
         },
 
         modelOptions: [
-          { value: 'Ioniq%205', text: 'Ioniq 5'},
-          { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
-          { value: 'Kona%20Ev', text: 'Kona Electric'},
-          { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
-          { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
-          { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
+          {
+            label: 'Hyundai',
+            options: [
+              { value: 'Ioniq%205', text: 'Ioniq 5'},
+              { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
+              { value: 'Kona%20Ev', text: 'Kona Electric'},
+              { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
+              { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
+              { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
+            ],
+          },
+          {
+            label: 'Kia',
+            options: [
+              { value: 'N', text: 'EV6'},
+            ],
+          }
+          
         ],
 
         yearOptions: [
@@ -199,19 +213,41 @@
       async getCurrentInventory() {
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
-
-        const response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
+        
+        if (this.localForm.model == 'N') {
+          // TODO: Move this to a function
+           var response = await fetch('http://localhost:8081/api/inventory/kia?' + new URLSearchParams({
             zip: this.localForm.zipcode,
             year: this.localForm.year,
             model: this.localForm.model,
-            radius: this.localForm.radius,
+            // radius: this.localForm.radius,  # Not sure if this is used
           }),
           {
           method: 'GET',
           mode: 'cors', 
           })
+          var x = await response.json()
+          var y = normalizeJson(x['vehicles'], kiaJsonMapping)
+          this.updateStore({'inventory': y})
+        }
+        // else {
+        //   var response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
+        //       zip: this.localForm.zipcode,
+        //       year: this.localForm.year,
+        //       model: this.localForm.model,
+        //       radius: this.localForm.radius,
+        //     }),
+        //     {
+        //     method: 'GET',
+        //     mode: 'cors', 
+        //     })
+        // }
         
-        this.updateStore({'inventory': await response.json()})
+        // if (this.localForm.model == 'EV6') {
+        //   const inv = normalizeJson(await response.json, keyMap = kia.js)
+        // }
+        // else {
+        // this.updateStore({'inventory': await response.json()})
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
@@ -219,7 +255,9 @@
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
+        // }
       },
+    
 
       // TODO: Convert this to a mixin
       parseQueryParams(inputParams) {
