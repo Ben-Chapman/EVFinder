@@ -233,18 +233,25 @@
     
       async getKiaInventory() {
         const response = await fetch('http://localhost:8081/api/inventory/kia?' + new URLSearchParams({
-        zip: this.localForm.zipcode,
-        year: this.localForm.year,
-        model: this.localForm.model,
-        // radius: this.localForm.radius,  # Not sure if this is used
-      }),
-        {
-        method: 'GET',
-        mode: 'cors', 
-        })
+          zip: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+        }),
+        {method: 'GET', mode: 'cors',})
 
-        var x = await response.json()
-        var y = normalizeJson(x['vehicles'], kiaJsonMapping)
+        var r = await response.json()
+        var y = normalizeJson(r['vehicles'], kiaJsonMapping)
+
+        y.forEach(vehicle => {
+          const dCode = vehicle['dealerCode']
+          const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
+
+          vehicle['dealerUrl'] = dealerDetail['url'].replace('http://', '')
+          vehicle['dealerNm'] = dealerDetail['name']
+          vehicle['city'] = dealerDetail['location']['city']
+          vehicle['state'] = dealerDetail['location']['state']
+          })
         this.updateStore({'inventory': y})
       },
 
