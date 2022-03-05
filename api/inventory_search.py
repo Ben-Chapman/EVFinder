@@ -198,40 +198,40 @@ def get_kia_inventory():
 
   zip_code = request_args['zip']
   year = request_args['year']
-  series = request_args['model']
-  # radius = request_args['radius']  # Not sure if this is used
+  model = request_args['model']
+  radius = request_args['radius']
 
   # Status:
   # DS = In Stock
   # IT = Coming Soon
 
   # Fetches data from the Kia Inventory API
-  api_url = 'https://www.kia.com/us/services/en/inventory/initial'
+  api_url = 'https://www.kia.com/us/services/en/inventory'
 
-  post_data = {
+  params = {
       'zipCode': zip_code,
       'year': year,
-      'series': series,
+      'series': model,
       # 'radius': radius,
   }
 # Have to post this data to get range results
-#   {
-#   "filterSet": {
-#     "seriesName": "EV6",
-#     "series": "N",
-#     "year": "2022",
-#     "zipCode": "07946",
-#     "currentRange": 15,
-#     "selectedRange": 50,
-#     "isInitialRequest": false,
-#     "status": [
-#       "DS",
-#       "IT"
-#     ]
-#   }
-# }
+  post_data = {
+  "filterSet": {
+    "seriesName": "EV6",
+    "series": model,
+    "year": year,
+    "zipCode": zip_code,
+    "currentRange": 15,
+    "selectedRange": int(radius),
+    "isInitialRequest": 'false',
+    "status": [
+      "DS",
+      "IT"
+    ]
+    }
+  }
   valid_request = True
-  for k, v in post_data.items():
+  for k, v in params.items():
     if not validate_request(k, v):
       valid_request = False
       break
@@ -249,7 +249,7 @@ def get_kia_inventory():
 
     headers = {
         'User-Agent': user_agent,
-        'Referer': f'https://www.kia.com/us/en/inventory/result?zipCode={post_data["zipCode"]}&seriesId={post_data["series"]}&year={post_data["year"]}',
+        'Referer': f'https://www.kia.com/us/en/inventory/result?zipCode={zip_code}&seriesId={model}&year={year}',
         'Content-Type': 'application/json;charset=UTF-8',
     }
     # For local/offline testing
@@ -324,6 +324,7 @@ def validate_request(validation_type, validation_data):
     'Santa%20Fe%20Phev',
     'Sonata%20Hev',
     'Tucson%20Phev'
+    'N'  # Kia
     ]
   valid_radii = [1, 999]
   valid_vins = []
