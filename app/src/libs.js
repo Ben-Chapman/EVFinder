@@ -13,7 +13,7 @@ const flattenObject = (obj, keyName) => {
       flattendObj[newKey] = obj[key];
     }
   })
-  return flattenObject
+  return flattendObj
 }
 
 function normalizeObjectKeys(inputObject, keyMap) {
@@ -27,3 +27,14 @@ function normalizeObjectKeys(inputObject, keyMap) {
   return {...tmp, ...inputObject}
 }
 
+export default function normalizeJson(inputJson, keyMap) {
+  var result = []
+  inputJson.forEach(i => {
+    result.push(
+      normalizeObjectKeys(
+        flattenObject(i, ''),
+        keyMap
+      ))
+  })
+  return result
+}
