@@ -20,7 +20,6 @@ And more specifically:
   'drivetrainDesc': 'drivetrainDescription',
   'price': 'msrp',
   'PlannedDeliveryDate': '',
-  'dealer-name-address': '',
   'distance': 'range',
   'vin-with-more-details': '',
   }

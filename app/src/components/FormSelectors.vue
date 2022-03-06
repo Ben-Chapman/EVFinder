@@ -215,16 +215,16 @@
         this.updateStore({'tableBusy': true})
         
         if (this.localForm.model == 'N') {
-          this.getKiaInventory()
+          await this.getKiaInventory()
         }
         else {
-          this.getHyundaiInventory()
+          await this.getHyundaiInventory()
         }
 
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
-          'inventoryCount': this.inventory.length,
+          // 'inventoryCount': this.inventory.length,
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
@@ -240,10 +240,10 @@
         }),
         {method: 'GET', mode: 'cors',})
 
-        var r = await response.json()
-        var y = normalizeJson(r['vehicles'], kiaJsonMapping)
+        var r = await response.json()  // Raw results
+        var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
 
-        y.forEach(vehicle => {
+        n.forEach(vehicle => {
           const dCode = vehicle['dealerCode']
           const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
 
@@ -251,8 +251,20 @@
           vehicle['dealerNm'] = dealerDetail['name']
           vehicle['city'] = dealerDetail['location']['city']
           vehicle['state'] = dealerDetail['location']['state']
+
+          // Distance to 2 decimal places
+          vehicle['distance'] = parseFloat(vehicle['distance']).toFixed(2).toString()
+          
+          // Delivery Date
+          if (vehicle['status'] == 'DS') {
+            vehicle['PlannedDeliveryDate'] = "In Stock"
+          }
+          else if (vehicle['status'] == 'IT') {
+            vehicle['PlannedDeliveryDate'] = "Coming Soon"
+          }
+          
           })
-        this.updateStore({'inventory': y})
+        this.updateStore({'inventory': n})
       },
 
       async getHyundaiInventory() {
@@ -346,7 +358,11 @@
             this.getCurrentInventory()
           }
         }
-      }
+      },
+      inventory() {
+        // When the inventory changes, update the $num vehicles found message
+        this.updateStore({'inventoryCount': this.inventory.length})
+      },
     },
   } // export
 </script>
