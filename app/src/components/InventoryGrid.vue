@@ -33,7 +33,7 @@
           <!-- Dealer Information -->
           <template #cell(dealer-name-address)="data">
             <b-link
-              :href="`https://${data.item.dealerUrl}`"
+              :href="data.item.dealerUrl"
               target="_blank"
               >
                 {{ data.item.dealerNm }}
@@ -69,18 +69,20 @@
 
               <!-- Vin Details List Group -->
               <!-- Dealer Website Button -->
-              <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
-                <b-row class="py-2" align-h="center">
-                  <b-button
-                    size="md"
-                    variant="light"
-                    @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
-                    class="mr-2 align-middle"
-                    >
-                    Dealer's Website for This Vehicle
-                    <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
-                  </b-button>
-                </b-row>
+              <div v-if="form.model != 'N'">
+                <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
+                      class="mr-2 align-middle"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
+                    </b-button>
+                  </b-row>
+                </div>
               </div>
               
                 <b-list-group
@@ -145,6 +147,7 @@
         vinDetailClickedCount: 0,
 
         // TODO: Normalize these keys, so they're not manufacturer specific
+        
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
@@ -180,8 +183,17 @@
         // Increment the counter
         this.vinDetailClickedCount += 1
 
-        // Now get VIN details
-        this.getVinDetail(item.vin)
+        if (this.form.model === "N") {
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            item,
+            )
+        }
+        else {
+          // Make a vin API call for Hyundai
+          this.getVinDetail(item.vin)
+        }
       },
       
       priceStringToNumber(priceString) {
@@ -219,11 +231,12 @@
       },
 
       formatDate(isoDate) {
-        // console.log(isoDate)
         if (isoDate) {  // Checking for null values
-          return new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+          const d = new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+          if (d != 'Invalid Date') {
+            return d
+          } else {return isoDate}
         }
-
         return ''
       },
 
@@ -240,6 +253,10 @@
           const _b = new Date(b[key])
           const aDate = Date.parse(_a)  // Convert Date object to epoch
           const bDate = Date.parse(_b)
+          
+          if ((_a || _b) == 'Invalid Date') {
+            return false
+          }
 
           if (aDate < bDate ){
             return -1
