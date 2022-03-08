@@ -33,7 +33,7 @@
           <!-- Dealer Information -->
           <template #cell(dealer-name-address)="data">
             <b-link
-              :href="data.item.dealerUrl"
+              :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
                 {{ data.item.dealerNm }}
@@ -121,6 +121,7 @@
 
   import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash'
+  import {kiaVinMapping} from '../json_mappings/kia'
 
   const apiBase = 'https://api.theevfinder.com'
   
@@ -183,11 +184,32 @@
         // Increment the counter
         this.vinDetailClickedCount += 1
 
+        /* The KIA API response contains all publically available information
+        about the vehicle, so there's no additional VIN API call needed. Thus
+        storing the /inventory API data directly in the vinDetail local store.
+        */
         if (this.form.model === "N") {
+          // Before writing the data, format the key names for humans
+          const k = {}
+          Object.keys(item).forEach(key => {
+            if (Object.keys(kiaVinMapping).includes(key)) {
+              k[kiaVinMapping[key]] = item[key]
+            }
+            // The Kia API returns individual elements for each feature, so
+            // concatinating into a single string for display
+            if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
+              if (k['Top Features']) {
+                k['Top Features'] = `${k['Top Features']}, ${item[key]}`
+              } else {
+                k['Top Features'] = item[key]
+              }
+            }
+          })
+
           this.$set(
-            this.vinDetail,
-            item.vin,
-            item,
+            this.vinDetail,  // Where to store
+            item.vin,        // What's the key
+            k,            // Data to store
             )
         }
         else {
@@ -254,6 +276,8 @@
           const aDate = Date.parse(_a)  // Convert Date object to epoch
           const bDate = Date.parse(_b)
           
+          // Some manufacturers don't include a delivery date in their API response
+          // If that's true, fall back to the buit-in sort-compare routine
           if ((_a || _b) == 'Invalid Date') {
             return false
           }

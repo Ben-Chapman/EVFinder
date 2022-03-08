@@ -172,7 +172,7 @@ def get_window_sticker():
   }
   
   try:
-    r = requests.get(api_url, params=params, headers=headers, verify=False)
+    r = requests.get(api_url, params=params, headers=headers)
     window_sticker_pdf = r.content
   except requests.exceptions.RequestException as e:
     print(f'Request Error: {e}')
@@ -212,7 +212,7 @@ def get_kia_inventory():
       'zipCode': zip_code,
       'year': year,
       'series': model,
-      # 'radius': radius,
+      'radius': radius,
   }
 # Have to post this data to get range results
   post_data = {
@@ -221,7 +221,7 @@ def get_kia_inventory():
     "series": model,
     "year": year,
     "zipCode": zip_code,
-    "currentRange": 15,
+    "currentRange": int(radius),
     "selectedRange": int(radius),
     "isInitialRequest": 'false',
     "status": [
@@ -237,11 +237,11 @@ def get_kia_inventory():
       break
   
   # Ensure we only serve traffic sourced from Cloudflare
-  # try:
-  #   request.headers['CF-RAY']
-  # except KeyError as e:
-  #   print(f'Non-CF Access - {request.headers}')
-  #   return json.dumps({}), 418
+  try:
+    request.headers['CF-RAY']
+  except KeyError as e:
+    print(f'Non-CF Access - {request.headers}')
+    return json.dumps({}), 418
 
   if valid_request:
     # We'll use the requesting UA to make the request to the Kia APIs
@@ -250,7 +250,6 @@ def get_kia_inventory():
     headers = {
         'User-Agent': user_agent,
         'Referer': f'https://www.kia.com/us/en/inventory/result?zipCode={zip_code}&seriesId={model}&year={year}',
-        'Content-Type': 'application/json;charset=UTF-8',
     }
     # For local/offline testing
     # if os.environ.get('API_ENV'):
@@ -261,7 +260,7 @@ def get_kia_inventory():
     #   return send_response(flatten_api_results(data), 'application/json', 0)
 
     try:
-      r = requests.post(api_url, data=json.dumps(post_data), headers=headers)
+      r = requests.post(api_url, json=post_data, headers=headers)
       data = r.json()
     except requests.exceptions.RequestException as e:
       print(f'Request Error: {e}')
@@ -284,7 +283,7 @@ def get_kia_inventory():
     return json.dumps({'message': 'Invalid Request'}), 500
 
 
-# TODO: Move to libs directory
+# TODO: Move this logic to the Vue app
 def flatten_api_results(input_data: str):
   tmp = []
   input_data = input_data['data'][0]['dealerInfo']
@@ -323,14 +322,14 @@ def validate_request(validation_type, validation_data):
     'Kona%20Ev',
     'Santa%20Fe%20Phev',
     'Sonata%20Hev',
-    'Tucson%20Phev'
+    'Tucson%20Phev',
     'N'  # Kia
     ]
   valid_radii = [1, 999]
   valid_vins = []
 
-  if 'zip' in validation_type:  # Capture variations of zip code
-    # Can zip be cast to an int
+  if 'zip' in validation_type:  # Capture variations of "zip code"
+    # Can zip be cast to an int?
     try:
       int(validation_data)
     except ValueError as e:
@@ -344,19 +343,16 @@ def validate_request(validation_type, validation_data):
   elif validation_type == 'year':
     return validation_data in valid_years
 
-  elif validation_type == 'model':
+  elif (validation_type == 'model' or validation_type == 'series'):
     return validation_data in valid_models
 
   elif validation_type == 'radius':
-    # Can radius be cast to an int
+    # Can radius be cast to an int?
     try:
       int(validation_data)
     except ValueError as e:
       return False
     return (int(validation_data) >= valid_radii[0] and int(validation_data) <= valid_radii[1])
-  
-  elif validation_type == 'series':
-    return validation_data == 'N'
 
 
 if os.environ.get('API_ENV_DEBUG'):
