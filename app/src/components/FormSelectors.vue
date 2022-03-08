@@ -117,6 +117,8 @@
   import normalizeJson from '../libs'
   import {kiaJsonMapping} from '../json_mappings/kia'
 
+  const apiBase = 'https://api.theevfinder.com'
+
   export default {
     mounted() {
       if (this.parseQueryParams(this.$route.query)) {
@@ -208,6 +210,19 @@
               console.log(error)
               }
             })
+        
+        // Send event data to Plausible
+        this.$plausible.trackEvent(
+          'Search Params', {
+            props:
+              {
+                Year: this.localForm.year,
+                Model: this.localForm.model,
+                Radius: this.localForm.radius,
+                ZipCode: this.localForm.zipcode,
+              }
+            }
+          )
       },
 
       async getCurrentInventory() {
@@ -228,11 +243,10 @@
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
-        // }
       },
     
       async getKiaInventory() {
-        const response = await fetch('http://localhost:8081/api/inventory/kia?' + new URLSearchParams({
+        const response = await fetch(apiBase + '/api/inventory/kia?' + new URLSearchParams({
           zip: this.localForm.zipcode,
           year: this.localForm.year,
           model: this.localForm.model,
@@ -244,10 +258,13 @@
         var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
 
         n.forEach(vehicle => {
+          // Lookup the dealer name/address from the dealer code
           const dCode = vehicle['dealerCode']
           const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
 
-          vehicle['dealerUrl'] = dealerDetail['url'].replace('http://', '')
+          // Some results have a fqdn for a dealerUrl, some not. Stripping the
+          // scheme, which will be re-inserted by the templace
+          vehicle['dealerUrl'] = dealerDetail['url'].replace(/http(s)?:\/\//i, '')
           vehicle['dealerNm'] = dealerDetail['name']
           vehicle['city'] = dealerDetail['location']['city']
           vehicle['state'] = dealerDetail['location']['state']
@@ -268,7 +285,7 @@
       },
 
       async getHyundaiInventory() {
-        const response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
+        const response = await fetch(apiBase + '/api/inventory?' + new URLSearchParams({
           zip: this.localForm.zipcode,
           year: this.localForm.year,
           model: this.localForm.model,
@@ -278,8 +295,14 @@
         method: 'GET',
         mode: 'cors', 
         })
+        const inv = await response.json()
         
-        this.updateStore({'inventory': await response.json()})
+        // Replace the $xx,xxx.xx string with a value which can be cast to float
+        inv.forEach(vehicle => {
+          vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+        })
+
+        this.updateStore({'inventory': inv})
       },
 
       // TODO: Convert this to a mixin
