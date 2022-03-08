@@ -114,6 +114,10 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import normalizeJson from '../libs'
+  import {kiaJsonMapping} from '../json_mappings/kia'
+
+  const apiBase = 'https://api.theevfinder.com'
 
   export default {
     mounted() {
@@ -140,12 +144,24 @@
         },
 
         modelOptions: [
-          { value: 'Ioniq%205', text: 'Ioniq 5'},
-          { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
-          { value: 'Kona%20Ev', text: 'Kona Electric'},
-          { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
-          { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
-          { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
+          {
+            label: 'Hyundai',
+            options: [
+              { value: 'Ioniq%205', text: 'Ioniq 5'},
+              { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
+              { value: 'Kona%20Ev', text: 'Kona Electric'},
+              { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
+              { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
+              { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
+            ],
+          },
+          {
+            label: 'Kia',
+            options: [
+              { value: 'N', text: 'EV6'},
+            ],
+          }
+          
         ],
 
         yearOptions: [
@@ -194,31 +210,99 @@
               console.log(error)
               }
             })
+        
+        // Send event data to Plausible
+        this.$plausible.trackEvent(
+          'Search Params', {
+            props:
+              {
+                Year: this.localForm.year,
+                Model: this.localForm.model,
+                Radius: this.localForm.radius,
+                ZipCode: this.localForm.zipcode,
+              }
+            }
+          )
       },
 
       async getCurrentInventory() {
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
-
-        const response = await fetch('https://api.theevfinder.com/api/inventory?' + new URLSearchParams({
-            zip: this.localForm.zipcode,
-            year: this.localForm.year,
-            model: this.localForm.model,
-            radius: this.localForm.radius,
-          }),
-          {
-          method: 'GET',
-          mode: 'cors', 
-          })
         
-        this.updateStore({'inventory': await response.json()})
+        if (this.localForm.model == 'N') {
+          await this.getKiaInventory()
+        }
+        else {
+          await this.getHyundaiInventory()
+        }
+
         // inventoryCount is used to display the $num Vehicles Found message
         // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
-          'inventoryCount': this.inventory.length,
+          // 'inventoryCount': this.inventory.length,
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
+      },
+    
+      async getKiaInventory() {
+        const response = await fetch(apiBase + '/api/inventory/kia?' + new URLSearchParams({
+          zip: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+        }),
+        {method: 'GET', mode: 'cors',})
+
+        var r = await response.json()  // Raw results
+        var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
+
+        n.forEach(vehicle => {
+          // Lookup the dealer name/address from the dealer code
+          const dCode = vehicle['dealerCode']
+          const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
+
+          // Some results have a fqdn for a dealerUrl, some not. Stripping the
+          // scheme, which will be re-inserted by the templace
+          vehicle['dealerUrl'] = dealerDetail['url'].replace(/http(s)?:\/\//i, '')
+          vehicle['dealerNm'] = dealerDetail['name']
+          vehicle['city'] = dealerDetail['location']['city']
+          vehicle['state'] = dealerDetail['location']['state']
+
+          // Distance to 2 decimal places
+          vehicle['distance'] = parseFloat(vehicle['distance']).toFixed(2).toString()
+          
+          // Delivery Date
+          if (vehicle['status'] == 'DS') {
+            vehicle['PlannedDeliveryDate'] = "In Stock"
+          }
+          else if (vehicle['status'] == 'IT') {
+            vehicle['PlannedDeliveryDate'] = "Coming Soon"
+          }
+          
+          })
+        this.updateStore({'inventory': n})
+      },
+
+      async getHyundaiInventory() {
+        const response = await fetch(apiBase + '/api/inventory?' + new URLSearchParams({
+          zip: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+        }),
+        {
+        method: 'GET',
+        mode: 'cors', 
+        })
+        const inv = await response.json()
+        
+        // Replace the $xx,xxx.xx string with a value which can be cast to float
+        inv.forEach(vehicle => {
+          vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+        })
+
+        this.updateStore({'inventory': inv})
       },
 
       // TODO: Convert this to a mixin
@@ -297,7 +381,11 @@
             this.getCurrentInventory()
           }
         }
-      }
+      },
+      inventory() {
+        // When the inventory changes, update the $num vehicles found message
+        this.updateStore({'inventoryCount': this.inventory.length})
+      },
     },
   } // export
 </script>
