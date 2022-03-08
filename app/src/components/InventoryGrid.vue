@@ -69,18 +69,20 @@
 
               <!-- Vin Details List Group -->
               <!-- Dealer Website Button -->
-              <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
-                <b-row class="py-2" align-h="center">
-                  <b-button
-                    size="md"
-                    variant="light"
-                    @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
-                    class="mr-2 align-middle"
-                    >
-                    Dealer's Website for This Vehicle
-                    <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
-                  </b-button>
-                </b-row>
+              <div v-if="form.model != 'N'">
+                <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(vinDetail[row.item.vin]['DI']['DealerVDPURL'])"
+                      class="mr-2 align-middle"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
+                    </b-button>
+                  </b-row>
+                </div>
               </div>
               
                 <b-list-group
@@ -119,6 +121,7 @@
 
   import { mapActions, mapState } from 'vuex'
   import {startCase, camelCase} from 'lodash'
+  import {kiaVinMapping} from '../json_mappings/kia'
 
   const apiBase = 'https://api.theevfinder.com'
   
@@ -145,11 +148,12 @@
         vinDetailClickedCount: 0,
 
         // TODO: Normalize these keys, so they're not manufacturer specific
+        
         fields: [
           { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
-          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc'},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: "convertToCurrency"},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
           // Virtual Column
           { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
@@ -180,8 +184,38 @@
         // Increment the counter
         this.vinDetailClickedCount += 1
 
-        // Now get VIN details
-        this.getVinDetail(item.vin)
+        /* The KIA API response contains all publically available information
+        about the vehicle, so there's no additional VIN API call needed. Thus
+        storing the /inventory API data directly in the vinDetail local store.
+        */
+        if (this.form.model === "N") {
+          // Before writing the data, format the key names for humans
+          const k = {}
+          Object.keys(item).forEach(key => {
+            if (Object.keys(kiaVinMapping).includes(key)) {
+              k[kiaVinMapping[key]] = item[key]
+            }
+            // The Kia API returns individual elements for each feature, so
+            // concatinating into a single string for display
+            if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
+              if (k['Top Features']) {
+                k['Top Features'] = `${k['Top Features']}, ${item[key]}`
+              } else {
+                k['Top Features'] = item[key]
+              }
+            }
+          })
+
+          this.$set(
+            this.vinDetail,  // Where to store
+            item.vin,        // What's the key
+            k,            // Data to store
+            )
+        }
+        else {
+          // Make a vin API call for Hyundai
+          this.getVinDetail(item.vin)
+        }
       },
       
       priceStringToNumber(priceString) {
@@ -219,11 +253,12 @@
       },
 
       formatDate(isoDate) {
-        // console.log(isoDate)
         if (isoDate) {  // Checking for null values
-          return new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+          const d = new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+          if (d != 'Invalid Date') {
+            return d
+          } else {return isoDate}
         }
-
         return ''
       },
 
@@ -240,6 +275,12 @@
           const _b = new Date(b[key])
           const aDate = Date.parse(_a)  // Convert Date object to epoch
           const bDate = Date.parse(_b)
+          
+          // Some manufacturers don't include a delivery date in their API response
+          // If that's true, fall back to the buit-in sort-compare routine
+          if ((_a || _b) == 'Invalid Date') {
+            return false
+          }
 
           if (aDate < bDate ){
             return -1

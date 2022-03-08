@@ -1,0 +1,6565 @@
+{
+  "filterSet": {
+    "criteriaGroups": [
+      {
+        "alwaysOpenAccordion": true, 
+        "componentType": "checkbox|trims", 
+        "groupCriteria": [
+          {
+            "elements": [
+              {
+                "active": true, 
+                "msrp": "48215", 
+                "name": "WIND", 
+                "selected": false, 
+                "value": "WIND"
+              }, 
+              {
+                "active": true, 
+                "msrp": "52585", 
+                "name": "GTL", 
+                "selected": false, 
+                "value": "GTL"
+              }
+            ], 
+            "name": "Trims"
+          }
+        ], 
+        "groupName": "Trims"
+      }, 
+      {
+        "alwaysOpenAccordion": true, 
+        "componentType": "colors", 
+        "groupCriteria": [
+          {
+            "alwaysOpenAccordian": true, 
+            "componentType": "colors", 
+            "elements": [
+              {
+                "active": true, 
+                "name": "Yacht Blue", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Yacht Blue"
+              }, 
+              {
+                "active": true, 
+                "name": "Aurora Black Pearl", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Aurora Black Pearl"
+              }, 
+              {
+                "active": true, 
+                "name": "Runway Red", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Runway Red"
+              }, 
+              {
+                "active": true, 
+                "name": "Snow White Pearl", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Snow White Pearl"
+              }, 
+              {
+                "active": true, 
+                "name": "Steel Matte Gray", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Steel Matte Gray"
+              }, 
+              {
+                "active": false, 
+                "name": "Interstellar Gray", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Interstellar Gray"
+              }, 
+              {
+                "active": true, 
+                "name": "Glacier", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Glacier"
+              }, 
+              {
+                "active": true, 
+                "name": "Gravity Blue", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Gravity Blue"
+              }, 
+              {
+                "active": true, 
+                "name": "Steel Gray", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Steel Gray"
+              }
+            ], 
+            "name": "Exterior"
+          }, 
+          {
+            "alwaysOpenAccordian": true, 
+            "componentType": "colors", 
+            "elements": [
+              {
+                "active": true, 
+                "name": "Black", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Black"
+              }, 
+              {
+                "active": false, 
+                "name": "Gray", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Gray"
+              }, 
+              {
+                "active": true, 
+                "name": "Black/Deep Green Two-tone", 
+                "selected": false, 
+                "useSwatch": false, 
+                "value": "Black/Deep Green Two-tone"
+              }
+            ], 
+            "name": "Interior"
+          }
+        ], 
+        "groupName": "Colors"
+      }, 
+      {
+        "alwaysOpenAccordion": false, 
+        "componentType": "checkbox|packages", 
+        "groupCriteria": [
+          {
+            "elements": [], 
+            "name": "Packages"
+          }
+        ], 
+        "groupName": "Packages"
+      }, 
+      {
+        "alwaysOpenAccordion": false, 
+        "componentType": "checkbox|engine", 
+        "groupCriteria": [
+          {
+            "elements": [
+              {
+                "active": true, 
+                "name": "Electric Motor", 
+                "selected": false, 
+                "value": "Electric Motor"
+              }
+            ], 
+            "name": "Engine"
+          }
+        ], 
+        "groupName": "Engine"
+      }, 
+      {
+        "alwaysOpenAccordion": false, 
+        "componentType": "checkbox|transmission'", 
+        "groupCriteria": [
+          {
+            "elements": [
+              {
+                "active": true, 
+                "name": "Automatic Transmission", 
+                "selected": false, 
+                "value": "Automatic Transmission"
+              }
+            ], 
+            "name": "Transmission"
+          }
+        ], 
+        "groupName": "Transmission"
+      }, 
+      {
+        "alwaysOpenAccordion": false, 
+        "componentType": "checkbox|drivetrain", 
+        "groupCriteria": [
+          {
+            "elements": [
+              {
+                "active": true, 
+                "name": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+                "selected": false, 
+                "value": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height"
+              }, 
+              {
+                "active": true, 
+                "name": "Rear-Wheel Drive (RWD)", 
+                "selected": false, 
+                "value": "Rear-Wheel Drive (RWD)"
+              }
+            ], 
+            "name": "Drivetrain"
+          }
+        ], 
+        "groupName": "Drivetrain"
+      }
+    ], 
+    "currentRange": 15, 
+    "dealers": [
+      {
+        "active": true, 
+        "chat_enabled": true, 
+        "code": "CA320", 
+        "distance": "7.0450941795978874", 
+        "features": [
+          "14", 
+          "13", 
+          "5"
+        ], 
+        "inTransitInventoryCount": null, 
+        "inventory": 21, 
+        "inventoryCount": null, 
+        "location": {
+          "city": "Van Nuys", 
+          "latitude": "34.181319999999999", 
+          "longitude": "-118.44898999999999", 
+          "state": "CA", 
+          "street1": "6115 Van Nuys Blvd. ", 
+          "street2": null, 
+          "zipCode": "91401"
+        }, 
+        "name": "Van Nuys KIA", 
+        "phones": [
+          {
+            "number": "8187510051", 
+            "type": "business"
+          }, 
+          {
+            "number": "8187510050", 
+            "type": "fax"
+          }
+        ], 
+        "selected": false, 
+        "url": "http://WWW.VANNUYSKIA.COM"
+      }, 
+      {
+        "active": true, 
+        "chat_enabled": true, 
+        "code": "CA308", 
+        "distance": "8.3936029575637043", 
+        "features": [
+          "14", 
+          "7", 
+          "13", 
+          "8", 
+          "5"
+        ], 
+        "inTransitInventoryCount": null, 
+        "inventory": 24, 
+        "inventoryCount": null, 
+        "location": {
+          "city": "Los Angeles", 
+          "latitude": "34.033279999999998", 
+          "longitude": "-118.27307999999999", 
+          "state": "CA", 
+          "street1": "1945 S. Figueroa Street ", 
+          "street2": null, 
+          "zipCode": "90007"
+        }, 
+        "name": "KIA Downtown Los Angeles", 
+        "phones": [
+          {
+            "number": "8664145619", 
+            "type": "business"
+          }, 
+          {
+            "number": "2137415003", 
+            "type": "fax"
+          }
+        ], 
+        "selected": false, 
+        "url": "HTTP://WWW.KIAOFDTLA.COM/"
+      }, 
+      {
+        "active": true, 
+        "chat_enabled": true, 
+        "code": "CA283", 
+        "distance": "9.4312783342865121", 
+        "features": [
+          "14", 
+          "7", 
+          "13", 
+          "8", 
+          "5"
+        ], 
+        "inTransitInventoryCount": null, 
+        "inventory": 22, 
+        "inventoryCount": null, 
+        "location": {
+          "city": "Glendale", 
+          "latitude": "34.141370000000002", 
+          "longitude": "-118.25465", 
+          "state": "CA", 
+          "street1": "400 South Brand Blvd. ", 
+          "street2": null, 
+          "zipCode": "91204"
+        }, 
+        "name": "Car Pros KIA Glendale", 
+        "phones": [
+          {
+            "number": "8187451400", 
+            "type": "business"
+          }, 
+          {
+            "number": "8182440044", 
+            "type": "fax"
+          }
+        ], 
+        "selected": false, 
+        "url": "HTTP://WWW.GLENDALEKIA.COM/"
+      }
+    ], 
+    "isInitialRequest": false, 
+    "page": 1, 
+    "pageSize": 210, 
+    "priceData": {
+      "maxDealerPrice": 59945, 
+      "minDealerPrice": 48215, 
+      "selectedMaxPrice": null, 
+      "selectedMinPrice": null
+    }, 
+    "selectedRange": 15, 
+    "series": "N", 
+    "seriesName": "EV6", 
+    "sortOrder": "DISTANCE_ASC", 
+    "status": null, 
+    "year": "2022", 
+    "zipCode": "90210", 
+    "zipLocation": {
+      "latitude": 34.0859, 
+      "longitude": -118.405
+    }
+  }, 
+  "inTransitVehicleCount": 0, 
+  "inTransitVehicleCountNearMatch": 0, 
+  "inventoryVehicleCount": 67, 
+  "inventoryVehicleCountNearMatch": 0, 
+  "performanceData": [
+    "Get Working Filter Set:0", 
+    "Update dealers and vehicle count:5", 
+    "Get Dealer Inventory Totals:10", 
+    "Get Vehicles:82"
+  ], 
+  "vehicleCount": 67, 
+  "vehicleCountNearMatch": 0, 
+  "vehicles": [
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "56936", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "DU3", 
+        "description": "Yacht Blue", 
+        "disclaimer": null, 
+        "edwColorName": "YACHT BLUE", 
+        "fabricName": null, 
+        "id": 1857227863, 
+        "images": null, 
+        "name": "Yacht Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1803", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "57540", 
+      "optionPackageCode": "GWN", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "GT-Line White Seat Package"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC4DLC4N5032944", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "SWP", 
+        "description": "Snow White Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "SNOW WHITE PEARL", 
+        "fabricName": null, 
+        "id": 192201603, 
+        "images": null, 
+        "name": "Snow White Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1934", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5036099", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19d6", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5036523", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "SWP", 
+        "description": "Snow White Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "SNOW WHITE PEARL", 
+        "fabricName": null, 
+        "id": 192201603, 
+        "images": null, 
+        "name": "Snow White Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b09", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC4N5033224", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1aef", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC4N5034986", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd199d", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC8N5035056", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1ab8", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC5N5032454", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a97", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "CGP", 
+        "description": "Black/Deep Green Two-tone", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK/DEEP GREEN TWO-TONE", 
+        "fabricName": null, 
+        "id": 562527103, 
+        "images": null, 
+        "name": "Black/Deep Green Two-tone", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC6N5027098", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "52094", 
+      "drivetrain": {
+        "description": "RWD", 
+        "drivetrain": "Rear-Wheel Drive (RWD)", 
+        "id": 1221589808
+      }, 
+      "edwTrim": "GTL RWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd18c7", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4362", 
+      "msrp": "52645", 
+      "optionPackageCode": "", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Wheel Locks"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC44LA3N5029497", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLG", 
+        "description": "Steel Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL GRAY", 
+        "fabricName": null, 
+        "id": -1496967151, 
+        "images": null, 
+        "name": "Steel Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1993", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC8N5036420", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a39", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC6N5035539", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a02", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5031631", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLG", 
+        "description": "Steel Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL GRAY", 
+        "fabricName": null, 
+        "id": -1496967151, 
+        "images": null, 
+        "name": "Steel Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1ccb", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA9N5030821", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1c1e", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "CGP", 
+        "description": "Black/Deep Green Two-tone", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK/DEEP GREEN TWO-TONE", 
+        "fabricName": null, 
+        "id": 562527103, 
+        "images": null, 
+        "name": "Black/Deep Green Two-tone", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC1N5031611", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1946", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5033994", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19f2", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5032956", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1c11", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC1N5033021", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b67", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5032825", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19ee", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5033511", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b54", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5034834", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA320", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b13", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.18132, 
+        "longitude": -118.44899
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "7.0450941795978874", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC4N5032509", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19de", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5034299", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd199e", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC8N5035025", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd199a", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC8N5035557", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd195f", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5032554", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "SWP", 
+        "description": "Snow White Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "SNOW WHITE PEARL", 
+        "fabricName": null, 
+        "id": 192201603, 
+        "images": null, 
+        "name": "Snow White Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd193e", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5034787", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1932", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "CGP", 
+        "description": "Black/Deep Green Two-tone", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK/DEEP GREEN TWO-TONE", 
+        "fabricName": null, 
+        "id": 562527103, 
+        "images": null, 
+        "name": "Black/Deep Green Two-tone", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLCXN5027329", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd18f3", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLCXN5034541", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "52378", 
+      "drivetrain": {
+        "description": "RWD", 
+        "drivetrain": "Rear-Wheel Drive (RWD)", 
+        "id": 1221589808
+      }, 
+      "edwTrim": "GTL RWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "DU3", 
+        "description": "Yacht Blue", 
+        "disclaimer": null, 
+        "edwColorName": "YACHT BLUE", 
+        "fabricName": null, 
+        "id": 1857227863, 
+        "images": null, 
+        "name": "Yacht Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd18ee", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4362", 
+      "msrp": "52940", 
+      "optionPackageCode": "ISN", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "GT-Line Suede Seat Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC44LA0N5030302", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1bc0", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC2N5032346", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "52378", 
+      "drivetrain": {
+        "description": "RWD", 
+        "drivetrain": "Rear-Wheel Drive (RWD)", 
+        "id": 1221589808
+      }, 
+      "edwTrim": "GTL RWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "DU3", 
+        "description": "Yacht Blue", 
+        "disclaimer": null, 
+        "edwColorName": "YACHT BLUE", 
+        "fabricName": null, 
+        "id": 1857227863, 
+        "images": null, 
+        "name": "Yacht Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd18b3", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4362", 
+      "msrp": "52940", 
+      "optionPackageCode": "ISN", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "GT-Line Suede Seat Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC44LA4N5033574", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "52282", 
+      "drivetrain": {
+        "description": "RWD", 
+        "drivetrain": "Rear-Wheel Drive (RWD)", 
+        "id": 1221589808
+      }, 
+      "edwTrim": "GTL RWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "DU3", 
+        "description": "Yacht Blue", 
+        "disclaimer": null, 
+        "edwColorName": "YACHT BLUE", 
+        "fabricName": null, 
+        "id": 1857227863, 
+        "images": null, 
+        "name": "Yacht Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd187a", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4362", 
+      "msrp": "52840", 
+      "optionPackageCode": "GWN", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "GT-Line White Seat Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC44LA8N5030239", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "48396", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1dba", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48940", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA0N5030089", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1d55", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA3N5032743", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1cd5", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA9N5029717", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1c48", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC1N5028725", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b0d", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC4N5032879", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1c1b", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC1N5031849", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "GLB", 
+        "description": "Glacier", 
+        "disclaimer": null, 
+        "edwColorName": "GLACIER", 
+        "fabricName": null, 
+        "id": -587770502, 
+        "images": null, 
+        "name": "Glacier", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19f8", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5032682", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b79", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC3N5030816", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b58", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5034283", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b48", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5035577", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a3a", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC6N5035279", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a32", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC6N5036304", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA308", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19f9", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.03328, 
+        "longitude": -118.27308
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "8.3936029575637043", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5032536", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "48396", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1cc3", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48940", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA9N5033220", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1d4f", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA3N5034962", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1acd", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC5N5030123", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLG", 
+        "description": "Steel Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL GRAY", 
+        "fabricName": null, 
+        "id": -1496967151, 
+        "images": null, 
+        "name": "Steel Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1d78", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA2N5032412", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "59257", 
+      "drivetrain": {
+        "description": "AWD", 
+        "drivetrain": "All-Wheel Drive (AWD) w/ Center Locking Differential and increased ride height", 
+        "id": 944250938
+      }, 
+      "edwTrim": "GTL AWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLM", 
+        "description": "Steel Matte Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL MATTE GRAY", 
+        "fabricName": null, 
+        "id": -1409313607, 
+        "images": null, 
+        "name": "Steel Matte Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1c53", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5462", 
+      "msrp": "59945", 
+      "optionPackageCode": "FEN", 
+      "options": [
+        "First Edition Package", 
+        "- Unique Exterior/Interior Design Elements"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC3DLC1N5026800", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1d8e", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA1N5032658", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1954", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5033266", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "CR5", 
+        "description": "Runway Red", 
+        "disclaimer": null, 
+        "edwColorName": "RUNWAY RED", 
+        "fabricName": null, 
+        "id": 316924087, 
+        "images": null, 
+        "name": "Runway Red", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b5d", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5033912", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1bb4", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC2N5033268", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd19f4", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC7N5032892", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLG", 
+        "description": "Steel Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL GRAY", 
+        "fabricName": null, 
+        "id": -1496967151, 
+        "images": null, 
+        "name": "Steel Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b6e", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5032226", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b68", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5032792", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd193c", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5034904", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1958", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5032957", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1953", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5033283", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1999", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC8N5035784", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "52378", 
+      "drivetrain": {
+        "description": "RWD", 
+        "drivetrain": "Rear-Wheel Drive (RWD)", 
+        "id": 1221589808
+      }, 
+      "edwTrim": "GTL RWD AT", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "DU3", 
+        "description": "Yacht Blue", 
+        "disclaimer": null, 
+        "edwColorName": "YACHT BLUE", 
+        "fabricName": null, 
+        "id": 1857227863, 
+        "images": null, 
+        "name": "Yacht Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1852", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4362", 
+      "msrp": "52940", 
+      "optionPackageCode": "ISN", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "GT-Line Suede Seat Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "GTL", 
+        "id": 70444414, 
+        "longName": "GTL", 
+        "name": "GTL"
+      }, 
+      "vin": "KNDC44LAXN5033871", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1abf", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC5N5031837", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "52258", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1b73", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "52840", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC3N5031769", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53707", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "ABP", 
+        "description": "Aurora Black Pearl", 
+        "disclaimer": null, 
+        "edwColorName": "AURORA BLACK PEARL", 
+        "fabricName": null, 
+        "id": -591940096, 
+        "images": null, 
+        "name": "Aurora Black Pearl", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1a51", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "54340", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC6N5033208", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "53247", 
+      "drivetrain": null, 
+      "edwTrim": "WIND AWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": 294088969
+      }, 
+      "engineDisplacement": "239kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "KLG", 
+        "description": "Steel Gray", 
+        "disclaimer": null, 
+        "edwColorName": "STEEL GRAY", 
+        "fabricName": null, 
+        "id": -1496967151, 
+        "images": null, 
+        "name": "Steel Gray", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "77.4 kWh Lithium Ion Battery / 310mi All-Electric Range", 
+            "168 kW Electric Motor (225hp w/ 258 lb-ft Torque)", 
+            "On-Board Power Generator (V2L)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1935", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "116 City 94 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N5452", 
+      "msrp": "53845", 
+      "optionPackageCode": "TEN", 
+      "options": [
+        "Wind Technology Package", 
+        "- Surround View Monitor"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC3DLC9N5035969", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }, 
+    {
+      "badge": null, 
+      "bodyDescription": "MPV", 
+      "clothLeather": null, 
+      "dealerCode": "CA283", 
+      "dealerPrice": "47936", 
+      "drivetrain": null, 
+      "edwTrim": "WIND RWD", 
+      "engineCylinders": {
+        "engineCylinders": "Electric Motor", 
+        "id": -919945074
+      }, 
+      "engineDisplacement": "168kw Electric Motor", 
+      "exteriorColor": {
+        "baseHex": null, 
+        "code": "B4U", 
+        "description": "Gravity Blue", 
+        "disclaimer": null, 
+        "edwColorName": "GRAVITY BLUE", 
+        "fabricName": null, 
+        "id": 313661830, 
+        "images": null, 
+        "name": "Gravity Blue", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "features": [
+        {
+          "options": [
+            "58.0 kWh Lithium Ion Battery / 232mi All-Electric Range", 
+            "125 kW Electric Motor (167hp w/ 258 lb-ft Torque)", 
+            "Ultra-Fast DC Charging (800V)", 
+            "Electronic Parking Brake w/ Auto Hold"
+          ], 
+          "title": "TOP FEATURES"
+        }
+      ], 
+      "id": "62206f790cf280fe33bd1d0f", 
+      "interiorColor": {
+        "baseHex": null, 
+        "code": "WK", 
+        "description": "Black", 
+        "disclaimer": null, 
+        "edwColorName": "BLACK", 
+        "fabricName": null, 
+        "id": 1651748593, 
+        "images": null, 
+        "name": "Black", 
+        "processType": 5, 
+        "swatchImgUrl": null, 
+        "useSwatch": false
+      }, 
+      "location": {
+        "latitude": 34.14137, 
+        "longitude": -118.25465
+      }, 
+      "mileage": "134 City 101 Highway", 
+      "model": {
+        "id": 69060, 
+        "model": "EV6"
+      }, 
+      "modelCode": "N4352", 
+      "msrp": "48445", 
+      "optionPackageCode": "STD", 
+      "options": [
+        "Carpeted Floor Mats", 
+        "Std. Package"
+      ], 
+      "packs": null, 
+      "range": "9.4312783342865121", 
+      "seriesId": "N", 
+      "sortKey": null, 
+      "status": "DS", 
+      "transmission": {
+        "id": 1945338344, 
+        "transmission": "Automatic Transmission"
+      }, 
+      "trim": {
+        "desc": "WIND", 
+        "id": 1649132697, 
+        "longName": "WIND", 
+        "name": "WIND"
+      }, 
+      "vin": "KNDC34LA6N5032655", 
+      "weight": null, 
+      "year": {
+        "id": 1537309, 
+        "year": "2022"
+      }
+    }
+  ]
+}

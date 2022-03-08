@@ -151,7 +151,7 @@
       return {
         /*
         There doesn't seem to be a reasonable way to store form checkbox data in
-        a Vuex store. So I'm using a store and forward pattern to address this.
+        a Vuex store. So using a store and forward pattern to address this.
         The form data is initially stored in this local data object, which is
         being watched. When this data object changes, the watcher will commit
         this entire object into the Vuex store.
@@ -168,23 +168,32 @@
     methods: {
       ...mapActions([
         'updateFilterSelections',
+        'updateStore',
           ]),
       
       populateFilterOptions() {
-        this.inventory.forEach(foo => {
-          Object.entries(foo).forEach(([key, value]) => {
-            if (key in this.filterOptions) {
-              if (!(this.filterOptions[key].includes(value))) {
+        if (Object.entries(this.filterOptions).length > 0) {
+          this.updateStore({'filterOptions': {}})
+        }
+
+        // Generate the filterOptions
+        var tmp = {}
+        this.inventory.forEach(vehicle => {
+          Object.entries(vehicle).forEach(([key, value]) => {
+            if (key in tmp) {
+              if (!(tmp[key].includes(value))) {
                 if (typeof(value) != 'object') {
-                this.filterOptions[key].push(value)
+                  tmp[key].push(value)
                 }
               }
-            }
-            else {
-              this.filterOptions[key] = [value]
+            } else {
+              tmp[key] = [value]
             }
           })
         })
+
+        // Write the filterOptions into the Vuex store
+        this.updateStore({'filterOptions': tmp})
       },
 
       resetFilterSelections() {
@@ -245,9 +254,11 @@
     },  // computed
 
     watch: {
-      // When the inventory Vuex store is updated, build the filter options
+      // When the inventory Vuex store is updated, build the filter options and
+      // remove any previous filters the user may have selected
       inventory: function () {
         this.populateFilterOptions()
+        this.resetFilterSelections()
       },
 
       // Watching this local data and when it updates, writing the data into the
