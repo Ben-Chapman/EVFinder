@@ -33,6 +33,7 @@ def test_validate_request_success(validation_type, test_input, expected, asserti
       ('zip', '00500', False, "Zip code not valid (too low)"),
       ('zip', '99951', False, "Zip code not valid (too high)"),
       ('zip', '-12345', False, "Not a valid zip code"),
+      ('zip', '98585-5002', False, "Not a 5-digit zip code"),
       ('year', '2021', False, "Invalid year"),
       ('year', '201', False, "Invalid year"),
       ('year', '-2022', False, "Invalid year"),
