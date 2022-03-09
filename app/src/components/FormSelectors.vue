@@ -2,12 +2,16 @@
     <div>
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
-        <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
+        <a href="/#/">
+          <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
+        </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
       <b-row class="d-flex mt-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="pl-0 d-none d-sm-block">
-          <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
+          <a href="/#/">
+            <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
+          </a>
         </b-col>
         
         <!-- Year -->
@@ -263,7 +267,7 @@
           const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
 
           // Some results have a fqdn for a dealerUrl, some not. Stripping the
-          // scheme, which will be re-inserted by the templace
+          // scheme, which will be re-inserted by the template
           vehicle['dealerUrl'] = dealerDetail['url'].replace(/http(s)?:\/\//i, '')
           vehicle['dealerNm'] = dealerDetail['name']
           vehicle['city'] = dealerDetail['location']['city']
@@ -280,7 +284,16 @@
             vehicle['PlannedDeliveryDate'] = "Coming Soon"
           }
           
-          })
+          /* The Kia API data is inconsistent and some vehicles don't have a
+           drivetrainDesc field (AWD/RWD), but do include this information in
+           a longer string description. For these vehicles, extracting the desc
+           from the string
+          */
+          if (!vehicle['drivetrainDesc']) {
+            const shortDesc = vehicle['drivetrainDrivetrain'].match(/RWD|AWD/)[0]
+            shortDesc ? vehicle['drivetrainDesc'] = shortDesc : null
+          }
+        })
         this.updateStore({'inventory': n})
       },
 
@@ -332,7 +345,7 @@
         else {
           return false
         }
-    },
+      },
     },  //methods
 
     computed: {
