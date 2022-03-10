@@ -289,7 +289,7 @@
            a longer string description. For these vehicles, extracting the desc
            from the string
           */
-          if (!vehicle['drivetrainDesc']) {
+          if (!vehicle['drivetrainDesc'] && vehicle['drivetrainDrivetrain']) {
             const shortDesc = vehicle['drivetrainDrivetrain'].match(/RWD|AWD/)[0]
             shortDesc ? vehicle['drivetrainDesc'] = shortDesc : null
           }
