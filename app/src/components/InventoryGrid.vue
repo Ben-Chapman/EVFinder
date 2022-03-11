@@ -84,6 +84,20 @@
                   </b-row>
                 </div>
               </div>
+              <!-- Window sticker for Kias -->
+              <div v-if="form.model == 'N'">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow('https://www.kia.com/us/services/us/windowsticker/load/' + row.item.vin)"
+                      class="mr-2 align-middle"
+                      >
+                      Window Sticker for This Vehicle
+                      <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon>
+                    </b-button>
+                  </b-row>
+              </div>
               
                 <b-list-group
                   horizontal
@@ -312,6 +326,11 @@
       },
 
       openUrlInNewWindow(url) {
+        // Fire event to Plausible
+        this.$plausible.trackEvent(
+          'Outbound Link: Click', {props: {url: url}}
+          )
+
         window.open(url, '_blank')
       },
 
