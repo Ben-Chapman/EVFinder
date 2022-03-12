@@ -254,11 +254,9 @@
     },  // computed
 
     watch: {
-      // When the inventory Vuex store is updated, build the filter options and
-      // remove any previous filters the user may have selected
+      // When the inventory Vuex store is updated, build the filter options
       inventory: function () {
         this.populateFilterOptions()
-        this.resetFilterSelections()
       },
 
       // Watching this local data and when it updates, writing the data into the
@@ -270,6 +268,12 @@
         // The callback will be called whenever any of the watched object properties
         // change regardless of their nested depth
         deep: true
+      },
+
+      // When the route changes, a different vehicle was selected, so remove any
+      // previous filters the user may have selected
+      $route() {
+        this.resetFilterSelections()
       },
     },  // watch
   } // default
