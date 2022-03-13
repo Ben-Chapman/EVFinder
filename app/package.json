@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --mode production",
+    "build": "npx browserslist@latest --update-db && vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -45,8 +45,9 @@
     "rules": {}
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
+    ">0.25%",
+    "not ie 11",
+    "not op_mini all",
     "not dead"
   ]
 }
