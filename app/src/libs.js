@@ -21,7 +21,6 @@ function normalizeObjectKeys(inputObject, keyMap) {
   Object.entries(keyMap).forEach(([key, value]) => {
     if (Object.keys(inputObject).includes(value)) {
       tmp[key] = inputObject[value]
-      delete inputObject[value]
     }
   })
   return {...tmp, ...inputObject}
