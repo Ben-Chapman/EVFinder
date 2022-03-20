@@ -161,8 +161,14 @@
     </b-row>
     
     <b-row class="d-flex justify-content-center mt-3" align-v="center">
-      <b-col cols="6" xs="12" md="4" align-self="center">
-        <p class="text-center attention"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
+      <b-col cols="12" xs="12" md="4" align-self="center">
+        <p class="text-center vehicles-available"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
+
+        <!-- Show a rotate message for xs screens -->
+        <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 rotate-message" align-v="center">
+            <b-icon icon="phone-landscape" variant="info" class="pr-4"></b-icon>
+            Rotate Your Device For More Options
+        </b-row>
       </b-col>
     </b-row>
   </div>
@@ -308,6 +314,17 @@
   } // default
 </script>
 
-<style>
+<style lang="scss">
+  @import '../assets/app_style.scss';
+  
+  .vehicles-available {
+    margin-bottom: .75rem;
+  }
+
+  .rotate-message {
+    font-size: .85rem;
+    margin-bottom: .75rem;
+    color: $orange-crayola;
+  }
 
 </style>

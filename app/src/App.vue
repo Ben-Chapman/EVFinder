@@ -4,7 +4,7 @@
       <FormSelectors/>
     </div>
 
-    <b-row >
+    <b-row>
       <InventoryGrid/>
     </b-row>
   </div>
