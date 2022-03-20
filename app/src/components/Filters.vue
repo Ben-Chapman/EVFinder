@@ -75,7 +75,34 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
-      
+  
+      <!-- Only show these filters on screens larger than xs -->
+      <div class="d-none d-sm-block">
+      <!-- Dealer Filter -->
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Dealer
+            <span v-if="localFilterSelections.dealerNm.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.dealerNm.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.dealerNm" :key=item
+              :value="item"
+              v-model="localFilterSelections.dealerNm"
+              name="Dealer-Name"
+              class="mb-3"
+              >
+              {{ item }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
+      </div>
+
       <!-- Price Filter -->
         <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
@@ -157,6 +184,7 @@
         this entire object into the Vuex store.
         */
         localFilterSelections: {
+          'dealerNm': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'ExtColorLongDesc': [],
@@ -198,6 +226,7 @@
 
       resetFilterSelections() {
         this.localFilterSelections = {
+          'dealerNm': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'ExtColorLongDesc': [],
