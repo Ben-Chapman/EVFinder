@@ -1,7 +1,6 @@
 <template>
   <div v-if="this.inventory.length > 0">
-    <hr>
-    <b-row align-h="center" class="d-flex justify-content-center" align-v="center">
+    <b-row align-h="center" class="d-flex justify-content-center border-top pt-3" align-v="center">
       <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
       
       <!-- Trim Filter -->
