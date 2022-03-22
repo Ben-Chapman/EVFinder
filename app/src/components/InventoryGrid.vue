@@ -335,6 +335,7 @@
       },
 
       formatVinDetails(input) {
+        console.log(input)
         var tmp = {}
         var keysToDelete = [
           'colors',
@@ -411,6 +412,18 @@
                 `${this.titleCase(input[key][a]['accessoryNm'])}: ${this.convertToCurrency(input[key][a]['accessoryPrice'])}`)
             }
             tmp['Accessories'] = aTmp.join(',  ')
+          }
+          else if (key == 'inventoryStatus') {
+            // Translate status codes to something meaningful
+            const transitStatus = {
+              'AA': 'At Sea 🚢',
+              'DS': 'Dealer Stock 🚩',
+              'IR': '🚛 In Transit',
+              'IT': '🚛 In Transit',
+              'PA': 'Port Arrival',
+              'TN': 'Ready for Shipment',
+            }
+            tmp['Inventory Status'] = transitStatus[value]
           }
           else if (needsCurrencyConversion.includes(key)) {
             tmp[nameMapping[key]] = this.convertToCurrency(value)
