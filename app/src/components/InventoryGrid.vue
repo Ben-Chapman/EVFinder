@@ -335,7 +335,6 @@
       },
 
       formatVinDetails(input) {
-        console.log(input)
         var tmp = {}
         var keysToDelete = [
           'colors',
