@@ -19,7 +19,7 @@ And more specifically:
   'trimDesc': 'edwTrim',
   'drivetrainDesc': 'drivetrainDescription',
   'price': 'msrp',
-  'PlannedDeliveryDate': '',
+  'inventoryStatus': 'status',
   'distance': 'range',
   'vin-with-more-details': '',
   }

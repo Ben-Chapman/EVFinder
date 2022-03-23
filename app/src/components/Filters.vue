@@ -75,7 +75,7 @@
           </b-dropdown-form>
         </b-dd>
   
-      <!-- Only show these filters on screens larger than xs -->
+      <!-- Only show this filter div on screens larger than xs -->
       <div class="d-none d-sm-block">
       <!-- Dealer Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
@@ -94,6 +94,30 @@
               :value="item"
               v-model="localFilterSelections.dealerNm"
               name="Dealer-Name"
+              class="mb-3"
+              >
+              {{ item }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
+
+        <!-- Inventory Status Filter -->
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Availability
+            <span v-if="localFilterSelections.inventoryStatus.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.inventoryStatus.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.inventoryStatus" :key=item
+              :value="item"
+              v-model="localFilterSelections.inventoryStatus"
+              name="Inventory-Status"
               class="mb-3"
               >
               {{ item }}
@@ -190,6 +214,7 @@
         */
         localFilterSelections: {
           'dealerNm': [],
+          'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'ExtColorLongDesc': [],
@@ -232,6 +257,7 @@
       resetFilterSelections() {
         this.localFilterSelections = {
           'dealerNm': [],
+          'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'ExtColorLongDesc': [],

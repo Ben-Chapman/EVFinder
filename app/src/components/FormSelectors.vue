@@ -279,9 +279,11 @@
           // Delivery Date
           if (vehicle['status'] == 'DS') {
             vehicle['PlannedDeliveryDate'] = "In Stock"
+            vehicle['inventoryStatus'] = "In Stock"
           }
           else if (vehicle['status'] == 'IT') {
             vehicle['PlannedDeliveryDate'] = "Coming Soon"
+            vehicle['inventoryStatus'] = "Coming Soon"
           }
           
           /* The Kia API data is inconsistent and some vehicles don't have a
@@ -310,6 +312,17 @@
         // Replace the $xx,xxx.xx string with a value which can be cast to float
         inv.forEach(vehicle => {
           vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+          // (key == 'inventoryStatus') {
+            // Translate status codes to something meaningful
+            const transitStatus = {
+              'AA': 'At Sea',
+              'DS': 'Dealer Stock',
+              'IR': 'In Transit',
+              'IT': 'In Transit',
+              'PA': 'Port Arrival',
+              'TN': 'Ready for Shipment',
+            }
+            vehicle['inventoryStatus'] = transitStatus[vehicle['inventoryStatus']]
         })
 
         this.updateStore({'inventory': inv})
@@ -401,5 +414,4 @@
 </script>
 
 <style scoped>
-
 </style>
