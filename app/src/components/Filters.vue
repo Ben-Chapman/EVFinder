@@ -104,7 +104,7 @@
         <!-- Inventory Status Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
-            Inventory Status
+            Availability
             <span v-if="localFilterSelections.inventoryStatus.length > 0">
               <b-badge variant="success">
                 {{ localFilterSelections.inventoryStatus.length }}
