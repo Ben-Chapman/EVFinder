@@ -62,9 +62,9 @@
           <b-card>
             <b-row class="justify-content-md-center">
               <div v-if="vinTableBusy" class="text-center my-2">
-                  <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
-                  <strong>Fetching Details for This Vehicle...</strong>
-                </div>
+                <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
+                <strong>Fetching Details for This Vehicle...</strong>
+              </div>
             </b-row>
 
               <!-- Vin Details List Group -->
@@ -411,7 +411,6 @@
           'trimDesc': 'Trim Description',
           'vin': 'VIN'}
 
-        // console.log(nameMapping['mileage'])
         for (let i in input) {
           const key = i
           const value = input[i]
@@ -460,12 +459,9 @@
         var selectedCategories = Object.entries(filterSelections).filter(f => f[1].length > 0)
         var selectedCategoriesCount = selectedCategories.length
         var isMatch = []
-        // console.log(selectedCategories)
-        // console.log(`\n\n${selectedCategoriesCount} Filter Type`)
         
         if (selectedCategoriesCount == 0) {
           // No filters are selected
-          // console.log("No filter")
           return true
         }
 
@@ -485,18 +481,15 @@
          for (var item of selectedCategories) {
            var category = item[0]
            var selectedItems = item[1]
-          //  console.log(`Selected Items are: ${selectedItems}`)
 
           if (category == 'price') {
             isMatch.push(this.filterByPrice(rowRecord, selectedItems[0]))
-            // console.log(category, selectedItems)
           }
           else {
-          // Each loop is a category. Do we have an OR match for the selected filter items?
-          // e.g. Blue OR Black OR White
-          isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
-          }
-          // console.log(`${selectedItems} | ${isMatch}`)
+            // Each loop is a category. Do we have an OR match for the selected filter items?
+            // e.g. Blue OR Black OR White
+            isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
+            }
           }
          
          if (isMatch.includes(false)) {
@@ -508,7 +501,6 @@
       },
 
       filterByPrice(rowRecord, selectedPrice) {
-        // console.log(`filterByPrice: ${rowRecord.price}, ${selectedPrice}`)
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
       
