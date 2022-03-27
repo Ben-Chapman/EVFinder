@@ -70,7 +70,7 @@
               <!-- Vin Details List Group -->
               <!-- Dealer Website Button -->
               <div v-if="form.model != 'N'">
-                <div v-if="vinDetail[row.item.vin]['DI']['DealerVDPURL']">
+                <div v-if="hasHyundaiVinDetail(vinDetail[row.item.vin])">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
@@ -134,7 +134,7 @@
   import Filters from './Filters.vue'
 
   import { mapActions, mapState } from 'vuex'
-  import {startCase, camelCase} from 'lodash'
+  import {camelCase, has, startCase} from 'lodash'
   import {kiaVinMapping} from '../json_mappings/kia'
 
   const apiBase = 'https://api.theevfinder.com'
@@ -256,11 +256,26 @@
         // Store a new record for each VIN we fetch.
         // this.$set is needed to enable reactive properties on an existing object
         // without this.$set, the nested table will not auto-refresh with this info
-        this.$set(
+        if (vinData['data'].length > 0) {
+          this.$set(
+            this.vinDetail,
+            vin,
+            this.formatVinDetails(vinData['data'][0]['vehicle'][0]),
+          )
+        } else if (vinData['data'].length == 0) {
+          this.$set(
+            this.vinDetail,
+            vin,
+            {'': 'No information was found for this VIN'},
+          )
+        } else {
+          this.$set(
           this.vinDetail,
           vin,
-          this.formatVinDetails(vinData['data'][0]['vehicle'][0]),
+          {'Error': 'An error occured fetching detail for this VIN'},
           )
+        }
+        
     
         // Remove the table busy indicator
         this.vinTableBusy = false
@@ -496,12 +511,17 @@
         // console.log(`filterByPrice: ${rowRecord.price}, ${selectedPrice}`)
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
+      
       // Before the browser quits, or the browser tab is closed, fire our Plausible call
       beforeWindowUnload() {
         this.$plausible.trackEvent(
           'VIN Detail', {props: {count: this.vinDetailClickedCount}}
           )
-      }
+      },
+
+      hasHyundaiVinDetail(item) {
+        return has(item, 'DealerVDPURL')
+      },
 
       
     }, // methods
@@ -525,7 +545,7 @@
           return false
         }
       },
-    },
+    },  // computed
     watch: {},
   }  // End of default
 </script>
