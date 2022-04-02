@@ -136,8 +136,9 @@
   import {mapActions, mapState} from 'vuex'
   import {has} from 'lodash'
 
-  import {kiaVinMapping} from '../json_mappings/kia'
-  import {getVinDetail} from '../json_mappings/hyundai'
+  import {convertToCurrency, titleCase} from '../libs'
+  import {kiaVinMapping} from '../manufacturers/kia'
+  import {getVinDetail} from '../manufacturers/hyundai'
   
   export default {
     components: {
@@ -164,10 +165,10 @@
         // TODO: Normalize these keys, so they're not manufacturer specific
         
         fields: [
-          { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
+          { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: "titleCase"},
-          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: "convertToCurrency"},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
           // Virtual Column
           { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },

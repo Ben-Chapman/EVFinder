@@ -12,7 +12,6 @@ import { convertToCurrency, titleCase } from "../libs"
 const apiBase = 'https://api.theevfinder.com'
 
 export async function getVinDetail(vin, model, year) {
-  
   const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
       model: model,
       year: year,
