@@ -1,4 +1,4 @@
-import {camelCase} from 'lodash';
+import {camelCase, startCase} from 'lodash';
 
 var flattendObj = {}
 const flattenObject = (obj, keyName) => {
@@ -36,4 +36,17 @@ export default function normalizeJson(inputJson, keyMap) {
       ))
   })
   return result
+}
+
+export function convertToCurrency(item) {
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+    })
+  return formatter.format(item)
+}
+
+export function titleCase(item) {
+  return startCase(camelCase(item))
 }

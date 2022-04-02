@@ -133,11 +133,11 @@
 <script>
   import Filters from './Filters.vue'
 
-  import { mapActions, mapState } from 'vuex'
-  import {camelCase, has, startCase} from 'lodash'
-  import {kiaVinMapping} from '../json_mappings/kia'
+  import {mapActions, mapState} from 'vuex'
+  import {has} from 'lodash'
 
-  const apiBase = 'https://api.theevfinder.com'
+  import {kiaVinMapping} from '../json_mappings/kia'
+  import {getVinDetail} from '../json_mappings/hyundai'
   
   export default {
     components: {
@@ -181,15 +181,7 @@
         'updateStore'
         ]),
 
-      /*
-      titleCase is also a global filter. The table fields array references this
-      function, so it's duplicated here also
-      */
-      titleCase(item) {
-        return startCase(camelCase(item))
-      },
-
-      toggleDetails(item) {
+      async toggleDetails(item) {
         // Inject _showDetails into the row items. Vue expects this to be present
         // to know this row has additional detail to display upon click
         if (item["_showDetails"]) item["_showDetails"] = false;
@@ -226,59 +218,28 @@
             k,            // Data to store
             )
         }
-        else {
-          // Make a vin API call for Hyundai
-          this.getVinDetail(item.vin)
+        else {  // Make a vin API call for Hyundai
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          
+          const hyundaiVinData = await getVinDetail(item.vin, this.form.model, this.form.year)
+
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            hyundaiVinData
+            )
         }
+
+        // Remove the table busy indicator
+        this.vinTableBusy = false
       },
       
       priceStringToNumber(priceString) {
         return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
-      },
-
-      async getVinDetail(vin) {
-        // Show users that we're fetching data
-        this.vinTableBusy = true
-
-        const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
-            model: this.form.model,
-            year: this.form.year,
-            vin: vin,
-          }),
-          {
-          method: 'GET',
-          mode: 'cors', 
-          })
-        
-        // Get VIN detail data for a single vehicle
-        const vinData = await response.json();
-        
-        // Store a new record for each VIN we fetch.
-        // this.$set is needed to enable reactive properties on an existing object
-        // without this.$set, the nested table will not auto-refresh with this info
-        if (vinData['data'].length > 0) {
-          this.$set(
-            this.vinDetail,
-            vin,
-            this.formatVinDetails(vinData['data'][0]['vehicle'][0]),
-          )
-        } else if (vinData['data'].length == 0) {
-          this.$set(
-            this.vinDetail,
-            vin,
-            {'': 'No information was found for this VIN'},
-          )
-        } else {
-          this.$set(
-          this.vinDetail,
-          vin,
-          {'Error': 'An error occured fetching detail for this VIN'},
-          )
-        }
-        
-    
-        // Remove the table busy indicator
-        this.vinTableBusy = false
       },
 
       formatDate(isoDate) {
@@ -330,16 +291,6 @@
         this.updateStore({'inventoryCount': filteredItems.length})
       },
 
-      // TODO: Move this to a filter
-      convertToCurrency(item) {
-        var formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          maximumFractionDigits: 0,
-          })
-        return formatter.format(item)
-      },
-
       openUrlInNewWindow(url) {
         // Fire event to Plausible
         this.$plausible.trackEvent(
@@ -348,111 +299,6 @@
 
         window.open(url, '_blank')
       },
-
-      formatVinDetails(input) {
-        var tmp = {}
-        var keysToDelete = [
-          'colors',
-        ]
-        var needsCurrencyConversion = [
-          'MAPPrice',
-          'freight',
-          'msrp',
-          'rbcSavings',
-          'totalAccessoryPrice',
-          'totalExtColorPrice',
-          'totalIntColotPrice',
-          'totalOptions',
-          'totalPackageOptionPrice',
-          'totalPackagePrice',
-        ]
-        var nameMapping = {
-          'DI': 'DI',
-          'colors': 'colors',
-          'MAPPrice': 'MAP Price',
-          'accessories': 'Accessories',
-          'cityMpg': 'City MPG',
-          'classDesc': 'Class Description',
-          'colorDesc': 'Color Description',
-          'cylinders': 'Cylinders',
-          'dealerCd': 'Dealer Code',
-          'doorCd': 'Door Code',
-          'drivetrain': 'Drivetrain',
-          'drivetrainDesc': 'Drivetrain Description',
-          'engineDesc': 'Engine Description',
-          'engineDisplacement': 'Engine Displacement',
-          'epaClassDesc': 'EPA Class Description',
-          'epaEstAvgMpg': 'EPA Estimated Average MPG',
-          'extColorDesc': 'External Color Description',
-          'freight': 'Freight Charge',
-          'fuelDesc': 'Fuel Description',
-          'highwayMpg': 'Highway MPG',
-          'horsepower': 'Horsepower',
-          'intColorDesc': 'Interior Color Description',
-          'inventoryStatus': 'Inventory Status',
-          'mileage': 'Mileage',
-          'modelCd': 'Model Code',
-          'modelGroupCd': 'Model Group Code',
-          'modelNm': 'Model Number',
-          'modelYear': 'Model Year',
-          'msrp': 'MSRP',
-          'packages': 'Packages',
-          'plannedDeliveryDate': 'Planned Delivery Date',
-          'rbcSavings': 'RBC Savings',
-          'sortableMileage': 'Vehicle Mileage',
-          'totalAccessoryPrice': 'Total Accessory Price',
-          'totalExtColorPrice': 'Total Exterior Color Price',
-          'totalIntColorPrice': 'Total Interior Color Price',
-          'totalOptions': 'Total Options Price',
-          'totalPackageOptionPrice': 'Total Package Options Price',
-          'totalPackagePrice': 'Total Package Price',
-          'totalPackages': 'Total Packages',
-          'transmissionDesc': 'Transmission Description',
-          'trimDesc': 'Trim Description',
-          'vin': 'VIN'}
-
-        for (let i in input) {
-          const key = i
-          const value = input[i]
-          
-          if (value === null || value == '') {
-            tmp[nameMapping[key]] = 'N/A'
-          }
-          else if (key == 'accessories') {
-            var aTmp = []
-            for (var a=0; a<input[key].length; a++) {
-              aTmp.push(
-                `${this.titleCase(input[key][a]['accessoryNm'])}: ${this.convertToCurrency(input[key][a]['accessoryPrice'])}`)
-            }
-            tmp['Accessories'] = aTmp.join(',  ')
-          }
-          else if (key == 'inventoryStatus') {
-            // Translate status codes to something meaningful
-            const transitStatus = {
-              'AA': 'At Sea 🚢',
-              'DS': 'Dealer Stock 🚩',
-              'IR': '🚛 In Transit',
-              'IT': '🚛 In Transit',
-              'PA': 'Port Arrival',
-              'TN': 'Ready for Shipment',
-            }
-            tmp['Inventory Status'] = transitStatus[value]
-          }
-          else if (needsCurrencyConversion.includes(key)) {
-            tmp[nameMapping[key]] = this.convertToCurrency(value)
-          }
-          else tmp[nameMapping[key]] = value
-        }
-
-        // Delete elements no longer needed
-        for (let j = 0; j < keysToDelete.length; j++) {
-          const element = keysToDelete[j]
-          delete tmp[element]
-        }
-
-      return tmp
-      },
-
 
       filterFunction(rowRecord, filterSelections) {
         // selectedCategories looks like ['trimDesc', ['LIMITED', 'SEL']]
