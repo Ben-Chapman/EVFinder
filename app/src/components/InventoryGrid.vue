@@ -359,7 +359,7 @@
       },
 
       hasHyundaiVinDetail(item) {
-        return has(item, 'DealerVDPURL')
+        return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
 
       
