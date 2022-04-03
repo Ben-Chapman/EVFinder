@@ -119,7 +119,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import normalizeJson from '../libs'
-  import {kiaJsonMapping} from '../json_mappings/kia'
+  import {kiaJsonMapping} from '../manufacturers/kia'
 
   const apiBase = 'https://api.theevfinder.com'
 
