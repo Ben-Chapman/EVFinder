@@ -24,4 +24,4 @@ pnpm-debug.log*
 
 # Python
 __pycache__/
-**testing.ipynb
+*.ipynb
