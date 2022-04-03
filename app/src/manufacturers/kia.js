@@ -15,6 +15,7 @@ And more specifically:
  */
 
  export const kiaJsonMapping = {
+  'interiorColorCd': 'interiorColorDescription',
   'ExtColorLongDesc': 'exteriorColorDescription',
   'trimDesc': 'edwTrim',
   'drivetrainDesc': 'drivetrainDescription',
