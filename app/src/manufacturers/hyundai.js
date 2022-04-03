@@ -1,12 +1,3 @@
-/* VIN search:
-- Search for a given vin
-- store the results
-- extract the zip from the results
-- search for the zip + 2 mile radius
-- filter the vin from the results
-- this shows the table
-
- */
 import { convertToCurrency, titleCase } from "../libs"
 
 const apiBase = 'https://api.theevfinder.com'
@@ -34,6 +25,15 @@ export async function getVinDetail(vin, model, year) {
       return {'Error': 'An error occured fetching detail for this VIN'}
   }
 }
+
+// export async function lookupByVin(vin) {
+//   // This is used for the search by VIN feature
+
+// if (validateVin(vin)) {
+
+// }
+
+// }
 
 function formatVinDetails(input) {
   var tmp = {}
@@ -138,3 +138,9 @@ function formatVinDetails(input) {
 
 return tmp
 }
+
+// function validateVin(manufacturer) {
+//   if (manufacturer == "hyundai" | manufacturer == "kia" ) {
+//     return /[A-Za-z]{2}[\w|\d]{9}\d{6}/.test(manufacturer)
+//   }
+// }
