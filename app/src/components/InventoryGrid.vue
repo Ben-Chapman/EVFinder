@@ -41,7 +41,7 @@
               - {{ data.item.city }}, {{ data.item.state }}
           </template>
 
-          <!-- Exterior Color -->
+          <!-- Interior Color -->
           <template #cell(interior-color)="data">
             {{ data.item.interiorColorCd }}
           </template>
@@ -170,9 +170,8 @@
         // TODO: Normalize these keys, so they're not manufacturer specific
         
         fields: [
-          { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
-          { key: 'interiorColorCd', label: 'Interior Color', sortable: true, sortDirection: 'desc'},
-          
+          { key: 'ExtColorLongDesc', label: 'Ext. Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'interiorColorCd', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
