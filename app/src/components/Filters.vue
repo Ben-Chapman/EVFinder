@@ -30,7 +30,7 @@
       <!-- Exterior Color Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
-            Exterior Color
+            Ext. Color
             <span v-if="localFilterSelections.ExtColorLongDesc.length > 0">
               <b-badge variant="success">
                 {{ localFilterSelections.ExtColorLongDesc.length }}
@@ -54,7 +54,7 @@
       <!-- Interior Color Filter -->
         <b-dd id="interior-color" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
-            Interior Color
+            Int. Color
             <span v-if="localFilterSelections.interiorColorCd.length > 0">
               <b-badge variant="success">
                 {{ localFilterSelections.interiorColorCd.length }}
@@ -76,7 +76,7 @@
         </b-dd>
       
       <!-- Drivetrain Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1" boundary="viewport">
           <template #button-content>
             Drivetrain
             <span v-if="localFilterSelections.drivetrainDesc.length > 0">
@@ -99,7 +99,7 @@
           </b-dropdown-form>
         </b-dd>
   
-      <!-- Only show this filter div on screens larger than xs -->
+      <!-- Only show these filters on screens larger than xs -->
       <div class="d-none d-sm-block">
       <!-- Dealer Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
@@ -148,9 +148,8 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
-      </div>
 
-      <!-- Price Filter -->
+        <!-- Price Filter -->
         <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             MSRP
@@ -194,6 +193,8 @@
               </div>
           </b-dropdown-form>
         </b-dd>
+      </div>
+
       <!-- If filters are selected, show the clear filter icon -->
       <div v-if="Object.values(filterSelections).filter(f => f.length > 0).length">
         <b-icon
@@ -209,16 +210,17 @@
     
     <b-row class="d-flex justify-content-center mt-3" align-v="center">
       <b-col cols="12" xs="12" md="4" align-self="center">
-        <div v-if="this.inventoryCount > 1">
-          <p class="text-center vehicles-available">
-            <b>{{ this.inventoryCount }}</b> Vehicles Available
-          </p>
-        </div>
-        <div v-else>
+        <div v-if="this.inventoryCount == 1">
           <p class="text-center vehicles-available">
             Just <b>{{ this.inventoryCount }}</b> Vehicle Available!
           </p>
         </div>
+        <div v-else>
+          <p class="text-center vehicles-available">
+            <b>{{ this.inventoryCount }}</b> Vehicles Available
+          </p>
+        </div>
+
         <!-- Show a rotate message for xs screens -->
         <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 rotate-message" align-v="center">
             <b-icon icon="phone-landscape" variant="secondary" class="pr-4"></b-icon>
