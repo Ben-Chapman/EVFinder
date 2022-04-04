@@ -41,6 +41,11 @@
               - {{ data.item.city }}, {{ data.item.state }}
           </template>
 
+          <!-- Interior Color -->
+          <template #cell(interior-color)="data">
+            {{ data.item.interiorColorCd }}
+          </template>
+
           <!-- VIN Column -->
           <template #cell(vin-with-more-details)="row">
             <!-- If we've already made the API call and stored the VIN data, just show it -->
@@ -165,7 +170,8 @@
         // TODO: Normalize these keys, so they're not manufacturer specific
         
         fields: [
-          { key: 'ExtColorLongDesc', label: 'Exterior Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'ExtColorLongDesc', label: 'Ext. Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'interiorColorCd', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},

@@ -121,6 +121,8 @@
   import normalizeJson from '../libs'
   import {kiaJsonMapping} from '../manufacturers/kia'
 
+  import {hyundaiInteriorColors, hyundaiTransitStatus} from '../constants'  //eslint-disable-line
+
   const apiBase = 'https://api.theevfinder.com'
 
   export default {
@@ -309,20 +311,17 @@
         })
         const inv = await response.json()
         
-        // Replace the $xx,xxx.xx string with a value which can be cast to float
         inv.forEach(vehicle => {
+          // Replace the $xx,xxx.xx string with a value which can be cast to float
           vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
-          // (key == 'inventoryStatus') {
-            // Translate status codes to something meaningful
-            const transitStatus = {
-              'AA': 'At Sea',
-              'DS': 'Dealer Stock',
-              'IR': 'In Transit',
-              'IT': 'In Transit',
-              'PA': 'Port Arrival',
-              'TN': 'Ready for Shipment',
-            }
-            vehicle['inventoryStatus'] = transitStatus[vehicle['inventoryStatus']]
+          
+          // Translate inventory status codes to something meaningful
+          vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
+
+          // Translate interior color codes to something meaningful
+          vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+
+
         })
 
         this.updateStore({'inventory': inv})

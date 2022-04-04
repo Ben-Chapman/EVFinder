@@ -19,6 +19,7 @@ $grey: #605F5E;
 $green-blue: #2D82B7;
 $orange-crayola: #FE7139;
 $logo-green: #70E000;
+$analogous-logo-green: #00E025;
 $highlight-bluegreen: #F0F8FA;
 $action-blue: #5C8DDB;
 $light-bluegray: #F2F6FA;
@@ -29,7 +30,7 @@ $mustard-yellow: #e4dc62;
 
 // Customized Variants
 $primary:       $primary-blue;
-// $secondary:     $action-blue;
+$secondary:     $analogous-logo-green;
 $success:       $logo-green;
 $info:          $orange-crayola;
 $warning:       $warning-red;
