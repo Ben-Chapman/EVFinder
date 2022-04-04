@@ -20,7 +20,6 @@ const hyundaiTransitStatus = {
   'TN': 'Ready for Shipment',
 }
 
-
 export {
   hyundaiInteriorColors,
   hyundaiTransitStatus,
