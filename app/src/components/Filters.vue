@@ -27,10 +27,10 @@
           </b-dropdown-form>
         </b-dd>
       
-      <!-- Color Filter -->
+      <!-- Exterior Color Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
-            Color
+            Ext. Color
             <span v-if="localFilterSelections.ExtColorLongDesc.length > 0">
               <b-badge variant="success">
                 {{ localFilterSelections.ExtColorLongDesc.length }}
@@ -50,9 +50,33 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
+
+      <!-- Interior Color Filter -->
+        <b-dd id="interior-color" size="sm" variant="outline-primary" class="px-1">
+          <template #button-content>
+            Int. Color
+            <span v-if="localFilterSelections.interiorColorCd.length > 0">
+              <b-badge variant="success">
+                {{ localFilterSelections.interiorColorCd.length }}
+              </b-badge>
+            </span>
+          </template>
+
+          <b-dropdown-form>
+            <b-form-checkbox
+              v-for="item in this.filterOptions.interiorColorCd" :key=item
+              :value="item"
+              v-model="localFilterSelections.interiorColorCd"
+              name="interior-color"
+              class="mb-3"
+              >
+              {{ item | titleCase }}
+            </b-form-checkbox>
+          </b-dropdown-form>
+        </b-dd>
       
       <!-- Drivetrain Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1" boundary="viewport">
           <template #button-content>
             Drivetrain
             <span v-if="localFilterSelections.drivetrainDesc.length > 0">
@@ -75,7 +99,7 @@
           </b-dropdown-form>
         </b-dd>
   
-      <!-- Only show this filter div on screens larger than xs -->
+      <!-- Only show these filters on screens larger than xs -->
       <div class="d-none d-sm-block">
       <!-- Dealer Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
@@ -124,9 +148,8 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
-      </div>
 
-      <!-- Price Filter -->
+        <!-- Price Filter -->
         <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             MSRP
@@ -170,6 +193,8 @@
               </div>
           </b-dropdown-form>
         </b-dd>
+      </div>
+
       <!-- If filters are selected, show the clear filter icon -->
       <div v-if="Object.values(filterSelections).filter(f => f.length > 0).length">
         <b-icon
@@ -185,11 +210,20 @@
     
     <b-row class="d-flex justify-content-center mt-3" align-v="center">
       <b-col cols="12" xs="12" md="4" align-self="center">
-        <p class="text-center vehicles-available"><b>{{ this.inventoryCount }}</b> Vehicles Available</p>
+        <div v-if="this.inventoryCount == 1">
+          <p class="text-center vehicles-available">
+            Just <b>{{ this.inventoryCount }}</b> Vehicle Available!
+          </p>
+        </div>
+        <div v-else>
+          <p class="text-center vehicles-available">
+            <b>{{ this.inventoryCount }}</b> Vehicles Available
+          </p>
+        </div>
 
         <!-- Show a rotate message for xs screens -->
         <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 rotate-message" align-v="center">
-            <b-icon icon="phone-landscape" variant="info" class="pr-4"></b-icon>
+            <b-icon icon="phone-landscape" variant="secondary" class="pr-4"></b-icon>
             Rotate Your Device For More Options
         </b-row>
       </b-col>
@@ -214,6 +248,7 @@
         */
         localFilterSelections: {
           'dealerNm': [],
+          'interiorColorCd': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
@@ -257,6 +292,7 @@
       resetFilterSelections() {
         this.localFilterSelections = {
           'dealerNm': [],
+          'interiorColorCd': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
@@ -349,7 +385,7 @@
   .rotate-message {
     font-size: .85rem;
     margin-bottom: .75rem;
-    color: $orange-crayola;
+    color: $analogous-logo-green;
   }
 
 </style>

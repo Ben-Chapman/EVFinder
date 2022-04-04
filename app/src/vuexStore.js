@@ -11,11 +11,15 @@ const state = {
   filterOptions: {},
   // TODO: These need to be normalized, and not tied to a specific JSON key name
   filterSelections: {
+    'dealerNm': [],
+    'interiorColorCd': [],
+    'inventoryStatus': [],
     'trimDesc': [],
     'drivetrainDesc': [],
     'ExtColorLongDesc': [],
     'price': [],
   },
+  
   form: {
     zipcode: '',
     year: '2022',
