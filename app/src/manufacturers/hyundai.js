@@ -54,22 +54,17 @@ function formatVinDetails(input) {
     'totalPackagePrice',
   ]
 
-  for (let i in input) {
-    const key = i
-    const value = input[i]
-    
+  Object.entries(input).forEach(([key, value]) => {
     if (value === null || value == '') {
       tmp[hyundaiVinDetailMapping[key]] = 'N/A'
-    }
-    else if (key == 'accessories') {
+    } else if (key == 'accessories') {
       var aTmp = []
       for (var a=0; a<input[key].length; a++) {
         aTmp.push(
           `${titleCase(input[key][a]['accessoryNm'])}: ${convertToCurrency(input[key][a]['accessoryPrice'])}`)
       }
       tmp['Accessories'] = aTmp.join(',  ')
-    }
-    else if (key == 'inventoryStatus') {
+    } else if (key == 'inventoryStatus') {
       // Translate status codes to something meaningful
       const transitStatus = {
         'AA': 'At Sea 🚢',
@@ -80,12 +75,12 @@ function formatVinDetails(input) {
         'TN': 'Ready for Shipment',
       }
       tmp['Inventory Status'] = transitStatus[value]
-    }
-    else if (needsCurrencyConversion.includes(key)) {
+    } else if (needsCurrencyConversion.includes(key)) {
       tmp[hyundaiVinDetailMapping[key]] = convertToCurrency(value)
+    } else if (keysToDelete.includes(key) == false) {
+      tmp[hyundaiVinDetailMapping[key]] = value
     }
-    else tmp[hyundaiVinDetailMapping[key]] = value
-  }
+  })
 
   // Delete elements no longer needed
   for (let j = 0; j < keysToDelete.length; j++) {
@@ -94,7 +89,7 @@ function formatVinDetails(input) {
   }
 
 return tmp
-}
+  }
 
 // function validateVin(manufacturer) {
 //   if (manufacturer == "hyundai" | manufacturer == "kia" ) {
