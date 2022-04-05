@@ -119,7 +119,7 @@
               </b-list-group>
               
           
-            <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+            <b-button size="sm" @click="row.toggleDetails" variant="light">Hide Details</b-button>
           </b-card>
         </template>
               <!-- Table Busy Indicator -->
