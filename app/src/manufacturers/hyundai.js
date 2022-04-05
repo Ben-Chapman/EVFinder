@@ -55,7 +55,7 @@ function formatVinDetails(input) {
   var nameMapping = {
     'DI': 'DI',
     'colors': 'colors',
-    'MAPPrice': 'MAP Price',
+    'MAPPrice': 'Market Adjustment Price',
     'accessories': 'Accessories',
     'cityMpg': 'City MPG',
     'classDesc': 'Class Description',
