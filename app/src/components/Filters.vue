@@ -20,7 +20,7 @@
               :value="item"
               v-model="localFilterSelections.trimDesc"
               name="trim-description"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item }}
             </b-form-checkbox>
@@ -44,7 +44,7 @@
               :value="item"
               v-model="localFilterSelections.ExtColorLongDesc"
               name="name-here"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item | titleCase }}
             </b-form-checkbox>
@@ -68,7 +68,7 @@
               :value="item"
               v-model="localFilterSelections.interiorColorCd"
               name="interior-color"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item | titleCase }}
             </b-form-checkbox>
@@ -92,7 +92,7 @@
               :value="item"
               v-model="localFilterSelections.drivetrainDesc"
               name="name-here"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item | titleCase }}
             </b-form-checkbox>
@@ -118,7 +118,7 @@
               :value="item"
               v-model="localFilterSelections.dealerNm"
               name="Dealer-Name"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item }}
             </b-form-checkbox>
@@ -142,7 +142,7 @@
               :value="item"
               v-model="localFilterSelections.inventoryStatus"
               name="Inventory-Status"
-              class="mb-3"
+              class="mb-1"
               >
               {{ item }}
             </b-form-checkbox>
@@ -285,6 +285,11 @@
           })
         })
 
+        // Sort the values for each filterOption
+        Object.entries(tmp).forEach(([key, value]) => {
+          tmp[key] = value.sort()
+        })
+
         // Write the filterOptions into the Vuex store
         this.updateStore({'filterOptions': tmp})
       },
@@ -387,5 +392,10 @@
     margin-bottom: .75rem;
     color: $analogous-logo-green;
   }
+
+  // Resize the text in the filter dropdowns
+  .b-dropdown-form {
+    font-size: .9rem !important;
+}
 
 </style>
