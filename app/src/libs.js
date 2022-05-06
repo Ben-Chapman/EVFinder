@@ -50,3 +50,19 @@ export function convertToCurrency(item) {
 export function titleCase(item) {
   return startCase(camelCase(item))
 }
+
+export function generateUrlQueryParams(item) {
+  /**
+   * For a given item, generate query parameters. Accepts an input object
+   */
+  Object.keys(item)
+  .filter(f => item[f].length > 0)
+  .forEach(key => {
+    console.log(key)
+    const queryParam = key.slice(0,2).toLowerCase()
+    const queryValue = item[key].join(',').toLowerCase()
+    var url = new URL(window.location.href)
+    url.searchParams.set(queryParam, queryValue)
+    window.history.replaceState({}, '', url.search)
+  })
+}
