@@ -233,9 +233,29 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import { generateUrlQueryParams } from '../libs'
+
+  // What length should the query param key length be. A value of 3 would
+  // truncate from ?queryParamHere=yes to ?que=yes
+  var queryParamKeyLength = 3
 
   export default {
-    mounted() {},
+    mounted() {
+      /** 
+       * On mount, determine if we have any filter-related query params. If so,
+       * parse them and populate into localFilterSelections
+       */
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+      Object.keys(params).forEach(param => {
+        Object.keys(this.localFilterSelections).forEach(filter => {
+          if (filter.startsWith(param)) {
+            this.localFilterSelections[filter].push(params[param])
+          }
+        })
+
+      })
+    },
 
     data() {
       return {
@@ -244,7 +264,7 @@
         a Vuex store. So using a store and forward pattern to address this.
         The form data is initially stored in this local data object, which is
         being watched. When this data object changes, the watcher will commit
-        this entire object into the Vuex store.
+        this entire object into the Vuex store and push the data into Vue router.
         */
         localFilterSelections: {
           'dealerNm': [],
@@ -261,15 +281,16 @@
     methods: {
       ...mapActions([
         'updateFilterSelections',
+        'updateQueryParams',
         'updateStore',
           ]),
       
-      populateFilterOptions() {
+      buildFilterOptions() {
         if (Object.entries(this.filterOptions).length > 0) {
           this.updateStore({'filterOptions': {}})
         }
 
-        // Generate the filterOptions
+        // Build the filterOptions
         var tmp = {}
         this.inventory.forEach(vehicle => {
           Object.entries(vehicle).forEach(([key, value]) => {
@@ -323,7 +344,8 @@
         'inventory',
         'filterSelections',
         'filterOptions',
-        'inventoryCount'
+        'inventoryCount',
+        'urlQueryParameters',
       ]),
 
       calculateMinPrice() {
@@ -357,7 +379,7 @@
     watch: {
       // When the inventory Vuex store is updated, build the filter options
       inventory: function () {
-        this.populateFilterOptions()
+        this.buildFilterOptions()
       },
 
       // Watching this local data and when it updates, writing the data into the
@@ -365,6 +387,9 @@
       localFilterSelections: {
         handler: function (val) {
           this.updateFilterSelections(val)
+
+          // When the filters are modified, update the URL query params
+          generateUrlQueryParams(val, queryParamKeyLength)
         },
         // The callback will be called whenever any of the watched object properties
         // change regardless of their nested depth
