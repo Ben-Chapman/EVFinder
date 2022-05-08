@@ -120,7 +120,6 @@
   import { mapActions, mapState } from 'vuex'
   import normalizeJson from '../libs'
   import {kiaJsonMapping} from '../manufacturers/kia'
-
   import {hyundaiInteriorColors, hyundaiTransitStatus} from '../constants'  //eslint-disable-line
 
   const apiBase = 'https://api.theevfinder.com'
