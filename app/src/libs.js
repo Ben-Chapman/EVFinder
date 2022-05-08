@@ -53,28 +53,26 @@ export function titleCase(item) {
 
 export function generateUrlQueryParams(item, sliceLength) {
   /**
-   * For a given item, generate query parameters. Accepts an input object
+   * For a given item, generate query parameters. Accepts an object.
+   * The input object (item) contains the full localqueryParams object, so
+   * we have to loop through that object, and only generate query params for 
+   * Object keys which have a value (user selected a filter item).
    */
   var url = new URL(window.location.href)
   Object.keys(item)
-  // .filter(f => item[f].length > 0)
   .forEach(key => {
-    const queryParam = key.slice(0,sliceLength).toLowerCase()
+    const queryParam = key.slice(0,sliceLength)
     const queryValue = item[key].join(',')
-    console.log(key)
-    console.log(item[key].length)
-      console.log(url.searchParams.has(key))
-      console.log('\n')
-    if (item[key].length == 0 && url.searchParams.has(queryParam)) {
-      
-      url.searchParams.delete(key)
-      // window.history.replaceState({}, '', url.search)
-    }
-    else if (item[key].length > 0) {
-      
+    
+    // Only generate a query param, if the user has selected a filter item
+    if (item[key].length > 0) {
       url.searchParams.set(queryParam, queryValue)
     }
-      
+    // When a user deselects a filter item, remove it from the list of query params
+    else if (item[key].length == 0 && url.searchParams.has(queryParam)) {
+      url.searchParams.delete(queryParam)
+    }
   })
+  // Push query param changes to the URL
   window.history.replaceState({}, '', url.search)
 }
