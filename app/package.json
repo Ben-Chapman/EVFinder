@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "npx browserslist@latest --update-db && vue-cli-service build --mode production",
+    "build": "npx browserslist@latest --update-db --yes && vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
