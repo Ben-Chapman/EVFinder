@@ -235,13 +235,26 @@
   import { mapActions, mapState } from 'vuex'
   import { generateUrlQueryParams } from '../libs'
 
+  // What length should the query param key length be. A value of 3 would
+  // truncate from ?queryParamHere=yes to ?que=yes
+  var queryParamKeyLength = 3
+
   export default {
     mounted() {
       /** 
        * On mount, determine if we have any filter-related query params. If so,
        * parse them and populate into localFilterSelections
        */
-      
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+      Object.keys(params).forEach(param => {
+        Object.keys(this.localFilterSelections).forEach(filter => {
+          if (filter.startsWith(param)) {
+            this.localFilterSelections[filter].push(params[param])
+          }
+        })
+
+      })
     },
 
     data() {
@@ -376,7 +389,7 @@
           this.updateFilterSelections(val)
 
           // When the filters are modified, update the URL query params
-          generateUrlQueryParams(val)
+          generateUrlQueryParams(val, queryParamKeyLength)
         },
         // The callback will be called whenever any of the watched object properties
         // change regardless of their nested depth

@@ -51,18 +51,30 @@ export function titleCase(item) {
   return startCase(camelCase(item))
 }
 
-export function generateUrlQueryParams(item) {
+export function generateUrlQueryParams(item, sliceLength) {
   /**
    * For a given item, generate query parameters. Accepts an input object
    */
+  var url = new URL(window.location.href)
   Object.keys(item)
-  .filter(f => item[f].length > 0)
+  // .filter(f => item[f].length > 0)
   .forEach(key => {
+    const queryParam = key.slice(0,sliceLength).toLowerCase()
+    const queryValue = item[key].join(',')
     console.log(key)
-    const queryParam = key.slice(0,2).toLowerCase()
-    const queryValue = item[key].join(',').toLowerCase()
-    var url = new URL(window.location.href)
-    url.searchParams.set(queryParam, queryValue)
-    window.history.replaceState({}, '', url.search)
+    console.log(item[key].length)
+      console.log(url.searchParams.has(key))
+      console.log('\n')
+    if (item[key].length == 0 && url.searchParams.has(queryParam)) {
+      
+      url.searchParams.delete(key)
+      // window.history.replaceState({}, '', url.search)
+    }
+    else if (item[key].length > 0) {
+      
+      url.searchParams.set(queryParam, queryValue)
+    }
+      
   })
+  window.history.replaceState({}, '', url.search)
 }
