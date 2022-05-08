@@ -90,7 +90,7 @@
                 </div>
               </div>
               <!-- Window sticker for Kias -->
-              <div v-if="form.model == 'N'">
+              <!-- <div v-if="form.model == 'N'">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
@@ -102,7 +102,7 @@
                       <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon>
                     </b-button>
                   </b-row>
-              </div>
+              </div> -->
               
                 <b-list-group
                   horizontal
