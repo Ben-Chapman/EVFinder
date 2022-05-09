@@ -1,0 +1,20 @@
+steps:
+- name: node
+  entrypoint: npm
+  args: ['install']
+
+- name: node
+  entrypoint: npm
+  args: ['run', 'build']
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: [
+    'gsutil',
+    '-m',
+    '-h "Cache-Control:public, max-age=3600"',
+    'cp',
+    '-r',
+    '/workspace/dist/*',
+    'gs://${_APP_BUCKET_NAME}/testing'
+    ]
+
