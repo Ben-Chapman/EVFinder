@@ -34,7 +34,8 @@ fi
 
 # Update the NPM package version from the git tag version
 VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.x
-npm version ${VER} -m "Build: Version bump to ${VER}"
+npm version ${VER} -m "Build: Version bump to %s"
+git_stage "package*" "Build: Version bump to ${VER}"
 
 # Push changes to Github
 if git log --branches --not --remotes |grep commit -eq 0; then
