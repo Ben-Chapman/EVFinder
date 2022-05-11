@@ -4,22 +4,23 @@
 # Helper script to build The EVFinder Vue app
 ###
 
-function git_commit() {
+function git_stage() {
   FILE_TO_COMMIT=$1
   COMMIT_MESSAGE=$2
   git config --global user.email "cloudbuild@theevfinder.com"
   git config --global user.name "Cloud Build"
   git add ${FILE_TO_COMMIT}
-  # git commit -m ${COMMIT_MESSAGE}
-  # git push origin main 
+  git commit -m ${COMMIT_MESSAGE}
+}
+
+function git_push() {
+  git push https://${GITHUB_TOKEN}@https://github.com/Ben-Chapman/EVFinder.git ${TAG_NAME}
 }
 
 # Install Node and NPM
 /sbin/apk -U add nodejs=16.14.2-r0 npm
 
 cd ./app
-
-# Install needed dependencies
 npm install
 
 UPDATE_BROWSERSLIST=$(npx browserslist@latest --update-db --yes)
@@ -28,17 +29,15 @@ UPDATE_BROWSERSLIST=$(npx browserslist@latest --update-db --yes)
 if git status -s | grep 'package-lock.json' -eq 0; then
   INSTALLED_VER=$(echo $UPDATE_BROWSERSLIST |grep "Installed Version" |awk '{print $3}')
   LATEST_VER=$(echo $UPDATE_BROWSERSLIST |grep "Latest version" |awk '{print $3}')
-  git_commit "package-lock.json" "Build: Update Browserslist from ${INSTALLED_VER} to ${LATEST_VER}"
+  git_stage "package-lock.json" "Build: Update Browserslist from ${INSTALLED_VER} to ${LATEST_VER}"
 fi
 
 # Update the NPM package version from the git tag version
 VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.x
-# npm version ${VER} -m "Version bump to ${VER}"
-npm version $VER
+npm version ${VER} -m "Build: Version bump to ${VER}"
 
-# Commit changes to to git
-# git push origin main
-
+# Push changes to Github
+  
 # Now build
 npm run build
 
