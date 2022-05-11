@@ -1,20 +1,12 @@
 steps:
-- name: node
-  entrypoint: npm
-  args: ['install']
-
-- name: node
-  entrypoint: npm
-  args: ['run', 'build']
-
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: [
-    'gsutil',
-    '-m',
-    '-h',
-    'Cache-Control:public, max-age=3600',
-    'cp',
-    '-r',
-    '/workspace/dist/*',
-    'gs://${_APP_BUCKET_NAME}/testing'
-    ]
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+  entrypoint: 'bash'
+  args: ['./app/build.sh']
+  secretEnv: ['GITHUB_TOKEN']
+  env:
+  - 'TAG_NAME=$TAG_NAME'
+  - '_APP_BUCKET_NAME=theevfinder.com'
+availableSecrets:
+  secretManager:
+  - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest
+    env: 'GITHUB_TOKEN'  
