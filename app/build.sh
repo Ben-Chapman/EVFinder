@@ -38,9 +38,7 @@ npm version ${VER} -m "Build: Version bump to %s"
 git_stage "package*" "Build: Version bump to ${VER}"
 
 # Push changes to Github
-if git log --branches --not --remotes |grep commit -eq 0; then
-  git_push
-fi
+git_push
 
 # Now build
 npm run build
