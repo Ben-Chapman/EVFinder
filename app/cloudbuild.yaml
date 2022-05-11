@@ -9,4 +9,6 @@ steps:
 availableSecrets:
   secretManager:
   - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest
-    env: 'GITHUB_TOKEN'  
+    env: 'GITHUB_TOKEN'
+options:
+ logging: CLOUD_LOGGING_ONLY
