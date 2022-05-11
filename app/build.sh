@@ -14,7 +14,7 @@ function git_stage() {
 }
 
 function git_push() {
-  git push https://${GITHUB_TOKEN}@https://github.com/Ben-Chapman/EVFinder.git ${TAG_NAME}
+  git push https://${GITHUB_TOKEN}@github.com/Ben-Chapman/EVFinder.git
 }
 
 # Install Node and NPM
@@ -37,7 +37,10 @@ VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.
 npm version ${VER} -m "Build: Version bump to ${VER}"
 
 # Push changes to Github
-  
+if git log --branches --not --remotes |grep commit -eq 0; then
+  git_push
+fi
+
 # Now build
 npm run build
 
