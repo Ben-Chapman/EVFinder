@@ -1,5 +1,5 @@
 import { convertToCurrency, titleCase } from "../libs"
-import { hyundaiVinDetailMapping } from "../constants"
+import { hyundaiVinDetailMapping } from "./hyundaiMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 
