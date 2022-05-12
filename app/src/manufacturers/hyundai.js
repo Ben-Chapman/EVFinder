@@ -40,8 +40,10 @@ function formatVinDetails(input) {
   var tmp = {}
   var keysToDelete = [
     'colors',
+    'DDCSpecialProgam',
   ]
   var needsCurrencyConversion = [
+    'DealerPrice',
     'MAPPrice',
     'freight',
     'msrp',

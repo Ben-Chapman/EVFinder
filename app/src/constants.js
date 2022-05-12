@@ -21,6 +21,7 @@ const hyundaiTransitStatus = {
 }
 
 const hyundaiVinDetailMapping = {
+  'DealerPrice': 'Dealer Price',
   'DI': 'DI',
   'colors': 'colors',
   'MAPPrice': 'Market Adjustment Price',
