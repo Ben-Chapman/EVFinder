@@ -250,7 +250,7 @@
       Object.keys(params).forEach(param => {
         Object.keys(this.localFilterSelections).forEach(filter => {
           if (filter.startsWith(param)) {
-            this.localFilterSelections[filter].push(params[param])
+            this.localFilterSelections[filter] = params[param].split(',')
           }
         })
 
