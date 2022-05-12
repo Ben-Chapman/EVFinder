@@ -142,7 +142,7 @@
   import {has} from 'lodash'
 
   import {convertToCurrency, titleCase} from '../libs'
-  import {kiaVinMapping} from '../manufacturers/kia'
+  import {kiaVinMapping} from '../manufacturers/kiaMappings'
   import {getVinDetail} from '../manufacturers/hyundai'
   
   export default {
