@@ -45,7 +45,7 @@ npm run build
 
 if [ $? -eq 0 ]; then
   # App build was successful, so deploy to GCS
-  gsutil -m -h "Cache-Control:public max-age=3600" cp -r /workspace/dist/* gs://${_APP_BUCKET_NAME}/testing
+  gsutil -m -h "Cache-Control:public max-age=3600" cp -r /workspace/dist/* gs://${_APP_BUCKET_NAME}
   RETVAL=$?
 fi
 
