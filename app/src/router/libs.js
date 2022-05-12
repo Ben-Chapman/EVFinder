@@ -15,9 +15,7 @@ function parseQueryParams(inputParams) {
       const longName = paramMapping[k]
       const value = queryParams[k]
 
-      // console.log(`blah  ${k}: ${queryParams[k]}`)
       if (Object.keys(paramMapping).includes(key)) {
-        console.log('writing qps')
         this.localForm[longName] = value
       }
     })
