@@ -14,7 +14,7 @@ function git_stage() {
 }
 
 function git_push() {
-  git push https://${GITHUB_TOKEN}@github.com/Ben-Chapman/EVFinder.git main
+  git push https://${GITHUB_TOKEN}@github.com/Ben-Chapman/EVFinder.git HEAD:main
 }
 
 # Install Node and NPM
