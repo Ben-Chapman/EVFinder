@@ -201,7 +201,7 @@
         about the vehicle, so there's no additional VIN API call needed. Thus
         storing the /inventory API data directly in the vinDetail local store.
         */
-        if (this.form.model === "N") {
+        if (this.form.manufacturer.toLowerCase() === "kia") {
           // Before writing the data, format the key names for humans
           const k = {}
           Object.keys(item).forEach(key => {
@@ -225,7 +225,7 @@
             k,            // Data to store
             )
         }
-        else {  // Make a vin API call for Hyundai
+        else if (this.form.manufacturer.toLowerCase() === "hyundai") {  // Make a vin API call for Hyundai
           // Show users that we're fetching data
           this.vinTableBusy = true
           
