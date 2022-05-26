@@ -25,6 +25,7 @@ const state = {
     year: '2022',
     model: 'Ioniq%205',
     radius: '',
+    manufacturer: '',
   }
   
 }
