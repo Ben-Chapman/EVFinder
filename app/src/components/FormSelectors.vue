@@ -2,14 +2,14 @@
     <div>
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
-        <a href="/#/">
+        <a href="/">
           <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
       <b-row class="d-flex mt-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="pl-0 d-none d-sm-block">
-          <a href="/#/">
+          <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
           </a>
         </b-col>
@@ -146,6 +146,7 @@
           year: '2022',
           model: 'Ioniq%205',
           radius: '',
+          manufacturer: '',
         },
 
         modelOptions: [
@@ -164,6 +165,7 @@
             label: 'Kia',
             options: [
               { value: 'N', text: 'EV6'},
+              { value: 'F', text: 'Niro Plug-In Hybrid'},
             ],
           }
           
@@ -195,6 +197,7 @@
       },
       
       routePushandGo() {
+        this.whichManufacturer(this.localForm.model)
         /*
         Push form fields to the Vue router as query params. We have a watch()
         configured which monitors for changes to the routes, and will triger an
@@ -234,10 +237,10 @@
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
         
-        if (this.localForm.model == 'N') {
+        if (this.localForm.manufacturer.toLowerCase() == 'kia') {
           await this.getKiaInventory()
         }
-        else {
+        else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
           await this.getHyundaiInventory()
         }
 
@@ -255,6 +258,7 @@
           zip: this.localForm.zipcode,
           year: this.localForm.year,
           model: this.localForm.model,
+          seriesName: this.localForm,
           radius: this.localForm.radius,
         }),
         {method: 'GET', mode: 'cors',})
@@ -354,6 +358,17 @@
           return false
         }
       },
+
+      whichManufacturer(vehicleModelName) {
+        Object.values(this.modelOptions).forEach(model => {
+          var manu = model.label
+          model.options.forEach(v => {
+            if (v.value.includes(vehicleModelName)) {
+              this.localForm.manufacturer = manu
+            }
+          })
+        })
+      }
     },  //methods
 
     computed: {
