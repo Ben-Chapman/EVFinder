@@ -147,6 +147,7 @@
           model: 'Ioniq%205',
           radius: '',
           manufacturer: '',
+          vehicleName: '',
         },
 
         modelOptions: [
@@ -165,7 +166,8 @@
             label: 'Kia',
             options: [
               { value: 'N', text: 'EV6'},
-              { value: 'F', text: 'Niro Plug-In Hybrid'},
+              { value: 'F', text: 'Niro Plug-In Hybrid' },
+              { value: 'V', text: 'Niro EV' },
             ],
           }
           
@@ -197,7 +199,7 @@
       },
       
       routePushandGo() {
-        this.whichManufacturer(this.localForm.model)
+        this.populateVehicleModelDetail(this.localForm.model)
         /*
         Push form fields to the Vue router as query params. We have a watch()
         configured which monitors for changes to the routes, and will triger an
@@ -258,7 +260,7 @@
           zip: this.localForm.zipcode,
           year: this.localForm.year,
           model: this.localForm.model,
-          seriesName: this.localForm,
+          seriesName: this.localForm.vehicleName,
           radius: this.localForm.radius,
         }),
         {method: 'GET', mode: 'cors',})
@@ -359,12 +361,18 @@
         }
       },
 
-      whichManufacturer(vehicleModelName) {
+      populateVehicleModelDetail(vehicleModelName) {
+        /**
+         * For a given vehicle model selection, populate some additional detail
+         * in the localForm, which can then be used  for things like manufacturer
+         * specific logic.
+         */
         Object.values(this.modelOptions).forEach(model => {
           var manu = model.label
           model.options.forEach(v => {
             if (v.value.includes(vehicleModelName)) {
               this.localForm.manufacturer = manu
+              this.localForm.vehicleName = v.text  // The Kia API needs this
             }
           })
         })
