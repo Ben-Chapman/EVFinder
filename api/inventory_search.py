@@ -20,6 +20,8 @@ CORS(
   methods="GET"
   )
 
+clouflare_auth = os.environ.get('CLOUDFLARE_AUTH')
+
 @app.route('/api/inventory')
 def get_inventory():
   
@@ -47,9 +49,8 @@ def get_inventory():
   
   # Ensure we only serve traffic sourced from Cloudflare
   try:
-    request.headers['CF-RAY']
+    request.headers[clouflare_auth]
   except KeyError as e:
-    print(f'Non-CF Access - {request.headers}')
     return json.dumps({}), 418
 
   if valid_request:
@@ -176,16 +177,6 @@ def get_window_sticker():
     window_sticker_pdf = r.content
   except requests.exceptions.RequestException as e:
     print(f'Request Error: {e}')
-    # request_debug = {
-    #   'Elapsed': r.elapsed, 
-    #   'Headers': r.headers, 
-    #   'Is_OK': r.ok,
-    #   'Reason': r.reason, 
-    #   'Request_Type': r.request, 
-    #   'Status_Code': r.status_code, 
-    #   'Request_URL': r.url
-    # }
-    # print(request_debug)
     return '', 500
 
   if r.status_code == 200:
@@ -199,6 +190,7 @@ def get_kia_inventory():
   zip_code = request_args['zip']
   year = request_args['year']
   model = request_args['model']
+  series_name = request_args['seriesName']
   radius = request_args['radius']
 
   # Status:
@@ -217,7 +209,7 @@ def get_kia_inventory():
 # Have to post this data to get range results
   post_data = {
   "filterSet": {
-    "seriesName": "EV6",
+    "seriesName": series_name,
     "series": model,
     "year": year,
     "zipCode": zip_code,
@@ -238,9 +230,8 @@ def get_kia_inventory():
   
   # Ensure we only serve traffic sourced from Cloudflare
   try:
-    request.headers['CF-RAY']
+    request.headers[clouflare_auth]
   except KeyError as e:
-    print(f'Non-CF Access - {request.headers}')
     return json.dumps({}), 418
 
   if valid_request:
@@ -251,13 +242,6 @@ def get_kia_inventory():
         'User-Agent': user_agent,
         'Referer': f'https://www.kia.com/us/en/inventory/result?zipCode={zip_code}&seriesId={model}&year={year}',
     }
-    # For local/offline testing
-    # if os.environ.get('API_ENV'):
-    #   with open('./tests/vehicles_data.json', 'r') as f:
-    #     data = json.loads(f.read())
-
-    #   print(f'\nUser agent for this request is: {user_agent}')
-    #   return send_response(flatten_api_results(data), 'application/json', 0)
 
     try:
       r = requests.post(api_url, json=post_data, headers=headers)
