@@ -1,4 +1,3 @@
-import logging
 from flask import Blueprint, request
 
 from libs.libs import send_response, send_error_response, validate_request
@@ -13,7 +12,10 @@ def get_kia_inventory():
   zip_code = request_args['zip']
   year = request_args['year']
   model = request_args['model']
-  # series_name = request_args['seriesName']  # Coming soon
+  try:
+    series_name = request_args['seriesName']
+  except Exception:  # temporary for rollout of this new query param
+    series_name = 'EV6'
   radius = request_args['radius']
   # We'll use the requesting UA to make the request to the Kia APIs
   user_agent = request.headers['User-Agent']
@@ -31,7 +33,7 @@ def get_kia_inventory():
 # The Kia API operates via POST with the following data
   post_data = {
   "filterSet": {
-    # "seriesName": series_name,
+    "seriesName": series_name,
     "series": model,
     "year": year,
     "zipCode": zip_code,
