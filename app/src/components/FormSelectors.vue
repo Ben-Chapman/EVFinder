@@ -118,7 +118,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import {hyundaiInteriorColors, hyundaiTransitStatus} from '../manufacturers/hyundaiMappings'
+  import { hyundaiInteriorColors, hyundaiTransitStatus } from '../manufacturers/hyundaiMappings'
   import { getKiaInventory } from '../manufacturers/kia'
 
   // const apiBase = 'https://api.theevfinder.com'
@@ -199,7 +199,6 @@
       },
       
       routePushandGo() {
-        this.populateVehicleModelDetail(this.localForm.model)
         /*
         Push form fields to the Vue router as query params. We have a watch()
         configured which monitors for changes to the routes, and will triger an
@@ -320,6 +319,10 @@
               this.localForm[longName] = value
             }
           })
+
+          // Now store some additional detail for the selected vehicle
+          this.populateVehicleModelDetail(this.localForm.model)
+
           return true  // Successfully parsed query params
         }
         else {
