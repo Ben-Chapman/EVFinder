@@ -43,7 +43,9 @@ def validate(validation_type, validation_data):
         'Santa%20Fe%20Phev',
         'Sonata%20Hev',
         'Tucson%20Phev',
-        'N'  # Kia
+        'N',  # Kia
+        'V',
+        'F'
         ]
       valid_radii = [1, 999]
       valid_vins = []

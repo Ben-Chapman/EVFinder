@@ -26,6 +26,7 @@ const state = {
     model: 'Ioniq%205',
     radius: '',
     manufacturer: '',
+    vehicleName: '',
   }
   
 }
