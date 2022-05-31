@@ -358,11 +358,11 @@
       },
       
       // Before the browser quits, or the browser tab is closed, fire our Plausible call
-      beforeWindowUnload() {
-        this.$plausible.trackEvent(
-          'VIN Detail', {props: {count: this.vinDetailClickedCount}}
-          )
-      },
+      // beforeWindowUnload() {
+      //   this.$plausible.trackEvent(
+      //     'VIN Detail', {props: {count: this.vinDetailClickedCount}}
+      //     )
+      // },
 
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
