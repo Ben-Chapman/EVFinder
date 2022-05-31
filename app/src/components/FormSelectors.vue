@@ -121,8 +121,7 @@
   import { hyundaiInteriorColors, hyundaiTransitStatus } from '../manufacturers/hyundaiMappings'
   import { getKiaInventory } from '../manufacturers/kia'
 
-  // const apiBase = 'https://api.theevfinder.com'
-  const apiBase = 'http://localhost:8081'
+  const apiBase = 'https://api.theevfinder.com'
 
   export default {
     mounted() {
@@ -239,13 +238,14 @@
         this.updateStore({'tableBusy': true})
         
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
-          var kiaInventory = await getKiaInventory(
+          const kiaInventory = await getKiaInventory(
             this.localForm.zipcode,
             this.localForm.year,
             this.localForm.model,
             this.localForm.vehicleName,
             this.localForm.radius,
           )
+          this.updateStore({'inventory': kiaInventory})
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
           await this.getHyundaiInventory()
@@ -259,15 +259,9 @@
           'form': this.localForm,
           })
 
-        this.updateStore({'inventory': kiaInventory})
+        
       },
     
-      // const kiaInventory = await getKiaInventory()
-
-      
-
-
-
       async getHyundaiInventory() {
         const response = await fetch(apiBase + '/api/inventory?' + new URLSearchParams({
           zip: this.localForm.zipcode,
