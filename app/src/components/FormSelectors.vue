@@ -118,11 +118,11 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import normalizeJson from '../libs'
-  import {kiaJsonMapping} from '../manufacturers/kiaMappings'
   import {hyundaiInteriorColors, hyundaiTransitStatus} from '../manufacturers/hyundaiMappings'
+  import { getKiaInventory } from '../manufacturers/kia'
 
-  const apiBase = 'https://api.theevfinder.com'
+  // const apiBase = 'https://api.theevfinder.com'
+  const apiBase = 'http://localhost:8081'
 
   export default {
     mounted() {
@@ -240,7 +240,13 @@
         this.updateStore({'tableBusy': true})
         
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
-          await this.getKiaInventory()
+          var kiaInventory = await getKiaInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.vehicleName,
+            this.localForm.radius,
+          )
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
           await this.getHyundaiInventory()
@@ -253,55 +259,15 @@
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
+
+        this.updateStore({'inventory': kiaInventory})
       },
     
-      async getKiaInventory() {
-        const response = await fetch(apiBase + '/api/inventory/kia?' + new URLSearchParams({
-          zip: this.localForm.zipcode,
-          year: this.localForm.year,
-          model: this.localForm.model,
-          seriesName: this.localForm.vehicleName,
-          radius: this.localForm.radius,
-        }),
-        {method: 'GET', mode: 'cors',})
+      // const kiaInventory = await getKiaInventory()
 
-        var r = await response.json()  // Raw results
-        var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
+      
 
-        n.forEach(vehicle => {
-          // Lookup the dealer name/address from the dealer code
-          const dCode = vehicle['dealerCode']
-          const dealerDetail = r['filterSet']['dealers'].find(dealer => dealer['code'] === dCode);
 
-          // Some results have a fqdn for a dealerUrl, some not. Stripping the
-          // scheme, which will be re-inserted by the template
-          vehicle['dealerUrl'] = dealerDetail['url'].replace(/http(s)?:\/\//i, '')
-          vehicle['dealerNm'] = dealerDetail['name']
-          vehicle['city'] = dealerDetail['location']['city']
-          vehicle['state'] = dealerDetail['location']['state']
-
-          // Distance to 2 decimal places
-          vehicle['distance'] = parseFloat(vehicle['distance']).toFixed(2).toString()
-          
-          // Delivery Date
-          if (vehicle['status'] == 'DS') {
-            vehicle['PlannedDeliveryDate'] = "In Stock"
-            vehicle['inventoryStatus'] = "In Stock"
-          }
-          else if (vehicle['status'] == 'IT') {
-            vehicle['PlannedDeliveryDate'] = "Coming Soon"
-            vehicle['inventoryStatus'] = "Coming Soon"
-          }
-          
-          /* The Kia API data is inconsistent and some vehicles don't have a
-           drivetrainDesc field (AWD/RWD), but do include this information in
-           a longer string description. For these vehicles, extracting the desc
-           from the string
-          */
-          vehicle['drivetrainDesc'] = vehicle['edwTrim'].match(/RWD|AWD/)[0]
-        })
-        this.updateStore({'inventory': n})
-      },
 
       async getHyundaiInventory() {
         const response = await fetch(apiBase + '/api/inventory?' + new URLSearchParams({
