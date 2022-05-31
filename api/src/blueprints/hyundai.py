@@ -48,6 +48,7 @@ def get_inventory():
     except KeyError:
       return send_error_response(
         error_message='Invalid data received from the Hyundai API',
+        error_data=data,
         status_code=500
       )
     
@@ -56,8 +57,13 @@ def get_inventory():
     else:
       return send_error_response(
         error_message='Received invalid data from the Hyundai API',
+        error_data=data,
         status_code=400
       )
   else:
     # Request could not be validated
-    return send_error_response('Invalid Request', 400)
+    return send_error_response(
+      error_message='Request could not be validated',
+      error_data=request.url,
+      status_code=400
+      )

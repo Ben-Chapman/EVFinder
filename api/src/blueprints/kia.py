@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, request
 
 from libs.libs import send_response, send_error_response, validate_request
@@ -12,7 +13,7 @@ def get_kia_inventory():
   zip_code = request_args['zip']
   year = request_args['year']
   model = request_args['model']
-  series_name = request_args['seriesName']
+  # series_name = request_args['seriesName']  # Coming soon
   radius = request_args['radius']
   # We'll use the requesting UA to make the request to the Kia APIs
   user_agent = request.headers['User-Agent']
@@ -30,7 +31,7 @@ def get_kia_inventory():
 # The Kia API operates via POST with the following data
   post_data = {
   "filterSet": {
-    "seriesName": series_name,
+    # "seriesName": series_name,
     "series": model,
     "year": year,
     "zipCode": zip_code,
@@ -63,9 +64,15 @@ def get_kia_inventory():
         cache_control_age=3600
       )
     else:
+      error_message = 'An error occured with the Kia API'
       return send_error_response(
-        error_message='An error occured with the Kia API'
+        error_message=error_message,
+        error_data=data
       )
   else:
     # Request could not be validated
-    return send_error_response('Invalid Request', 400)
+    return send_error_response(
+      error_message='Request could not be validated',
+      error_data=request.url,
+      status_code=400
+      )

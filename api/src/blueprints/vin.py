@@ -47,5 +47,6 @@ def get_vin_details():
   else:
       return send_error_response(
         error_message='Received invalid data from the Hyundai API',
+        error_data=data,
         status_code=400
       )

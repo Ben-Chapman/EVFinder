@@ -1,4 +1,5 @@
 import json
+import logging
 from tokenize import String
 from flask import jsonify, make_response
 
@@ -10,12 +11,16 @@ def send_response(response_data, content_type, cache_control_age, status_code=20
   }
   return response
 
-def send_error_response(error_message: String, status_code: int=500):
+def send_error_response(error_message: String, error_data, status_code: int=500):
   response = make_response(jsonify(error_message), status_code)
   response.headers = {
     'Content-Type': 'application/json',
     'Cache-Control': 'public, max-age=0, immutable',
   }
+
+  # Logging this error
+  logging.warning(f'{error_message}: {error_data}')
+
   return response
 
 def validate_request(input_data):
