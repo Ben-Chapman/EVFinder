@@ -371,7 +371,6 @@
             this.priceStringToNumber(input.price)
           )
         })
-        // console.log(`Min Price: ${Math.max(...numberData)}`)
         return Math.max(...numberData)
         },
     },  // computed
@@ -409,6 +408,7 @@
   @import '../assets/app_style.scss';
   
   .vehicles-available {
+    font-size: 1.1rem;
     margin-bottom: .75rem;
   }
 
