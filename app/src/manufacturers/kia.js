@@ -33,12 +33,12 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
     
     // Delivery Date
     if (vehicle['status'] == 'DS') {
-      vehicle['PlannedDeliveryDate'] = "In Stock"
-      vehicle['inventoryStatus'] = "In Stock"
+      vehicle['PlannedDeliveryDate'] = "Available"
+      vehicle['inventoryStatus'] = "Available"
     }
     else if (vehicle['status'] == 'IT') {
-      vehicle['PlannedDeliveryDate'] = "Coming Soon"
-      vehicle['inventoryStatus'] = "Coming Soon"
+      vehicle['PlannedDeliveryDate'] = "Arriving Soon"
+      vehicle['inventoryStatus'] = "Arriving Soon"
     }
     
     /* The Kia API data is inconsistent and some vehicles don't have a
