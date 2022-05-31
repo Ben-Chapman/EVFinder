@@ -1,4 +1,4 @@
-from api.inventory_search import validate_request
+from api.src.libs.libs import validate_request
 import pytest
 import requests
 
@@ -22,7 +22,7 @@ import requests
     ]
   )
 def test_validate_request_success(validation_type, test_input, expected, assertion_message):
-  assert validate_request(validation_type, test_input) == expected, assertion_message
+  assert validate_request({validation_type: test_input}.items()) == expected, assertion_message
 
 @pytest.mark.parametrize(
   "validation_type, test_input, expected, assertion_message",
@@ -49,4 +49,4 @@ def test_validate_request_success(validation_type, test_input, expected, asserti
     ]
   )
 def test_validate_request_fail(validation_type, test_input, expected, assertion_message):
-  assert validate_request(validation_type, test_input) == expected, assertion_message
+  assert validate_request({validation_type: test_input}.items()) == expected, assertion_message
