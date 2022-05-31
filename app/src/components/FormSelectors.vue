@@ -222,17 +222,17 @@
             })
         
         // Send event data to Plausible
-        this.$plausible.trackEvent(
-          'Search Params', {
-            props:
-              {
-                Year: this.localForm.year,
-                Model: this.localForm.model,
-                Radius: this.localForm.radius,
-                ZipCode: this.localForm.zipcode,
-              }
-            }
-          )
+        // this.$plausible.trackEvent(
+        //   'Search Params', {
+        //     props:
+        //       {
+        //         Year: this.localForm.year,
+        //         Model: this.localForm.model,
+        //         Radius: this.localForm.radius,
+        //         ZipCode: this.localForm.zipcode,
+        //       }
+        //     }
+        //   )
       },
 
       async getCurrentInventory() {
