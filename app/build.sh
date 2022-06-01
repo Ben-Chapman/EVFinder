@@ -23,12 +23,14 @@ function git_push() {
 cd ./app
 npm install
 
+echo "Updating Browserslist..."
 UPDATE_BROWSERSLIST=$(npx browserslist@latest --update-db --yes)
 
 # Browserslist has been updated
-if git status -s | grep 'package-lock.json' -eq 0; then
-  INSTALLED_VER=$(echo $UPDATE_BROWSERSLIST |grep "Installed Version" |awk '{print $3}')
-  LATEST_VER=$(echo $UPDATE_BROWSERSLIST |grep "Latest version" |awk '{print $3}')
+git status -s | grep 'package-lock.json'
+if [ $? -eq 0 ]; then
+  INSTALLED_VER=$(echo $UPDATE_BROWSERSLIST |grep -i "Installed Version" |awk '{print $3}')
+  LATEST_VER=$(echo $UPDATE_BROWSERSLIST |grep -i "Latest version" |awk '{print $3}')
   git_stage "package-lock.json" "Build: Update Browserslist from ${INSTALLED_VER} to ${LATEST_VER}"
 fi
 
@@ -38,6 +40,7 @@ npm version ${VER} -m "Build: Version bump to %s"
 git_stage "package*" "Build: Version bump to ${VER}"
 
 # Push changes to Github
+echo "Pushing changes to Github..."
 git_push
 
 # Now build
