@@ -54,7 +54,6 @@
               >
                 {{ data.item.dealerNm }}
               </b-link>
-              - {{ data.item.city }}, {{ data.item.state }}
           </template>
 
           <!-- Distance -->
