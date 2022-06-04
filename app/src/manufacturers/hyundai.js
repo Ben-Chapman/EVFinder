@@ -58,7 +58,12 @@ function formatVinDetails(input) {
 
   Object.entries(input).forEach(([key, value]) => {
     if (value === null || value == '') {
-      tmp[hyundaiVinDetailMapping[key]] = 'N/A'
+      if (hyundaiVinDetailMapping[key] != undefined) {
+        tmp[hyundaiVinDetailMapping[key]] = 'N/A'
+      }
+      else {
+        key = 'N/A'
+      }
     } else if (key == 'accessories') {
       var aTmp = []
       for (var a=0; a<input[key].length; a++) {
