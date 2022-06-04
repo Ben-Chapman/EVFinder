@@ -4,13 +4,9 @@
 # Helper script to build The EVFinder Vue app
 ###
 
-function git_stage() {
-  FILE_TO_COMMIT=$1
-  COMMIT_MESSAGE=$2
+function configure_git() {
   git config --global user.email "cloudbuild@theevfinder.com"
   git config --global user.name "Cloud Build"
-  git add ${FILE_TO_COMMIT}
-  git commit -m ${COMMIT_MESSAGE}
 }
 
 function git_push() {
@@ -25,6 +21,9 @@ npm install
 
 echo "Updating Browserslist..."
 UPDATE_BROWSERSLIST=$(npx browserslist@latest --update-db --yes)
+
+# Setup git
+configure_git
 
 # Browserslist has been updated
 git status -s | grep 'package-lock.json'
