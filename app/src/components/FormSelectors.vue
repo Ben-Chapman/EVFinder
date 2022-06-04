@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- Only show this version of the logo on xs screens -->
-      <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
+      <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
           <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
