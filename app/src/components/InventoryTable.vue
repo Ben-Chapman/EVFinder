@@ -274,9 +274,9 @@
         if (isoDate) {  // Checking for null values
           // Parsing the ISO8601 isoDate into a DateString (Mon Jan 01 1970) and
           // stripping the leading day of week resulting in Jan 01 1970
-          const d = new Date(isoDate).toDateString().substring(4,)
+          const d = new Date(isoDate).toDateString()
           if (d != 'Invalid Date') {
-            return d
+            return d.substring(4,)
           } else {
               return isoDate
             }
