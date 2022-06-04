@@ -59,6 +59,8 @@
               trim
               debounce="250"
               required
+              inputmode="numeric"
+              pattern="[0-9]*"
             >
             </b-form-input>
           </b-form-group>
@@ -81,6 +83,8 @@
               trim
               debounce="250"
               required
+              inputmode="numeric"
+              pattern="[0-9]*"
             >
             </b-form-input>
           </b-form-group>
