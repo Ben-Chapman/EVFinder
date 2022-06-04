@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- Only show this version of the logo on xs screens -->
-      <b-row class="d-flex py-2 d-md-none d-sm-block" align-h="center">
+      <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
           <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
@@ -53,6 +53,8 @@
             description="Enter a 5-digit US zip code"
           >
             <b-form-input
+              autocomplete="off"
+              name="search"
               id="form-zipcode"
               v-model="localForm.zipcode"
               :state="isValidZipCode"
@@ -356,11 +358,16 @@
       ]),
 
       isValidZipCode() {
+        const zip = this.localForm.zipcode
         // Hide the error indicator when this field is blank
-        if(this.localForm.zipcode.length == 0) {
+        if(zip.length == 0) {
             return null
         }
-        return /^\d{5}(-\d{4})?$/.test(this.localForm.zipcode)
+        // https://facts.usps.com/42000-zip-codes/
+        const validZipCodes = [501, 99950]  // Starting zip code is 00501
+
+        // Is the input zip code a 5 digit number between 501 and 99950
+        return /^\d{5}$/.test(zip) && (parseInt(zip) >= validZipCodes[0] && parseInt(zip) <= validZipCodes[1])
       },
 
       isValidRadius() {

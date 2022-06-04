@@ -13,7 +13,7 @@
       <div v-else>
         <b-table
           hover
-          stacked="md"
+          stacked="sm"
           responsive
           :busy="tableBusy"
           :items="this.inventory"
@@ -35,7 +35,18 @@
             {{ data.item.interiorColorCd }}
           </template>
           
-          <!-- Dealer Information -->
+          <!-- Dealer Information for Mobile Devices. Displays dealer name only-->
+          <template #cell(dealer-name-only)="data">
+            <b-link
+              :href="`https://${data.item.dealerUrl}`"
+              target="_blank"
+              >
+                {{ data.item.dealerNm }}
+              </b-link>
+          </template>
+
+          <!-- Dealer Information for Large Screen Devices.
+          Displays Dealer Name - City, State -->
           <template #cell(dealer-name-address)="data">
             <b-link
               :href="`https://${data.item.dealerUrl}`"
@@ -179,7 +190,13 @@
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
-          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true },
+
+          // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
+          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell"},
+
+          // Display only the Dealer's name on mobile devices (hidden on desktop, iPad landscape, etc)
+          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" },
+          
           // Only show the Distance column on large+ devices (hidden on mobile, iPad portrait, etc)
           { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell'},
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
@@ -256,9 +273,9 @@
         if (isoDate) {  // Checking for null values
           // Parsing the ISO8601 isoDate into a DateString (Mon Jan 01 1970) and
           // stripping the leading day of week resulting in Jan 01 1970
-          const d = new Date(isoDate).toDateString().substring(4,)
+          const d = new Date(isoDate).toDateString()
           if (d != 'Invalid Date') {
-            return d
+            return d.substring(4,)
           } else {
               return isoDate
             }
