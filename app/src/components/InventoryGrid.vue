@@ -13,8 +13,8 @@
       <div v-else>
         <b-table
           hover
-          sticky-header="78vh"
           stacked="md"
+          responsive
           :busy="tableBusy"
           :items="this.inventory"
           :fields="this.fields"
@@ -29,6 +29,11 @@
           <template #cell(exterior-color)="data">
             {{ titleCase(data.item.ExtColorLongDesc) }}
           </template>
+
+          <!-- Interior Color -->
+          <template #cell(interior-color)="data">
+            {{ data.item.interiorColorCd }}
+          </template>
           
           <!-- Dealer Information -->
           <template #cell(dealer-name-address)="data">
@@ -38,12 +43,11 @@
               >
                 {{ data.item.dealerNm }}
               </b-link>
-              - {{ data.item.city }}, {{ data.item.state }}
           </template>
 
-          <!-- Interior Color -->
-          <template #cell(interior-color)="data">
-            {{ data.item.interiorColorCd }}
+          <!-- Distance -->
+          <template #cell(distance)="data">
+            {{ data.item.distance }} mi.
           </template>
 
           <!-- VIN Column -->
@@ -168,7 +172,6 @@
         vinDetailClickedCount: 0,
 
         // TODO: Normalize these keys, so they're not manufacturer specific
-        
         fields: [
           { key: 'ExtColorLongDesc', label: 'Ext. Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'interiorColorCd', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
@@ -176,9 +179,9 @@
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
           { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
-          // Virtual Column
-          { key: 'dealer-name-address', label: 'Dealer Information', sortable: true, sortByFormatted: true, filterByFormatted: true },
-          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc' },
+          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true },
+          // Only show the Distance column on large+ devices (hidden on mobile, iPad portrait, etc)
+          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell'},
           { key: 'vin-with-more-details', label: "VIN", sortable: false }
         ],
       } // End of return
@@ -251,10 +254,14 @@
 
       formatDate(isoDate) {
         if (isoDate) {  // Checking for null values
-          const d = new Date(isoDate.split('T')[0]).toDateString()  // Removing the time
+          // Parsing the ISO8601 isoDate into a DateString (Mon Jan 01 1970) and
+          // stripping the leading day of week resulting in Jan 01 1970
+          const d = new Date(isoDate).toDateString().substring(4,)
           if (d != 'Invalid Date') {
             return d
-          } else {return isoDate}
+          } else {
+              return isoDate
+            }
         }
         return ''
       },
@@ -367,7 +374,7 @@
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
-
+    
       
     }, // methods
     
@@ -408,6 +415,12 @@
 
   .table-hover tbody tr:hover {
     background-color: $highlight-bluegreen !important;
+}
+
+  .vin {
+    font-family: $font-family-monospace;
+    font-size: 1rem !important;
+    letter-spacing: -.03rem;
 }
 
   .no-inventory {
