@@ -5,14 +5,14 @@
     </div>
 
     <b-row>
-      <InventoryGrid/>
+      <InventoryTable/>
     </b-row>
   </div>
 </template>
 
 <script>
 import FormSelectors from './components/FormSelectors.vue'
-import InventoryGrid from './components/InventoryGrid.vue'
+import InventoryTable from './components/InventoryTable.vue'
 import {version} from '../package.json'
 console.log(`The EVFinder release version ${version}`)
 
@@ -20,7 +20,7 @@ export default {
   name: 'App',
   components: {
     FormSelectors,
-    InventoryGrid,
+    InventoryTable,
   },
 
   // Vue.head config here
