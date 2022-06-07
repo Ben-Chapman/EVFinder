@@ -43,9 +43,10 @@ def validate(validation_type, validation_data):
         'Santa%20Fe%20Phev',
         'Sonata%20Hev',
         'Tucson%20Phev',
-        'N',  # Kia
-        'V',
-        'F'
+        'N',  # EV6
+        'V',  # Niro EV
+        'F',  # Niro Plug-in Hybrid
+        'T',  # Sorento Plug-in Hybrid
         ]
       valid_radii = [1, 999]
       valid_vins = []
