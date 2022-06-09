@@ -5,7 +5,11 @@
 
     <!-- Table here -->
     <b-row class="d-flex justify-content-center">
-      <div v-if="showInventoryAlert" class="mt-5">
+      <!-- The API returned an error, so display an error message -->
+      <div v-if="this.apiErrorDetail.length > 0">
+        <ErrorMessage/>
+      </div>
+      <div v-else-if="showInventoryAlert" class="mt-5">
         <b-alert show variant="success" class="no-inventory px-5">
           No Vehicles Were Found. Adjust your search parameters and try again.
         </b-alert>
@@ -151,6 +155,7 @@
 </template>
 
 <script>
+  import ErrorMessage from './ErrorMessage.vue'
   import Filters from './Filters.vue'
 
   import {mapActions, mapState} from 'vuex'
@@ -162,6 +167,7 @@
   
   export default {
     components: {
+      ErrorMessage,
       Filters
       },
 
@@ -397,6 +403,7 @@
     
     computed: {
       ...mapState([
+        'apiErrorDetail',
         'tableBusy',
         'inventory',
         'filterSelections',
@@ -407,7 +414,7 @@
         if (
           !this.tableBusy
           && Object.values(this.inventory).length == 0
-          && Object.values(this.form).filter(f => f.length > 0).length == 4){
+          && Object.values(this.form).filter(f => f.length > 0).length == Object.keys(this.form).length){
           return true
         }
         else {
@@ -443,5 +450,6 @@
   .no-inventory {
     color: #6c757d !important;
     font-size: 1.2rem;
+    text-align: center;
   }  
 </style>
