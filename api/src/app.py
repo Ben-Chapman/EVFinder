@@ -21,10 +21,10 @@ CORS(
   app, 
   resources=r'/api/*',
   origins=[
-    "http://localhost:8080",
     "https://theevfinder.com",
     "https://www.theevfinder.com",
-    
+    "http://bs-local.com:8080",
+    "http://localhost:8080",
   ],
   methods="GET"
   )
