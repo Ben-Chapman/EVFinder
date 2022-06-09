@@ -12,8 +12,9 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
     radius: radius,
   }),
   {method: 'GET', mode: 'cors',})
+
   if (!response.ok) {
-    return ['ERROR', response.status, response.statusText]
+    return ['ERROR', response.status, await response.text()]
   } else {
     var r = await response.json()  // Raw results
     var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
