@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Fonts
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300;500&family=Inconsolata:wght@300&display=swap');
 
@@ -21,14 +23,23 @@ $orange-crayola: #FE7139;
 $logo-green: #70E000;
 $analogous-logo-green: #00E025;
 $highlight-bluegreen: #F0F8FA;
-$action-blue: #5C8DDB;
+$action-blue: #0E92EB;
 $light-bluegray: #F2F6FA;
-// $primary-blue: #1976d2;
 $primary-blue: #3884fe;
-$warning-red: #fc627a;
+$warning-red: #f95b5b;
 $mustard-yellow: #e4dc62;
 
-// Customized Variants
+// Adding custom variants
+$theme-colors: () !default;
+$custom-variants: map.merge(
+  (
+    "action-blue": $action-blue,
+    "mustard-yellow": $mustard-yellow
+  ),
+  $theme-colors,
+);
+
+// Customization of the standard variants
 $primary:       $primary-blue;
 $secondary:     $analogous-logo-green;
 $success:       $logo-green;
