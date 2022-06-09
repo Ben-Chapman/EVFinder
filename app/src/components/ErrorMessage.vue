@@ -36,13 +36,22 @@
 
 <script>
 import {mapState} from 'vuex'
-
 export default {
+  mounted() {
+    /**
+     * If this component is called, we're showing an error message. Logging this
+     * to Plausible
+    */
+    this.$plausible.trackEvent(
+      'Error Message', {props: {statusCode: this.apiErrorDetail[1]}}
+    )
+  },
   methods: {
     refreshPage() {
       location.reload()
-    }
+    },
   },
+
   computed: {
       ...mapState([
         'apiErrorDetail',
