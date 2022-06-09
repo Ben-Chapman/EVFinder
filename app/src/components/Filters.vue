@@ -223,7 +223,7 @@
 
         <!-- Show a rotate message for xs screens -->
         <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 rotate-message" align-v="center">
-            <b-icon icon="phone-landscape" variant="secondary" class="pr-4"></b-icon>
+            <b-icon icon="phone-landscape" variant="action-blue" class="pr-4"></b-icon>
             Rotate Your Device For More Options
         </b-row>
       </b-col>
@@ -415,7 +415,7 @@
   .rotate-message {
     font-size: .85rem;
     margin-bottom: .75rem;
-    color: $analogous-logo-green;
+    color: $action_blue;
   }
 
   // Resize the text in the filter dropdowns

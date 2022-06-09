@@ -12,9 +12,9 @@ def send_response(response_data, content_type, cache_control_age, status_code=20
   return response
 
 def send_error_response(error_message: String, error_data, status_code: int=500):
-  response = make_response(jsonify(error_message), status_code)
+  response = make_response(error_message, status_code)
   response.headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'text/plain',
     'Cache-Control': 'public, max-age=0, immutable',
   }
 
@@ -43,9 +43,10 @@ def validate(validation_type, validation_data):
         'Santa%20Fe%20Phev',
         'Sonata%20Hev',
         'Tucson%20Phev',
-        'N',  # Kia
-        'V',
-        'F'
+        'N',  # EV6
+        'V',  # Niro EV
+        'F',  # Niro Plug-in Hybrid
+        'T',  # Sorento Plug-in Hybrid
         ]
       valid_radii = [1, 999]
       valid_vins = []

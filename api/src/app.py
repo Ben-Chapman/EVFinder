@@ -12,6 +12,8 @@ from blueprints.kia import kia
 from blueprints.vin import vin
 from blueprints.window_sticker import ws
 
+from libs.libs import send_error_response
+
 app = Flask(__name__)
 
 # Setup CORS handling
@@ -53,6 +55,10 @@ def validate_source():
       request.headers[clouflare_auth]
     except KeyError:
       logging.info(f'Non-Cloudflare Request: {request.remote_addr}, {request.user_agent}, {request.url}')
-      return make_response(jsonify(''), 418)
+      return send_error_response(
+        error_message='The request could not be validated',
+        error_data='',
+        status_code=418
+      )
   else:
     logging.error('CLOUDFLARE_AUTH Env Variable not found.')

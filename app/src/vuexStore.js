@@ -9,6 +9,7 @@ const state = {
   filter: null,
   inventoryCount: 0,
   filterOptions: {},
+  apiErrorDetail: [],
   // TODO: These need to be normalized, and not tied to a specific JSON key name
   filterSelections: {
     'dealerNm': [],

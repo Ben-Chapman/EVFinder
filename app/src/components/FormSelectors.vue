@@ -192,14 +192,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return 'a valid zip code and a search radius.'
+            return 'a valid zip code and a search radius between 1 and 999.'
           }
         }
         if (this.isValidZipCode != true) {
           return 'a valid zip code.'
         }
         if (this.isValidRadius != true) {
-          return 'a search radius.'
+          return 'a search radius between 1 and 999.'
         }      
       },
       
@@ -243,6 +243,12 @@
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
         
+        // If we had a previous error from the API, clear it from the vuex store
+        // before proceeding
+        if (this.apiErrorDetail.length > 0) {
+          this.updateStore({'apiErrorDetail': []})
+        }
+
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
           const kiaInventory = await getKiaInventory(
             this.localForm.zipcode,
@@ -251,21 +257,20 @@
             this.localForm.vehicleName,
             this.localForm.radius,
           )
-          this.updateStore({'inventory': kiaInventory})
+          if (kiaInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': kiaInventory})
+          } else {
+            this.updateStore({'inventory': kiaInventory})
+          }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
           await this.getHyundaiInventory()
         }
 
-        // inventoryCount is used to display the $num Vehicles Found message
-        // Populating that prop with the number of vehicles returned from the API
         this.updateStore({
-          // 'inventoryCount': this.inventory.length,
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
-
-        
       },
     
       async getHyundaiInventory() {
@@ -279,8 +284,15 @@
         method: 'GET',
         mode: 'cors', 
         })
-        const inv = await response.json()
         
+        if (!response.ok) {
+          const errorDetail = ['ERROR', response.status, await response.text()]
+          this.updateStore({'apiErrorDetail': errorDetail})
+        } else {
+          var inv = await response.json()
+        }
+
+        if (inv.length > 0) {
         inv.forEach(vehicle => {
           // Replace the $xx,xxx.xx string with a value which can be cast to float
           vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
@@ -290,11 +302,10 @@
 
           // Translate interior color codes to something meaningful
           vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
-
-
         })
 
         this.updateStore({'inventory': inv})
+        }
       },
 
       // TODO: Convert this to a mixin
@@ -355,6 +366,7 @@
         'inventory',
         'inventoryCount',
         'tableBusy',
+        'apiErrorDetail'
       ]),
 
       isValidZipCode() {
