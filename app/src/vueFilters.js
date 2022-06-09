@@ -10,11 +10,11 @@ Vue.filter('titleCase', value => {
   return startCase(camelCase(value))
 });
 
-Vue.filter('convertToCurrency', v => {
+Vue.filter('convertToCurrency', value => {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 0,
     })
-  return formatter.format(v)
+  return formatter.format(value)
 });
