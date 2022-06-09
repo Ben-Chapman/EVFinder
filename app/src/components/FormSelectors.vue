@@ -192,14 +192,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return 'a valid zip code and a search radius.'
+            return 'a valid zip code and a search radius between 1 and 999.'
           }
         }
         if (this.isValidZipCode != true) {
           return 'a valid zip code.'
         }
         if (this.isValidRadius != true) {
-          return 'a search radius.'
+          return 'a search radius between 1 and 999.'
         }      
       },
       
