@@ -43,7 +43,12 @@ export default {
      * to Plausible
     */
     this.$plausible.trackEvent(
-      'Error Message', {props: {statusCode: this.apiErrorDetail[1]}}
+      'Error Message', {
+        props: {
+          statusCode: this.apiErrorDetail[1],
+          queryParam: window.location.search,
+        }
+      }
     )
   },
   methods: {
