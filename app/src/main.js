@@ -16,6 +16,7 @@ import {
   BIconChevronDown,
   BIconBoxArrowUpRight,
   BIconSliders,
+  BIconInfoCircle,
   LayoutPlugin,
   FormGroupPlugin,
   FormSelectPlugin,
@@ -32,6 +33,7 @@ import {
   ListGroupPlugin,
   SpinnerPlugin,
   ImagePlugin,
+  CollapsePlugin,
 } from 'bootstrap-vue'
 
 [
@@ -51,7 +53,8 @@ import {
   CardPlugin,
   ListGroupPlugin,
   SpinnerPlugin,
-  ImagePlugin
+  ImagePlugin,
+  CollapsePlugin,
 ].forEach(x => Vue.use(x));
 
 Vue.component('BIconSliders', BIconSliders)
@@ -59,6 +62,7 @@ Vue.component('BIconX', BIconX)
 Vue.component('BIconXCircle', BIconXCircle)
 Vue.component('BIconChevronDown', BIconChevronDown)
 Vue.component('BIconBoxArrowUpRight', BIconBoxArrowUpRight)
+Vue.component('BIconInfoCircle', BIconInfoCircle)
 
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
