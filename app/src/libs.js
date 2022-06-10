@@ -42,6 +42,10 @@ export function convertToCurrency(item) {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
+    // minimumFractionDigits must also be set when maximumFractionDigits is < 2
+    // This is needed to support Safari <15 on iOS
+    //https://stackoverflow.com/a/41045289
+    minimumFractionDigits: 0,
     maximumFractionDigits: 0,
     })
   return formatter.format(item)
