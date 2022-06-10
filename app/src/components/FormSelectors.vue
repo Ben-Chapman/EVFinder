@@ -8,7 +8,7 @@
       </b-row>
       <!-- For all other screen sizes, show this logo -->
       <b-row class="d-flex mt-3" align-h="center">
-        <b-col cols="1" cols-sm="2" class="pl-0 d-none d-sm-block">
+        <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
           </a>
@@ -31,7 +31,7 @@
         </b-col>
 
         <!-- Model -->
-        <b-col cols=5 md=3>
+        <b-col cols=6 md=3>
           <b-form-group
             id="form-model"
             description="Select a Model"
@@ -47,7 +47,7 @@
         </b-col>
 
         <!-- Zip Code -->
-        <b-col cols=5 md=2>
+        <b-col cols=4 md=2>
           <b-form-group
             id="form-zipcode"
             description="Enter a 5-digit US zip code"
@@ -69,7 +69,7 @@
         </b-col>
 
         <!-- Radius -->
-        <b-col cols=3 md=2>
+        <b-col cols=4 md=2>
           <b-form-group
             id="form-radius"
             description="Search Radius in Miles"

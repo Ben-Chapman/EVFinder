@@ -1,13 +1,10 @@
 <template>
-  <div>
-    <div>
+  <b-container fluid>
       <FormSelectors/>
-    </div>
-
     <b-row>
       <InventoryTable/>
     </b-row>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -40,5 +37,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+/*
+This is needed to prevent horizontal scrolling when using a fluid (full-width) 
+container
+*/
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 </style>

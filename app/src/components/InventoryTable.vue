@@ -128,13 +128,12 @@
                   v-for="(item, key) in vinDetail[row.item.vin]" :key=key
                 >
                 <!-- We're displaying the Dealer URL above, don't display it here -->
-                  <b-col cols=4 v-if="key != 'DI'">
+                  <b-col cols=8 md=4 v-if="key != 'DI'">
                     <b-list-group-item class="border-0 py-1"><b>{{ key }}</b></b-list-group-item>
                   </b-col>
                   <div v-if="key != 'DI'">
                     <b-list-group-item class="border-0 py-1">{{ item }}</b-list-group-item>
                   </div>
-                
               </b-list-group>
               
           
