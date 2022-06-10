@@ -10,13 +10,13 @@
       API error text. -->
       <div v-if="this.apiErrorDetail[2].length <= 60">
       There was a server error with this request: <code class="error-message">{{ this.apiErrorDetail[2] }} ({{ this.apiErrorDetail[1] }})</code>
-        <p class="pt-3">Please refresh this page, or retry your request.</p>
+        <p class="pt-3">Please refresh this page or retry.</p>
       </div>
       <div v-else>
         <!-- For longer error responses passed through from the various manufacturer
         APIs, we're collapsing the actual error text, accessible from an info button -->
         There was a server error with this request.
-        <p class="pt-3">Please refresh this page or retry your request.
+        <p class="pt-3">Please refresh this page or retry.
           <b-button size="sm" variant="link" class="px-0 info-button" v-b-toggle.collapse-2>
             <b-icon-info-circle aria-hidden="true"></b-icon-info-circle>
           </b-button>
