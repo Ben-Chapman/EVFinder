@@ -222,9 +222,9 @@
         </div>
 
         <!-- Show a rotate message for xs screens -->
-        <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 rotate-message" align-v="center">
+        <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 py-1 rotate-message" align-v="center">
             <b-icon icon="phone-landscape" variant="action-blue" class="pr-4"></b-icon>
-            Rotate Your Device For More Options
+            Rotate Your Phone For More Options
         </b-row>
       </b-col>
     </b-row>
@@ -413,9 +413,11 @@
   }
 
   .rotate-message {
+    background: rgb(109,185,237);
+    background: linear-gradient(90deg, rgba(109,185,237,1) 0%, rgba(69,171,240,1) 77%, rgba(109,185,237,1) 100%);
     font-size: .85rem;
     margin-bottom: .75rem;
-    color: $action_blue;
+    color: #fff;
   }
 
   // Resize the text in the filter dropdowns

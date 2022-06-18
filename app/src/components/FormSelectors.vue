@@ -387,7 +387,7 @@
         if(this.localForm.radius.length == 0) {
             return null
         }
-        return /^\d{1,3}$/.test(this.localForm.radius)
+        return (this.localForm.radius > 0 && /^\d{1,3}$/.test(this.localForm.radius))
       },
 
       validateSubmitButton() {
