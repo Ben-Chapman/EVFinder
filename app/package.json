@@ -28,6 +28,7 @@
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "browserslist": "^4.20.3",
+    "cypress": "^10.1.0",
     "ejs": ">=3.1.7",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
