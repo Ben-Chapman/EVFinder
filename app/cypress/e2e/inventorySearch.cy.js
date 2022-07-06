@@ -15,13 +15,20 @@ describe('Search for Vehicle Inventory', () => {
 
     // Do we have at least 1 table row?
     cy.get('tbody').first()
-    // cy.get('tbody > :nth-child(1)')
+    cy.percySnapshot('Inventory Results');
   })
 
   it('Clicks on Table Row', () => {
     cy.get('tbody > :nth-child(1)').click()
     cy.get('td').contains('MSRP')
+
+    // Take a snapshot while the VIN Detail section is expanded
+    cy.percySnapshot('VIN Detail Expanded');
+
     cy.get('tbody > :nth-child(1)').click()  // Close the row detail
+
+    // Ensure the VIN detail section closes properly
+    cy.percySnapshot('VIN Detail Collapsed');
   })
 
   it('Sorts by Column Heading', () => {
