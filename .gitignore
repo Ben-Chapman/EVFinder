@@ -25,3 +25,7 @@ pnpm-debug.log*
 # Python
 __pycache__/
 *.ipynb
+
+# Cypress
+app/cypress/videos
+app/cypress/screenshots
