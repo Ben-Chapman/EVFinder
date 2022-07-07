@@ -103,7 +103,7 @@
                       class="mr-2 align-middle"
                       >
                       Dealer's Website for This Vehicle
-                      <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" font-scale="1"></b-icon>
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" font-scale="1"></b-icon-box-arrow-up-right>
                     </b-button>
                   </b-row>
                 </div>
@@ -118,7 +118,7 @@
                       class="mr-2 align-middle"
                       >
                       Window Sticker for This Vehicle
-                      <b-icon icon="box-arrow-up-right" aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon>
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right->
                     </b-button>
                   </b-row>
               </div> -->

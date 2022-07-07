@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.inventory.length > 0">
     <b-row align-h="center" class="d-flex justify-content-center border-top pt-3" align-v="center">
-      <b-icon icon="sliders" aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon>
+      <b-icon-sliders aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon-sliders>
       
       <!-- Trim Filter -->
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
@@ -182,14 +182,13 @@
                 v-else
                 >
                 MSRP Is Less-Than <b>{{ localFilterSelections.price[0] | convertToCurrency() }}</b>
-                <b-icon
-                  icon="x-circle"
+                <b-icon-x-circle
                   class="ml-2"
                   @click="resetPriceFilter()"
                   font-scale="1"
                   v-b-tooltip="{ title: 'Reset MSRP Filter', placement: 'bottom', variant: 'info' }"
                   >
-                  </b-icon>
+                </b-icon-x-circle>
               </div>
           </b-dropdown-form>
         </b-dd>
@@ -197,14 +196,13 @@
 
       <!-- If filters are selected, show the clear filter icon -->
       <div v-if="Object.values(filterSelections).filter(f => f.length > 0).length">
-        <b-icon
-          icon="x"
+        <b-icon-x
           class="ml-1"
           font-scale="1.5"
           @click="resetFilterSelections()"
           v-b-tooltip="{ title: 'Clear Filters', placement: 'bottom', variant: 'info' }"
           >
-        </b-icon>
+        </b-icon-x>
       </div>
     </b-row>
     
@@ -223,7 +221,7 @@
 
         <!-- Show a rotate message for xs screens -->
         <b-row class="d-flex justify-content-center d-block d-sm-none mt-0 py-1 rotate-message" align-v="center">
-            <b-icon icon="phone-landscape" variant="action-blue" class="pr-4"></b-icon>
+            <b-icon-phone-landscape variant="action-blue" class="pr-4"></b-icon-phone-landscape>
             Rotate Your Phone For More Options
         </b-row>
       </b-col>

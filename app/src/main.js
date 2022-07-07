@@ -17,6 +17,7 @@ import {
   BIconBoxArrowUpRight,
   BIconSliders,
   BIconInfoCircle,
+  BIconPhoneLandscape,
   LayoutPlugin,
   FormGroupPlugin,
   FormSelectPlugin,
@@ -24,7 +25,6 @@ import {
   ButtonPlugin,
   TooltipPlugin,
   TablePlugin,
-  IconsPlugin,
   DropdownPlugin,
   BadgePlugin,
   FormCheckboxPlugin,
@@ -39,7 +39,6 @@ import {
 [
   AlertPlugin,
   LayoutPlugin,
-  IconsPlugin,
   FormGroupPlugin,
   FormSelectPlugin,
   FormInputPlugin,
@@ -63,6 +62,7 @@ Vue.component('BIconXCircle', BIconXCircle)
 Vue.component('BIconChevronDown', BIconChevronDown)
 Vue.component('BIconBoxArrowUpRight', BIconBoxArrowUpRight)
 Vue.component('BIconInfoCircle', BIconInfoCircle)
+Vue.component('BIconPhoneLandscape', BIconPhoneLandscape)
 
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
