@@ -20,7 +20,7 @@ export async function getHyundaiInventory(zip, year, model, radius) {
   }
 }
 
-export async function getVinDetail(vin, model, year) {
+export async function getHyundaiVinDetail(vin, model, year) {
   const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
       model: model,
       year: year,
