@@ -53,7 +53,10 @@ def get_inventory():
       )
     
     if 'SUCCESS' in data['status']:
-      return send_response(data, 'application/json', 3600)
+      if request_args['v2']:
+        return send_response(data, 'application/json', 3600)
+      else:
+        return send_response(flatten_api_results(data), 'application/json', 3600)
     else:
       return send_error_response(
         error_message='Received invalid data from the Hyundai API',

@@ -124,10 +124,8 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import { hyundaiInteriorColors, hyundaiTransitStatus } from '../manufacturers/hyundaiMappings'
+  import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
-
-  const apiBase = 'https://api.theevfinder.com'
 
   export default {
     mounted() {
@@ -224,19 +222,6 @@
               console.log(error)
               }
             })
-        
-        // Send event data to Plausible
-        // this.$plausible.trackEvent(
-        //   'Search Params', {
-        //     props:
-        //       {
-        //         Year: this.localForm.year,
-        //         Model: this.localForm.model,
-        //         Radius: this.localForm.radius,
-        //         ZipCode: this.localForm.zipcode,
-        //       }
-        //     }
-        //   )
       },
 
       async getCurrentInventory() {
@@ -264,48 +249,24 @@
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
-          await this.getHyundaiInventory()
+          // await this.getHyundaiInventory()
+          const hyundaiInventory = await getHyundaiInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.radius,
+          )
+          if (hyundaiInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': hyundaiInventory})
+          } else {
+            this.updateStore({'inventory': hyundaiInventory})
+          }
         }
 
         this.updateStore({
           'tableBusy': false,  // Remove the table busy indicator
           'form': this.localForm,
           })
-      },
-    
-      async getHyundaiInventory() {
-        const response = await fetch(apiBase + '/api/inventory?' + new URLSearchParams({
-          zip: this.localForm.zipcode,
-          year: this.localForm.year,
-          model: this.localForm.model,
-          radius: this.localForm.radius,
-        }),
-        {
-        method: 'GET',
-        mode: 'cors', 
-        })
-        
-        if (!response.ok) {
-          const errorDetail = ['ERROR', response.status, await response.text()]
-          this.updateStore({'apiErrorDetail': errorDetail})
-        } else {
-          var inv = await response.json()
-        }
-
-        if (inv.length > 0) {
-          inv.forEach(vehicle => {
-            // Replace the $xx,xxx.xx string with a value which can be cast to float
-            vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
-            
-            // Translate inventory status codes to something meaningful
-            vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
-
-            // Translate interior color codes to something meaningful
-            vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
-          })
-
-        this.updateStore({'inventory': inv})
-        }
       },
 
       // TODO: Convert this to a mixin

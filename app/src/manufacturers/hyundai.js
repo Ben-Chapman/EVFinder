@@ -1,5 +1,5 @@
 import { convertToCurrency, titleCase } from "../libs"
-import { hyundaiVinDetailMapping } from "./hyundaiMappings"
+import { hyundaiVinDetailMapping, hyundaiTransitStatus, hyundaiInteriorColors } from "./hyundaiMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 
@@ -9,13 +9,14 @@ export async function getHyundaiInventory(zip, year, model, radius) {
     year: year,
     model: model,
     radius: radius,
+    v2: true
   }),
   {method: 'GET', mode: 'cors',})
 
   if (!response.ok) {
     return ['ERROR', response.status, await response.text()]
   } else {
-    // do stuff here
+    return formatHyundaiInventoryResults(await response.json())
   }
 }
 
@@ -33,7 +34,6 @@ export async function getVinDetail(vin, model, year) {
   // Get VIN detail data for a single vehicle
   const vinData = await response.json()
   
-  
   if (vinData['data'].length > 0) {
     return formatVinDetails(vinData['data'][0]['vehicle'][0])
   } else if (vinData['data'].length == 0) {
@@ -43,7 +43,7 @@ export async function getVinDetail(vin, model, year) {
   }
 }
 
-function formatHyundaiApiResults(input) {
+function formatHyundaiInventoryResults(input) {
   const res = []
   input['data'][0]['dealerInfo'].forEach(dealer => {
     dealer['vehicles'].forEach(vehicle => {
@@ -51,12 +51,23 @@ function formatHyundaiApiResults(input) {
       res.push({...dealer, ...vehicle})
     })
   })
-  // Becuase we just merged the dealer and vehicle Objects, deleting the vehicles
-  // array from each vehicle (which was carried over from the dealer object)
-  res.forEach(vehicle => {
-    delete vehicle['vehicles']
-  })
 
+  if (res.length > 0) {
+    res.forEach(vehicle => {
+      // Becuase we just merged the dealer and vehicle Objects, deleting the vehicles
+      // array from each vehicle (which was carried over from the dealer object)
+      delete vehicle['vehicles']
+
+      // Replace the $xx,xxx.xx string with a value which can be cast to float
+      vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+      
+      // Translate inventory status codes to something meaningful
+      vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
+
+      // Translate interior color codes to something meaningful
+      vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+    })
+  }
   return res
 }
 
