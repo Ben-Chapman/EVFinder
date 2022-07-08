@@ -3,6 +3,22 @@ import { hyundaiVinDetailMapping } from "./hyundaiMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 
+export async function getHyundaiInventory(zip, year, model, radius) {
+  const response = await fetch(apiBase + '/api/inventory/hyundai?' + new URLSearchParams({
+    zip: zip,
+    year: year,
+    model: model,
+    radius: radius,
+  }),
+  {method: 'GET', mode: 'cors',})
+
+  if (!response.ok) {
+    return ['ERROR', response.status, await response.text()]
+  } else {
+    // do stuff here
+  }
+}
+
 export async function getVinDetail(vin, model, year) {
   const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
       model: model,
@@ -27,14 +43,22 @@ export async function getVinDetail(vin, model, year) {
   }
 }
 
-// export async function lookupByVin(vin) {
-//   // This is used for the search by VIN feature
+function formatHyundaiApiResults(input) {
+  const res = []
+  input['data'][0]['dealerInfo'].forEach(dealer => {
+    dealer['vehicles'].forEach(vehicle => {
+      delete dealer['vehicles'][vehicle]
+      res.push({...dealer, ...vehicle})
+    })
+  })
+  // Becuase we just merged the dealer and vehicle Objects, deleting the vehicles
+  // array from each vehicle (which was carried over from the dealer object)
+  res.forEach(vehicle => {
+    delete vehicle['vehicles']
+  })
 
-// if (validateVin(vin)) {
-
-// }
-
-// }
+  return res
+}
 
 function formatVinDetails(input) {
   var tmp = {}
@@ -98,8 +122,3 @@ function formatVinDetails(input) {
 return tmp
   }
 
-// function validateVin(manufacturer) {
-//   if (manufacturer == "hyundai" | manufacturer == "kia" ) {
-//     return /[A-Za-z]{2}[\w|\d]{9}\d{6}/.test(manufacturer)
-//   }
-// }

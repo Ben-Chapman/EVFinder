@@ -293,16 +293,16 @@
         }
 
         if (inv.length > 0) {
-        inv.forEach(vehicle => {
-          // Replace the $xx,xxx.xx string with a value which can be cast to float
-          vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
-          
-          // Translate inventory status codes to something meaningful
-          vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
+          inv.forEach(vehicle => {
+            // Replace the $xx,xxx.xx string with a value which can be cast to float
+            vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+            
+            // Translate inventory status codes to something meaningful
+            vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
 
-          // Translate interior color codes to something meaningful
-          vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
-        })
+            // Translate interior color codes to something meaningful
+            vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+          })
 
         this.updateStore({'inventory': inv})
         }
