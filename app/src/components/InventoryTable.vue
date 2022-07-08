@@ -45,7 +45,7 @@
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
-                {{ data.item.dealerNm }}
+                {{ data.item.dealerName }}
               </b-link>
           </template>
 
@@ -56,7 +56,7 @@
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
-                {{ data.item.dealerNm }}
+                {{ data.item.dealerName }}
               </b-link>
           </template>
 
@@ -160,7 +160,7 @@
   import {mapActions, mapState} from 'vuex'
   import {has} from 'lodash'
 
-  import {convertToCurrency, titleCase} from '../libs'
+  import {convertToCurrency} from '../libs'
   import {kiaVinMapping} from '../manufacturers/kiaMappings'
   import {getVinDetail} from '../manufacturers/hyundai'
   
@@ -185,16 +185,14 @@
       return {
         vinDetail: {},
         vinTableBusy: false,
-        vinDetailClickedCount: 0,
 
-        // TODO: Normalize these keys, so they're not manufacturer specific
         fields: [
-          { key: 'ExtColorLongDesc', label: 'Ext. Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
-          { key: 'interiorColorCd', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
+          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
+          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
-          { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
 
           // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
           { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell"},
@@ -218,9 +216,6 @@
         // to know this row has additional detail to display upon click
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
-        
-        // Increment the counter
-        this.vinDetailClickedCount += 1
 
         /* The KIA API response contains all publically available information
         about the vehicle, so there's no additional VIN API call needed. Thus
@@ -385,13 +380,6 @@
       filterByPrice(rowRecord, selectedPrice) {
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
-      
-      // Before the browser quits, or the browser tab is closed, fire our Plausible call
-      // beforeWindowUnload() {
-      //   this.$plausible.trackEvent(
-      //     'VIN Detail', {props: {count: this.vinDetailClickedCount}}
-      //     )
-      // },
 
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))

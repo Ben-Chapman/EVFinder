@@ -14,9 +14,9 @@ And more specifically:
 }
  */
 
- export const kiaJsonMapping = {
-  'interiorColorCd': 'interiorColorDescription',
-  'ExtColorLongDesc': 'exteriorColorDescription',
+ export const kiaInventoryMapping = {
+  'interiorColor': 'interiorColorDescription',
+  'exteriorColor': 'exteriorColorDescription',
   'trimDesc': 'edwTrim',
   'drivetrainDesc': 'drivetrainDescription',
   'price': 'msrp',
@@ -79,8 +79,8 @@ And more specifically:
       "yearYear": 'Year',
       // "features0Options4": '',
       // "dealerUrl": '',
-      "dealerNm": 'Dealer Name',
+      "dealerName": 'Dealer Name',
       "city": 'City',
       "state": 'State',
-      "PlannedDeliveryDate": 'Inventory Status',
+      "deliveryDate": 'Inventory Status',
   }

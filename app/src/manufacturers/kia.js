@@ -1,5 +1,5 @@
 import normalizeJson from '../libs'
-import { kiaJsonMapping } from './kiaMappings'
+import { kiaInventoryMapping } from './kiaMappings'
 
 const apiBase = 'https://api.theevfinder.com'
 
@@ -17,7 +17,7 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
     return ['ERROR', response.status, await response.text()]
   } else {
     var r = await response.json()  // Raw results
-    var n = normalizeJson(r['vehicles'], kiaJsonMapping)  // Normalized results
+    var n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
 
     n.forEach(vehicle => {
       // Lookup the dealer name/address from the dealer code
@@ -27,7 +27,7 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
       // Some results have a fqdn for a dealerUrl, some not. Stripping the
       // scheme, which will be re-inserted by the template
       vehicle['dealerUrl'] = dealerDetail['url'].replace(/http(s)?:\/\//i, '')
-      vehicle['dealerNm'] = dealerDetail['name']
+      vehicle['dealerName'] = dealerDetail['name']
       vehicle['city'] = dealerDetail['location']['city']
       vehicle['state'] = dealerDetail['location']['state']
 
@@ -36,11 +36,11 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
       
       // Delivery Date
       if (vehicle['status'] == 'DS') {
-        vehicle['PlannedDeliveryDate'] = "Available"
+        vehicle['deliveryDate'] = "Available"
         vehicle['inventoryStatus'] = "Available"
       }
       else if (vehicle['status'] == 'IT') {
-        vehicle['PlannedDeliveryDate'] = "Arriving Soon"
+        vehicle['deliveryDate'] = "Arriving Soon"
         vehicle['inventoryStatus'] = "Arriving Soon"
       }
       

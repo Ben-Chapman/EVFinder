@@ -105,18 +105,18 @@
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Dealer
-            <span v-if="localFilterSelections.dealerNm.length > 0">
+            <span v-if="localFilterSelections.dealerName.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.dealerNm.length }}
+                {{ localFilterSelections.dealerName.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.dealerNm" :key=item
+              v-for="item in this.filterOptions.dealerName" :key=item
               :value="item"
-              v-model="localFilterSelections.dealerNm"
+              v-model="localFilterSelections.dealerName"
               name="Dealer-Name"
               class="mb-1"
               >
@@ -265,7 +265,7 @@
         this entire object into the Vuex store and push the data into Vue router.
         */
         localFilterSelections: {
-          'dealerNm': [],
+          'dealerName': [],
           'interiorColorCd': [],
           'inventoryStatus': [],
           'trimDesc': [],
@@ -315,7 +315,7 @@
 
       resetFilterSelections() {
         this.localFilterSelections = {
-          'dealerNm': [],
+          'dealerName': [],
           'interiorColorCd': [],
           'inventoryStatus': [],
           'trimDesc': [],

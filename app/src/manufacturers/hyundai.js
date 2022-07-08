@@ -64,10 +64,13 @@ function formatHyundaiInventoryResults(input) {
       vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
 
       // Translate interior color codes to something meaningful
-      vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+      vehicle['interiorColor'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
 
-      // Pull the Exterior Color Name up from a nested Object
-      vehicle['ExtColorLongDesc'] = vehicle['colors'][0]['ExtColorLongDesc']
+      // Pull the Exterior Color Name up from a nested Object, and title case format
+      vehicle['exteriorColor'] = titleCase(vehicle['colors'][0]['ExtColorLongDesc'])
+
+      // Title case format
+      vehicle['drivetrainDesc'] = titleCase(vehicle['drivetrainDesc'])
     })
   }
   return res
