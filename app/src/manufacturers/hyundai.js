@@ -46,8 +46,7 @@ export async function getVinDetail(vin, model, year) {
 function formatHyundaiInventoryResults(input) {
   const res = []
   input['data'][0]['dealerInfo'].forEach(dealer => {
-    dealer['vehicles'].forEach(vehicle => {
-      delete dealer['vehicles'][vehicle]
+    dealer['vehicles']?.forEach(vehicle => {
       res.push({...dealer, ...vehicle})
     })
   })
@@ -66,6 +65,9 @@ function formatHyundaiInventoryResults(input) {
 
       // Translate interior color codes to something meaningful
       vehicle['interiorColorCd'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+
+      // Pull the Exterior Color Name up from a nested Object
+      vehicle['ExtColorLongDesc'] = vehicle['colors'][0]['ExtColorLongDesc']
     })
   }
   return res
