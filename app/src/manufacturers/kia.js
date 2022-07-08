@@ -1,5 +1,5 @@
 import normalizeJson from '../libs'
-import { kiaInventoryMapping } from './kiaMappings'
+import { kiaInventoryMapping, kiaVinMapping } from './kiaMappings'
 
 const apiBase = 'https://api.theevfinder.com'
 
@@ -58,4 +58,28 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
 
     return n
   }
+}
+
+export function getKiaVinDetail(input) {
+  /** The KIA API response contains all publically available information
+   * about the vehicle, so there's no additional VIN API call needed. Thus
+   * storing the /inventory API data directly in the vinDetail local store.
+   */
+    const k = {}
+    Object.keys(input).forEach(key => {
+      if (Object.keys(kiaVinMapping).includes(key)) {
+        k[kiaVinMapping[key]] = input[key]
+      }
+      // The Kia API returns individual elements for each feature, so
+      // concatinating into a single string for display
+      if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
+        if (k['Top Features']) {
+          k['Top Features'] = `${k['Top Features']}, ${input[key]}`
+        } else {
+          k['Top Features'] = input[key]
+        }
+      }
+    })
+  
+    return k
 }

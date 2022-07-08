@@ -157,12 +157,13 @@
   import ErrorMessage from './ErrorMessage.vue'
   import Filters from './Filters.vue'
 
-  import {mapActions, mapState} from 'vuex'
-  import {has} from 'lodash'
+  import { mapActions, mapState } from 'vuex'
+  import { has } from 'lodash'
 
-  import {convertToCurrency} from '../libs'
-  import {kiaVinMapping} from '../manufacturers/kiaMappings'
-  import {getVinDetail} from '../manufacturers/hyundai'
+  import { convertToCurrency } from '../libs'
+  
+  import { getHyundaiVinDetail } from '../manufacturers/hyundai'
+  import { getKiaVinDetail } from '../manufacturers/kia'
   
   export default {
     components: {
@@ -217,40 +218,18 @@
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
 
-        /* The KIA API response contains all publically available information
-        about the vehicle, so there's no additional VIN API call needed. Thus
-        storing the /inventory API data directly in the vinDetail local store.
-        */
         if (this.form.manufacturer.toLowerCase() === "kia") {
-          // Before writing the data, format the key names for humans
-          const k = {}
-          Object.keys(item).forEach(key => {
-            if (Object.keys(kiaVinMapping).includes(key)) {
-              k[kiaVinMapping[key]] = item[key]
-            }
-            // The Kia API returns individual elements for each feature, so
-            // concatinating into a single string for display
-            if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
-              if (k['Top Features']) {
-                k['Top Features'] = `${k['Top Features']}, ${item[key]}`
-              } else {
-                k['Top Features'] = item[key]
-              }
-            }
-          })
-
+          const kiaVinData = getKiaVinDetail(item)
           this.$set(
             this.vinDetail,  // Where to store
             item.vin,        // What's the key
-            k,            // Data to store
+            kiaVinData,            // Data to store
             )
         }
         else if (this.form.manufacturer.toLowerCase() === "hyundai") {  // Make a vin API call for Hyundai
           // Show users that we're fetching data
           this.vinTableBusy = true
-          
-          const hyundaiVinData = await getVinDetail(item.vin, this.form.model, this.form.year)
-
+          const hyundaiVinData = await getHyundaiVinDetail(item.vin, this.form.model, this.form.year)
           // Store a new record for each VIN we fetch.
           // this.$set is needed to enable reactive properties on an existing object
           // without this.$set, the nested table will not auto-refresh with this info
