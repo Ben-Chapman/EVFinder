@@ -71,6 +71,12 @@ function formatHyundaiInventoryResults(input) {
 
       // Title case format
       vehicle['drivetrainDesc'] = titleCase(vehicle['drivetrainDesc'])
+
+      // Delivery Date
+      vehicle['deliveryDate'] = vehicle['PlannedDeliveryDate']
+
+      // Dealer Name
+      vehicle['dealerName'] = vehicle['dealerNm']
     })
   }
   return res
