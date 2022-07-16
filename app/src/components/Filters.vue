@@ -31,18 +31,18 @@
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Ext. Color
-            <span v-if="localFilterSelections.ExtColorLongDesc.length > 0">
+            <span v-if="localFilterSelections.exteriorColor.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.ExtColorLongDesc.length }}
+                {{ localFilterSelections.exteriorColor.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
+              v-for="item in this.filterOptions.exteriorColor" :key=item
               :value="item"
-              v-model="localFilterSelections.ExtColorLongDesc"
+              v-model="localFilterSelections.exteriorColor"
               name="name-here"
               class="mb-1"
               >
@@ -55,18 +55,18 @@
         <b-dd id="interior-color" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Int. Color
-            <span v-if="localFilterSelections.interiorColorCd.length > 0">
+            <span v-if="localFilterSelections.interiorColor.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.interiorColorCd.length }}
+                {{ localFilterSelections.interiorColor.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.interiorColorCd" :key=item
+              v-for="item in this.filterOptions.interiorColor" :key=item
               :value="item"
-              v-model="localFilterSelections.interiorColorCd"
+              v-model="localFilterSelections.interiorColor"
               name="interior-color"
               class="mb-1"
               >
@@ -266,11 +266,11 @@
         */
         localFilterSelections: {
           'dealerName': [],
-          'interiorColorCd': [],
+          'interiorColor': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
+          'exteriorColor': [],
           'price': [],
         },
       }
@@ -316,11 +316,11 @@
       resetFilterSelections() {
         this.localFilterSelections = {
           'dealerName': [],
-          'interiorColorCd': [],
+          'interiorColor': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
+          'exteriorColor': [],
           'price': [],
         }
       },
