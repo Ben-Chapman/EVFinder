@@ -23,7 +23,7 @@ const genesisInventoryMapping = {
   'SortablePrice': 'price',
   'status': 'inventoryStatus',
   'range': 'distance',
-  '': 'vin-with-more-details',
+  'VIN': 'vin',
   'DlrName': 'dealerName',
   }
 
