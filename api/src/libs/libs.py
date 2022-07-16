@@ -47,6 +47,7 @@ def validate(validation_type, validation_data):
         'V',  # Niro EV
         'F',  # Niro Plug-in Hybrid
         'T',  # Sorento Plug-in Hybrid
+        'GV60',  # Genesis GV60
         ]
       valid_radii = [1, 999]
       valid_vins = []

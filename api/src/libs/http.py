@@ -4,7 +4,10 @@ import requests
 
 def get(url, query_params, request_headers):
   try:
-    r = requests.get(url, params=query_params, headers=request_headers)
+    if len(query_params) > 0:
+      r = requests.get(url, params=query_params, headers=request_headers, verify=False)
+    else:
+      r = requests.get(url, headers=request_headers, verify=False)
   except requests.exceptions.RequestException as e:
     logging.error(f'Request Error: {e}')
     request_debug = {
