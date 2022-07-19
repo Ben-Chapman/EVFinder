@@ -60,6 +60,10 @@ function formatGenesisInventoryResults(input) {
         k[key] = vehicle['Veh'][key]
       }
     })
+    // Genesis do not provide any inventory status for the GV60 (yet?), so a
+    // quick hack until something better is found/developed
+    k['deliveryDate'] = "Unknown"
+    
     res.push(k)
   })
   return res
