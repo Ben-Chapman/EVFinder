@@ -1,17 +1,17 @@
  /**
-  * This file is used to map API specific JSON key descriptions to normalized key
+  * This file is used to map API-specific JSON key descriptions to normalized key
   * descriptions used throughout the site.
   * 
   * The structure of the jsonMapping object is:
   * {
-  *   'normalizedKey': 'apiSpecificKey'
+  *   'apiSpecificKey': 'normalizedKey'
   * }
   * 
   * And more specifically:
   * {
-  *   'exteriorColor': 'colorOfTheOutsideOfTheCar',
-  *   'year': 'modelYear',
-  *   'horsepower': 'powerLevelAsMeasuredByHorses'
+  *   'colorOfTheOutsideOfTheCar': 'exteriorColor',
+  *   'modelYear': 'year'
+  *   'powerLevelAsMeasuredByHorses': 'horsepower'
   * }
   */
 
