@@ -5,9 +5,9 @@ import requests
 def get(url, query_params, request_headers):
   try:
     if len(query_params) > 0:
-      r = requests.get(url, params=query_params, headers=request_headers, verify=False)
+      r = requests.get(url, params=query_params, headers=request_headers)
     else:
-      r = requests.get(url, headers=request_headers, verify=False)
+      r = requests.get(url, headers=request_headers)
   except requests.exceptions.RequestException as e:
     logging.error(f'Request Error: {e}')
     request_debug = {
