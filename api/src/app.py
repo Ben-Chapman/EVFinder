@@ -23,7 +23,7 @@ CORS(
   origins=[
     "https://theevfinder.com",
     "https://www.theevfinder.com",
-    "https://dev.theevfinder.com",
+    "http://dev.theevfinder.com",
     "http://bs-local.com:8080",
     "http://localhost:8080",
   ],
