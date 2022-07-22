@@ -45,7 +45,7 @@
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
-                {{ data.item.dealerNm }}
+                {{ data.item.dealerName }}
               </b-link>
           </template>
 
@@ -56,7 +56,7 @@
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
-                {{ data.item.dealerNm }}
+                {{ data.item.dealerName }}
               </b-link>
           </template>
 
@@ -157,12 +157,13 @@
   import ErrorMessage from './ErrorMessage.vue'
   import Filters from './Filters.vue'
 
-  import {mapActions, mapState} from 'vuex'
-  import {has} from 'lodash'
+  import { mapActions, mapState } from 'vuex'
+  import { has } from 'lodash'
 
-  import {convertToCurrency, titleCase} from '../libs'
-  import {kiaVinMapping} from '../manufacturers/kiaMappings'
-  import {getVinDetail} from '../manufacturers/hyundai'
+  import { convertToCurrency } from '../libs'
+  
+  import { getHyundaiVinDetail } from '../manufacturers/hyundai'
+  import { getKiaVinDetail } from '../manufacturers/kia'
   
   export default {
     components: {
@@ -185,16 +186,14 @@
       return {
         vinDetail: {},
         vinTableBusy: false,
-        vinDetailClickedCount: 0,
 
-        // TODO: Normalize these keys, so they're not manufacturer specific
         fields: [
-          { key: 'ExtColorLongDesc', label: 'Ext. Color', sortable: true, sortDirection: 'desc', formatter: titleCase},
-          { key: 'interiorColorCd', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
+          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
+          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', formatter: titleCase},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
-          { key: 'PlannedDeliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
 
           // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
           { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell"},
@@ -218,44 +217,19 @@
         // to know this row has additional detail to display upon click
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
-        
-        // Increment the counter
-        this.vinDetailClickedCount += 1
 
-        /* The KIA API response contains all publically available information
-        about the vehicle, so there's no additional VIN API call needed. Thus
-        storing the /inventory API data directly in the vinDetail local store.
-        */
         if (this.form.manufacturer.toLowerCase() === "kia") {
-          // Before writing the data, format the key names for humans
-          const k = {}
-          Object.keys(item).forEach(key => {
-            if (Object.keys(kiaVinMapping).includes(key)) {
-              k[kiaVinMapping[key]] = item[key]
-            }
-            // The Kia API returns individual elements for each feature, so
-            // concatinating into a single string for display
-            if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
-              if (k['Top Features']) {
-                k['Top Features'] = `${k['Top Features']}, ${item[key]}`
-              } else {
-                k['Top Features'] = item[key]
-              }
-            }
-          })
-
+          const kiaVinData = getKiaVinDetail(item)
           this.$set(
             this.vinDetail,  // Where to store
             item.vin,        // What's the key
-            k,            // Data to store
+            kiaVinData,            // Data to store
             )
         }
         else if (this.form.manufacturer.toLowerCase() === "hyundai") {  // Make a vin API call for Hyundai
           // Show users that we're fetching data
           this.vinTableBusy = true
-          
-          const hyundaiVinData = await getVinDetail(item.vin, this.form.model, this.form.year)
-
+          const hyundaiVinData = await getHyundaiVinDetail(item.vin, this.form.model, this.form.year)
           // Store a new record for each VIN we fetch.
           // this.$set is needed to enable reactive properties on an existing object
           // without this.$set, the nested table will not auto-refresh with this info
@@ -385,13 +359,6 @@
       filterByPrice(rowRecord, selectedPrice) {
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
-      
-      // Before the browser quits, or the browser tab is closed, fire our Plausible call
-      // beforeWindowUnload() {
-      //   this.$plausible.trackEvent(
-      //     'VIN Detail', {props: {count: this.vinDetailClickedCount}}
-      //     )
-      // },
 
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))

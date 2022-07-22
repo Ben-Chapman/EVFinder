@@ -1,5 +1,3 @@
-
-
 describe('Search for Vehicle Inventory', () => {
   before(() => {
     cy.visit('/')
@@ -11,7 +9,7 @@ describe('Search for Vehicle Inventory', () => {
 
   it('Confirms Inventory Results', () => {
     // The XX Vehicles Available Message
-    cy.get('.vehicles-available').contains("Vehicles Available")
+    cy.get('.vehicles-available', { timeout: 10000 }).contains("Vehicles Available")
 
     // Do we have at least 1 table row?
     cy.get('tbody').first()

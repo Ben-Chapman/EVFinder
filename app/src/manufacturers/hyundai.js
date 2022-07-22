@@ -1,9 +1,26 @@
 import { convertToCurrency, titleCase } from "../libs"
-import { hyundaiVinDetailMapping } from "./hyundaiMappings"
+import { hyundaiVinDetailMapping, hyundaiTransitStatus, hyundaiInteriorColors } from "./hyundaiMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 
-export async function getVinDetail(vin, model, year) {
+export async function getHyundaiInventory(zip, year, model, radius) {
+  const response = await fetch(apiBase + '/api/inventory/hyundai?' + new URLSearchParams({
+    zip: zip,
+    year: year,
+    model: model,
+    radius: radius,
+    v2: true
+  }),
+  {method: 'GET', mode: 'cors',})
+
+  if (!response.ok) {
+    return ['ERROR', response.status, await response.text()]
+  } else {
+    return formatHyundaiInventoryResults(await response.json())
+  }
+}
+
+export async function getHyundaiVinDetail(vin, model, year) {
   const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
       model: model,
       year: year,
@@ -17,7 +34,6 @@ export async function getVinDetail(vin, model, year) {
   // Get VIN detail data for a single vehicle
   const vinData = await response.json()
   
-  
   if (vinData['data'].length > 0) {
     return formatVinDetails(vinData['data'][0]['vehicle'][0])
   } else if (vinData['data'].length == 0) {
@@ -27,14 +43,44 @@ export async function getVinDetail(vin, model, year) {
   }
 }
 
-// export async function lookupByVin(vin) {
-//   // This is used for the search by VIN feature
+function formatHyundaiInventoryResults(input) {
+  const res = []
+  input['data'][0]['dealerInfo'].forEach(dealer => {
+    dealer['vehicles']?.forEach(vehicle => {
+      res.push({...dealer, ...vehicle})
+    })
+  })
 
-// if (validateVin(vin)) {
+  if (res.length > 0) {
+    res.forEach(vehicle => {
+      // Becuase we just merged the dealer and vehicle Objects, deleting the vehicles
+      // array from each vehicle (which was carried over from the dealer object)
+      delete vehicle['vehicles']
 
-// }
+      // Replace the $xx,xxx.xx string with a value which can be cast to float
+      vehicle['price'] = vehicle['price'].replace('$', '').replace(',', '')
+      
+      // Translate inventory status codes to something meaningful
+      vehicle['inventoryStatus'] = hyundaiTransitStatus[vehicle['inventoryStatus']]
 
-// }
+      // Translate interior color codes to something meaningful
+      vehicle['interiorColor'] = hyundaiInteriorColors[vehicle['interiorColorCd']]
+
+      // Pull the Exterior Color Name up from a nested Object, and title case format
+      vehicle['exteriorColor'] = titleCase(vehicle['colors'][0]['ExtColorLongDesc'])
+
+      // Title case format
+      vehicle['drivetrainDesc'] = titleCase(vehicle['drivetrainDesc'])
+
+      // Delivery Date
+      vehicle['deliveryDate'] = vehicle['PlannedDeliveryDate']
+
+      // Dealer Name
+      vehicle['dealerName'] = vehicle['dealerNm']
+    })
+  }
+  return res
+}
 
 function formatVinDetails(input) {
   var tmp = {}
@@ -98,8 +144,3 @@ function formatVinDetails(input) {
 return tmp
   }
 
-// function validateVin(manufacturer) {
-//   if (manufacturer == "hyundai" | manufacturer == "kia" ) {
-//     return /[A-Za-z]{2}[\w|\d]{9}\d{6}/.test(manufacturer)
-//   }
-// }

@@ -31,18 +31,18 @@
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Ext. Color
-            <span v-if="localFilterSelections.ExtColorLongDesc.length > 0">
+            <span v-if="localFilterSelections.exteriorColor.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.ExtColorLongDesc.length }}
+                {{ localFilterSelections.exteriorColor.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.ExtColorLongDesc" :key=item
+              v-for="item in this.filterOptions.exteriorColor" :key=item
               :value="item"
-              v-model="localFilterSelections.ExtColorLongDesc"
+              v-model="localFilterSelections.exteriorColor"
               name="name-here"
               class="mb-1"
               >
@@ -55,18 +55,18 @@
         <b-dd id="interior-color" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Int. Color
-            <span v-if="localFilterSelections.interiorColorCd.length > 0">
+            <span v-if="localFilterSelections.interiorColor.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.interiorColorCd.length }}
+                {{ localFilterSelections.interiorColor.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.interiorColorCd" :key=item
+              v-for="item in this.filterOptions.interiorColor" :key=item
               :value="item"
-              v-model="localFilterSelections.interiorColorCd"
+              v-model="localFilterSelections.interiorColor"
               name="interior-color"
               class="mb-1"
               >
@@ -105,18 +105,18 @@
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Dealer
-            <span v-if="localFilterSelections.dealerNm.length > 0">
+            <span v-if="localFilterSelections.dealerName.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.dealerNm.length }}
+                {{ localFilterSelections.dealerName.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.dealerNm" :key=item
+              v-for="item in this.filterOptions.dealerName" :key=item
               :value="item"
-              v-model="localFilterSelections.dealerNm"
+              v-model="localFilterSelections.dealerName"
               name="Dealer-Name"
               class="mb-1"
               >
@@ -265,12 +265,12 @@
         this entire object into the Vuex store and push the data into Vue router.
         */
         localFilterSelections: {
-          'dealerNm': [],
-          'interiorColorCd': [],
+          'dealerName': [],
+          'interiorColor': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
+          'exteriorColor': [],
           'price': [],
         },
       }
@@ -315,12 +315,12 @@
 
       resetFilterSelections() {
         this.localFilterSelections = {
-          'dealerNm': [],
-          'interiorColorCd': [],
+          'dealerName': [],
+          'interiorColor': [],
           'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
-          'ExtColorLongDesc': [],
+          'exteriorColor': [],
           'price': [],
         }
       },
