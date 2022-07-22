@@ -14,7 +14,7 @@ function git_push() {
 }
 
 # Install Node and NPM
-/sbin/apk -U add nodejs=16.14.2-r0 npm
+/sbin/apk -U add nodejs npm
 
 cd ./app
 npm install
