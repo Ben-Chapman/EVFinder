@@ -267,7 +267,7 @@
         localFilterSelections: {
           'dealerName': [],
           'interiorColor': [],
-          'deliveryDate': [],
+          'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],
@@ -317,7 +317,7 @@
         this.localFilterSelections = {
           'dealerName': [],
           'interiorColor': [],
-          'deliveryDate': [],
+          'inventoryStatus': [],
           'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],

@@ -56,7 +56,7 @@ def get_inventory():
       try:
         request_args['v2']
         return send_response(data, 'application/json', 3600)
-      except:
+      except KeyError:
         return send_response(flatten_api_results(data), 'application/json', 3600)
     else:
       return send_error_response(
