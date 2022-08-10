@@ -4,6 +4,8 @@ from flask import Blueprint, request
 from libs.libs import send_response, send_error_response, validate_request
 from libs.http import get
 
+import requests
+
 genesis = Blueprint(name="genesis", import_name=__name__)
 
 @genesis.route('/api/inventory/genesis', methods=['GET'])
@@ -35,10 +37,10 @@ def get_genesis_inventory():
 
   if validate_request(params.items()):
     # Make a call to the Genesis API
-    g = get(
+    g = requests.get(
       url=api_url,
-      request_headers=headers,
-      query_params={}
+      headers=headers,
+      # query_params={}
       )
     data = g.json()
 

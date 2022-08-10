@@ -2,8 +2,7 @@
 import { genesisInventoryMapping } from "./genesisMappings"
 
 
-// const apiBase = 'https://api.theevfinder.com'
-const apiBase = 'http://localhost:8081'
+const apiBase = 'https://api.theevfinder.com'
 export async function getGenesisInventory(zip, year, model, radius) {
   const response = await fetch(apiBase + '/api/inventory/genesis?' + new URLSearchParams({
     zip: zip,
@@ -12,6 +11,13 @@ export async function getGenesisInventory(zip, year, model, radius) {
     radius: radius,
   }),
   {method: 'GET', mode: 'cors',})
+  // const response = await fetch(apiBase + '/api/inventory/test?' + new URLSearchParams({
+  //   zip: zip,
+  //   year: year,
+  //   model: model,
+  //   radius: radius,
+  // }),
+  // {method: 'GET', mode: 'cors',})
 
   if (!response.ok) {
     return ['ERROR', response.status, await response.text()]
