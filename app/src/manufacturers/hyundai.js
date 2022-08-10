@@ -44,8 +44,9 @@ export async function getHyundaiVinDetail(vin, model, year) {
 }
 
 function formatHyundaiInventoryResults(input) {
+  console.log(input)
   const res = []
-  if (!(input ['data'][0]['dealerInfo']) === null) {  // If the API returned vehicles in inventory
+  if (input['data'][0]['dealerInfo'] !== null) {  // If the API returned vehicles in inventory
     input['data'][0]['dealerInfo'].forEach(dealer => {
       dealer['vehicles']?.forEach(vehicle => {
         res.push({...dealer, ...vehicle})
