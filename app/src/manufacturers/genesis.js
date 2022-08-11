@@ -4,52 +4,33 @@ import { genesisInventoryMapping } from "./genesisMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 export async function getGenesisInventory(zip, year, model, radius) {
-  const response = await fetch(apiBase + '/api/inventory/genesis?' + new URLSearchParams({
+  const inventory = await fetch(apiBase + '/api/inventory/genesis?' + new URLSearchParams({
     zip: zip,
     year: year,
     model: model,
     radius: radius,
   }),
   {method: 'GET', mode: 'cors',})
-  // const response = await fetch(apiBase + '/api/inventory/test?' + new URLSearchParams({
-  //   zip: zip,
-  //   year: year,
-  //   model: model,
-  //   radius: radius,
-  // }),
-  // {method: 'GET', mode: 'cors',})
-
-  if (!response.ok) {
-    return ['ERROR', response.status, await response.text()]
+  
+  const dealers = await fetch(apiBase + '/api/dealer/genesis?' + new URLSearchParams({
+    zip: zip,
+    year: year,
+    model: model,
+    radius: radius,
+  }),
+  {method: 'GET', mode: 'cors',})
+  
+  // const dealerList = dealers.json()
+  // console.log(dealerList)
+  if (inventory.ok) {
+    return formatGenesisInventoryResults(await inventory.json(), await dealers.json())
   } else {
-    return formatGenesisInventoryResults(await response.json())
+    return ['ERROR', inventory.status, await inventory.text()]
   }
+  
 }
 
-// export async function getHyundaiVinDetail(vin, model, year) {
-//   const response = await fetch(apiBase + '/api/vin?' + new URLSearchParams({
-//       model: model,
-//       year: year,
-//       vin: vin,
-//     }),
-//     {
-//     method: 'GET',
-//     mode: 'cors', 
-//     })
-  
-//   // Get VIN detail data for a single vehicle
-//   const vinData = await response.json()
-  
-//   if (vinData['data'].length > 0) {
-//     return formatVinDetails(vinData['data'][0]['vehicle'][0])
-//   } else if (vinData['data'].length == 0) {
-//       return {'': 'No information was found for this VIN'}
-//   } else {
-//       return {'Error': 'An error occured fetching detail for this VIN'}
-//   }
-// }
-
-function formatGenesisInventoryResults(input) {
+function formatGenesisInventoryResults(input, dealerList) {
   const res = []
   input['Vehicles'].forEach(vehicle => {
     const k = {}
@@ -65,75 +46,16 @@ function formatGenesisInventoryResults(input) {
         // If there's no EV Finder-specific key, just append the Genesis key
         k[key] = vehicle['Veh'][key]
       }
+
+      Object.entries(dealerList['dealers']).forEach(f => {
+        if (f[1]['dealerCd'] == k['DealerCd']) {
+          k['distance'] = f[1]['distance']
+          k['dealerUrl'] = f[1]['dealerUrl']
+        }
+      })
     })
-    // Genesis do not provide any inventory status for the GV60 (yet?), so a
-    // quick hack until something better is found/developed
-    k['deliveryDate'] = "Unknown"
     
     res.push(k)
   })
   return res
 }
-
-// function formatVinDetails(input) {
-//   var tmp = {}
-//   var keysToDelete = [
-//     'colors',
-//     'DDCSpecialProgam',
-//   ]
-//   var needsCurrencyConversion = [
-//     'DealerPrice',
-//     'MAPPrice',
-//     'freight',
-//     'msrp',
-//     'rbcSavings',
-//     'totalAccessoryPrice',
-//     'totalExtColorPrice',
-//     'totalIntColotPrice',
-//     'totalOptions',
-//     'totalPackageOptionPrice',
-//     'totalPackagePrice',
-//   ]
-
-//   Object.entries(input).forEach(([key, value]) => {
-//     if (value === null || value == '') {
-//       if (hyundaiVinDetailMapping[key] != undefined) {
-//         tmp[hyundaiVinDetailMapping[key]] = 'N/A'
-//       }
-//       else {
-//         key = 'N/A'
-//       }
-//     } else if (key == 'accessories') {
-//       var aTmp = []
-//       for (var a=0; a<input[key].length; a++) {
-//         aTmp.push(
-//           `${titleCase(input[key][a]['accessoryNm'])}: ${convertToCurrency(input[key][a]['accessoryPrice'])}`)
-//       }
-//       tmp['Accessories'] = aTmp.join(',  ')
-//     } else if (key == 'inventoryStatus') {
-//       // Translate status codes to something meaningful
-//       const transitStatus = {
-//         'AA': 'At Sea 🚢',
-//         'DS': 'Dealer Stock 🚩',
-//         'IR': '🚛 In Transit',
-//         'IT': '🚛 In Transit',
-//         'PA': 'Port Arrival',
-//         'TN': 'Ready for Shipment',
-//       }
-//       tmp['Inventory Status'] = transitStatus[value]
-//     } else if (needsCurrencyConversion.includes(key)) {
-//       tmp[hyundaiVinDetailMapping[key]] = convertToCurrency(value)
-//     } else if (keysToDelete.includes(key) == false) {
-//       tmp[hyundaiVinDetailMapping[key]] = value
-//     }
-//   })
-
-//   // Delete elements no longer needed
-//   for (let j = 0; j < keysToDelete.length; j++) {
-//     const element = keysToDelete[j]
-//     delete tmp[element]
-//   }
-
-// return tmp
-//   }
-

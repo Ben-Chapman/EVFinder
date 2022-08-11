@@ -129,18 +129,18 @@
         <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
           <template #button-content>
             Availability
-            <span v-if="localFilterSelections.deliveryDate.length > 0">
+            <span v-if="localFilterSelections.inventoryStatus.length > 0">
               <b-badge variant="success">
-                {{ localFilterSelections.deliveryDate.length }}
+                {{ localFilterSelections.inventoryStatus.length }}
               </b-badge>
             </span>
           </template>
 
           <b-dropdown-form>
             <b-form-checkbox
-              v-for="item in this.filterOptions.deliveryDate" :key=item
+              v-for="item in this.filterOptions.inventoryStatus" :key=item
               :value="item"
-              v-model="localFilterSelections.deliveryDate"
+              v-model="localFilterSelections.inventoryStatus"
               name="Inventory-Status"
               class="mb-1"
               >

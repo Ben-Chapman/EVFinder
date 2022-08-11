@@ -25,6 +25,7 @@ const genesisInventoryMapping = {
   'range': 'distance',
   'VIN': 'vin',
   'DlrName': 'dealerName',
+  'PlannedDeliveryDate': 'deliveryDate',
   }
 
 // const hyundaiTransitStatus = {
