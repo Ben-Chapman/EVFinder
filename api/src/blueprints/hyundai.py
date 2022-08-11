@@ -7,7 +7,9 @@ from libs.libs import flatten_api_results, send_error_response, send_response, v
 from libs.http import get
 
 hyundai = Blueprint(name="hyundai", import_name=__name__)
-
+import requests
+import logging
+logging.getLogger('flask_cors').level = logging.DEBUG
 
 @hyundai.route('/api/inventory', methods=['GET'])
 @hyundai.route('/api/inventory/hyundai', methods=['GET'])
@@ -34,6 +36,7 @@ def get_inventory():
   }
 
   if validate_request(params.items()):
+    # g = requests.get(url=api_url, params=params, headers=headers)
     # Make a call to the Hyundai API
     g = get(
       url=api_url,
@@ -71,3 +74,12 @@ def get_inventory():
       error_data=request.url,
       status_code=400
       )
+
+@hyundai.route('/api/inventory/test', methods=['GET'])
+def testing():
+  return send_response({'testing': 'working'}, 'application/json', 3600)
+  # return send_error_response(
+  #       error_message='Received invalid data from the Hyundai API',
+  #       error_data={'testing': 'working'},
+  #       status_code=400
+  #     )
