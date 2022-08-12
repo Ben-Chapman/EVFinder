@@ -162,7 +162,6 @@
               { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
               { value: 'Kona%20Ev', text: 'Kona Electric'},
               { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
-              { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
               { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
             ],
           },

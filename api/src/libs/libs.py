@@ -41,7 +41,6 @@ def validate(validation_type, validation_data):
         'Ioniq%20Phev',
         'Kona%20Ev',
         'Santa%20Fe%20Phev',
-        'Sonata%20Hev',
         'Tucson%20Phev',
         'N',  # EV6
         'V',  # Niro EV
