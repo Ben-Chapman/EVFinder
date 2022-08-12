@@ -41,12 +41,12 @@ def validate(validation_type, validation_data):
         'Ioniq%20Phev',
         'Kona%20Ev',
         'Santa%20Fe%20Phev',
-        'Sonata%20Hev',
         'Tucson%20Phev',
         'N',  # EV6
         'V',  # Niro EV
         'F',  # Niro Plug-in Hybrid
         'T',  # Sorento Plug-in Hybrid
+        'GV60',  # Genesis GV60
         ]
       valid_radii = [1, 999]
       valid_vins = []

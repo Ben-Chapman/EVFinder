@@ -124,6 +124,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import { getGenesisInventory } from '../manufacturers/genesis'
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
 
@@ -161,8 +162,13 @@
               { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
               { value: 'Kona%20Ev', text: 'Kona Electric'},
               { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
-              { value: 'Sonata%20Hev', text: 'Sonata Hybrid'},  // User request
               { value: 'Tucson%20Phev', text: 'Tucson Plug-in Hybrid'},
+            ],
+          },
+          {
+            label: 'Genesis',
+            options: [
+              { value: 'GV60', text: 'GV60'},
             ],
           },
           {
@@ -173,11 +179,11 @@
               { value: 'V', text: 'Niro EV' },
             ],
           }
-          
         ],
 
         yearOptions: [
           { value: '2022', text: '2022' },
+          { value: '2023', text: '2023' },
         ],
       }
     }, // data
@@ -249,7 +255,6 @@
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
-          // await this.getHyundaiInventory()
           const hyundaiInventory = await getHyundaiInventory(
             this.localForm.zipcode,
             this.localForm.year,
@@ -260,6 +265,19 @@
             this.updateStore({'apiErrorDetail': hyundaiInventory})
           } else {
             this.updateStore({'inventory': hyundaiInventory})
+          }
+        }
+        else if (this.localForm.manufacturer.toLowerCase() === 'genesis') {
+          const genesisInventory = await getGenesisInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.radius,
+          )
+          if (genesisInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': genesisInventory})
+          } else {
+            this.updateStore({'inventory': genesisInventory})
           }
         }
 

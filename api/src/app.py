@@ -41,6 +41,10 @@ app.register_blueprint(ws)
 client = google.cloud.logging.Client()
 client.setup_logging()
 
+# CORS Debug Logging
+# import logging
+# logging.getLogger('flask_cors').level = logging.DEBUG
+
 # Ensure we only serve traffic sourced from Cloudflare
 # This will run for all routes in this app
 @app.before_request
