@@ -19,18 +19,16 @@ export async function getGenesisInventory(zip, year, model, radius) {
     radius: radius,
   }),
   {method: 'GET', mode: 'cors',})
-  
-  // const dealerList = dealers.json()
-  // console.log(dealerList)
+
   if (inventory.ok) {
-    return formatGenesisInventoryResults(await inventory.json(), await dealers.json())
+    return formatGenesisInventoryResults(await inventory.json(), await dealers.json(), radius)
   } else {
     return ['ERROR', inventory.status, await inventory.text()]
   }
   
 }
 
-function formatGenesisInventoryResults(input, dealerList) {
+function formatGenesisInventoryResults(input, dealerList, radius) {
   const res = []
   input['Vehicles'].forEach(vehicle => {
     const k = {}
@@ -46,7 +44,7 @@ function formatGenesisInventoryResults(input, dealerList) {
         // If there's no EV Finder-specific key, just append the Genesis key
         k[key] = vehicle['Veh'][key]
       }
-
+      
       Object.entries(dealerList['dealers']).forEach(f => {
         if (f[1]['dealerCd'] == k['DealerCd']) {
           k['distance'] = f[1]['distance']
@@ -55,7 +53,9 @@ function formatGenesisInventoryResults(input, dealerList) {
       })
     })
     
-    res.push(k)
+    if (k['distance'] <= radius) {
+      res.push(k)
+    }
   })
   return res
 }
