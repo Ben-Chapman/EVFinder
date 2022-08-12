@@ -7,6 +7,7 @@ from libs.libs import send_response, send_error_response, validate_request
 volkswagen = Blueprint(name="volkswagen", import_name=__name__)
 
 s = requests.Session()
+api_url = 'https://api.vw.com/graphql'
 
 @volkswagen.route('/api/inventory/volkswagen', methods=['GET'])
 def get_volkswagen_inventory():
@@ -20,7 +21,7 @@ def get_volkswagen_inventory():
   # We'll use the requesting UA to make the request to the Volkswagen APIs
   user_agent = request.headers['User-Agent']
 
-  inventory_url = 'https://api.vw.com/graphql'
+  
   params = {
       'zip': zip_code,
       'year': year,
@@ -33,7 +34,7 @@ def get_volkswagen_inventory():
       'referer': 'https://www.vw.com/'
   }
   
-  post_data = {
+  inventory_post_data = {
     "operationName": "InventoryData",
     "variables": {
       "zipcode": zip_code,
@@ -52,9 +53,9 @@ def get_volkswagen_inventory():
   if validate_request(params.items()):
     # Make a call to the Volkswagen API
     inventory = s.post(
-      url=inventory_url,
+      url=api_url,
       headers=headers,
-      json=post_data,
+      json=inventory_post_data,
       verify=False
     )
     
@@ -82,3 +83,49 @@ def get_volkswagen_inventory():
       error_data=request.url,
       status_code=400
       )
+
+@volkswagen.route('/api/vin/volkswagen', methods=['GET'])
+def get_vin_details():
+  request_args = request.args
+
+  zip_code = request_args['zip']
+  vin = request_args['vin']
+
+  # We'll use the requesting UA to make the request to the Volkswagen APIs
+  user_agent = request.headers['User-Agent']
+  
+  headers = {
+      'User-Agent': user_agent,
+      'referer': 'https://www.vw.com/'
+  }
+  
+  vin_post_data = {
+    "operationName": "VehicleData",
+    "variables": {
+      "vin": vin,
+      "zipcode": zip_code
+    },
+    'query': 'query VehicleData($vin: String, $zipcode: String) {vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl mpgHighway trimLevel mediaImageUrl mediaImageUrlAlt mediaAssets {   description   type   asset   __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures {   key   title   __typename } factoryModelYear dealerInstalledAccessories {   mdmCode   title   longTitle   description   image   itemPrice   creativeTitle   __typename } dealer {   generatedDate   dealerid   name   dealername   seolookupkey   address1   address2   city   state   postalcode   country   url   phone   latlong   staticMapsUrl   distance   inventoryCount   aor   isSatellite   isAssessing   lmaId   __typename } specifications {   text   values {     key     label     longTitle     value     __typename   }   key   __typename } destinationCharge __typename}}'
+  }
+  
+  vin_detail = s.post(
+      url=api_url,
+      headers=headers,
+      json=vin_post_data,
+      verify=False
+    )
+    
+  data = vin_detail.json()
+
+  if len(data['data']['vehicle']) > 0:
+    return send_response(
+      response_data=data,
+      content_type='application/json',
+      cache_control_age=3600
+    )
+  else:
+    error_message = 'An error occured with the Volkswagen API'
+    return send_error_response(
+      error_message=error_message,
+      error_data=data
+    )
