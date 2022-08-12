@@ -15,6 +15,7 @@ import requests
       ('model', 'Santa%20Fe%20Phev', True, "Valid Model"),
       ('model', 'Sonata%20Hev', True, "Valid Model"),
       ('model', 'Tucson%20Phev', True, "Valid Model"),
+      ('model', 'GV60', True, "Valid Model"),
       ('series', 'N', True, "Valid Model"),
       ('radius', '1', True, "Valid radius"),
       ('radius', '999', True, "Valid radius"),
