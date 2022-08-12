@@ -108,24 +108,24 @@
                   </b-row>
                 </div>
               </div>
-              <!-- Window sticker for Kias -->
-              <!-- <div v-if="form.model == 'N'">
+              <!-- Window sticker for Genesis -->
+              <div v-if="form.model == 'GV60'">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
                       variant="light"
-                      @click="openUrlInNewWindow('https://www.kia.com/us/services/us/windowsticker/load/' + row.item.vin)"
+                      @click="openUrlInNewWindow(generateGenesisWindowStickerUrl(row.item.vin, form.model))"
                       class="mr-2 align-middle"
                       >
                       Window Sticker for This Vehicle
-                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right->
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
                     </b-button>
                   </b-row>
-              </div> -->
+              </div>
               
                 <b-list-group
                   horizontal
-                  v-for="(item, key) in vinDetail[row.item.vin]" :key=item
+                  v-for="(item, key) in vinDetail[row.item.vin]" :key=key
                 >
                 <!-- We're displaying the Dealer URL above, don't display it here -->
                   <b-col cols=8 md=4 v-if="key != 'DI'">
@@ -372,8 +372,11 @@
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
-    
-      
+
+      generateGenesisWindowStickerUrl(vin, genesisModel) {
+        const refreshToken = new Date().toISOString().split('T')[0] // 2022-08-01
+        return `https://www.genesis.com/us/en/services/windowsticker?refreshToken=${refreshToken}&vehicleType=new&VIN=${vin}&vehicleModel=${genesisModel}`
+      },
     }, // methods
     
     computed: {
