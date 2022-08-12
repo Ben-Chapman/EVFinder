@@ -8,8 +8,6 @@ from libs.http import get
 
 hyundai = Blueprint(name="hyundai", import_name=__name__)
 import requests
-import logging
-logging.getLogger('flask_cors').level = logging.DEBUG
 
 @hyundai.route('/api/inventory', methods=['GET'])
 @hyundai.route('/api/inventory/hyundai', methods=['GET'])
