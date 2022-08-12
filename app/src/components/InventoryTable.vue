@@ -125,7 +125,7 @@
               
                 <b-list-group
                   horizontal
-                  v-for="(item, key) in vinDetail[row.item.vin]" :key=key
+                  v-for="(item, key) in vinDetail[row.item.vin]" :key=item
                 >
                 <!-- We're displaying the Dealer URL above, don't display it here -->
                   <b-col cols=8 md=4 v-if="key != 'DI'">
@@ -164,6 +164,7 @@
   
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
+  import { getGenesisVinDetail } from '../manufacturers/genesis'
   
   export default {
     components: {
@@ -237,6 +238,14 @@
             this.vinDetail,
             item.vin,
             hyundaiVinData
+            )
+        }
+        else if (this.form.manufacturer.toLowerCase() === "genesis") {
+          const genesisVinData = getGenesisVinDetail(item)
+          this.$set(
+            this.vinDetail,  // Where to store
+            item.vin,        // What's the key
+            genesisVinData,            // Data to store
             )
         }
 

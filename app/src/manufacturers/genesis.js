@@ -1,5 +1,5 @@
 // import { convertToCurrency, titleCase } from "../libs"
-import { genesisInventoryMapping } from "./genesisMappings"
+import { genesisInventoryMapping, genesisVinMapping } from "./genesisMappings"
 
 
 const apiBase = 'https://api.theevfinder.com'
@@ -44,7 +44,7 @@ function formatGenesisInventoryResults(input, dealerList, radius) {
         // If there's no EV Finder-specific key, just append the Genesis key
         k[key] = vehicle['Veh'][key]
       }
-      
+
       Object.entries(dealerList['dealers']).forEach(f => {
         if (f[1]['dealerCd'] == k['DealerCd']) {
           k['distance'] = f[1]['distance']
@@ -58,4 +58,20 @@ function formatGenesisInventoryResults(input, dealerList, radius) {
     }
   })
   return res
+}
+
+export function getGenesisVinDetail(input) {
+  /** The Genesis Inventory service does not provide a lot of additional detail
+   * for each vehicle, and it appears there is no JSON endpoint for a VIN lookup.
+   * So for now, just storing the /inventory API data directly in the vinDetail
+   * local store.
+   */
+    const k = {}
+    Object.keys(input).forEach(key => {
+      if (Object.keys(genesisVinMapping).includes(key)) {
+        k[genesisVinMapping[key]] = input[key]
+      }
+    })
+  
+    return k
 }
