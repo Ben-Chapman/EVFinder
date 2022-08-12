@@ -72,12 +72,3 @@ def get_inventory():
       error_data=request.url,
       status_code=400
       )
-
-@hyundai.route('/api/inventory/test', methods=['GET'])
-def testing():
-  return send_response({'testing': 'working'}, 'application/json', 3600)
-  # return send_error_response(
-  #       error_message='Received invalid data from the Hyundai API',
-  #       error_data={'testing': 'working'},
-  #       status_code=400
-  #     )
