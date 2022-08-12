@@ -1,9 +1,18 @@
 // import { convertToCurrency, titleCase } from "../libs"
 import { genesisInventoryMapping, genesisVinMapping } from "./genesisMappings"
 
-
 const apiBase = 'https://api.theevfinder.com'
 export async function getGenesisInventory(zip, year, model, radius) {
+  /**
+   * Genesis GV60s are 2023 model year and newer. If the user selects 2022 return
+   * an empty array without making an API call.
+   * TODO: Create an info-message Vue component, and display a helpful info message.
+   */
+
+  if (year == 2022) {
+    return []
+  }
+  
   const inventory = await fetch(apiBase + '/api/inventory/genesis?' + new URLSearchParams({
     zip: zip,
     year: year,

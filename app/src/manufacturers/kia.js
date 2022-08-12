@@ -4,6 +4,14 @@ import { kiaInventoryMapping, kiaVinMapping } from './kiaMappings'
 const apiBase = 'https://api.theevfinder.com'
 
 export async function getKiaInventory(zip, year, model, seriesName, radius) {
+   /**
+   * The KIA API throws a 500 when making a request for a 2023 model year vehicles
+   * (as of Aug 12). If the user selects 2023, just return an empty array
+   */
+    if (year == 2023) {
+      return []
+    }
+    
   const response = await fetch(apiBase + '/api/inventory/kia?' + new URLSearchParams({
     zip: zip,
     year: year,
