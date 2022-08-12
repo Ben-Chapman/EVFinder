@@ -43,7 +43,6 @@ def get_genesis_inventory():
     inventory = s.get(
       url=inventory_url,
       headers=headers,
-      verify=False
     )
     
     data = inventory.json()
