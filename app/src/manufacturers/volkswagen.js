@@ -55,7 +55,12 @@ function formatVolkswagenInventoryResults(input) {
     tmp['trimDesc'].includes('AWD') ? tmp['drivetrainDesc'] = 'AWD' : tmp['drivetrainDesc'] = 'RWD'
 
     // Inventory Status
-    tmp['inTransit'] === true ? tmp['inventoryStatus'] = 'In Transit' : tmp['inventoryStatus'] = 'Check With Dealer'
+    tmp['inTransit'] === true ? tmp['deliveryDate'] = 'In Transit' : tmp['deliveryDate'] = 'Check With Dealer'
+    tmp['inventoryStatus'] = tmp['deliveryDate']
+
+    // VW provides a FQDN for the dealer URL. Some manufacturers don't so the 
+    // scheme is inserted in the table template. So removing the scheme here
+    tmp['dealerUrl'] = tmp['dealerUrl'].replace('https://', '')
    })
    
    return res
