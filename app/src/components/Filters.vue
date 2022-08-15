@@ -360,11 +360,8 @@
 
         calculateMaxPrice() {
         var inputData = this.inventory
-        // console.log("Computed Calculating Min Max Here")
         var numberData = []
-        // console.log(inputData)
         Object.values(inputData).forEach(input => {
-          // console.log(`${input.vin}: ${input.price}`)
           numberData.push(
             this.priceStringToNumber(input.price)
           )
