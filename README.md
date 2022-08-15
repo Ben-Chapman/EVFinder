@@ -1,2 +1,2 @@
-# EVFinder
-The EV FInder
+# The EV Finder | Find Your New Electric Vehicle
+
