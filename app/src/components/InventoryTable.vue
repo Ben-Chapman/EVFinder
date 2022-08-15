@@ -122,6 +122,20 @@
                     </b-button>
                   </b-row>
               </div>
+              <!-- Direct Dealer URL for Volkswagen -->
+              <div v-if="form.model == 'ID.4' && row.item.onlineSalesURL != ''">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(row.item.onlineSalesURL)"
+                      class="mr-2 align-middle"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
+                    </b-button>
+                  </b-row>
+              </div>
               
                 <b-list-group
                   horizontal
