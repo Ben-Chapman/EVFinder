@@ -10,6 +10,7 @@ from blueprints.genesis import genesis
 from blueprints.hyundai import hyundai
 from blueprints.kia import kia
 from blueprints.vin import vin
+from blueprints.volkswagen import volkswagen
 from blueprints.window_sticker import ws
 
 from libs.libs import send_error_response
@@ -34,6 +35,7 @@ CORS(
 app.register_blueprint(genesis)
 app.register_blueprint(hyundai)
 app.register_blueprint(kia)
+app.register_blueprint(volkswagen)
 app.register_blueprint(vin)
 app.register_blueprint(ws)
 

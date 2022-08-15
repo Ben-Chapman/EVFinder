@@ -122,6 +122,20 @@
                     </b-button>
                   </b-row>
               </div>
+              <!-- Direct Dealer URL for Volkswagen -->
+              <div v-if="form.model == 'ID.4' && row.item.onlineSalesURL != ''">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(row.item.onlineSalesURL)"
+                      class="mr-2 align-middle"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
+                    </b-button>
+                  </b-row>
+              </div>
               
                 <b-list-group
                   horizontal
@@ -165,6 +179,7 @@
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
   import { getGenesisVinDetail } from '../manufacturers/genesis'
+  import { getVolkswagenVinDetail } from '../manufacturers/volkswagen'
   
   export default {
     components: {
@@ -246,6 +261,19 @@
             this.vinDetail,  // Where to store
             item.vin,        // What's the key
             genesisVinData,            // Data to store
+            )
+        }
+        else if (this.form.manufacturer.toLowerCase() === "volkswagen") {  // Make a vin API call for Volkswagen
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          const volkswagenVinData = await getVolkswagenVinDetail(this.form.zipcode, item.vin)
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            volkswagenVinData
             )
         }
 

@@ -66,7 +66,7 @@ def get_kia_inventory():
         cache_control_age=3600
       )
     else:
-      error_message = 'An error occured with the Kia API'
+      error_message = 'An error occurred with the Kia API'
       return send_error_response(
         error_message=error_message,
         error_data=data

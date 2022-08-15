@@ -39,7 +39,7 @@ export async function getHyundaiVinDetail(vin, model, year) {
   } else if (vinData['data'].length == 0) {
       return {'': 'No information was found for this VIN'}
   } else {
-      return {'Error': 'An error occured fetching detail for this VIN'}
+      return {'Error': 'An error occurred fetching detail for this VIN'}
   }
 }
 

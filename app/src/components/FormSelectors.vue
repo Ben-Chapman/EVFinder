@@ -127,6 +127,7 @@
   import { getGenesisInventory } from '../manufacturers/genesis'
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
+  import { getVolkswagenInventory } from '../manufacturers/volkswagen'
 
   export default {
     mounted() {
@@ -178,7 +179,13 @@
               { value: 'F', text: 'Niro Plug-In Hybrid' },
               { value: 'V', text: 'Niro EV' },
             ],
-          }
+          },
+          {
+            label: 'Volkswagen',
+            options: [
+              { value: 'ID.4', text: 'ID.4'},
+            ],
+          },
         ],
 
         yearOptions: [
@@ -278,6 +285,19 @@
             this.updateStore({'apiErrorDetail': genesisInventory})
           } else {
             this.updateStore({'inventory': genesisInventory})
+          }
+        }
+        else if (this.localForm.manufacturer.toLowerCase() === 'volkswagen') {
+          const volkswagenInventory = await getVolkswagenInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.radius,
+          )
+          if (volkswagenInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': volkswagenInventory})
+          } else {
+            this.updateStore({'inventory': volkswagenInventory})
           }
         }
 
