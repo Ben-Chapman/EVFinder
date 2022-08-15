@@ -56,6 +56,7 @@ def get_volkswagen_inventory():
       url=api_url,
       headers=headers,
       json=inventory_post_data,
+      verify=False
     )
     
     data = inventory.json()
@@ -111,6 +112,7 @@ def get_vin_details():
       url=api_url,
       headers=headers,
       json=vin_post_data,
+      verify=False
     )
     
   data = vin_detail.json()
