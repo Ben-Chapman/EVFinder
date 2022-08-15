@@ -54,7 +54,7 @@ def get_genesis_inventory():
         cache_control_age=3600
       )
     else:
-      error_message = 'An error occured with the Genesis API'
+      error_message = 'An error occurred with the Genesis API'
       return send_error_response(
         error_message=error_message,
         error_data=data
@@ -110,7 +110,7 @@ def get_genesis_dealers():
         cache_control_age=3600
       )
     else:
-      error_message = 'An error occured with the Genesis API'
+      error_message = 'An error occurred with the Genesis API'
       return send_error_response(
         error_message=error_message,
         error_data=data

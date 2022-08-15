@@ -56,7 +56,6 @@ def get_volkswagen_inventory():
       url=api_url,
       headers=headers,
       json=inventory_post_data,
-      verify=False
     )
     
     data = inventory.json()
@@ -71,7 +70,7 @@ def get_volkswagen_inventory():
         cache_control_age=3600
       )
     except KeyError:
-      error_message = 'An error occured with the Volkswagen API'
+      error_message = 'An error occurred with the Volkswagen API'
       return send_error_response(
         error_message=error_message,
         error_data=data
@@ -112,7 +111,6 @@ def get_vin_details():
       url=api_url,
       headers=headers,
       json=vin_post_data,
-      verify=False
     )
     
   data = vin_detail.json()
@@ -124,7 +122,7 @@ def get_vin_details():
       cache_control_age=3600
     )
   else:
-    error_message = 'An error occured with the Volkswagen API'
+    error_message = 'An error occurred with the Volkswagen API'
     return send_error_response(
       error_message=error_message,
       error_data=data
