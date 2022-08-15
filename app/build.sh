@@ -50,7 +50,7 @@ if [ $? -eq 0 ]; then
   gsutil -m -h "Cache-Control:public max-age=3600" cp -r /workspace/dist/* gs://${_APP_BUCKET_NAME}
   
   # Don't cache index.html
-  gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}index.html
+  gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}/index.html
   RETVAL=$?
 fi
 
