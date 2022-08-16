@@ -11,7 +11,17 @@
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
 import {version} from '../package.json'
-console.log(`The EVFinder release version ${version}`)
+
+console.log(`
+The EVFinder release version ${version}
+
+███████      Hey There!
+██           Found a bug? -> https://github.com/Ben-Chapman/EVFinder/issues/new?template=bug_report.md
+█████
+██           Are you good with the Internet, software development and whatnot?
+███████      Come help out -> https://github.com/Ben-Chapman/EVFinder
+
+`)
 
 export default {
   name: 'App',
