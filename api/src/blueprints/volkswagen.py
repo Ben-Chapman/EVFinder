@@ -6,7 +6,7 @@ from libs.libs import send_response, send_error_response, validate_request
 
 volkswagen = Blueprint(name="volkswagen", import_name=__name__)
 
-s = requests.Session()
+# s = requests.Session()
 api_url = 'https://api.vw.com/graphql'
 
 @volkswagen.route('/api/inventory/volkswagen', methods=['GET'])
@@ -52,10 +52,11 @@ def get_volkswagen_inventory():
 
   if validate_request(params.items()):
     # Make a call to the Volkswagen API
-    inventory = s.post(
+    inventory = requests.post(
       url=api_url,
       headers=headers,
       json=inventory_post_data,
+      verify=False
     )
     
     data = inventory.json()
@@ -70,6 +71,7 @@ def get_volkswagen_inventory():
         cache_control_age=3600
       )
     except KeyError:
+      print(f'ERROR Here: {data}')
       error_message = 'An error occurred with the Volkswagen API'
       return send_error_response(
         error_message=error_message,
@@ -107,10 +109,11 @@ def get_vin_details():
     'query': 'query VehicleData($vin: String, $zipcode: String) {vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl mpgHighway trimLevel mediaImageUrl mediaImageUrlAlt mediaAssets {   description   type   asset   __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures {   key   title   __typename } factoryModelYear dealerInstalledAccessories {   mdmCode   title   longTitle   description   image   itemPrice   creativeTitle   __typename } dealer {   generatedDate   dealerid   name   dealername   seolookupkey   address1   address2   city   state   postalcode   country   url   phone   latlong   staticMapsUrl   distance   inventoryCount   aor   isSatellite   isAssessing   lmaId   __typename } specifications {   text   values {     key     label     longTitle     value     __typename   }   key   __typename } destinationCharge __typename}}'
   }
   
-  vin_detail = s.post(
+  vin_detail = requests.post(
       url=api_url,
       headers=headers,
       json=vin_post_data,
+      verify=False
     )
     
   data = vin_detail.json()
