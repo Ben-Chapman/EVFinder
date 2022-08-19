@@ -217,7 +217,7 @@
       routePushandGo() {
         /*
         Push form fields to the Vue router as query params. We have a watch()
-        configured which monitors for changes to the routes, and will triger an
+        configured which monitors for changes to the routes, and will trigger an
         API call if they're valid.
         */
         this.$router.push({
@@ -235,6 +235,17 @@
               console.log(error)
               }
             })
+        
+        // Fire an event to Plausible to allow reporting on which manufacturers
+        // and vehicle models are being selected
+        this.$plausible.trackEvent(
+          'Selected Vehicle', {
+            props: {
+              vehicleManufacturer: this.localForm.manufacturer,
+              vehicleModel: this.localForm.model,
+            }
+          }
+        )
       },
 
       async getCurrentInventory() {
