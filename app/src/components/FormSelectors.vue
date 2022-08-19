@@ -235,17 +235,6 @@
               console.log(error)
               }
             })
-        
-        // Fire an event to Plausible to allow reporting on which manufacturers
-        // and vehicle models are being selected
-        this.$plausible.trackEvent(
-          'Selected Vehicle', {
-            props: {
-              vehicleManufacturer: this.localForm.manufacturer,
-              vehicleModel: this.localForm.model,
-            }
-          }
-        )
       },
 
       async getCurrentInventory() {
@@ -419,6 +408,17 @@
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
             this.getCurrentInventory()
+
+          // Fire an event to Plausible to allow reporting on which manufacturers
+          // and vehicle models are being selected
+          this.$plausible.trackEvent(
+            'Selected Vehicle', {
+              props: {
+                vehicleManufacturer: this.localForm.manufacturer,
+                vehicleModel: this.localForm.vehicleName,
+              }
+            }
+          )
           }
         }
       },
