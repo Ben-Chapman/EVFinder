@@ -7,7 +7,7 @@
         </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
-      <b-row class="d-flex mt-3" align-h="center">
+      <b-row class="d-flex mt-2" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
@@ -18,7 +18,11 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-year"
-            description="Select a Model Year"
+            label="Select a Model Year"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
           >
             <b-form-select
               id="form-year"
@@ -34,7 +38,11 @@
         <b-col cols=6 md=3>
           <b-form-group
             id="form-model"
-            description="Select a Model"
+            label="Select a Model"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
           >
             <b-form-select
               id="form-model"
@@ -50,7 +58,11 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-zipcode"
-            description="Enter a 5-digit US zip code"
+            label="Enter a 5-digit US zip code"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
           >
             <b-form-input
               autocomplete="off"
@@ -72,7 +84,11 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-radius"
-            description="Search Radius in Miles"
+            label="Search Radius in Miles"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
           >
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
@@ -159,7 +175,7 @@
           {
             label: 'Hyundai',
             options: [
-              { value: 'Ioniq%205', text: 'Ioniq 5'},
+              { value: 'Ioniq%205', text: 'Ioniq 5', modelYears: [2022, 2023]},
               { value: 'Ioniq%20Phev', text: 'Ioniq Plug-in Hybrid'},
               { value: 'Kona%20Ev', text: 'Kona Electric'},
               { value: 'Santa%20Fe%20Phev', text: 'Santa Fe Plug-in Hybrid'},
