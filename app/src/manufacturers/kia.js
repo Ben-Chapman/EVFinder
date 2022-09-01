@@ -18,9 +18,8 @@ export async function getKiaInventory(zip, year, model, radius) {
     var r = await response.json()  // Raw results
   }
 
-  if (r.hasOwnProperty('vehicles')) {
-    console.log("Inv results here")
-    const n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
+  if ('vehicles' in r) {
+    var n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
     n.forEach(vehicle => {
       // Lookup the dealer name/address from the dealer code
       const dCode = vehicle['dealerCode']
@@ -57,9 +56,8 @@ export async function getKiaInventory(zip, year, model, radius) {
         vehicle['drivetrainDesc'] = "Unknown"
       }
     })
-  // console.log(n)
   } else {
-    var n = []
+    n = []
   }
 
   return n

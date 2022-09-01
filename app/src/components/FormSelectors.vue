@@ -253,7 +253,8 @@ export default {
           this.localForm.year,
           this.localForm.model,
           this.localForm.radius,
-        )
+        ))
+
         if (kiaInventory[0] === 'ERROR') {
           this.updateStore({'apiErrorDetail': kiaInventory})
         } else {
