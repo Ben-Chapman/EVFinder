@@ -8,14 +8,14 @@ kia = Blueprint(name="kia", import_name=__name__)
 @kia.route('/api/inventory/kia', methods=['GET'])
 def get_kia_inventory():
   request_args = request.args
-  print(f'\n\n\n\{request_args}\n\n\n')
+
   zip_code = request_args['zip']
   year = request_args['year']
   model = request_args['model']
   radius = request_args['radius']
   # We'll use the requesting UA to make the request to the Kia APIs
   user_agent = request.headers['User-Agent']
-  print(zip_code, year, model, radius)
+
   # Fetches data from the Kia Inventory API
   api_url = 'https://www.kia.com/us/services/en/inventory/initial'
 
@@ -49,6 +49,7 @@ def get_kia_inventory():
       )
     # The Kia API will return a JSON object for any reasonable request, and the
     # http helper library will return an empty JSON object for non-200 responses
+    # so len(data) should be > 0 for all valid responses
     if len(data) > 0:
       return send_response(
         response_data=data,
