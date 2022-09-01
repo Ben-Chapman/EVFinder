@@ -3,20 +3,11 @@ import { kiaInventoryMapping, kiaVinMapping } from './kiaMappings'
 
 const apiBase = 'https://api.theevfinder.com'
 
-export async function getKiaInventory(zip, year, model, seriesName, radius) {
-   /**
-   * The KIA API throws a 500 when making a request for a 2023 model year vehicles
-   * (as of Aug 12). If the user selects 2023, just return an empty array
-   */
-    if (year == 2023) {
-      return []
-    }
-    
+export async function getKiaInventory(zip, year, model, radius) {
   const response = await fetch(apiBase + '/api/inventory/kia?' + new URLSearchParams({
     zip: zip,
     year: year,
     model: model,
-    seriesName: seriesName,
     radius: radius,
   }),
   {method: 'GET', mode: 'cors',})
@@ -25,8 +16,11 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
     return ['ERROR', response.status, await response.text()]
   } else {
     var r = await response.json()  // Raw results
-    var n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
+  }
 
+  if (r.hasOwnProperty('vehicles')) {
+    console.log("Inv results here")
+    const n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
     n.forEach(vehicle => {
       // Lookup the dealer name/address from the dealer code
       const dCode = vehicle['dealerCode']
@@ -63,10 +57,13 @@ export async function getKiaInventory(zip, year, model, seriesName, radius) {
         vehicle['drivetrainDesc'] = "Unknown"
       }
     })
-
-    return n
+  // console.log(n)
+  } else {
+    var n = []
   }
-}
+
+  return n
+  }
 
 export function getKiaVinDetail(input) {
   /** The KIA API response contains all publically available information

@@ -7,7 +7,11 @@
         </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
+<<<<<<< Updated upstream
       <b-row class="d-flex mt-3" align-h="center">
+=======
+      <b-row class="d-flex mt-2 align-items-center" align-h="center">
+>>>>>>> Stashed changes
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
@@ -18,7 +22,15 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-year"
+<<<<<<< Updated upstream
             description="Select a Model Year"
+=======
+            label="Model Year"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
+>>>>>>> Stashed changes
           >
             <b-form-select
               id="form-year"
@@ -34,7 +46,15 @@
         <b-col cols=6 md=3>
           <b-form-group
             id="form-model"
+<<<<<<< Updated upstream
             description="Select a Model"
+=======
+            label="Vehicle Model"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
+>>>>>>> Stashed changes
           >
             <b-form-select
               id="form-model"
@@ -50,7 +70,15 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-zipcode"
+<<<<<<< Updated upstream
             description="Enter a 5-digit US zip code"
+=======
+            label="Zip Code"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
+>>>>>>> Stashed changes
           >
             <b-form-input
               autocomplete="off"
@@ -72,7 +100,15 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-radius"
+<<<<<<< Updated upstream
             description="Search Radius in Miles"
+=======
+            label="Search Radius"
+            label-align="top"
+            label-size="sm"
+            label-for="form-year"
+            label-class="text-muted my-0"
+>>>>>>> Stashed changes
           >
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
@@ -91,33 +127,27 @@
             </b-form-input>
           </b-form-group>
         </b-col>
-        
-        <!-- Enabled Button -->
-        <div>
-            <span id="enabled-wrapper" class="d-inline-block" tabindex="0">
-              <b-button
-                v-if="validateSubmitButton"
-                id="submit-button"
-                variant="primary"
-                @click="routePushandGo()"
-                >Submit</b-button>
-            </span>
-        </div>
 
-          <!-- Disabled Button -->
-          <div>
-            <span id="disabled-wrapper" class="d-inline-block" tabindex="0">
-              <b-button
-                v-if="validateSubmitButton == false"
-                disabled
-                id="invalid-submit-button"
-                variant="outline-primary"
-                >Submit</b-button>
-              </span>
-            <b-tooltip target="disabled-wrapper" triggers="hover">
-                Please enter {{ invalidFormMessage() }}
-              </b-tooltip>
-          </div>
+        <span class="d-inline-block mt-3" tabindex="0">
+          <span v-if="validateSubmitButton" id="enabled-wrapper">
+            <b-button
+              id="submit-button"
+              variant="primary"
+              @click="routePushandGo()"
+              >Submit
+            </b-button>
+          </span>
+          <span v-else id="invalid-submit-button">
+            <b-button
+              disabled
+              variant="outline-primary"
+              >Submit
+            </b-button>
+          </span>
+        </span>
+        <b-tooltip target="invalid-submit-button" triggers="hover">
+          Please enter {{ invalidFormMessage() }}
+        </b-tooltip>
       </b-row>
     </div>
 </template>
@@ -252,9 +282,9 @@
             this.localForm.zipcode,
             this.localForm.year,
             this.localForm.model,
-            this.localForm.vehicleName,
             this.localForm.radius,
           )
+          console.log(kiaInventory)
           if (kiaInventory[0] === 'ERROR') {
             this.updateStore({'apiErrorDetail': kiaInventory})
           } else {
