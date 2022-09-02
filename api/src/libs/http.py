@@ -27,7 +27,7 @@ def get(url, query_params, request_headers):
 
 def post(url, request_headers, post_data):
   try:
-    r = requests.post(url, json=post_data, headers=request_headers)
+    r = requests.post(url, json=post_data, headers=request_headers, verify=False)
     data = r.json()
   except requests.exceptions.RequestException as e:
     logging.error(f'Request Error: {e}')

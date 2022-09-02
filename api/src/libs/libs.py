@@ -45,6 +45,7 @@ def validate(validation_type, validation_data):
         'N',  # EV6
         'V',  # Niro EV
         'F',  # Niro Plug-in Hybrid
+        'R', # Sportage Plug-in Hybrid
         'T',  # Sorento Plug-in Hybrid
         'GV60',  # Genesis GV60
         'ID.4', # VW ID.4

@@ -178,6 +178,8 @@
               { value: 'N', text: 'EV6'},
               { value: 'F', text: 'Niro Plug-In Hybrid' },
               { value: 'V', text: 'Niro EV' },
+              { value: 'T', text: 'Sorento Plug-in Hybrid' },
+              { value: 'R', text: 'Sportage Plug-in Hybrid' },
             ],
           },
           {
@@ -252,7 +254,6 @@
             this.localForm.zipcode,
             this.localForm.year,
             this.localForm.model,
-            this.localForm.vehicleName,
             this.localForm.radius,
           )
           if (kiaInventory[0] === 'ERROR') {
