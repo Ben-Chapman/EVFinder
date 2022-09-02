@@ -178,6 +178,8 @@
               { value: 'N', text: 'EV6'},
               { value: 'F', text: 'Niro Plug-In Hybrid' },
               { value: 'V', text: 'Niro EV' },
+              { value: 'T', text: 'Sorento Plug-in Hybrid' },
+              { value: 'R', text: 'Sportage Plug-in Hybrid' },
             ],
           },
           {
