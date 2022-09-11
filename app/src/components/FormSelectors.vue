@@ -178,6 +178,8 @@
               { value: 'N', text: 'EV6'},
               { value: 'F', text: 'Niro Plug-In Hybrid' },
               { value: 'V', text: 'Niro EV' },
+              { value: 'T', text: 'Sorento Plug-in Hybrid' },
+              { value: 'R', text: 'Sportage Plug-in Hybrid' },
             ],
           },
           {
@@ -217,7 +219,7 @@
       routePushandGo() {
         /*
         Push form fields to the Vue router as query params. We have a watch()
-        configured which monitors for changes to the routes, and will triger an
+        configured which monitors for changes to the routes, and will trigger an
         API call if they're valid.
         */
         this.$router.push({
@@ -252,7 +254,6 @@
             this.localForm.zipcode,
             this.localForm.year,
             this.localForm.model,
-            this.localForm.vehicleName,
             this.localForm.radius,
           )
           if (kiaInventory[0] === 'ERROR') {
@@ -408,6 +409,17 @@
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
             this.getCurrentInventory()
+
+          // Fire an event to Plausible to allow reporting on which manufacturers
+          // and vehicle models are being selected
+          this.$plausible.trackEvent(
+            'Selected Vehicle', {
+              props: {
+                vehicleManufacturer: this.localForm.manufacturer,
+                vehicleModel: this.localForm.vehicleName,
+              }
+            }
+          )
           }
         }
       },

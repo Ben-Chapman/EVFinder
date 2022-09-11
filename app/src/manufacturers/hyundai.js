@@ -44,7 +44,6 @@ export async function getHyundaiVinDetail(vin, model, year) {
 }
 
 function formatHyundaiInventoryResults(input) {
-  console.log(input)
   const res = []
   if (input['data'][0]['dealerInfo'] !== null) {  // If the API returned vehicles in inventory
     input['data'][0]['dealerInfo'].forEach(dealer => {
@@ -55,7 +54,7 @@ function formatHyundaiInventoryResults(input) {
   }
   if (res.length > 0) {
     res.forEach(vehicle => {
-      // Becuase we just merged the dealer and vehicle Objects, deleting the vehicles
+      // Because we just merged the dealer and vehicle Objects, deleting the vehicles
       // array from each vehicle (which was carried over from the dealer object)
       delete vehicle['vehicles']
 
@@ -98,7 +97,7 @@ function formatVinDetails(input) {
     'rbcSavings',
     'totalAccessoryPrice',
     'totalExtColorPrice',
-    'totalIntColotPrice',
+    'totalIntColorPrice',
     'totalOptions',
     'totalPackageOptionPrice',
     'totalPackagePrice',
