@@ -1,8 +1,14 @@
-# ![The EV Finder](theevfinder.png)
 # The EV Finder | Find Your New Electric Vehicle
 
+<img
+  src="theevfinder.png"
+  align="left"
+  height="100px"
+  style="padding: .5rem 1rem .5rem 0"
+/>
+
 The EV Finder is an open-source project with the goal of providing a simple yet
-powerful service to allow prospective electric vehicle (EV) buyers a way to view
+powerful website to allow prospective electric vehicle (EV) buyers a way to view
 available EV inventory for all electric and plug-in hybrid vehicles currently on
 the market. 
 
