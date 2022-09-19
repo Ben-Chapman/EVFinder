@@ -1,11 +1,12 @@
-# The EV Finder | Find Your New Electric Vehicle
-
 <img
   src="theevfinder.png"
   align="left"
   height="60px"
   style="padding: .5rem 1rem .5rem 0"
 />
+<h1>The EV Finder | Find Your New Electric Vehicle</h1>
+
+
 
 The EV Finder is an open-source project with the goal of providing a simple yet
 powerful website to allow prospective electric vehicle (EV) buyers a way to view
