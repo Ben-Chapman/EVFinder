@@ -3,7 +3,7 @@
 <img
   src="theevfinder.png"
   align="left"
-  height="100px"
+  height="60px"
   style="padding: .5rem 1rem .5rem 0"
 />
 
