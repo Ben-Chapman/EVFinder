@@ -2,7 +2,7 @@
 name: Request for a New Vehicle
 about: Request a new vehicle to be added to The EV Finder
 title: ''
-labels: ''
+labels: New EV Request
 assignees: Ben-Chapman
 
 ---
