@@ -26,7 +26,7 @@ and have them running to capture HTTP traffic.
 
 ## Finding and Understanding a Manufacturer’s Inventory API
 This is usually as simple as performing a web search for something like 
-"\<manufacturer\> inventory search. Follow the search results until you end up on 
+"\<manufacturer\> inventory search". Follow the search results until you end up on 
 a manufacturer's website, which enables you to search for their vehicles given
 a zip code and ideally a search radius. Ensure you have a web proxy application
 running, or DevTools is open and capturing traffic.
