@@ -26,7 +26,7 @@ and have them running to capture HTTP traffic.
 
 ## Finding and Understanding a Manufacturer’s Inventory API
 This is usually as simple as performing a web search for something like 
-<manufacturer> inventory search. Follow the search results until you end up on 
+"\<manufacturer\> inventory search. Follow the search results until you end up on 
 a manufacturer's website, which enables you to search for their vehicles given
 a zip code and ideally a search radius. Ensure you have a web proxy application
 running, or DevTools is open and capturing traffic.
@@ -79,9 +79,10 @@ manufacturer by copying an existing blueprint.
 new manufacturer:
     - `from blueprints.manufacturer import manufacturer`
     - `app.register_blueprint(manufacturer)`
-3. From here, within the `@manufacturer.route('/api/inventory/manufacturer', methods=['GET'])`
+3. Now, within your new blueprint file and under the
+`@manufacturer.route('/api/inventory/manufacturer', methods=['GET'])`
 decorator, you need to write the code which makes an HTTP request to the
-manufacturer's API (in whatever form that is), and returns a JSON object containing
+manufacturer's API (in whatever form that is), to return a JSON object containing
 the inventory results.
     - A simple example is the [Hyundai API](../api/src/blueprints/hyundai.py),
     a slightly more complex example is the [Volkswagen API.](../api/src/blueprints/volkswagen.py)
