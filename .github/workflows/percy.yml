@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v3
       
       - run: cd $GITHUB_WORKSPACE/app
+      - run: ls -la
       - run: npm install
       - run: npx vue-cli-service build --mode production
       - run: npx @percy/cli snapshot ./dist/
