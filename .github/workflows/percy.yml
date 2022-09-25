@@ -16,10 +16,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      
-      - run: cd ${{ github.workspace }}/app
-      - run: ls -la
+
       - run: npm install
+      - run: cd $HOME/app
+      - run: ls -la
       - run: npx vue-cli-service build --mode production
       - run: npx @percy/cli snapshot ./dist/
       
