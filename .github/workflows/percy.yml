@@ -1,0 +1,23 @@
+###
+# Workflow which runs a Percy Test for each PR
+###
+
+name: Percy Visual Testing
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  npm-install-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      
+      - run: cd $GITHUB_WORKSPACE/app/src
+      - run: npm install
+      - run: npm run build
+      - run: npx @percy/cli snapshot dist/
+      
