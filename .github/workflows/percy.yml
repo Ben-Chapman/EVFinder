@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - name: NPM Install Packages
-        run: npm ci
+        run: npm install
       - name: Build Application
         working-directory: ./app
         run: npx vue-cli-service build --mode production
