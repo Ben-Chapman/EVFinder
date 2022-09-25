@@ -26,7 +26,7 @@ and have them running to capture HTTP traffic.
 
 ## Finding and Understanding a Manufacturer’s Inventory API
 This is usually as simple as performing a web search for something like 
-"\<manufacturer\> inventory search". Follow the search results until you end up on 
+"\<manufacturer\> inventory search. Follow the search results until you end up on 
 a manufacturer's website, which enables you to search for their vehicles given
 a zip code and ideally a search radius. Ensure you have a web proxy application
 running, or DevTools is open and capturing traffic.
@@ -87,4 +87,50 @@ the inventory results.
     - A simple example is the [Hyundai API](../api/src/blueprints/hyundai.py),
     a slightly more complex example is the [Volkswagen API.](../api/src/blueprints/volkswagen.py)
 
-## Building the EV Finder Web Interface for a New Manufacturer
+## Configuring the EV Finder Vue App for a New Manufacturer
+The EV Finder Vue.js application contains the logic to parse and format a
+manufacturer's inventory API for presentation to the user. The actual
+implementation for each manufacturer will be different, but the expected output
+will be the same.
+
+1. Create a two new manufacturer javascript files in `../app/src/manufacturers`:
+  - `<manufacturer>.js`
+    - Detail here on what this file is for
+  - `<manufacturer>Mappings.js`
+    - Detail here on what this file is for
+
+2. Add the manufacturer and model name(s) to
+`../app/src/components/FormSelectors.vue`. Ensure you maintain alphabetical
+order by manufacturer. A fictional example would look like the following:
+```
+  {
+    label: 'ElectroCar',
+    options: [
+      { value: 'e-car1', text: 'ElectoCar 1'},
+    ],
+  }
+```
+  - The `label` key is used as the dropdown option group heading, and should be
+  complete the name of the manufacturer.
+    - ✅ "Volkswagen"
+    - ⛔ "VW"
+  - Each vehicle associated with this manufacturer will need an entry in the 
+  `options` array.
+    - `options.value` is typically the internal value the manufacturer uses within
+    their API. This value will be passed into the EVFinder API which then makes
+    a call to the manufacturers inventory APIs, so it should match exactly what
+    the manufacturer's API is expecting.
+      - ✅ "Ioniq%205"
+      - ⛔ "Ioniq 5"
+    - `options.text` is the human-readable model name displayed in the UI of the
+    site. It should match the name of the vehicle as published by the
+    manufacturer:
+      - ✅ "ID.4"
+      - ⛔ "id4"
+      - ✅: "Niro Plug-In Hybrid"
+      - ⛔ "Niro Plug In"
+  
+  - Add a new `else{}` statement to app/src/components/FormSelectors.vue, by duplicating
+   an exising `else if (this.localForm.manufacturer.toLowerCase() === '<manufacturer>') {`
+   statement. Within this `else if` statement, modify the various function calls
+   to reflect the new manufacturer. 
