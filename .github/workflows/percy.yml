@@ -32,8 +32,8 @@ jobs:
           port: 8080
           index-files: |
             ["index.html"]
-          
-          run: curl -vvvv http://localhost:8080/index.html
+      -    
+        run: curl -vvvv http://localhost:8080/index.html
           
 #       - name: Start Application
 #         working-directory: ./app
