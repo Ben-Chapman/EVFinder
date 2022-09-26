@@ -32,7 +32,7 @@ jobs:
           directory: "./app/dist"
           port: 8080
           index-files: |
-            ["index.html"]
+            ["index.html", "index.htm"]
 
       - name: Run Cypress Tests with Percy
         working-directory: ./app
