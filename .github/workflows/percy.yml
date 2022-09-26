@@ -39,7 +39,7 @@ jobs:
         run: npx percy exec -- cypress run
         
       - name: Upload Screenshots and Video on Failure
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         # Only trigger if the previous step failed
         if: failure()
         with:
