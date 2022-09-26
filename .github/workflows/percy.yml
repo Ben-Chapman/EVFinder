@@ -1,0 +1,49 @@
+###
+# Workflow which runs a Percy Test for each PR
+###
+
+name: Percy Visual Testing
+on:
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+  build-and-run-vue-app:
+    runs-on: ubuntu-latest
+    env:
+      PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      
+      
+      - name: NPM Install Packages
+        run: npm install
+        
+      - name: Build Application
+        working-directory: ./app
+        run: npx vue-cli-service build --mode production
+        
+      - name: Serve Files
+        uses: Eun/http-server-action@v1
+        with:
+          directory: "./app/dist"
+          port: 8080
+          index-files: |
+            ["index.html", "index.htm"]
+
+      - name: Run Cypress Tests with Percy
+        working-directory: ./app
+        run: npx percy exec -- cypress run
+        
+      - name: Upload Screenshots and Video on Failure
+        uses: actions/upload-artifact@v3
+        # Only trigger if the previous step failed
+        if: failure()
+        with:
+          name: failure-video
+          path: |
+            app/cypress/videos/
+            app/cypress/screenshots/
