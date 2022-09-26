@@ -1,6 +1,6 @@
 describe('Search for Vehicle Inventory', () => {
   before(() => {
-    cy.visit('/')
+    cy.visit('/index.html')
     cy.get('.form-group > div > #form-zipcode').clear().type('90210')
     cy.get('.form-group > div > #form-radius').clear().type('100')
     cy.wait(500)

@@ -1,6 +1,6 @@
 describe('Validation of the Input Form', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('/index.html')
   })
 
   it('Submit Button Is Disabled With Empty Form', () => {
