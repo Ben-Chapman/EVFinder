@@ -34,5 +34,6 @@ jobs:
             ["index.html"]
 
       - name: Run Cypress Tests with Percy
+        working-directory: ./app
         run: npx percy exec -- cypress run
       
