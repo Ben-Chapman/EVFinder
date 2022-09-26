@@ -30,8 +30,6 @@ jobs:
         with:
           directory: "${{ github.workspace }}/app"
           port: 8080
-          index-files: "index.html"
-          allowed-methods: "GET"
           
           run: curl -vvvv http://localhost:8080/index.html
           
