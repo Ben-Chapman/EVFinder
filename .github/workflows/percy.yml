@@ -28,7 +28,7 @@ jobs:
       - name: Serve Files
         uses: Eun/http-server-action@v1
         with:
-          directory: "${{ github.workspace }}/app"
+          directory: "./app/dist"
           port: 8080
           index-files: |
             ["index.html"]
