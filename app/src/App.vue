@@ -1,7 +1,7 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="d-flex flex-column justify-content-center min-vh-100">
       <FormSelectors/>
-    <b-row>
+    <b-row class="flex-fill">
       <InventoryTable/>
     </b-row>
     <b-row>

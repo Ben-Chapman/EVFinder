@@ -4,7 +4,7 @@
     <Filters/>
 
     <!-- Table here -->
-    <b-row class="d-flex justify-content-center">
+    <b-row>
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
