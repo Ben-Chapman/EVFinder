@@ -4,7 +4,7 @@
     <Filters/>
 
     <!-- Table here -->
-    <b-row>
+    <div class="d-flex justify-content-center">
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
@@ -27,6 +27,7 @@
           @row-clicked="toggleDetails"
           @filtered="onFiltered"
           :filter-function="filterFunction"
+          table-class="table"
           >
 
           <!-- Exterior Color -->
@@ -84,7 +85,7 @@
           <!-- Vin Details Section -->
           <template #row-details="row">
           <b-card>
-            <b-row class="justify-content-md-center">
+            <b-row>
               <div v-if="vinTableBusy" class="text-center my-2">
                 <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
                 <strong>Fetching Details for This Vehicle...</strong>
@@ -163,7 +164,7 @@
             </template>
           </b-table>
       </div>
-    </b-row>
+    </div>
   </b-container>
 </template>
 
