@@ -18,6 +18,7 @@ import {
   BIconSliders,
   BIconInfoCircle,
   BIconPhoneLandscape,
+  BIconGithub,
   LayoutPlugin,
   FormGroupPlugin,
   FormSelectPlugin,
@@ -63,6 +64,7 @@ Vue.component('BIconChevronDown', BIconChevronDown)
 Vue.component('BIconBoxArrowUpRight', BIconBoxArrowUpRight)
 Vue.component('BIconInfoCircle', BIconInfoCircle)
 Vue.component('BIconPhoneLandscape', BIconPhoneLandscape)
+Vue.component('BIconGithub', BIconGithub)
 
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)

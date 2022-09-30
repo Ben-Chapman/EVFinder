@@ -4,7 +4,7 @@
     <Filters/>
 
     <!-- Table here -->
-    <b-row class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
@@ -27,6 +27,7 @@
           @row-clicked="toggleDetails"
           @filtered="onFiltered"
           :filter-function="filterFunction"
+          table-class="table"
           >
 
           <!-- Exterior Color -->
@@ -84,7 +85,7 @@
           <!-- Vin Details Section -->
           <template #row-details="row">
           <b-card>
-            <b-row class="justify-content-md-center">
+            <b-row>
               <div v-if="vinTableBusy" class="text-center my-2">
                 <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
                 <strong>Fetching Details for This Vehicle...</strong>
@@ -142,11 +143,11 @@
                   v-for="(item, key) in vinDetail[row.item.vin]" :key=key
                 >
                 <!-- We're displaying the Dealer URL above, don't display it here -->
-                  <b-col cols=8 md=4 v-if="key != 'DI'">
-                    <b-list-group-item class="border-0 py-1"><b>{{ key }}</b></b-list-group-item>
+                  <b-col cols=7 md=4 class="px-0" v-if="key != 'DI'">
+                    <b-list-group-item class="border-0 py-1 px-0"><b>{{ key }}</b></b-list-group-item>
                   </b-col>
                   <div v-if="key != 'DI'">
-                    <b-list-group-item class="border-0 py-1">{{ item }}</b-list-group-item>
+                    <b-list-group-item class="border-0 py-1 px-0">{{ item }}</b-list-group-item>
                   </div>
               </b-list-group>
               
@@ -163,7 +164,7 @@
             </template>
           </b-table>
       </div>
-    </b-row>
+    </div>
   </b-container>
 </template>
 

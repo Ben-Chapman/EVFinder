@@ -1,16 +1,21 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="d-flex flex-column justify-content-center min-vh-100">
       <FormSelectors/>
-    <b-row>
+    <b-row class="flex-fill">
       <InventoryTable/>
+    </b-row>
+    <b-row>
+      <Footer/>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
 import {version} from '../package.json'
+
 
 console.log(`
 The EVFinder release version ${version}
@@ -26,9 +31,10 @@ The EVFinder release version ${version}
 export default {
   name: 'App',
   components: {
+    Footer,
     FormSelectors,
     InventoryTable,
-  },
+},
 
   // Vue.head config here
   head: {
@@ -47,6 +53,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  min-height: 100vh;
 }
 
 /*
