@@ -8,7 +8,7 @@
       </a>
       </b-row>
 
-      <b-row align-h="center" class="d-flex justify-content-center pt-2">
+      <b-row align-h="center" class="d-flex justify-content-center py-2">
         <a href="https://github.com/Ben-Chapman/EVFinder">
           <b-icon-github
             aria-hidden="true"
@@ -36,9 +36,6 @@
   .footer {
   position: sticky;
   bottom: 0;
-  // width: 100%;
-  height: auto; /* Set the fixed height of the footer here */
-  // line-height: 60px; /* Vertically center the text there */
-  background-color: rgba(156, 246, 104, 0.98);
+  height: auto;
 }
 </style>
