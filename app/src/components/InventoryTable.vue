@@ -1,10 +1,14 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <!-- Let's filter -->
     <Filters/>
 
     <!-- Table here -->
-    <div class="d-flex justify-content-center">
+    <!-- Flex column for small displays (phone portrait orientation)
+         which expands the stacked table to full width of the display
+         flex row for all other media sizes, which is the default and
+         is needed to properly format the table -->
+    <div class="d-flex justify-content-center flex-column flex-md-row">
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
@@ -27,7 +31,6 @@
           @row-clicked="toggleDetails"
           @filtered="onFiltered"
           :filter-function="filterFunction"
-          table-class="table"
           >
 
           <!-- Exterior Color -->
