@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="frosted-bg">
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
@@ -432,4 +432,8 @@
 </script>
 
 <style scoped>
+  .frosted-bg {
+  /* background: rgba(0,0,0,0.8); */
+  backdrop-filter: blur(50px);
+}
 </style>
