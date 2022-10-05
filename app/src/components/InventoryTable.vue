@@ -461,5 +461,5 @@
     color: #6c757d !important;
     font-size: 1.2rem;
     text-align: center;
-  }  
+  }
 </style>

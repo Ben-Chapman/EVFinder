@@ -1,5 +1,5 @@
 <template>
-    <div class="frosted-bg">
+    <div>
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
@@ -7,7 +7,7 @@
         </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
-      <b-row class="d-flex mt-3" align-h="center">
+      <b-row class="d-flex my-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
@@ -18,7 +18,6 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-year"
-            description="Select a Model Year"
           >
             <b-form-select
               id="form-year"
@@ -34,7 +33,6 @@
         <b-col cols=6 md=3>
           <b-form-group
             id="form-model"
-            description="Select a Model"
           >
             <b-form-select
               id="form-model"
@@ -50,9 +48,9 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-zipcode"
-            description="Enter a 5-digit US zip code"
           >
             <b-form-input
+              placeholder="US Zip Code"
               autocomplete="off"
               name="search"
               id="form-zipcode"
@@ -72,11 +70,12 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-radius"
-            description="Search Radius in Miles"
+            variant="dark"
           >
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
             <b-form-input
+              placeholder="Search Radius"
               autocomplete="off"
               name="search"
               id="form-radius"
@@ -217,6 +216,8 @@
       },
       
       routePushandGo() {
+        this.updateStore({'showTable': true})
+        
         /*
         Push form fields to the Vue router as query params. We have a watch()
         configured which monitors for changes to the routes, and will trigger an
@@ -363,6 +364,7 @@
       // Vuex
       ...mapState([
         'form',
+        'showTable',
         'inventory',
         'inventoryCount',
         'tableBusy',
@@ -431,9 +433,13 @@
   } // export
 </script>
 
-<style scoped>
-  .frosted-bg {
-  /* background: rgba(0,0,0,0.8); */
-  backdrop-filter: blur(50px);
-}
+<style>
+  ::placeholder {
+    color: #9b9b9b !important;
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: #9b9b9b !important;
+  }
+
 </style>

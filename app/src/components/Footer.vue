@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="footer">
-    <b-row align-h="center" class="d-flex justify-content-center" >
+    <b-row align-h="center" class="d-flex justify-content-center pt-2" >
       Copyright ©{{ this.currentYear }} The EV Finder | 
       Licensed under &nbsp;
       <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
