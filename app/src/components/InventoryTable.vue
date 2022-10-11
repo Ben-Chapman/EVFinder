@@ -1,4 +1,5 @@
 <template>
+  <transition name="slide">
   <b-container fluid>
     <!-- Let's filter -->
     <Filters/>
@@ -169,6 +170,7 @@
       </div>
     </div>
   </b-container>
+</transition>
 </template>
 
 <script>

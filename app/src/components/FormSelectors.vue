@@ -216,8 +216,6 @@
       },
       
       routePushandGo() {
-        this.updateStore({'showTable': true})
-        
         /*
         Push form fields to the Vue router as query params. We have a watch()
         configured which monitors for changes to the routes, and will trigger an
@@ -364,7 +362,7 @@
       // Vuex
       ...mapState([
         'form',
-        'showTable',
+        'fetchingData',
         'inventory',
         'inventoryCount',
         'tableBusy',
@@ -410,6 +408,7 @@
         */
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
+            this.updateStore({'fetchingData': true})
             this.getCurrentInventory()
 
           // Fire an event to Plausible to allow reporting on which manufacturers

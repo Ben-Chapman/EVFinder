@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
   tableBusy: false,
-  showTable: false,
+  fetchingData: false,
   inventory: [],
   filter: null,
   inventoryCount: 0,

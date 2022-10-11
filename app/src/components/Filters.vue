@@ -399,9 +399,7 @@
   } // default
 </script>
 
-<style lang="scss">
-  @import '../assets/app_style.scss';
-  
+<style>
   .vehicles-available {
     font-size: 1.1rem;
     margin-bottom: .75rem;

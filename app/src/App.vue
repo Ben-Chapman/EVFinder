@@ -1,16 +1,16 @@
 <template>
   <b-container
     fluid
-    class="d-flex flex-column justify-content-center min-vh-100 hero px-0"
-    :style="{backgroundImage: `url('${randomHeroImage['imageUrl']}')`}"
+    class="d-flex flex-column justify-content-center min-vh-100 hero"
+    :style="{backgroundImage: `url('${getHeroImage['imageUrl']}')`}"
     >
-    <div class="frosted-bg justify-content-center">
+    <div class="justify-content-center">
       <FormSelectors/>
     </div>
     <b-row class="flex-fill">
-    <!-- <div v-if="this.showTable"> -->
-      <InventoryTable/>
-    <!-- </div> -->
+      <!-- <transition name="fade"> -->
+        <InventoryTable v-if="this.showTable"/>
+      <!-- </transition> -->
     </b-row>
     <b-row class="frosted-bg">
       <Footer/>
@@ -22,9 +22,8 @@
 import { mapState } from 'vuex'
 import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
-// import HomepageImageGrid from './components/HomepageImageGrid.vue'
 import InventoryTable from './components/InventoryTable.vue'
-import {version} from '../package.json'
+import { version } from '../package.json'
 
 
 console.log(`
@@ -43,25 +42,20 @@ export default {
   components: {
     Footer,
     FormSelectors,
-    // HomepageImageGrid,
     InventoryTable,
   },
-  data() {
-    return {
-      showTable: this.showTable
-    }
-  },
-  mounted() {
-    console.log(this.showTable)
-  },
+
   computed: {
     // Vuex
     ...mapState([
-        'showTable',
+        'inventoryCount',
+        'fetchingData',
       ]),
+    showTable() {
+      return this.fetchingData || this.inventoryCount > 0
+    },
 
-    randomHeroImage() {
-      // https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css/52280182#52280182
+    getHeroImage() {
       const vehicleImages = [
         {
           imageName: "2022-gv60.jpeg",
@@ -93,11 +87,19 @@ export default {
       const rand = Math.floor(Math.random() * (vehicleImages.length))
 
       const relativeImagePath = "hero_images"
-
-      return {
-        "imageUrl": relativeImagePath.concat('/', vehicleImages[rand].imageName),
-        "title": vehicleImages[rand].overlayText
+      
+      if (this.showTable) {
+        return {
+          "imageUrl": null,
+        }
+        
+      } else {
+        return {
+          "imageUrl": relativeImagePath.concat('/', vehicleImages[rand].imageName),
+          "title": vehicleImages[rand].overlayText
+        }
       }
+      
     },
   },  //computed
 
@@ -133,11 +135,22 @@ export default {
   }
 
   .frosted-bg {
-    backdrop-filter: blur(10px);
-    width: 100%;
+    mask: linear-gradient(transparent, black 20%);
+    backdrop-filter: blur(20px) saturate(50%);
   }
 
   .hero {
+     /**
+     * :style="" in the container definition is needed to dynamically generate
+     * the background image url from getHeroImage(). The remainder of the
+     * CSS can be defined here.
+     */
     background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+
+  #app:before {
+    filter: blur(8px);
   }
 </style>
