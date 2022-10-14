@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  showTable: false,
   tableBusy: false,
-  fetchingData: false,
   inventory: [],
   filter: null,
   inventoryCount: 0,

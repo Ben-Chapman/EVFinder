@@ -49,12 +49,8 @@ export default {
     // Vuex
     ...mapState([
         'inventoryCount',
-        'fetchingData',
+        'showTable',
       ]),
-    showTable() {
-      return this.fetchingData || this.inventoryCount > 0
-    },
-
     getHeroImage() {
       const vehicleImages = [
         {
@@ -88,6 +84,7 @@ export default {
 
       const relativeImagePath = "hero_images"
       
+      // If we're showing the inventory results table, do this
       if (this.showTable) {
         return {
           "imageUrl": null,
@@ -150,7 +147,4 @@ export default {
     background-attachment: fixed;
   }
 
-  #app:before {
-    filter: blur(8px);
-  }
 </style>

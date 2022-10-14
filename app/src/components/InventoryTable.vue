@@ -10,15 +10,18 @@
          flex row for all other media sizes, which is the default and
          is needed to properly format the table -->
     <div class="d-flex justify-content-center flex-column flex-md-row">
+      
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
       </div>
+
       <div v-else-if="showInventoryAlert" class="mt-5">
         <b-alert show variant="success" class="no-inventory px-5">
           No Vehicles Were Found. Adjust your search parameters and try again.
         </b-alert>
       </div>
+      
       <div v-else>
         <b-table
           hover
@@ -416,10 +419,10 @@
     computed: {
       ...mapState([
         'apiErrorDetail',
-        'tableBusy',
-        'inventory',
         'filterSelections',
-        'form'
+        'form',
+        'inventory',
+        'tableBusy',
       ]),
 
       showInventoryAlert() {

@@ -130,8 +130,14 @@
 
   export default {
     mounted() {
+      /**
+       * When this component is mounted, check for query params in the URL
+       * If found, parse them for validity, show the table component and proceed
+       * to fetch inventory
+       */
       if (this.parseQueryParams(this.$route.query)) {
           if (this.validateSubmitButton) {
+            this.updateStore({'showTable': true})
             this.getCurrentInventory()
           }
         }
@@ -361,12 +367,12 @@
     computed: {
       // Vuex
       ...mapState([
+        'apiErrorDetail',
         'form',
-        'fetchingData',
         'inventory',
         'inventoryCount',
+        'showTable',
         'tableBusy',
-        'apiErrorDetail'
       ]),
 
       isValidZipCode() {
@@ -408,7 +414,7 @@
         */
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
-            this.updateStore({'fetchingData': true})
+            this.updateStore({'showTable': true})
             this.getCurrentInventory()
 
           // Fire an event to Plausible to allow reporting on which manufacturers
@@ -424,6 +430,7 @@
           }
         }
       },
+
       inventory() {
         // When the inventory changes, update the $num vehicles found message
         this.updateStore({'inventoryCount': this.inventory.length})
