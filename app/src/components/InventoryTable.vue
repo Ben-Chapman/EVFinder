@@ -1,5 +1,4 @@
 <template>
-  <transition name="slide">
   <b-container fluid>
     <!-- Let's filter -->
     <Filters/>
@@ -27,6 +26,7 @@
           hover
           stacked="sm"
           responsive
+          class="rounded inventory-table"
           :busy="tableBusy"
           :items="this.inventory"
           :fields="this.fields"
@@ -91,7 +91,7 @@
 
           <!-- Vin Details Section -->
           <template #row-details="row">
-          <b-card>
+          <b-card class="inventory-table">
             <b-row>
               <div v-if="vinTableBusy" class="text-center my-2">
                 <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
@@ -173,7 +173,6 @@
       </div>
     </div>
   </b-container>
-</transition>
 </template>
 
 <script>
@@ -455,6 +454,9 @@
   .table-hover tbody tr:hover {
     background-color: $highlight-bluegreen !important;
 }
+  .inventory-table {
+    background-color: #ffffffd8;
+  }
 
   .vin {
     font-family: $font-family-monospace;

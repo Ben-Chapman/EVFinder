@@ -1,17 +1,20 @@
 <template>
   <b-container
     fluid
-    class="d-flex flex-column justify-content-center min-vh-100 hero"
-    :style="{backgroundImage: `url('${getHeroImage['imageUrl']}')`}"
+    class="d-flex flex-column justify-content-center min-vh-100"
+    :style="heroImageStyle"
+    id="background"
     >
     <div class="justify-content-center">
       <FormSelectors/>
     </div>
+
     <b-row class="flex-fill">
-      <!-- <transition name="fade"> -->
+      <transition name="fade" mode="out-in">
         <InventoryTable v-if="this.showTable"/>
-      <!-- </transition> -->
+      </transition>
     </b-row>
+
     <b-row class="frosted-bg">
       <Footer/>
     </b-row>
@@ -44,15 +47,18 @@ export default {
     FormSelectors,
     InventoryTable,
   },
+  data() {
+    return {
+      heroImage: {}
+    }
+  },
+  mounted() {
+      this.getHeroImage()
+  },  // mounted
 
-  computed: {
-    // Vuex
-    ...mapState([
-        'inventoryCount',
-        'showTable',
-      ]),
+  methods: {
     getHeroImage() {
-      const vehicleImages = [
+      const heroImages = [
         {
           imageName: "2022-gv60.jpeg",
           overlayText: "2022 Genesis GV60"
@@ -79,26 +85,41 @@ export default {
         },
       ]
       
-      // Random int which will be used to select an element from vehicleImages
-      const rand = Math.floor(Math.random() * (vehicleImages.length))
-
+      // Random int which will be used to select an element from heroImages
+      const rand = Math.floor(Math.random() * (heroImages.length))
       const relativeImagePath = "hero_images"
-      
-      // If we're showing the inventory results table, do this
-      if (this.showTable) {
-        return {
-          "imageUrl": null,
-        }
-        
-      } else {
-        return {
-          "imageUrl": relativeImagePath.concat('/', vehicleImages[rand].imageName),
-          "title": vehicleImages[rand].overlayText
-        }
+
+      this.heroImage = {
+        "imageUrl": relativeImagePath.concat('/', heroImages[rand].imageName),
+        "blurredImageUrl": relativeImagePath.concat('/blurred/', heroImages[rand].imageName),
+        "title": heroImages[rand].overlayText,
       }
-      
     },
+  },
+
+  computed: {
+    // Vuex
+    ...mapState([
+        'inventoryCount',
+        'showTable',
+      ]),
+
+    heroImageStyle() {
+        return {
+          backgroundImage: `url('${this.heroImage['imageUrl']}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundAttachment: 'fixed',
+          transition: '1s background ease'
+        }
+      },
   },  //computed
+
+  watch: {
+      showTable() {
+        this.heroImage["imageUrl"] = this.heroImage["blurredImageUrl"]
+      }
+  },  // watch
 
   // Vue.head config here
   head: {
@@ -136,15 +157,11 @@ export default {
     backdrop-filter: blur(20px) saturate(50%);
   }
 
-  .hero {
-     /**
-     * :style="" in the container definition is needed to dynamically generate
-     * the background image url from getHeroImage(). The remainder of the
-     * CSS can be defined here.
-     */
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 2s
   }
 
+  .fade-enter, .fade-leave-to {
+      opacity: 0
+  }
 </style>
