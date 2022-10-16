@@ -41,9 +41,7 @@ const state = {
 const mutations = {
   mutateState(state, payload) {
     Object.getOwnPropertyNames(payload).forEach(val => {
-      // console.log(val)
       if (payload[val] !== undefined) {
-        // console.log(payload[val])
         state[val] = payload[val]
       }
     })
@@ -63,7 +61,6 @@ const actions = {
   },
 
   updateFilterSelections({ commit }, payload) {
-    // console.log(payload)
     commit('mutateFilterSelections', payload)
   }
 }
