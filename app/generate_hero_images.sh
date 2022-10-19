@@ -27,6 +27,13 @@ generate_desktop_images () {
   -density 96 \
   -quality "${DESKTOP_QUALITY_FACTOR}%" \
   ${1} ${2}
+
+  # Optimizing the desktop images one by one. ImageOptim takes a single file or
+  # a directory as input params, and when the input is a directory ImageOptim will
+  # optimze all images recursively. Becuase the source images are stored in a 
+  # subdir within the desktop images dir, the source images get optimized, which
+  # we don't want.
+  optimize_images $2
 }
 
 generate_blurred_images () {
@@ -63,8 +70,16 @@ generate_mobile_images () {
     fi
 }
 
+optimize_images () {
+  if [ $(uname) = "Darwin" ]; then
+    echo "Optimizing images: $@ 🚀"
+    /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${@} > /dev/null 2>&1
+  fi
+}
+
 main () {
   find -E ${SOURCE_IMAGE_DIR} -depth 1 -regex '.*(png|jpg|jpeg|webp)' -print |while read file; do
+  echo -e "\n"
     IMAGE_NAME=$(basename ${file})
     generate_desktop_images ${file} ${DESKTOP_IMAGE_DIR}/${IMAGE_NAME}
     generate_blurred_images ${file} ${BLURRED_IMAGE_DIR}/${IMAGE_NAME}
@@ -72,10 +87,7 @@ main () {
   done
 }
 
-# Generate image renditions
 main
 
-# Optimize images
-# if [ $(uname) = "Darwin" ]; then
-#   /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${DESKTOP_IMAGE_DIR}
-# fi
+# Desktop images are optimized one by one in generate_desktop_images()
+optimize_images ${BLURRED_IMAGE_DIR} ${MOBILE_IMAGE_DIR}
