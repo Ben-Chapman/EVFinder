@@ -91,7 +91,7 @@
 
           <!-- Vin Details Section -->
           <template #row-details="row">
-          <b-card class="inventory-table">
+          <b-card>
             <b-row>
               <div v-if="vinTableBusy" class="text-center my-2">
                 <b-spinner class="align-middle mr-2" variant="success"></b-spinner>
@@ -456,6 +456,10 @@
 }
   .inventory-table {
     background-color: #ffffffd8;
+  }
+
+  .card {
+    background-color: #ffffffd8 !important;
   }
 
   .vin {

@@ -1,0 +1,81 @@
+#!/bin/bash
+
+###
+# Simple helper script to generate various hero image renditions for The EV Finder
+###
+
+set -e
+
+SOURCE_IMAGE_DIR="public/hero_images/src"
+DESKTOP_IMAGE_DIR="public/hero_images"
+BLURRED_IMAGE_DIR="public/hero_images/blurred"
+MOBILE_IMAGE_DIR="public/hero_images/mobile"
+
+DESKTOP_IMAGE_WIDTH="1280"
+MOBILE_IMAGE_WIDTH="1024"
+
+DESKTOP_QUALITY_FACTOR="80"
+BLURRED_QUALITY_FACTOR="50"
+MOBILE_QUALITY_FACTOR="60"
+
+generate_desktop_images () {
+  echo "Generating desktop image for $1"
+
+  convert \
+  -strip \
+  -resize ${DESKTOP_IMAGE_WIDTH} \
+  -density 96 \
+  -quality "${DESKTOP_QUALITY_FACTOR}%" \
+  ${1} ${2}
+}
+
+generate_blurred_images () {
+  echo "Generating blurred image for $1"
+
+  convert \
+  -strip \
+  -interlace Plane \
+  -scale 10% \
+  -blur 0x2.5 \
+  -fill white \
+  -colorize 40% \
+  -resize 1000% \
+  -quality "${BLURRED_QUALITY_FACTOR}%" \
+  ${1} ${2}
+}
+
+generate_mobile_images () {
+  echo "Generating mobile image for $1"
+  convert \
+  -strip \
+  -resize ${MOBILE_IMAGE_WIDTH} \
+  -density 96 \
+  -quality "${MOBILE_QUALITY_FACTOR}%" \
+  ${1} ${2}
+
+  # Copying the mobile image which needs to be manually edited for phones in
+  # portrait mode.
+    PORTRAIT_FILENAME="portrait-$(basename $2)"
+    # If the destination file does not exist, copy this file
+    if [ ! -f ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME} ]; then
+      cp $2 ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME}
+      echo -e "\t🔔 ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME} needs to be edited!\n"
+    fi
+}
+
+main () {
+  find -E ${SOURCE_IMAGE_DIR} -depth 1 -regex '.*(png|jpg|jpeg|webp)' -print |while read file; do
+    IMAGE_NAME=$(basename ${file})
+    generate_desktop_images ${file} ${DESKTOP_IMAGE_DIR}/${IMAGE_NAME}
+    generate_blurred_images ${file} ${BLURRED_IMAGE_DIR}/${IMAGE_NAME}
+    generate_mobile_images ${file} ${MOBILE_IMAGE_DIR}/${IMAGE_NAME}
+  done
+}
+
+# Generate image renditions
+main
+
+# Optimize images
+# if [ $(uname) = "Darwin" ]; then
+#   /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${DESKTOP_IMAGE_DIR}
+# fi

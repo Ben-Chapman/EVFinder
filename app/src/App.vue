@@ -23,11 +23,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import { version } from '../package.json'
+
 import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
-import { version } from '../package.json'
 
+import getHeroImage from './hero'
 
 console.log(`
 The EVFinder release version ${version}
@@ -53,49 +55,8 @@ export default {
     }
   },
   mounted() {
-      this.getHeroImage()
+      this.heroImage = getHeroImage()  // Compute the hero image URL on mount
   },  // mounted
-
-  methods: {
-    getHeroImage() {
-      const heroImages = [
-        {
-          imageName: "2022-gv60.jpeg",
-          overlayText: "2022 Genesis GV60"
-        },
-        {
-          imageName: "2023-id.4.jpg",
-          overlayText: "2023 Volkswagen ID.4"
-        },
-        {
-          imageName: "2022-ioniq5.jpeg",
-          overlayText: "2022 Hyundai Ioniq 5"
-        },
-        {
-          imageName: "2023-ev6.jpeg",
-          overlayText: "2023 Kia EV6"
-        },
-        {
-          imageName: "2023-kona-electric.jpeg",
-          overlayText: "2023 Hyundai Kona Electric"
-        },
-        {
-          imageName: "2023-niro-ev.jpeg",
-          overlayText: "2023 Kia Niro EV"
-        },
-      ]
-      
-      // Random int which will be used to select an element from heroImages
-      const rand = Math.floor(Math.random() * (heroImages.length))
-      const relativeImagePath = "hero_images"
-
-      this.heroImage = {
-        "imageUrl": relativeImagePath.concat('/', heroImages[rand].imageName),
-        "blurredImageUrl": relativeImagePath.concat('/blurred/', heroImages[rand].imageName),
-        "title": heroImages[rand].overlayText,
-      }
-    },
-  },
 
   computed: {
     // Vuex
@@ -117,6 +78,11 @@ export default {
 
   watch: {
       showTable() {
+        /**
+         * When the inventory table is shown, swapping the existing background
+         * image for the blurred variant. This blurred variant is now an out
+         * of focus (literally and figuratively) element on the page.
+         */
         this.heroImage["imageUrl"] = this.heroImage["blurredImageUrl"]
       }
   },  // watch
