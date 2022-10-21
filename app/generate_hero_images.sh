@@ -59,15 +59,6 @@ generate_mobile_images () {
   -density 96 \
   -quality "${MOBILE_QUALITY_FACTOR}%" \
   ${1} ${2}
-
-  # Copying the mobile image which needs to be manually edited for phones in
-  # portrait mode.
-    PORTRAIT_FILENAME="portrait-$(basename $2)"
-    # If the destination file does not exist, copy this file
-    if [ ! -f ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME} ]; then
-      cp $2 ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME}
-      echo -e "\t🔔 ${MOBILE_IMAGE_DIR}/${PORTRAIT_FILENAME} needs to be edited!\n"
-    fi
 }
 
 optimize_images () {
