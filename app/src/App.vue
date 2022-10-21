@@ -51,11 +51,22 @@ export default {
   },
   data() {
     return {
-      heroImage: {}
+      heroImage: {},
+      portraitPosition: "center center",
     }
   },
   mounted() {
-      this.heroImage = getHeroImage()  // Compute the hero image URL on mount
+      this.heroImage = getHeroImage()  // Get the hero image URL on mount
+      
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        console.log('portrait here')
+        this.portraitPosition = this.heroImage['portraitPosition']
+
+        console.log(`Moving image to ${this.portraitPosition}`)
+      }
+
+      window.addEventListener("resize", this.handleOrientationChange)
+
   },  // mounted
 
   computed: {
@@ -69,13 +80,29 @@ export default {
         return {
           backgroundImage: `url('${this.heroImage['imageUrl']}')`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center center',
+          backgroundPosition: this.portraitPosition,
           backgroundAttachment: 'fixed',
           transition: '1s background ease'
         }
       },
   },  //computed
-
+  methods: {
+    handleOrientationChange() {
+      console.log("changing orientation in handle")
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        console.log('found portrait')
+        this.portraitPosition = this.heroImage['portraitPosition']
+      } else {
+        console.log('found landscape')
+        this.portraitPosition = "center center"
+      }
+      // else 
+      // if (orientation === "landscape-primary") {
+      //   // this.heroImage['imageUrl'] = this.heroImage['portraitImageUrl'].replace('-portrait', "")
+      //   console.log('landscape')
+      // }
+    }
+  },
   watch: {
       showTable() {
         /**
