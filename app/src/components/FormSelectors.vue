@@ -110,7 +110,7 @@
                 v-if="validateSubmitButton == false"
                 disabled
                 id="invalid-submit-button"
-                variant="outline-primary"
+                variant="primary"
                 >Submit</b-button>
               </span>
             <b-tooltip target="disabled-wrapper" triggers="hover">
