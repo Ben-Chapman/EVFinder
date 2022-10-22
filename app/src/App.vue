@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
       this.heroImage = getHeroImage()  // Get the hero image URL on mount
-      
+
       if (window.matchMedia("(orientation: portrait)").matches) {
         console.log('portrait here')
         this.portraitPosition = this.heroImage['portraitPosition']
@@ -96,11 +96,6 @@ export default {
         console.log('found landscape')
         this.portraitPosition = "center center"
       }
-      // else 
-      // if (orientation === "landscape-primary") {
-      //   // this.heroImage['imageUrl'] = this.heroImage['portraitImageUrl'].replace('-portrait', "")
-      //   console.log('landscape')
-      // }
     }
   },
   watch: {
