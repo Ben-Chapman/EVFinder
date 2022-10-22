@@ -47,7 +47,7 @@ generate_blurred_images () {
   -blur 0x2.5 \
   -fill white \
   -colorize 40% \
-  -resize 1000% \
+  -resize ${DESKTOP_IMAGE_WIDTH} \
   -quality "${BLURRED_QUALITY_FACTOR}%" \
   ${1} ${2}
 }
