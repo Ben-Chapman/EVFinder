@@ -23,6 +23,7 @@ generate_desktop_images () {
 
   convert \
   -strip \
+  -interlace Plane \
   -resize ${DESKTOP_IMAGE_WIDTH} \
   -density 96 \
   -quality "${DESKTOP_QUALITY_FACTOR}%" \
@@ -55,6 +56,7 @@ generate_mobile_images () {
   echo "Generating mobile image for $1"
   convert \
   -strip \
+  -interlace Plane \
   -resize ${MOBILE_IMAGE_WIDTH} \
   -density 96 \
   -quality "${MOBILE_QUALITY_FACTOR}%" \
