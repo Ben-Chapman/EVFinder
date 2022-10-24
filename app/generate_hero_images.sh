@@ -11,12 +11,12 @@ DESKTOP_IMAGE_DIR="public/hero_images"
 BLURRED_IMAGE_DIR="public/hero_images/blurred"
 MOBILE_IMAGE_DIR="public/hero_images/mobile"
 
-DESKTOP_IMAGE_WIDTH="1280"
-MOBILE_IMAGE_WIDTH="1024"
+DESKTOP_IMAGE_WIDTH="1920"
+MOBILE_IMAGE_WIDTH="1280"
 
 DESKTOP_QUALITY_FACTOR="80"
 BLURRED_QUALITY_FACTOR="50"
-MOBILE_QUALITY_FACTOR="60"
+MOBILE_QUALITY_FACTOR="80"
 
 generate_desktop_images () {
   echo "Generating desktop image for $1"
