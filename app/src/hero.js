@@ -5,30 +5,29 @@ export default function getHeroImage() {
         ["2022-gv60-1.jpg", "-26rem center"],
         ["2022-gv60-2.jpg", "-10rem center"],
         ["2022-gv60-3.jpg", "-10rem center"],
-        ["2022-gv60-4.jpg", "-42rem center"],
       ],
       overlayText: "2022 Genesis GV60",
-      modelOptionsValue: "GV60"
+      modelName: "GV60"
     },
     {
       imageNames: [
         ["2023-id4-1.jpg", "-18.5rem center"],
         ["2023-id4-2.jpg", "-36rem center"],
         ["2023-id4-3.jpg", "-35rem center"],
-        ["2023-id4-4.jpg","-23.5rem center"],  // maybe image
+        ["2023-id4-4.jpg","-23.5rem center"],
       ],
       overlayText: "2023 Volkswagen ID.4",
-      modelOptionsValue: "ID.4"
+      modelName: "ID.4"
     },
     {
       imageNames: [
         ["2023-ioniq5-1.jpg", "-20rem center"],
-        ["2023-ioniq5-2.jpg", "-44.5rem center"], //maybe pic
-        ["2023-ioniq5-3.jpg", "-47rem center"],
-        ["2023-ioniq5-4.jpg", "-28rem center"],
+        ["2023-ioniq5-2.jpg", "-44.5rem center"],
+        ["2023-ioniq5-3.jpg", "-58rem center"],
+        ["2023-ioniq5-4.jpg", "-28rem center"], //too low
       ],
       overlayText: "2023 Hyundai Ioniq 5",
-      modelOptionsValue: "Ioniq%205"
+      modelName: "Ioniq%205"
     },
     {
       imageNames: [
@@ -37,16 +36,16 @@ export default function getHeroImage() {
         ["2023-ev6-3.jpg", "-45rem center"],
       ],
       overlayText: "2023 Kia EV6",
-      modelOptionsValue: "N"
+      modelName: "N"
     },
     {
       imageNames: [
-        ["2023-kona-1.jpg", "-10rem center"], //nogo
+        ["2023-kona-1.jpg", "-10rem center"],
         ["2023-kona-2.jpg", "-20rem center"],
-        ["2023-kona-3.jpg", "-10rem center"],  //maybe
+        ["2023-kona-3.jpg", "-10rem center"],
       ],
       overlayText: "2023 Hyundai Kona Electric",
-      modelOptionsValue: "Kona%20Ev"
+      modelName: "Kona%20Ev"
     },
     {
       imageNames: [
@@ -55,7 +54,7 @@ export default function getHeroImage() {
         ["2023-niro-3.jpg", "-26.5rem center"],
       ],
       overlayText: "2023 Kia Niro EV",
-      modelOptionsValue: "V"
+      modelName: "V"
     },
   ]
   
@@ -87,6 +86,6 @@ export default function getHeroImage() {
     "portraitPosition": heroImages[randomVehicle].imageNames[randomImageIndex][1],
     "blurredImageUrl": blurredImagePath + randomImage,
     "title": heroImages[randomVehicle].overlayText,
-    "model": heroImages[randomVehicle].modelOptionsValue
+    "model": heroImages[randomVehicle].modelName
   }
 }
