@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid class="footer">
-    <b-row align-h="center" class="d-flex justify-content-center pt-3 footer-text">
+  <b-container fluid class="footer frosted-bg">
+    <b-row align-h="center" class="d-flex justify-content-center pt-1 footer-text">
       Copyright ©{{ this.currentYear }} The EV Finder | 
       Licensed under&nbsp;
       <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
@@ -44,4 +44,11 @@
   .footer-text a {
       color: black;
     }
+
+  .frosted-bg {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(10px);
+    filter: drop-shadow(2px 4px 6px black);
+    box-shadow: inset 0 0 0 200px rgb(255 255 255 / 8%);
+  }
 </style>

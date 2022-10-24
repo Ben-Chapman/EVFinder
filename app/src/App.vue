@@ -15,7 +15,7 @@
       </transition>
     </b-row>
 
-    <b-row class="frosted-bg">
+    <b-row>
       <Footer/>
     </b-row>
   </b-container>
@@ -52,7 +52,8 @@ export default {
   data() {
     return {
       heroImage: {},
-      portraitPosition: "center center",
+      imagePosition: "center center",
+      transition: ""
     }
   },
   mounted() {
@@ -60,9 +61,9 @@ export default {
 
       if (window.matchMedia("(orientation: portrait)").matches) {
         console.log('portrait here')
-        this.portraitPosition = this.heroImage['portraitPosition']
+        this.imagePosition = this.heroImage['portraitPosition']
 
-        console.log(`Moving image to ${this.portraitPosition}`)
+        console.log(`Moving image to ${this.imagePosition}`)
       }
 
       window.addEventListener("resize", this.handleOrientationChange)
@@ -87,9 +88,9 @@ export default {
         return {
           backgroundImage: `url('${this.heroImage['imageUrl']}')`,
           backgroundSize: 'cover',
-          backgroundPosition: this.portraitPosition,
+          backgroundPosition: this.imagePosition,
           backgroundAttachment: 'fixed',
-          transition: '1s background ease'
+          transition: this.transition
         }
       },
   },  //computed
@@ -101,11 +102,11 @@ export default {
     handleOrientationChange() {
       console.log("changing orientation in handle")
       if (window.matchMedia("(orientation: portrait)").matches) {
-        console.log('found portrait')
-        this.portraitPosition = this.heroImage['portraitPosition']
+        this.transition = "1s background ease"
+        this.imagePosition = this.heroImage['portraitPosition']
       } else {
-        console.log('found landscape')
-        this.portraitPosition = "center center"
+        this.imagePosition = "center center"
+        this.transition = ""  // Prevent sliding into the bg image in landscape
       }
     }
   },
@@ -149,11 +150,6 @@ export default {
       padding-left: 15px;
       margin-right: auto;
       margin-left: auto;   
-  }
-
-  .frosted-bg {
-    mask: linear-gradient(transparent, black 20%);
-    backdrop-filter: blur(20px) saturate(50%);
   }
 
   .fade-enter-active, .fade-leave-active {
