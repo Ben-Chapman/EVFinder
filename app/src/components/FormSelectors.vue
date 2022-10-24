@@ -222,14 +222,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return 'a valid zip code and a search radius between 1 and 999.'
+            return 'a valid US zip code and a search area between 1 and 999 miles.'
           }
         }
         if (this.isValidZipCode != true) {
-          return 'a valid zip code.'
+          return 'a valid US zip code.'
         }
         if (this.isValidRadius != true) {
-          return 'a search radius between 1 and 999.'
+          return 'a search area between 1 and 999 miles.'
         }      
       },
       
