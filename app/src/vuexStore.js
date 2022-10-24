@@ -24,8 +24,8 @@ const state = {
   
   form: {
     zipcode: '',
-    year: '2022',
-    model: 'Ioniq%205',
+    year: '',
+    model: '',
     radius: '',
     manufacturer: '',
     vehicleName: '',

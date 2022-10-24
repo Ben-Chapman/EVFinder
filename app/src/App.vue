@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { version } from '../package.json'
 
 import Footer from './components/Footer.vue'
@@ -67,6 +67,12 @@ export default {
 
       window.addEventListener("resize", this.handleOrientationChange)
 
+      /**
+       * When a random image is selected, push the vehicle model into Vuex.
+       * This will be picked up by the FormSelectors component and update the
+       * dropdown menu to reflect the vehicle image being shown.
+       */
+      this.updateStore({'form': {'model': this.heroImage['model']}})
   },  // mounted
 
   computed: {
@@ -74,6 +80,7 @@ export default {
     ...mapState([
         'inventoryCount',
         'showTable',
+        'form'
       ]),
 
     heroImageStyle() {
@@ -87,6 +94,10 @@ export default {
       },
   },  //computed
   methods: {
+      ...mapActions([
+        'updateStore'
+        ]),
+
     handleOrientationChange() {
       console.log("changing orientation in handle")
       if (window.matchMedia("(orientation: portrait)").matches) {

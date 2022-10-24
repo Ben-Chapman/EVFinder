@@ -87,5 +87,6 @@ export default function getHeroImage() {
     "portraitPosition": heroImages[randomVehicle].imageNames[randomImageIndex][1],
     "blurredImageUrl": blurredImagePath + randomImage,
     "title": heroImages[randomVehicle].overlayText,
+    "model": heroImages[randomVehicle].modelOptionsValue
   }
 }

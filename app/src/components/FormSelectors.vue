@@ -140,6 +140,16 @@
             this.updateStore({'showTable': true})
             this.getCurrentInventory()
           }
+        } else {
+          /**
+           * When a random image is selected, the vehicle model is pushed into
+           * Vuex. Grabbing that data, and pushing it into the localForm which
+           * will update the vehicle model dropdown menu. The dropdown menu will
+           * now match the vehicle background image being displayed.
+           */
+          this.$nextTick(() => {
+            this.localForm.model = this.form.model
+          });
         }
     },
 
@@ -153,7 +163,7 @@
         */
         localForm: {
           zipcode: '',
-          year: '2022',
+          year: '2023',
           model: 'Ioniq%205',
           radius: '',
           manufacturer: '',
