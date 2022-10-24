@@ -48,7 +48,5 @@
   .frosted-bg {
     background-color: rgba(255, 255, 255, .15);
     backdrop-filter: blur(10px);
-    filter: drop-shadow(2px 4px 6px black);
-    box-shadow: inset 0 0 0 200px rgb(255 255 255 / 8%);
   }
 </style>
