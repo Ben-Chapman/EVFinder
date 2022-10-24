@@ -50,7 +50,9 @@
             id="form-zipcode"
           >
             <b-form-input
-              placeholder="US Zip Code"
+              placeholder="Zip Code"
+              oninvalid="this.setCustomValidity('Please Enter valid email')"
+              oninput="setCustomValidity('')"
               autocomplete="off"
               name="search"
               id="form-zipcode"
@@ -75,7 +77,7 @@
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
             <b-form-input
-              placeholder="Search Radius"
+              placeholder="Search Area"
               autocomplete="off"
               name="search"
               id="form-radius"
