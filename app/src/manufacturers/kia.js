@@ -18,8 +18,8 @@ export async function getKiaInventory(zip, year, model, radius) {
     var r = await response.json()  // Raw results
   }
 
-  if ('vehicles' in r) {
-    var n = normalizeJson(r['vehicles'], kiaInventoryMapping)  // Normalized results
+  if ('inventoryVehicles' in r) {
+    var n = normalizeJson(r['inventoryVehicles'], kiaInventoryMapping)  // Normalized results
     n.forEach(vehicle => {
       // Lookup the dealer name/address from the dealer code
       const dCode = vehicle['dealerCode']
@@ -33,7 +33,7 @@ export async function getKiaInventory(zip, year, model, radius) {
       vehicle['state'] = dealerDetail['location']['state']
 
       // Distance to 2 decimal places
-      vehicle['distance'] = parseFloat(vehicle['distance']).toFixed(2).toString()
+      vehicle['distance'] = parseFloat(vehicle['dealerDistance']).toFixed(2).toString()
       
       // Delivery Date
       if (vehicle['status'] == 'DS') {
@@ -55,6 +55,32 @@ export async function getKiaInventory(zip, year, model, radius) {
       } else {
         vehicle['drivetrainDesc'] = "Unknown"
       }
+  
+      /**
+       * Kia stores the exterior color name under a top-level object called
+       * exteriorImages{}, which we need to pull out for display in the UI.
+       * So, regex matching the hex value provided with each vehicle description
+       * and looping through the top-level object to find the hex value and
+       * extract the actual color name.
+       */
+      try {
+        const extColor = vehicle['exteriorImagesExteriorProfile'].match(/[0-9a-fA-F]{6}/)[0]
+        // Looping through the non-flattened API response object to get exterior color
+        r['filterSet']['criteriaGroups'].forEach(group => {
+          if (group.groupName === 'Colors') {
+            group['groupCriteria'].forEach(criteria => {
+              criteria['elements'].forEach(element => {
+                if (element['baseHex'] === extColor) {
+                  vehicle['exteriorColor'] = element['name']
+                }
+              })
+            })
+          }
+        })
+      } catch {
+        vehicle['exteriorColor'] = "Unknown"
+      }
+      
     })
   } else {
     n = []
@@ -74,7 +100,7 @@ export function getKiaVinDetail(input) {
         k[kiaVinMapping[key]] = input[key]
       }
       // The Kia API returns individual elements for each feature, so
-      // concatinating into a single string for display
+      // concatenating into a single string for display
       if (key.indexOf("features0Options") >= 0) {  // Does the key contain features0Options
         if (k['Top Features']) {
           k['Top Features'] = `${k['Top Features']}, ${input[key]}`
