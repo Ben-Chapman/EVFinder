@@ -77,7 +77,7 @@
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
             <b-form-input
-              placeholder="Search Area"
+              placeholder="Distance"
               autocomplete="off"
               name="search"
               id="form-radius"
@@ -222,14 +222,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return 'a valid US zip code and a search area between 1 and 999 miles.'
+            return 'a valid US zip code and a search distance between 1 and 999 miles.'
           }
         }
         if (this.isValidZipCode != true) {
           return 'a valid US zip code.'
         }
         if (this.isValidRadius != true) {
-          return 'a search area between 1 and 999 miles.'
+          return 'a search distance between 1 and 999 miles.'
         }      
       },
       
