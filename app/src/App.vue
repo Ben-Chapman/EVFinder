@@ -60,12 +60,10 @@ export default {
       this.heroImage = getHeroImage()  // Get the hero image URL on mount
 
       if (window.matchMedia("(orientation: portrait)").matches) {
-        console.log('portrait here')
         this.imagePosition = this.heroImage['portraitPosition']
-
-        console.log(`Moving image to ${this.imagePosition}`)
       }
 
+      // Listen for orientation changes, and adjust the image position as needed
       window.addEventListener("resize", this.handleOrientationChange)
 
       /**
@@ -100,13 +98,20 @@ export default {
         ]),
 
     handleOrientationChange() {
-      console.log("changing orientation in handle")
-      if (window.matchMedia("(orientation: portrait)").matches) {
+      if (window.matchMedia("(orientation: landscape)").matches) {
+        this.imagePosition = "center center"
+        this.transition = ""  // Prevent bg image sliding when transitioning to landscape
+      }
+      else if (this.showTable) {
+        /**
+         * Turns out, when rotating from landscape back to portrait, the image
+         * sliding in behind the table is *really* annoying. Thus, preventing that.
+         */
+        this.transition = ""
+      }
+      else if (window.matchMedia("(orientation: portrait)").matches) {
         this.transition = "1s background ease"
         this.imagePosition = this.heroImage['portraitPosition']
-      } else {
-        this.imagePosition = "center center"
-        this.transition = ""  // Prevent sliding into the bg image in landscape
       }
     }
   },
