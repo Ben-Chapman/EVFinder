@@ -16,6 +16,7 @@ $soothing-green: #93C0A4;
 $persian-green: #00A896;
 $electric-blue: #38AECC;
 $grey: #605F5E;
+$dark: #000000;
 
 // https://coolors.co/d0ccd0-2d82b7-f06543-70e000-3d3d3d-fbfcff
 $green-blue: #2D82B7;
@@ -23,8 +24,9 @@ $orange-crayola: #FE7139;
 $logo-green: #70E000;
 $analogous-logo-green: #00E025;
 $highlight-bluegreen: #F0F8FA;
-$action-blue: #0E92EB;
+$action-blue: #219bec;
 $light-bluegray: #F2F6FA;
+$dark-blue: #0389e3;
 $primary-blue: #3884fe;
 $warning-red: #f95b5b;
 $mustard-yellow: #e4dc62;
@@ -34,7 +36,8 @@ $theme-colors: () !default;
 $custom-variants: map.merge(
   (
     "action-blue": $action-blue,
-    "mustard-yellow": $mustard-yellow
+    "mustard-yellow": $mustard-yellow,
+    "dark": $dark,
   ),
   $theme-colors,
 );

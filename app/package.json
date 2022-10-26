@@ -31,14 +31,14 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@percy/cli": "^1.10.4",
+    "@percy/cli": "^1.12.0",
     "@percy/cypress": "^3.1.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "browserslist": "^4.21.1",
-    "cypress": "^10.3.0",
+    "cypress": "^10.10.0",
     "ejs": ">=3.1.7",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",

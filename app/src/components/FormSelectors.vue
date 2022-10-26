@@ -7,7 +7,7 @@
         </a>
       </b-row>
       <!-- For all other screen sizes, show this logo -->
-      <b-row class="d-flex mt-3" align-h="center">
+      <b-row class="d-flex my-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
@@ -18,7 +18,6 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-year"
-            description="Select a Model Year"
           >
             <b-form-select
               id="form-year"
@@ -34,7 +33,6 @@
         <b-col cols=6 md=3>
           <b-form-group
             id="form-model"
-            description="Select a Model"
           >
             <b-form-select
               id="form-model"
@@ -50,9 +48,11 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-zipcode"
-            description="Enter a 5-digit US zip code"
           >
             <b-form-input
+              placeholder="Zip Code"
+              oninvalid="this.setCustomValidity('Please Enter valid email')"
+              oninput="setCustomValidity('')"
               autocomplete="off"
               name="search"
               id="form-zipcode"
@@ -72,11 +72,12 @@
         <b-col cols=4 md=2>
           <b-form-group
             id="form-radius"
-            description="Search Radius in Miles"
+            variant="dark"
           >
             <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
             <b-form-input
+              placeholder="Distance"
               autocomplete="off"
               name="search"
               id="form-radius"
@@ -111,7 +112,7 @@
                 v-if="validateSubmitButton == false"
                 disabled
                 id="invalid-submit-button"
-                variant="outline-primary"
+                variant="primary"
                 >Submit</b-button>
               </span>
             <b-tooltip target="disabled-wrapper" triggers="hover">
@@ -131,10 +132,26 @@
 
   export default {
     mounted() {
+      /**
+       * When this component is mounted, check for query params in the URL
+       * If found, parse them for validity, show the table component and proceed
+       * to fetch inventory
+       */
       if (this.parseQueryParams(this.$route.query)) {
           if (this.validateSubmitButton) {
+            this.updateStore({'showTable': true})
             this.getCurrentInventory()
           }
+        } else {
+          /**
+           * When a random image is selected, the vehicle model is pushed into
+           * Vuex. Grabbing that data, and pushing it into the localForm which
+           * will update the vehicle model dropdown menu. The dropdown menu will
+           * now match the vehicle background image being displayed.
+           */
+          this.$nextTick(() => {
+            this.localForm.model = this.form.model
+          });
         }
     },
 
@@ -148,7 +165,7 @@
         */
         localForm: {
           zipcode: '',
-          year: '2022',
+          year: '2023',
           model: 'Ioniq%205',
           radius: '',
           manufacturer: '',
@@ -205,14 +222,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return 'a valid zip code and a search radius between 1 and 999.'
+            return 'a valid US zip code and a search distance between 1 and 999 miles.'
           }
         }
         if (this.isValidZipCode != true) {
-          return 'a valid zip code.'
+          return 'a valid US zip code.'
         }
         if (this.isValidRadius != true) {
-          return 'a search radius between 1 and 999.'
+          return 'a search distance between 1 and 999 miles.'
         }      
       },
       
@@ -362,11 +379,12 @@
     computed: {
       // Vuex
       ...mapState([
+        'apiErrorDetail',
         'form',
         'inventory',
         'inventoryCount',
+        'showTable',
         'tableBusy',
-        'apiErrorDetail'
       ]),
 
       isValidZipCode() {
@@ -408,6 +426,7 @@
         */
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
+            this.updateStore({'showTable': true})
             this.getCurrentInventory()
 
           // Fire an event to Plausible to allow reporting on which manufacturers
@@ -423,6 +442,7 @@
           }
         }
       },
+
       inventory() {
         // When the inventory changes, update the $num vehicles found message
         this.updateStore({'inventoryCount': this.inventory.length})
@@ -431,5 +451,13 @@
   } // export
 </script>
 
-<style scoped>
+<style>
+  ::placeholder {
+    color: #9b9b9b !important;
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: #9b9b9b !important;
+  }
+
 </style>

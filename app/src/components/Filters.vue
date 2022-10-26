@@ -1,10 +1,10 @@
 <template>
   <div v-if="this.inventory.length > 0">
-    <b-row align-h="center" class="d-flex justify-content-center border-top pt-3" align-v="center">
+    <b-row align-h="center" class="d-flex justify-content-center pt-3" align-v="center">
       <b-icon-sliders aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon-sliders>
       
       <!-- Trim Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
             Trim
             <span v-if="localFilterSelections.trimDesc.length > 0">
@@ -28,7 +28,7 @@
         </b-dd>
       
       <!-- Exterior Color Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
             Ext. Color
             <span v-if="localFilterSelections.exteriorColor.length > 0">
@@ -52,7 +52,7 @@
         </b-dd>
 
       <!-- Interior Color Filter -->
-        <b-dd id="interior-color" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="interior-color" size="sm" variant="primary" class="px-1">
           <template #button-content>
             Int. Color
             <span v-if="localFilterSelections.interiorColor.length > 0">
@@ -76,7 +76,7 @@
         </b-dd>
       
       <!-- Drivetrain Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1" boundary="viewport">
+        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
           <template #button-content>
             Drivetrain
             <span v-if="localFilterSelections.drivetrainDesc.length > 0">
@@ -102,7 +102,7 @@
       <!-- Only show these filters on screens larger than xs -->
       <div class="d-none d-sm-block">
       <!-- Dealer Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
             Dealer
             <span v-if="localFilterSelections.dealerName.length > 0">
@@ -126,7 +126,7 @@
         </b-dd>
 
         <!-- Inventory Status Filter -->
-        <b-dd id="trim-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
             Availability
             <span v-if="localFilterSelections.inventoryStatus.length > 0">
@@ -150,7 +150,7 @@
         </b-dd>
 
         <!-- Price Filter -->
-        <b-dd right id="distance-dd" size="sm" variant="outline-primary" class="px-1">
+        <b-dd right id="distance-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
             MSRP
             <span v-if="localFilterSelections.price.length > 0">
@@ -399,9 +399,7 @@
   } // default
 </script>
 
-<style lang="scss">
-  @import '../assets/app_style.scss';
-  
+<style>
   .vehicles-available {
     font-size: 1.1rem;
     margin-bottom: .75rem;
@@ -415,7 +413,7 @@
     color: #fff;
   }
 
-  // Resize the text in the filter dropdowns
+  /* Resize the text in the filter dropdowns */
   .b-dropdown-form {
     font-size: .9rem !important;
 }

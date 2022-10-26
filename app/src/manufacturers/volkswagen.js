@@ -4,15 +4,6 @@ import { volkswagenVinMapping } from "./volkswagenMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 export async function getVolkswagenInventory(zip, year, model, radius) {
-  /**
-   * Volkswagen is only returning inventory results for 2022 model year, so if
-   * the user selects 2023, return an empty array (for now).
-   */
-
-  if (year == 2023) {
-    return []
-  }
-  
   const inventory = await fetch(apiBase + '/api/inventory/volkswagen?' + new URLSearchParams({
     zip: zip,
     year: year,

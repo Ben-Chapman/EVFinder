@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  showTable: false,
   tableBusy: false,
   inventory: [],
   filter: null,
@@ -23,8 +24,8 @@ const state = {
   
   form: {
     zipcode: '',
-    year: '2022',
-    model: 'Ioniq%205',
+    year: '',
+    model: '',
     radius: '',
     manufacturer: '',
     vehicleName: '',
@@ -40,9 +41,7 @@ const state = {
 const mutations = {
   mutateState(state, payload) {
     Object.getOwnPropertyNames(payload).forEach(val => {
-      // console.log(val)
       if (payload[val] !== undefined) {
-        // console.log(payload[val])
         state[val] = payload[val]
       }
     })
@@ -62,7 +61,6 @@ const actions = {
   },
 
   updateFilterSelections({ commit }, payload) {
-    // console.log(payload)
     commit('mutateFilterSelections', payload)
   }
 }

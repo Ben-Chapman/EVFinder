@@ -1,10 +1,10 @@
 <template>
-  <b-container fluid class="footer">
-    <b-row align-h="center" class="d-flex justify-content-center" >
+  <b-container fluid class="footer frosted-bg">
+    <b-row align-h="center" class="d-flex justify-content-center pt-1 footer-text">
       Copyright ©{{ this.currentYear }} The EV Finder | 
-      Licensed under &nbsp;
+      Licensed under&nbsp;
       <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
-        GNU GPLv3
+        <u>GNU GPLv3</u>
       </a>
       </b-row>
 
@@ -33,9 +33,20 @@
 </script>
 
 <style lang="scss">
+  @import '../assets/app_style.scss';
+  
   .footer {
-  position: sticky;
-  bottom: 0;
-  height: auto;
-}
+    position: sticky;
+    bottom: 0;
+    height: auto;
+  }
+
+  .footer-text a {
+      color: black;
+    }
+
+  .frosted-bg {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(10px);
+  }
 </style>

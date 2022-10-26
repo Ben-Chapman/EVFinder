@@ -9,20 +9,24 @@
          flex row for all other media sizes, which is the default and
          is needed to properly format the table -->
     <div class="d-flex justify-content-center flex-column flex-md-row">
+      
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
       </div>
+
       <div v-else-if="showInventoryAlert" class="mt-5">
         <b-alert show variant="success" class="no-inventory px-5">
           No Vehicles Were Found. Adjust your search parameters and try again.
         </b-alert>
       </div>
+      
       <div v-else>
         <b-table
           hover
           stacked="sm"
           responsive
+          class="rounded inventory-table"
           :busy="tableBusy"
           :items="this.inventory"
           :fields="this.fields"
@@ -414,10 +418,10 @@
     computed: {
       ...mapState([
         'apiErrorDetail',
-        'tableBusy',
-        'inventory',
         'filterSelections',
-        'form'
+        'form',
+        'inventory',
+        'tableBusy',
       ]),
 
       showInventoryAlert() {
@@ -450,6 +454,13 @@
   .table-hover tbody tr:hover {
     background-color: $highlight-bluegreen !important;
 }
+  .inventory-table {
+    background-color: #ffffffd8;
+  }
+
+  .card {
+    background-color: #ffffffd8 !important;
+  }
 
   .vin {
     font-family: $font-family-monospace;
@@ -461,5 +472,5 @@
     color: #6c757d !important;
     font-size: 1.2rem;
     text-align: center;
-  }  
+  }
 </style>
