@@ -29,7 +29,7 @@ import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
 
-import getHeroImage from './hero'
+import getHeroImage from './helpers/hero'
 
 console.log(`
 The EVFinder release version ${version}
@@ -72,6 +72,18 @@ export default {
        * dropdown menu to reflect the vehicle image being shown.
        */
       this.updateStore({'form': {'model': this.heroImage['model']}})
+
+      // Push display dimensions to Plausible
+      const width  = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth
+      const height = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight
+
+      this.$plausible.trackEvent(
+        'Display Dimensions', {props: {dimensions: `${width}x${height}`}}
+      )
   },  // mounted
 
   computed: {

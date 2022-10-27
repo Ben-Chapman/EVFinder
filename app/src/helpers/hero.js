@@ -2,6 +2,15 @@ export default function getHeroImage() {
   const heroImages = [
     {
       imageNames: [
+        ["2023-g80ev-1.jpg", "-22rem center"],
+        ["2023-g80ev-2.jpg", "-48rem center"],
+        ["2023-g80ev-3.jpg", "-10rem center"],
+      ],
+      overlayText: "2023 Genesis Electrified G80",
+      modelName: "ElectrifiedG80"
+    },
+    {
+      imageNames: [
         ["2022-gv60-1.jpg", "-26rem center"],
         ["2022-gv60-2.jpg", "-10rem center"],
         ["2022-gv60-3.jpg", "-10rem center"],

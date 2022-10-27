@@ -182,7 +182,7 @@
   import { mapActions, mapState } from 'vuex'
   import { has } from 'lodash'
 
-  import { convertToCurrency } from '../libs'
+  import { convertToCurrency } from '../helpers/libs'
   
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'

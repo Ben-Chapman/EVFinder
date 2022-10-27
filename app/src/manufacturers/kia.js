@@ -1,4 +1,4 @@
-import normalizeJson from '../libs'
+import normalizeJson from '../helpers/libs'
 import { kiaInventoryMapping, kiaVinMapping } from './kiaMappings'
 
 const apiBase = 'https://api.theevfinder.com'
