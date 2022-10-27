@@ -1,4 +1,4 @@
-// import { convertToCurrency, titleCase } from "../libs"
+// import { convertToCurrency, titleCase } from "../helpers/libs"
 import { genesisInventoryMapping, genesisVinMapping } from "./genesisMappings"
 
 const apiBase = 'https://api.theevfinder.com'

@@ -7,7 +7,7 @@
   - `<manufacturer>Mappings.js`
     - Detail here on what this file is for
 
-- Add the manufacturer and model name(s) to app/src/components/FormSelectors.vue. Ensure you maintain alphabetical order by manufacturer.
+- Add the manufacturer and model name(s) to app/src/helpers/formSelectorOptions.js. Ensure you maintain alphabetical order by manufacturer.
 ```
   {
     label: 'ElectroCar',

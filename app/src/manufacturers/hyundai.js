@@ -1,4 +1,4 @@
-import { convertToCurrency, titleCase } from "../libs"
+import { convertToCurrency, titleCase } from "../helpers/libs"
 import { hyundaiVinDetailMapping, hyundaiTransitStatus, hyundaiInteriorColors } from "./hyundaiMappings"
 
 const apiBase = 'https://api.theevfinder.com'

@@ -231,7 +231,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import { generateUrlQueryParams } from '../libs'
+  import { generateUrlQueryParams } from '../helpers/libs'
 
   // What length should the query param key length be. A value of 3 would
   // truncate from ?queryParamHere=yes to ?que=yes

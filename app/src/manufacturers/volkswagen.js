@@ -1,4 +1,4 @@
-import { convertToCurrency } from "../libs"
+import { convertToCurrency } from "../helpers/libs"
 import { volkswagenInventoryMapping } from "./volkswagenMappings"
 import { volkswagenVinMapping } from "./volkswagenMappings"
 
