@@ -332,7 +332,14 @@
       },
 
       priceStringToNumber(priceString) {
-        return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
+        try {
+          // For those manufacturers who provide MSRP as a formatted string
+          return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
+        }
+        catch {
+          return Number(parseFloat(priceString))
+        }
+        
       },
     },  // methods
 
