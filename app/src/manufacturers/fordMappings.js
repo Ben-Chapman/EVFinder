@@ -1,11 +1,9 @@
 const fordInventoryMapping = {
-  'interiorColor': 'interiorColorDescription',
+  'interiorColor': 'vehicleFeaturesInteriorColorDisplayName',
   'exteriorColor': 'vehicleFeaturesExteriorColorDisplayName',
-  'trimDesc': 'edwTrim',
-  'drivetrainDesc': 'drivetrainDescription',
-  'price': 'msrp',
-  'inventoryStatus': 'status',
-  'distance': 'range',
+  'trimDesc': 'vehicleTrimDisplayName',
+  'drivetrainDesc': 'keyDisplayFeaturesDrivetrain',
+  'price': 'pricingMsrpPricingAdjustedPrice',
   'vin-with-more-details': '',
   }
 
