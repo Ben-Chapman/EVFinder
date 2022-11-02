@@ -212,9 +212,9 @@
         vinTableBusy: false,
 
         fields: [
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
           { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
           { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
