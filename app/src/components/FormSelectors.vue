@@ -125,7 +125,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import { modelOptions, yearOptions } from '../helpers/formSelectorOptions'
+  import { modelOptions, yearOptions } from '../helpers/formOptions'
   import { getFordInventory } from '../manufacturers/ford'
   import { getGenesisInventory } from '../manufacturers/genesis'
   import { getHyundaiInventory } from '../manufacturers/hyundai'

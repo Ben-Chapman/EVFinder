@@ -2,7 +2,7 @@ const modelOptions = [
   {
     label: 'Ford',
     options: [
-      { value: 'mache', text: 'Mach-E'},
+      { value: 'mache', text: 'Mustang Mach-E'},
     ],
   },
   {
