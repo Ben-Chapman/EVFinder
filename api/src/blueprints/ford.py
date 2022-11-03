@@ -1,102 +1,149 @@
+import json
+import math
+import requests
+
 from datetime import datetime
 from flask import Blueprint, request
 
 from libs.libs import send_response, send_error_response, validate_request
-
-import requests
 
 ford = Blueprint(name="ford", import_name=__name__)
 
 s = requests.Session()
 
 @ford.route('/api/inventory/ford', methods=['GET'])
-def get_ford_inventory():
-  request_args = request.args
-
-  zip_code = request_args['zip']
-  year = request_args['year']
-  model = request_args['model']
-  radius = request_args['radius']
-
-  # We'll use the requesting UA to make the request to the Ford APIs
-  user_agent = request.headers['User-Agent']
-
-  dealers_url = f'https://shop.ford.com/aemservices/cache/inventory/dealer/dealers'
-  inventory_url = f'https://shop.ford.com/aemservices/cache/inventory/dealer-lot'
-
+def main():
+  request_args = {
+    'zip_code': request.args['zip'],
+    'year': request.args['year'],
+    'model': request.args['model'],
+    'radius': request.args['radius'],
+  }
+  
   headers = {
-    'User-Agent': user_agent,
-    'Referer': f'https://shop.ford.com/inventory/{model}/',
+    'User-Agent': request.headers['User-Agent'],  # Use the requesting UA
+    'Referer': f"https://shop.ford.com/inventory/{request_args['model']}/",
   }
 
-  dealers_params = {
+  params = {
     'make': 'Ford',
     'market': 'US',
     'inventoryType': 'Radius',
     'maxDealerCount': '1',
-    'model': model,
+    'model': request_args['model'],
     'segment': 'Crossover',
-    'zipcode': zip_code
-  }
+    'zipcode': request_args['zip_code']
+    }
+
+  # Retrieve the dealer slug, which is needed for the inventory API call
+  slug = get_dealer_slug(headers, params)
+
+  if slug:
+    # Retrieve the initial batch of 12 vehicles
+    inventory_params = {
+        **params,
+        'dealerSlug': slug,
+        'Radius': request_args['radius'],
+        'Order': 'Distance',
+        # 'beginIndex': '0',
+        # 'endIndex': '500'
+      }
+
+    inv = get_ford_inventory(headers=headers, params=inventory_params)
+
+    try:
+      total_count = inv['data']['filterResults']['ExactMatch']['totalCount']
+    except KeyError as e:
+      print(f"No pagination for Inventory call: {e}")
+    
+    if total_count > 12:
+      remainder_inventory_params = {
+        **inventory_params,
+        'beginIndex': '12',
+        'endIndex': math.ceil(total_count / 12) * 12 # Ford pages 12 vehicles at a time
+      }
+
+      remainder = get_ford_inventory(
+        headers=headers,
+        params=remainder_inventory_params)
+      # Return the merged inventory + remainder JSON objects
+      return json.dumps(dict(inv, **remainder))
+        # {key: value for (key, value) in inv.items() +
+        # remainder.items()})
+    else:
+      return send_response(
+        response_data=json.dumps(inv),
+        content_type='application/json',
+        cache_control_age=3600)
+    
+
+
+def get_ford_inventory(headers, params):
+  inventory_url = f'https://shop.ford.com/aemservices/cache/inventory/dealer-lot'
 
   validate_request = True
   # if validate_request(params.items()):
   if validate_request:
     # Make a dealers API call to get a dealer slug, which will be needed for the
     # inventory API call later
-    dealers = s.get(
-      url=dealers_url,
+    
+    inventory = s.get(
+      url=inventory_url,
       headers=headers,
-      params=dealers_params,
+      params=params,
       verify=False
     )
-    if (dealers.json()['status'].lower() == 'success' and len(dealers.json()['data']['Response']) > 0):
-      dealer_slug = dealers.json()['data']['firstFDDealerSlug']
+    inventory.raise_for_status()
 
-      inventory_params = {
-        **dealers_params,
-        'dealerSlug': dealer_slug,
-        'Radius': radius,
-        'Order': 'Distance',
-        # 'beginIndex': '0',
-        # 'endIndex': '500'
-      }
+    return inventory.json()
+     
+
+
+
+
+    # return inventory.json()
+  # return (inventory.status_code, inventory.json())
+    # remainder_inventory = s.get(
+    #   url=inventory_url,
+    #   headers=headers,
+    #   params={
+    #     **inventory_params,
+    #     'beginIndex': '0',
+    #     'endIndex': inventory.json()['data']['filterResults']['ExactMatch']['totalCount']
+    #   }
+    # )
+
+#   if inventory.json()['status'].lower() == 'success':
+#     return send_response(
+#       response_data=inventory.json(),
+#       content_type='application/json',
+#       cache_control_age=3600
+#     )
+#   else:
+#     error_message = 'An error occurred with the Ford API'
+#     return send_error_response(
+#       error_message=error_message,
+#       error_data=inventory.json()
+#     )
+# else:
+#   # Request could not be validated
+#   return send_error_response(
+#     error_message='Request could not be validated',
+#     error_data=request.url,
+#     status_code=400
+#     )
+
+def get_dealer_slug(headers, params):
+  dealers_url = f'https://shop.ford.com/aemservices/cache/inventory/dealer/dealers'
   
+  dealers = s.get(
+    url=dealers_url,
+    headers=headers,
+    params=params,
+    verify=False)
+  dealers.raise_for_status()
 
-      inventory = s.get(
-        url=inventory_url,
-        headers=headers,
-        params=inventory_params,
-        verify=False
-      )
-      # return inventory.json()
-    # return (inventory.status_code, inventory.json())
-      # remainder_inventory = s.get(
-      #   url=inventory_url,
-      #   headers=headers,
-      #   params={
-      #     **inventory_params,
-      #     'beginIndex': '0',
-      #     'endIndex': inventory.json()['data']['filterResults']['ExactMatch']['totalCount']
-      #   }
-      # )
+  dealers = dealers.json()
 
-    if inventory.json()['status'].lower() == 'success':
-      return send_response(
-        response_data=inventory.json(),
-        content_type='application/json',
-        cache_control_age=3600
-      )
-    else:
-      error_message = 'An error occurred with the Ford API'
-      return send_error_response(
-        error_message=error_message,
-        error_data=inventory.json()
-      )
-  else:
-    # Request could not be validated
-    return send_error_response(
-      error_message='Request could not be validated',
-      error_data=request.url,
-      status_code=400
-      )
+  if (dealers['status'].lower() == 'success' and len(dealers['data']['Response']) > 0):
+    return dealers['data']['firstFDDealerSlug']
