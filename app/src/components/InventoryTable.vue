@@ -49,31 +49,33 @@
           
           <!-- Dealer Information for Mobile Devices. Displays dealer name only-->
           <template #cell(dealer-name-only)="data">
+            <div v-if="data.item.dealerUrl">
             <b-link
-              v-if="data.item.dealerUrl"
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
                 {{ data.item.dealerName }}
               </b-link>
-            <v-else>
+            </div>
+            <div v-else>
               {{ data.item.dealerName }}
-            </v-else>
+            </div>
           </template>
 
           <!-- Dealer Information for Large Screen Devices.
           Displays Dealer Name - City, State -->
           <template #cell(dealer-name-address)="data">
+            <div v-if="data.item.dealerUrl">
             <b-link
-              v-if="data.item.dealerUrl"
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
                 {{ data.item.dealerName }}
               </b-link>
-            <v-else>
+              </div>
+            <div v-else>
               {{ data.item.dealerName }}
-            </v-else>
+            </div>
           </template>
 
           <!-- Distance -->
