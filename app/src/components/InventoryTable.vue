@@ -184,6 +184,7 @@
 
   import { convertToCurrency } from '../helpers/libs'
   
+  import { getChevroletVinDetail } from '../manufacturers/chevrolet'
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
   import { getGenesisVinDetail } from '../manufacturers/genesis'
@@ -261,6 +262,19 @@
             this.vinDetail,
             item.vin,
             hyundaiVinData
+            )
+        }
+        else if (this.form.manufacturer.toLowerCase() === "chevrolet") {  // Make a vin API call for Chevrolet
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          const chevroletVinData = await getChevroletVinDetail(item.vin)
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            chevroletVinData
             )
         }
         else if (this.form.manufacturer.toLowerCase() === "genesis") {
