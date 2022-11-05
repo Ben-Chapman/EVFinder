@@ -25,7 +25,7 @@ def main():
     'Referer': f"https://shop.ford.com/inventory/{request_args['model']}/",
   }
 
-  params = {
+  common_params = {
     'make': 'Ford',
     'market': 'US',
     'inventoryType': 'Radius',
@@ -36,12 +36,12 @@ def main():
     }
 
   # Retrieve the dealer slug, which is needed for the inventory API call
-  slug = get_dealer_slug(headers, params)
+  slug = get_dealer_slug(headers, common_params)
 
   if slug:
     # Retrieve the initial batch of 12 vehicles
     inventory_params = {
-        **params,
+        **common_params,
         'dealerSlug': slug,
         'Radius': request_args['radius'],
         'Order': 'Distance',
@@ -66,16 +66,67 @@ def main():
       remainder = get_ford_inventory(
         headers=headers,
         params=remainder_inventory_params)
+      
       # Return the merged inventory + remainder JSON objects
-      return json.dumps(dict(inv, **remainder))
-        # {key: value for (key, value) in inv.items() +
-        # remainder.items()})
+      inv['rdata'] = remainder['data']
+
+      # Add the dealer_slug to the response, this will be needed for future API
+      # calls
+      inv['dealerSlug'] = slug
+
+      return send_response(
+        response_data=json.dumps(inv),
+        content_type='application/json',
+        cache_control_age=3600)
     else:
       return send_response(
         response_data=json.dumps(inv),
         content_type='application/json',
         cache_control_age=3600)
-    
+  
+
+@ford.route('/api/vin/ford', methods=['GET'])
+def get_vin_detail():
+  vin_url = 'https://shop.ford.com/aemservices/cache/inventory/dealer/vehicle-details'
+
+  headers = {
+    'User-Agent': request.headers['User-Agent'],  # Use the requesting UA
+    'Referer': f"https://shop.ford.com/inventory/{request.args['model']}/results?zipcode={request.args['zip']}&Radius=20&Dealer={request.args['paCode']}&year={request.args['year']}&Order=Distance"
+  }
+
+  vin_params = {
+      'dealerSlug': request.args['dealerSlug'],
+      'modelSlug': request.args['modelSlug'],
+      'vin': request.args['vin'],
+      'make': 'Ford',
+      'market': 'US',
+      'requestTowingData': 'undefined',
+      'inventoryType': 'Radius',
+      'ownerPACode': request.args['paCode'],
+      'segment': 'Crossover',
+      'zipcode': request.args['zip']
+    }
+
+  try:
+    vin_data = s.get(
+      url=vin_url,
+      headers=headers,
+      params=vin_params,
+      verify=False)
+  
+    vin_data.raise_for_status()
+    return send_response(
+        response_data=json.dumps(vin_data),
+        content_type='application/json',
+        cache_control_age=3600)
+
+  except Exception as e:
+    return ((vin_data.status_code, vin_data.url, '\r\n'.join('{}: {}'.format(k, v) for k, v in vin_data.headers.items())))
+    # error_message = f'An error occurred with the Ford API: {e}'
+    # return send_error_response(
+    #   error_message=error_message,
+    #   error_data=vin_data
+    # )
 
 
 def get_ford_inventory(headers, params):
@@ -147,3 +198,4 @@ def get_dealer_slug(headers, params):
 
   if (dealers['status'].lower() == 'success' and len(dealers['data']['Response']) > 0):
     return dealers['data']['firstFDDealerSlug']
+
