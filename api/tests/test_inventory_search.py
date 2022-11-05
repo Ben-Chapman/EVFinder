@@ -16,6 +16,8 @@ import requests
       ('model', 'Tucson%20Phev', True, "Valid Model"),
       ('model', 'GV60', True, "Valid Model"),
       ('model', 'ID.4', True, "Valid Model"),
+      ('model', 'Bolt EV', True, "Valid Model"),
+      ('model', 'Bolt EUV', True, "Valid Model"),
       ('series', 'N', True, "Valid Model"),
       ('radius', '1', True, "Valid radius"),
       ('radius', '999', True, "Valid radius"),
