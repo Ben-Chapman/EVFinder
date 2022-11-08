@@ -1,4 +1,4 @@
-import { convertToCurrency } from "../helpers/libs"
+import { convertToCurrency, titleCase } from "../helpers/libs"
 import { chevroletInventoryMapping, chevroletVinMapping } from "./chevroletMappings"
 
 const apiBase = 'https://api.theevfinder.com'
@@ -61,13 +61,14 @@ function formatChevroletInventoryResults(input) {
     // bring some nested values up to the top level and create entries that don't exist
     const enhancedResult = {
       ...vehicle,
-      'dealerName': vehicle.dealer?.name,
+      'dealerName': titleCase(vehicle.dealer?.name),
       'dealerDistance': vehicle.dealer?.distance,
       'trimName': vehicle.trim?.name,
       'totalPrice': vehicle.pricing?.cash?.summary?.items.find(item => item.type == 'total_vehicle_price').value.toString(),
-      'vehicleAvailabilityDisplayStatus': vehicle.vehicleAvailabilityStatus?.displayStatus,
+      'vehicleAvailabilityDisplayStatus': titleCase(vehicle.vehicleAvailabilityStatus?.displayStatus),
       'extColor': extColors[colorCodeFromUrl(vehicle.extImages[0])],
       'intColor': intColors[colorCodeFromUrl(vehicle.intImages[0])],
+      'drivetrainDesc': 'FWD',  // hard coded for Bolt EV, Bolt EUV; future models may require better strategy for deriving this.
     }
 
     Object.keys(enhancedResult).forEach(key => {
@@ -116,6 +117,7 @@ export async function getChevroletVinDetail(vin) {
     'extColorDescription': vinData.data.extColor?.description,
     'intColorOptionCode': vinData.data.intColor?.optionCode,
     'intColorDescription': vinData.data.intColor?.description,
+    'epaElectricRange': vinData.data.keyFeatures.find(item => item.iconKey == 'icon-epa-electric-range').value.match(/\d+ miles/i)[0] ?? '',
   }
 
   Object.keys(enhancedResult).forEach(vinKey => {

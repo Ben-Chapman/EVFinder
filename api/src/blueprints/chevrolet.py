@@ -6,61 +6,61 @@ from libs.libs import send_response, send_error_response, validate_request
 
 chevrolet = Blueprint(name="chevrolet", import_name=__name__)
 
-api_url = 'https://www.chevrolet.com/electric/shopping/api/drp-cp-api/p/v1/vehicles'
+BASE_API = 'https://www.chevrolet.com/electric/shopping/api/drp-cp-api/p/v1'
+
 
 @chevrolet.route('/api/inventory/chevrolet', methods=['GET'])
 def get_chevrolet_inventory():
   params = {
-      'zip': request.args.get('zip'),
-      'year': request.args.get('year'),
-      'model': request.args.get('model'),
-      'radius': request.args.get('radius'),
+    'zip': request.args.get('zip'),
+    'year': request.args.get('year'),
+    'model': request.args.get('model'),
+    'radius': request.args.get('radius'),
   }
-  
+
   # We'll use the requesting UA to make the request to the API
   headers = {
-      'User-Agent': request.headers['User-Agent'],
+    'User-Agent': request.headers['User-Agent'],
   }
-  
+
   inventory_post_data = {
-          'name': 'DrpInventory',
-          'filters': [
-              {
-                  'field': 'model',
-                  'operator': 'IN',
-                  'values': [ params['model'] ],
-                  'key': 'model',
-              },
-              {
-                  'field': 'year',
-                  'operator': 'IN',
-                  'values': [ params['year'] ],
-                  'key': 'year',
-              },
-              {
-                  'field': 'radius',
-                  'operator': 'IN',
-                  'values': [ params['radius'] ],
-                  'key': 'radius',
-              },
-              {
-                  'field': 'zipcode',
-                  'operator': 'IN',
-                  'values': [ params['zip'] ],
-                  'key': 'zipcode',
-              },
-          ]
+    'name': 'DrpInventory',
+    'filters': [
+      {
+        'field': 'model',
+        'operator': 'IN',
+        'values': [params['model']],
+        'key': 'model',
+      },
+      {
+        'field': 'year',
+        'operator': 'IN',
+        'values': [params['year']],
+        'key': 'year',
+      },
+      {
+        'field': 'radius',
+        'operator': 'IN',
+        'values': [params['radius']],
+        'key': 'radius',
+      },
+      {
+        'field': 'zipcode',
+        'operator': 'IN',
+        'values': [params['zip']],
+        'key': 'zipcode',
+      },
+    ]
   }
 
   if validate_request(params.items()):
     # Make a call to the API
     inventory = requests.post(
-      url=api_url,
+      url=f'{BASE_API}/vehicles',
       headers=headers,
       json=inventory_post_data,
-      verify=False
     )
-    
+
     data = inventory.json()
 
     try:
@@ -84,29 +84,29 @@ def get_chevrolet_inventory():
       error_message='Request could not be validated',
       error_data=request.url,
       status_code=400
-      )
+    )
+
 
 @chevrolet.route('/api/vin/chevrolet', methods=['GET'])
 def get_chevrolet_details():
   # We'll use the requesting UA to make the request to the API
   headers = {
-      'User-Agent': request.headers['User-Agent'],
+    'User-Agent': request.headers['User-Agent'],
   }
-  
+
   vin = request.args.get('vin')
   vin_post_data = {
-          'key': 'VIN',
-          'value': vin
+    'key': 'VIN',
+    'value': vin
   }
 
   # Make a call to the API
   details = requests.post(
-    url=f'{api_url}/details',
+    url=f'{BASE_API}/vehicles/details',
     headers=headers,
     json=vin_post_data,
-    verify=False
   )
-  
+
   data = details.json()
 
   status_text = data.get('status')
@@ -121,4 +121,3 @@ def get_chevrolet_details():
     content_type='application/json',
     cache_control_age=3600
   )
-
