@@ -60,12 +60,17 @@
           <!-- Dealer Information for Large Screen Devices.
           Displays Dealer Name - City, State -->
           <template #cell(dealer-name-address)="data">
-            <b-link
-              :href="`https://${data.item.dealerUrl}`"
-              target="_blank"
-              >
+            <div v-if="data.item.dealerUrl">
+              <b-link
+                :href="`https://${data.item.dealerUrl}`"
+                target="_blank"
+                >
                 {{ data.item.dealerName }}
               </b-link>
+            </div>
+            <div v-else>
+              {{ data.item.dealerName }}
+            </div>
           </template>
 
           <!-- Distance -->
