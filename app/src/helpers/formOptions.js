@@ -6,6 +6,13 @@ const modelOptions = [
     ],
   },
   {
+  label: 'Chevrolet',
+    options: [
+      { value: 'Bolt EUV', text: 'Bolt EUV'},
+      { value: 'Bolt EV', text: 'Bolt EV'},
+    ],
+  },
+  {
     label: 'Hyundai',
     options: [
       { value: 'Ioniq%205', text: 'Ioniq 5'},

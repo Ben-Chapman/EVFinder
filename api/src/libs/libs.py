@@ -51,6 +51,8 @@ def validate(validation_type, validation_data):
         'ElectrifiedG80',  # Genesis Electrified G80
         'ID.4', # VW ID.4
         'mache', # Mustang Mach-E
+        'Bolt EV', # Chevrolet Bolt EV
+        'Bolt EUV', # Chevrolet Bolt EUV
         ]
       valid_radii = [1, 999]
       valid_vins = []

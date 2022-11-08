@@ -127,6 +127,8 @@
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
   import { getFordInventory } from '../manufacturers/ford'
+  import { modelOptions, yearOptions } from '../helpers/formSelectorOptions'
+  import { getChevroletInventory } from '../manufacturers/chevrolet'
   import { getGenesisInventory } from '../manufacturers/genesis'
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
@@ -256,6 +258,19 @@
             this.updateStore({'apiErrorDetail': hyundaiInventory})
           } else {
             this.updateStore({'inventory': hyundaiInventory})
+          }
+        }
+        else if (this.localForm.manufacturer.toLowerCase() === 'chevrolet') {
+          const chevroletInventory = await getChevroletInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.radius,
+          )
+          if (chevroletInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': chevroletInventory})
+          } else {
+            this.updateStore({'inventory': chevroletInventory})
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'genesis') {
