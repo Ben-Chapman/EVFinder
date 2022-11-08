@@ -1,5 +1,5 @@
 import normalizeJson from "../helpers/libs"
-import { fordInventoryMapping } from "./fordMappings"
+import { fordInventoryMapping, fordVinMapping } from "./fordMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 export async function getFordInventory(zip, year, model, radius) {
@@ -19,9 +19,9 @@ export async function getFordInventory(zip, year, model, radius) {
 }
 
 export async function getFordVinDetail(dealerSlug, model, vin, year, paCode, zip) {
-  const response = await fetch(apiBase + '/api/vin/ford?' + new URLSearchParams({
+  const vinData = await fetch(apiBase + '/api/vin/ford?' + new URLSearchParams({
     dealerSlug: dealerSlug,
-    modelSlug: `${year}-${model}`,  // 2022-mache
+    modelSlug: `${year}-${model}`.toLowerCase(),  // 2022-mache
     vin: vin,
     paCode: paCode,
     zip: zip,
@@ -31,12 +31,18 @@ export async function getFordVinDetail(dealerSlug, model, vin, year, paCode, zip
   {method: 'GET', mode: 'cors',})
 
   // Get VIN detail data for a single vehicle
-const vinData = await response.json()
-console.log(vinData)
+  if (vinData.ok) {
+    return formatFordVinResults(await vinData.json())
+  } else {
+    return ['ERROR', vinData.status, await vinData.text()]
+  }
+// const vinData = await response.json()
+// console.log(vinData)
 }
 
 
 function formatFordInventoryResults(input) {
+  console.log(input)
   // Merging the initial inventory results with any paginated vehicle results
   let vehicles = []
   if ( Object.hasOwn(input, 'rdata') ) {
@@ -63,11 +69,26 @@ function formatFordInventoryResults(input) {
   
   n.forEach(vehicle => {
     const dealerId = vehicle['dealerPaCode']
+    
     // Format the inventory status
     vehicle['daysOnDealerLot'] > 0 ? vehicle['deliveryDate'] = `In Stock for ${vehicle['daysOnDealerLot']} days` : vehicle['deliveryDate'] = "Unknown"
     
-    vehicle['distance'] = dealers[dealerId]['distance']
-    vehicle['dealerName'] = dealers[dealerId]['displayName']
+    /**
+     * In testing, I've seen where the dealerId provided in an individual
+     * vehicle response, doesn't match any dealerId provided by the inventory
+     * API response (an error?). So catching that and falling back to deriving
+     * the dealer's name from another field.
+     */
+    try {
+      vehicle['distance'] = dealers[dealerId]['distance']
+      vehicle['dealerName'] = dealers[dealerId]['displayName']
+    } catch (error) {
+      // /dealer/Santa-Monica-Ford-12345/model/2022-Mache/... ->
+      // Santa Monica Ford 12345
+      vehicle['dealerName'] = vehicle['detailPageUrl'].split('/')[2].replaceAll('-', ' ')
+      vehicle['distance'] = "0"
+    }
+    
     // The dealerSlug is needed for VIN detail calls. Storing here for use later
     vehicle['dealerSlug'] = input['dealerSlug']
   })
@@ -75,6 +96,20 @@ function formatFordInventoryResults(input) {
   return n
 }
 
-// function formatFordVinResults(input) {
-
-// }
+function formatFordVinResults(input) {
+  // console.log(input.data.selected)
+  const v = normalizeJson([input.data.selected], {})[0]
+  // console.log(v)
+  const vinFormattedData = {}
+  Object.keys(v).forEach(vinKey => {
+    // console.log(vinKey)
+    // Map Ford-specific keys to EVFinder-specific keys
+  Object.keys(fordVinMapping).includes(vinKey) ? vinFormattedData[fordVinMapping[vinKey]] = v[vinKey] : null
+  })
+  
+  // Provide dealer details
+  vinFormattedData['Dealer Address'] = `${v['dealerName']}\n${v['dealerDealerAddressStreet1']} ${v['dealerDealerAddressStreet2']} ${v['dealerDealerAddressStreet3']}\n${v['dealerAddressCity']}, ${v['dealerAddressState']} ${v['dealerAddressZipCode']}`
+  
+  vinFormattedData['Dealer Phone'] = v['dealerDealerPhone']
+  return vinFormattedData
+}

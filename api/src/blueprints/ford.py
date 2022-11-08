@@ -60,7 +60,10 @@ def main():
       remainder_inventory_params = {
         **inventory_params,
         'beginIndex': '12',
-        'endIndex': math.ceil(total_count / 12) * 12 # Ford pages 12 vehicles at a time
+        # The Ford inventory API pages 12 vehicles at a time, and their API does
+        # not seem to accept a random high value for endIndex, so calculating
+        # the actual value here
+        'endIndex': math.ceil(total_count / 12) * 12
       }
 
       remainder = get_ford_inventory(
@@ -91,7 +94,7 @@ def get_vin_detail():
 
   headers = {
     'User-Agent': request.headers['User-Agent'],  # Use the requesting UA
-    'Referer': f"https://shop.ford.com/inventory/{request.args['model']}/results?zipcode={request.args['zip']}&Radius=20&Dealer={request.args['paCode']}&year={request.args['year']}&Order=Distance"
+    'Referer': f"https://shop.ford.com/inventory/mach-e/results?zipcode={request.args['zip']}&Radius=20&year={request.args['year']}&Order=Distance"
   }
 
   vin_params = {
@@ -113,20 +116,20 @@ def get_vin_detail():
       headers=headers,
       params=vin_params,
       verify=False)
-  
     vin_data.raise_for_status()
-    return send_response(
-        response_data=json.dumps(vin_data),
+  except Exception as e:
+    print(f"-----\n\n{vin_data.request.url} \n\n {vin_data.request.headers}\n\n {vin_data.json()}\n\n-----")
+    # return vin_data.json()
+    error_message = f'An error occurred with the Ford API: {e}'
+    return send_error_response(
+      error_message=error_message,
+      error_data=vin_data
+    )
+  
+  return send_response(
+        response_data=vin_data.json(),
         content_type='application/json',
         cache_control_age=3600)
-
-  except Exception as e:
-    return ((vin_data.status_code, vin_data.url, '\r\n'.join('{}: {}'.format(k, v) for k, v in vin_data.headers.items())))
-    # error_message = f'An error occurred with the Ford API: {e}'
-    # return send_error_response(
-    #   error_message=error_message,
-    #   error_data=vin_data
-    # )
 
 
 def get_ford_inventory(headers, params):
@@ -147,42 +150,7 @@ def get_ford_inventory(headers, params):
     inventory.raise_for_status()
 
     return inventory.json()
-     
 
-
-
-
-    # return inventory.json()
-  # return (inventory.status_code, inventory.json())
-    # remainder_inventory = s.get(
-    #   url=inventory_url,
-    #   headers=headers,
-    #   params={
-    #     **inventory_params,
-    #     'beginIndex': '0',
-    #     'endIndex': inventory.json()['data']['filterResults']['ExactMatch']['totalCount']
-    #   }
-    # )
-
-#   if inventory.json()['status'].lower() == 'success':
-#     return send_response(
-#       response_data=inventory.json(),
-#       content_type='application/json',
-#       cache_control_age=3600
-#     )
-#   else:
-#     error_message = 'An error occurred with the Ford API'
-#     return send_error_response(
-#       error_message=error_message,
-#       error_data=inventory.json()
-#     )
-# else:
-#   # Request could not be validated
-#   return send_error_response(
-#     error_message='Request could not be validated',
-#     error_data=request.url,
-#     status_code=400
-#     )
 
 def get_dealer_slug(headers, params):
   dealers_url = f'https://shop.ford.com/aemservices/cache/inventory/dealer/dealers'

@@ -154,6 +154,20 @@
                     </b-button>
                   </b-row>
               </div>
+              <!-- Window sticker for Ford -->
+              <div v-if="form.model == 'mache' && row.item.windowStickerUrl != ''">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(row.item.windowStickerUrl)"
+                      class="mr-2 align-middle rounded"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
+                    </b-button>
+                  </b-row>
+              </div>
               
                 <b-list-group
                   horizontal
@@ -302,7 +316,7 @@
             item.dealerSlug,
             this.form.model,
             item.vin,
-            this.form.year,
+            item.modelYear,
             item.dealerPaCode,
             this.form.zipcode,
           )
