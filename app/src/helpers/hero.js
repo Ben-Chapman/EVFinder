@@ -65,6 +65,26 @@ export default function getHeroImage() {
       overlayText: "2023 Kia Niro EV",
       modelName: "V"
     },
+    {
+      imageNames: [
+        ["2022-chevrolet-bolt-ev-1.jpg", "-17rem center"],
+        ["2022-chevrolet-bolt-ev-2.jpg", "-15rem center"],
+        ["2023-chevrolet-bolt-ev-1.jpg", "-30rem center"],
+        ["2023-chevrolet-bolt-ev-2.jpg", "-36rem center"],
+      ],
+      overlayText: "2023 Chevrolet Bolt EV",
+      modelName: "Bolt EV"
+    },
+    {
+      imageNames: [
+        ["2022-chevrolet-bolt-euv-1.jpg", "-12rem center"],
+        ["2022-chevrolet-bolt-euv-2.jpg", "-28rem center"],
+        ["2022-chevrolet-bolt-euv-3.jpg", "-24.5rem center"],
+        ["2022-chevrolet-bolt-euv-4.jpg", "-13rem center"],
+      ],
+      overlayText: "2023 Chevrolet Bolt EUV",
+      modelName: "Bolt EUV"
+    },
   ]
   
   // Random int which will be used to select an element from heroImages

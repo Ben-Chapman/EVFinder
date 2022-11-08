@@ -35,3 +35,4 @@
    an exising `else if (this.localForm.manufacturer.toLowerCase() === '<manufacturer>') {`
    statement. Within this `else if` statement, modify the various function calls
    to reflect the new manufacturer. 
+  - Repeat for app/src/components/InventoryTable.vue.
