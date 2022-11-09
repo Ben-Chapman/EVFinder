@@ -1,8 +1,9 @@
 import normalizeJson from "../helpers/libs"
-import { convertToCurrency, sortObjectByKey, titleCase } from "../helpers/libs"
+import { cl, convertToCurrency, sortObjectByKey, titleCase } from "../helpers/libs"
 import { fordInventoryMapping, fordVinMapping } from "./fordMappings"
 
 const apiBase = 'https://api.theevfinder.com'
+
 export async function getFordInventory(zip, year, model, radius) {
   const inventory = await fetch(apiBase + '/api/inventory/ford?' + new URLSearchParams({
     zip: zip,
@@ -51,7 +52,6 @@ function formatFordInventoryResults(input) {
   }
 
   var n = normalizeJson(vehicles, fordInventoryMapping)
-
   /**
    * Loop through the dealer information in the returned inventory object,
    * and pull out the dealerId and dealer name. We'll use this hashmap to
@@ -86,7 +86,6 @@ function formatFordInventoryResults(input) {
       vehicle['dealerName'] = vehicle['detailPageUrl'].split('/')[2].replaceAll('-', ' ')
       vehicle['distance'] = "0"
     }
-    
     // The dealerSlug is needed for VIN detail calls. Storing here for use later
     vehicle['dealerSlug'] = input['dealerSlug']
   })
@@ -96,12 +95,11 @@ function formatFordInventoryResults(input) {
 
 function formatFordVinResults(input) {
   const v = normalizeJson([input.data.selected], fordVinMapping)[0]
-  
-  const needsCurrencyConversion = [
-    'pricingMsrpPricingBase',
-    'pricingMsrpPricingOptions',
-    'pricingInvoice',
-    'vehiclePricingDestinationDeliveryCharge'
+  needsCurrencyConversion = [
+    'vehiclePricingMsrpPricingBase',
+    'vehiclePricingMsrpPricingOptions',
+    'vehiclePricingDestinationDeliveryCharge',
+    'vehiclePricingMsrpPricingNetPrice'
   ]
 
   const vinFormattedData = {}
@@ -127,6 +125,5 @@ function formatFordVinResults(input) {
       vinFormattedData[titleCase(key)] = features[key]['displayName']
     }
   })
-
   return sortObjectByKey(vinFormattedData)
 }

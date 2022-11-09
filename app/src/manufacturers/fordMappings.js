@@ -11,10 +11,10 @@ const fordVinMapping = {
   'vehicleStage': "Vehicle Stage",
   'vehicleVin': 'VIN',
   'trimId': 'Trim ID',
-  'pricingMsrpPricingBase': 'Pricing - Base MSRP',
-  'pricingMsrpPricingOptions': 'Pricing - Options',
+  'vehiclePricingMsrpPricingBase': 'Pricing - Base MSRP',
+  'vehiclePricingMsrpPricingOptions': 'Pricing - Options',
   'vehiclePricingDestinationDeliveryCharge': 'Pricing - Dest and Delivery Charge',
-  'pricingInvoice': 'Pricing - Total MSRP',
+  'vehiclePricingMsrpPricingNetPrice': 'Pricing - Total MSRP',
   'daysOnDealerLot': 'Days on Dealer Lot',
   'vehicleTrimDisplayName': 'Trim Level',
 }
