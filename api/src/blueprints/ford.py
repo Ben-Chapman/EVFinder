@@ -37,7 +37,6 @@ def main():
 
   # Retrieve the dealer slug, which is needed for the inventory API call
   slug = get_dealer_slug(headers, common_params)
-
   if slug:
     # Retrieve the initial batch of 12 vehicles
     inventory_params = {
@@ -50,7 +49,11 @@ def main():
       }
 
     inv = get_ford_inventory(headers=headers, params=inventory_params)
-
+    
+    # Add the dealer_slug to the response, this will be needed for future API
+    # calls
+    inv['dealerSlug'] = slug
+    
     try:
       total_count = inv['data']['filterResults']['ExactMatch']['totalCount']
     except KeyError as e:
@@ -72,10 +75,6 @@ def main():
       
       # Return the merged inventory + remainder JSON objects
       inv['rdata'] = remainder['data']
-
-      # Add the dealer_slug to the response, this will be needed for future API
-      # calls
-      inv['dealerSlug'] = slug
 
       return send_response(
         response_data=json.dumps(inv),
@@ -119,7 +118,6 @@ def get_vin_detail():
     vin_data.raise_for_status()
   except Exception as e:
     print(f"-----\n\n{vin_data.request.url} \n\n {vin_data.request.headers}\n\n {vin_data.json()}\n\n-----")
-    # return vin_data.json()
     error_message = f'An error occurred with the Ford API: {e}'
     return send_error_response(
       error_message=error_message,
