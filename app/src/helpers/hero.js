@@ -85,6 +85,17 @@ export default function getHeroImage() {
       overlayText: "2023 Chevrolet Bolt EUV",
       modelName: "Bolt EUV"
     },
+    {
+      imageNames: [
+        ["2021-mustang-mache-1.jpg", "-45rem center"],
+        ["2021-mustang-mache-2.jpg", "-20rem center"],
+        ["2021-mustang-mache-3.jpg", "-23rem center"],
+        ["2021-mustang-mache-4.jpg", "-21rem center"],
+        ["2022-mustang-mache-1.jpg", "-20rem center"],
+      ],
+      overlayText: "2022 Ford Mustang Mach-E",
+      modelName: "mache"
+    },
   ]
   
   // Random int which will be used to select an element from heroImages
