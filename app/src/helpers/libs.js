@@ -55,6 +55,10 @@ export function titleCase(item) {
   return startCase(camelCase(item))
 }
 
+export function sortObjectByKey(item) {
+  return Object.fromEntries(Object.entries(item).sort())
+}
+
 export function generateUrlQueryParams(item, sliceLength) {
   /**
    * For a given item, generate query parameters. Accepts an object.

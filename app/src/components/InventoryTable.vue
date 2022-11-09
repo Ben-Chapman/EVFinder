@@ -155,7 +155,11 @@
                   </b-row>
               </div>
               <!-- Window sticker for Ford -->
-              <div v-if="form.model == 'mache' && row.item.windowStickerUrl != ''">
+              <div
+                v-if="form.model == 'mache' && 
+                row.item.windowStickerUrl != '' &&
+                !vinTableBusy"
+                >
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
@@ -163,12 +167,12 @@
                       @click="openUrlInNewWindow(row.item.windowStickerUrl)"
                       class="mr-2 align-middle rounded"
                       >
-                      Dealer's Website for This Vehicle
+                      Window Sticker for This Vehicle
                       <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
                     </b-button>
                   </b-row>
               </div>
-              
+                <!-- VIN Detail Section -->
                 <b-list-group
                   horizontal
                   v-for="(item, key) in vinDetail[row.item.vin]" :key=key
@@ -464,6 +468,11 @@
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
 
+      // sortVinDetails(vinDetailObject) {
+      //   console.log(vinDetailObject)
+      //   return Object.fromEntries(Object.entries(vinDetailObject).sort())
+      // },
+
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
@@ -472,6 +481,7 @@
         const refreshToken = new Date().toISOString().split('T')[0] // 2022-08-01
         return `https://www.genesis.com/us/en/services/windowsticker?refreshToken=${refreshToken}&vehicleType=new&VIN=${vin}&vehicleModel=${genesisModel}`
       },
+
     }, // methods
     
     computed: {

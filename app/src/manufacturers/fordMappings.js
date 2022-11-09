@@ -9,17 +9,14 @@ const fordInventoryMapping = {
 
 const fordVinMapping = {
   'vehicleStage': "Vehicle Stage",
-  'vin': 'VIN',
+  'vehicleVin': 'VIN',
   'trimId': 'Trim ID',
-  'pricingBaseInvoice': 'Base Invoice Price',
-  'pricingDestinationDeliveryCharge': 'Dest and Delivery Charge',
-  'pricingInvoice': 'Invoice Price',
+  'pricingMsrpPricingBase': 'Pricing - Base MSRP',
+  'pricingMsrpPricingOptions': 'Pricing - Options',
+  'vehiclePricingDestinationDeliveryCharge': 'Pricing - Dest and Delivery Charge',
+  'pricingInvoice': 'Pricing - Total MSRP',
   'daysOnDealerLot': 'Days on Dealer Lot',
   'vehicleTrimDisplayName': 'Trim Level',
-  'engine': 'Drivetrain',
-  'vehicleEngine': 'Engine',
-  
-
 }
 
 export {

@@ -1,4 +1,5 @@
 import normalizeJson from "../helpers/libs"
+import { convertToCurrency, sortObjectByKey, titleCase } from "../helpers/libs"
 import { fordInventoryMapping, fordVinMapping } from "./fordMappings"
 
 const apiBase = 'https://api.theevfinder.com'
@@ -36,13 +37,10 @@ export async function getFordVinDetail(dealerSlug, model, vin, year, paCode, zip
   } else {
     return ['ERROR', vinData.status, await vinData.text()]
   }
-// const vinData = await response.json()
-// console.log(vinData)
 }
 
 
 function formatFordInventoryResults(input) {
-  console.log(input)
   // Merging the initial inventory results with any paginated vehicle results
   let vehicles = []
   if ( Object.hasOwn(input, 'rdata') ) {
@@ -97,19 +95,38 @@ function formatFordInventoryResults(input) {
 }
 
 function formatFordVinResults(input) {
-  // console.log(input.data.selected)
-  const v = normalizeJson([input.data.selected], {})[0]
-  // console.log(v)
+  const v = normalizeJson([input.data.selected], fordVinMapping)[0]
+  
+  const needsCurrencyConversion = [
+    'pricingMsrpPricingBase',
+    'pricingMsrpPricingOptions',
+    'pricingInvoice',
+    'vehiclePricingDestinationDeliveryCharge'
+  ]
+
   const vinFormattedData = {}
   Object.keys(v).forEach(vinKey => {
-    // console.log(vinKey)
     // Map Ford-specific keys to EVFinder-specific keys
-  Object.keys(fordVinMapping).includes(vinKey) ? vinFormattedData[fordVinMapping[vinKey]] = v[vinKey] : null
+    Object.keys(fordVinMapping).includes(vinKey) ? vinFormattedData[fordVinMapping[vinKey]] = v[vinKey] : null
+
+    // Need to format some values to display as dollars
+    needsCurrencyConversion.includes(vinKey) ? vinFormattedData[fordVinMapping[vinKey]] = convertToCurrency(v[vinKey]) : null
   })
-  
+
   // Provide dealer details
   vinFormattedData['Dealer Address'] = `${v['dealerName']}\n${v['dealerDealerAddressStreet1']} ${v['dealerDealerAddressStreet2']} ${v['dealerDealerAddressStreet3']}\n${v['dealerAddressCity']}, ${v['dealerAddressState']} ${v['dealerAddressZipCode']}`
   
   vinFormattedData['Dealer Phone'] = v['dealerDealerPhone']
-  return vinFormattedData
+
+  // Ford exposes dealer installed accessories in nested Objects, dealing with
+  // that here
+  const features = input.data.selected.vehicle.vehicleFeatures
+  Object.keys(features).forEach(key => {
+    // WheelSize desc is a duplicate of another key, so excluding it
+    if (features[key]['displayName'] != null && key != "WheelSize") {
+      vinFormattedData[titleCase(key)] = features[key]['displayName']
+    }
+  })
+
+  return sortObjectByKey(vinFormattedData)
 }
