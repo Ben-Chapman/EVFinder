@@ -59,6 +59,14 @@ export function sortObjectByKey(item) {
   return Object.fromEntries(Object.entries(item).sort())
 }
 
+export function cl(whatToLog) {
+  if (typeof(whatToLog) === 'object' && whatToLog != null) {
+    console.log(JSON.stringify(whatToLog))
+  } else {
+    console.log(whatToLog)
+  }
+}
+
 export function generateUrlQueryParams(item, sliceLength) {
   /**
    * For a given item, generate query parameters. Accepts an object.
