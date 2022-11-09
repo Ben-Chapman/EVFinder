@@ -30,6 +30,7 @@
           :busy="tableBusy"
           :items="this.inventory"
           :fields="this.fields"
+          :sort-by.sync="this.fields.distance"
           :sort-compare="customSort"
           :filter="this.filterSelections"
           @row-clicked="toggleDetails"
