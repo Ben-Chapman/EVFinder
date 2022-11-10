@@ -2,7 +2,6 @@ import json
 import math
 import requests
 
-from datetime import datetime
 from flask import Blueprint, request
 
 from libs.libs import send_response, send_error_response, validate_request
