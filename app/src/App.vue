@@ -29,7 +29,7 @@ import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
 
-import getHeroImage from './helpers/hero'
+import getHeroImage from './helpers/heroImages'
 
 console.log(`
 The EVFinder release version ${version}
