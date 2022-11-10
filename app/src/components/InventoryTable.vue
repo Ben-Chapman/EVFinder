@@ -30,6 +30,7 @@
           :busy="tableBusy"
           :items="this.inventory"
           :fields="this.fields"
+          :sort-by.sync="this.fields.distance"
           :sort-compare="customSort"
           :filter="this.filterSelections"
           @row-clicked="toggleDetails"
@@ -49,25 +50,30 @@
           
           <!-- Dealer Information for Mobile Devices. Displays dealer name only-->
           <template #cell(dealer-name-only)="data">
+            <div v-if="data.item.dealerUrl">
             <b-link
               :href="`https://${data.item.dealerUrl}`"
               target="_blank"
               >
                 {{ data.item.dealerName }}
               </b-link>
+            </div>
+            <div v-else>
+              {{ data.item.dealerName }}
+            </div>
           </template>
 
           <!-- Dealer Information for Large Screen Devices.
           Displays Dealer Name - City, State -->
           <template #cell(dealer-name-address)="data">
             <div v-if="data.item.dealerUrl">
-              <b-link
-                :href="`https://${data.item.dealerUrl}`"
-                target="_blank"
-                >
+            <b-link
+              :href="`https://${data.item.dealerUrl}`"
+              target="_blank"
+              >
                 {{ data.item.dealerName }}
               </b-link>
-            </div>
+              </div>
             <div v-else>
               {{ data.item.dealerName }}
             </div>
@@ -149,7 +155,25 @@
                     </b-button>
                   </b-row>
               </div>
-              
+              <!-- Window sticker for Ford -->
+              <div
+                v-if="form.model == 'mache' && 
+                row.item.windowStickerUrl != '' &&
+                !vinTableBusy"
+                >
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(row.item.windowStickerUrl)"
+                      class="mr-2 align-middle rounded"
+                      >
+                      Window Sticker for This Vehicle
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
+                    </b-button>
+                  </b-row>
+              </div>
+                <!-- VIN Detail Section -->
                 <b-list-group
                   horizontal
                   v-for="(item, key) in vinDetail[row.item.vin]" :key=key
@@ -189,10 +213,11 @@
 
   import { convertToCurrency } from '../helpers/libs'
   
+  import { getFordVinDetail } from '../manufacturers/ford'
+  import { getGenesisVinDetail } from '../manufacturers/genesis'
   import { getChevroletVinDetail } from '../manufacturers/chevrolet'
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
-  import { getGenesisVinDetail } from '../manufacturers/genesis'
   import { getVolkswagenVinDetail } from '../manufacturers/volkswagen'
   
   export default {
@@ -218,9 +243,9 @@
         vinTableBusy: false,
 
         fields: [
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
           { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
           { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
           { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
@@ -301,6 +326,26 @@
             this.vinDetail,
             item.vin,
             volkswagenVinData
+            )
+        }
+        else if (this.form.manufacturer.toLowerCase() === "ford") {
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          const fordVinData = await getFordVinDetail(
+            item.dealerSlug,
+            this.form.model,
+            item.vin,
+            item.modelYear,
+            item.dealerPaCode,
+            this.form.zipcode,
+          )
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            fordVinData
             )
         }
 
@@ -424,6 +469,11 @@
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
 
+      // sortVinDetails(vinDetailObject) {
+      //   console.log(vinDetailObject)
+      //   return Object.fromEntries(Object.entries(vinDetailObject).sort())
+      // },
+
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
@@ -432,6 +482,7 @@
         const refreshToken = new Date().toISOString().split('T')[0] // 2022-08-01
         return `https://www.genesis.com/us/en/services/windowsticker?refreshToken=${refreshToken}&vehicleType=new&VIN=${vin}&vehicleModel=${genesisModel}`
       },
+
     }, // methods
     
     computed: {
