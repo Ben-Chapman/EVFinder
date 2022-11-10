@@ -50,7 +50,7 @@ def validate(validation_type, validation_data):
         'GV60',  # Genesis GV60
         'ElectrifiedG80',  # Genesis Electrified G80
         'ID.4', # VW ID.4
-        'mache', # Mustang Mach-E
+        'mache', # Ford Mustang Mach-E
         'Bolt EV', # Chevrolet Bolt EV
         'Bolt EUV', # Chevrolet Bolt EUV
         ]
