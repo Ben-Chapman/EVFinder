@@ -420,6 +420,10 @@
         */
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
+            // Clear any existing inventory from vuex, before fetching anew
+            if (this.inventory.length > 0) {
+              this.updateStore({'inventory': []})
+            }
             this.updateStore({'showTable': true})
             this.getCurrentInventory()
 

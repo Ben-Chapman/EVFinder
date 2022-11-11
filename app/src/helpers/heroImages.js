@@ -1,4 +1,4 @@
-export default function getHeroImage() {
+export function getHeroImage() {
   const heroImages = [
     {
       imageNames: [
@@ -128,4 +128,9 @@ export default function getHeroImage() {
     "title": heroImages[randomVehicle].overlayText,
     "model": heroImages[randomVehicle].modelName
   }
+}
+
+export async function preloadBlurredImage(imageUrl) {
+  var image = new Image();
+  image.src = imageUrl;
 }
