@@ -306,11 +306,11 @@
             this.localForm.model,
             this.localForm.radius,
           )
-          // if (fordInventory[0] === 'ERROR') {
-          //   this.updateStore({'apiErrorDetail': fordInventory})
-          // } else {
+          if (fordInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': fordInventory})
+          } else {
             this.updateStore({'inventory': fordInventory})
-          // }
+          }
         }
 
         this.updateStore({

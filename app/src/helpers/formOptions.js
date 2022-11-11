@@ -1,15 +1,15 @@
 const modelOptions = [
   {
-    label: 'Ford',
-    options: [
-      { value: 'mache', text: 'Mustang Mach-E'},
-    ],
-  },
-  {
   label: 'Chevrolet',
     options: [
       { value: 'Bolt EUV', text: 'Bolt EUV'},
       { value: 'Bolt EV', text: 'Bolt EV'},
+    ],
+  },
+  {
+    label: 'Ford',
+    options: [
+      { value: 'mache', text: 'Mustang Mach-E'},
     ],
   },
   {
