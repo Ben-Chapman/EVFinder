@@ -28,6 +28,7 @@ def validate_request(input_data):
   for k, v in input_data:
     if not validate(k, v):
       is_valid_request = False
+      print(f"\n\nFailed to validate: {k} {v}")
       break
   
   return is_valid_request

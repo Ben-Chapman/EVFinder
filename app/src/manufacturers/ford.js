@@ -47,6 +47,12 @@ export async function getFordVinDetail(dealerSlug, model, vin, year, paCode, zip
 
 
 function formatFordInventoryResults(input) {
+  if (Object.keys(input.data.filterResults).length == 0) {
+    // filterResults is empty when no vehicles are found for a given search
+    // So returning an empty object so the UI displays the no vehicles found message
+    return {}
+  }
+
   // Merging the initial inventory results with any paginated vehicle results
   let vehicles = []
   if ( Object.hasOwn(input, 'rdata') ) {

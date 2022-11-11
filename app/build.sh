@@ -19,19 +19,8 @@ function git_push() {
 cd ./app
 npm install
 
-echo "Updating Browserslist..."
-UPDATE_BROWSERSLIST=$(npx browserslist@latest --update-db --yes)
-
 # Setup git
 configure_git
-
-# Browserslist has been updated
-git status -s | grep 'package-lock.json'
-if [ $? -eq 0 ]; then
-  INSTALLED_VER=$(echo $UPDATE_BROWSERSLIST |grep -i "Installed Version" |awk '{print $3}')
-  LATEST_VER=$(echo $UPDATE_BROWSERSLIST |grep -i "Latest version" |awk '{print $3}')
-  git commit -am "Build: Update Browserslist from ${INSTALLED_VER} to ${LATEST_VER}"
-fi
 
 # Update the NPM package version from the git tag version
 VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.x
@@ -47,12 +36,22 @@ npm run build
 
 if [ $? -eq 0 ]; then
   # App build was successful, so deploy to GCS
-  gsutil -m -h "Cache-Control:public max-age=3600" cp -r /workspace/dist/* gs://${_APP_BUCKET_NAME}
+  # -z applies gzip compression to files with an extension matching the defined list
+  gsutil -m -h "Cache-Control:public max-age=3600" \
+  cp -r -z html,js,css,scss,xml,svg \
+  /workspace/dist/* \
+  gs://${_APP_BUCKET_NAME}
   
   # Don't cache index.html
   echo -e "\nSetting no-cache on index.html..."
   gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}/index.html
   RETVAL=$?
+
+  # gsutil cp does not provide a way to exclude files from upload, so performing a
+  # second operation to remove the hero images sources, as they're not publically
+  # accessed
+  echo -e "\nRemoving hero images source images..."
+  gsutil -m rm -r gs://${_APP_BUCKET_NAME}/hero_images/src
 fi
 
 exit $RETVAL

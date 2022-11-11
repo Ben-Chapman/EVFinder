@@ -469,11 +469,6 @@
         return this.priceStringToNumber(rowRecord.price) < selectedPrice
       },
 
-      // sortVinDetails(vinDetailObject) {
-      //   console.log(vinDetailObject)
-      //   return Object.fromEntries(Object.entries(vinDetailObject).sort())
-      // },
-
       hasHyundaiVinDetail(item) {
         return (has(item, 'DI') && has(item['DI'], 'DealerVDPURL'))
       },
