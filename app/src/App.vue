@@ -29,7 +29,7 @@ import Footer from './components/Footer.vue'
 import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
 
-import getHeroImage from './helpers/heroImages'
+import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
 
 console.log(`
 The EVFinder release version ${version}
@@ -84,6 +84,18 @@ export default {
       this.$plausible.trackEvent(
         'Display Dimensions', {props: {dimensions: `${width}x${height}`}}
       )
+
+      /**
+       * Finally, prefetch the blurred background image, which will be swapped in when
+       * the user performs an inventory search. This helps to ensure the we can swap into
+       * the blurred image smoothly, without waiting for it to download at search time.
+       * Using the load event to fetch this image after the entire page has loaded.
+       */
+      window.addEventListener('load', () => {
+        preloadBlurredImage(this.heroImage["blurredImageUrl"])
+      })
+
+      
   },  // mounted
 
   computed: {
@@ -134,6 +146,7 @@ export default {
          * image for the blurred variant. This blurred variant is now an out
          * of focus (literally and figuratively) element on the page.
          */
+        this.transition = ".3s background ease"
         this.heroImage["imageUrl"] = this.heroImage["blurredImageUrl"]
       }
   },  // watch
