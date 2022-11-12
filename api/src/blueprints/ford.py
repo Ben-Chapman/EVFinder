@@ -36,7 +36,15 @@ def main():
         "segment": "Crossover",
         "zipcode": request_args["zip_code"],
     }
-
+    # Ford apparently does not support radius searches > 500 miles. For now, returning
+    # an error message to users who attempt a search radius > 500  miles.
+    # TODO: Deal with this in the UI, with better info messaging
+    if int(request_args['radius']) > 500:
+        return send_error_response(
+            error_message="Retry your request with a radius between 1 and 500 miles.",
+            error_data="",
+            status_code=400
+        )
     # Retrieve the dealer slug, which is needed for the inventory API call
     if validate_request(request_args.items()):
         slug = get_dealer_slug(headers, common_params)
@@ -67,7 +75,13 @@ def main():
         # Add the dealer_slug to the response, the frontend will need this for future
         # API calls
         inv["dealerSlug"] = slug
-
+        try:
+            inv["data"]["filterResults"]
+        except TypeError:
+            return send_error_response(
+                error_message=f"An error occurred with the Ford API: {inv['errorMessage']}",
+                error_data=inv['errorMessage']
+            )
         try:
             total_count = inv["data"]["filterResults"]["ExactMatch"]["totalCount"]
             if total_count > 12:
@@ -92,9 +106,7 @@ def main():
                     content_type="application/json",
                     cache_control_age=3600,
                 )
-            # else:
-                
-        except KeyError as e:
+        except TypeError as e:
             print(f"No pagination for Inventory call: {e}")
 
         return send_response(
@@ -132,7 +144,7 @@ def get_vin_detail():
             headers=headers,
             params=vin_params,
             timeout=(3.05, 15.05),
-            verify=False,
+            verify=False
         )
         vin_data.raise_for_status()
     except Exception as e:
