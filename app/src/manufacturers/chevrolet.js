@@ -1,7 +1,8 @@
 import { convertToCurrency, titleCase } from "../helpers/libs"
 import { chevroletInventoryMapping, chevroletVinMapping } from "./chevroletMappings"
 
-const apiBase = 'https://api.theevfinder.com'
+// const apiBase = 'https://chevfix---api-rylxnyu4dq-uc.a.run.app/'
+const apiBase = 'http://localhost:8081'
 
 /**
  * Fetches vehicle inventory from the manufacturer's API.
@@ -80,7 +81,19 @@ function formatChevroletInventoryResults(input) {
         _vehicle[key] = enhancedResult[key]
       }
     })
+    
+    // Some inventory is marked as "Temporarily Unavailable", which is exposed through
+    // a recall key, and not vehicleAvailabilityStatus. Dealing with that here
+    if (vehicle.recall) {
+      _vehicle['deliveryDate'] = vehicle.recall?.displayStatus
+     }
+    
+     // Populate inventoryStatus which is exposed as the Availability filter
+    _vehicle['inventoryStatus'] = _vehicle['deliveryDate']
+
     results.push(_vehicle)
+
+    
   })
   return results
 }
@@ -110,14 +123,14 @@ export async function getChevroletVinDetail(vin) {
     'dealerName': vinData.data.dealer?.name,
     'dealerPostalCode': vinData.data.dealer?.postalCode,
     'totalVehiclePrice': convertToCurrency(
-      vinData.data.prices?.summary.find(item => item.type == 'total_vehicle_price').value.toString()
+      vinData.data.prices?.summary.find(item => item.type == 'total_vehicle_price').value.toString() ?? '0'
     ),
     'trimName': vinData.data.trim?.name,
     'extColorOptionCode': vinData.data.extColor?.optionCode,
     'extColorDescription': vinData.data.extColor?.description,
     'intColorOptionCode': vinData.data.intColor?.optionCode,
     'intColorDescription': vinData.data.intColor?.description,
-    'epaElectricRange': vinData.data.keyFeatures.find(item => item.iconKey == 'icon-epa-electric-range').value.match(/\d+ miles/i)[0] ?? '',
+    'epaElectricRange': vinData.data.keyFeatures.find(item => item.iconKey == 'icon-epa-electric-range')?.value.match(/\d+ miles/i)[0] ?? 'Unavailable',
   }
 
   Object.keys(enhancedResult).forEach(vinKey => {
