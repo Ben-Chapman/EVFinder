@@ -1,8 +1,7 @@
 import { convertToCurrency, titleCase } from "../helpers/libs"
 import { chevroletInventoryMapping, chevroletVinMapping } from "./chevroletMappings"
 
-// const apiBase = 'https://chevfix---api-rylxnyu4dq-uc.a.run.app/'
-const apiBase = 'http://localhost:8081'
+const apiBase = 'https://api.theevfinder.com'
 
 /**
  * Fetches vehicle inventory from the manufacturer's API.
