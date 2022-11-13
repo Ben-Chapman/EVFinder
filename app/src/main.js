@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueHead from 'vue-head'
 import { VuePlausible } from 'vue-plausible'
 
 import App from './App.vue'
@@ -70,8 +69,6 @@ Vue.component('BIconGithub', BIconGithub)
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-Vue.use(VueHead)
 
 Vue.use(VuePlausible, {
   domain: 'theevfinder.com',
