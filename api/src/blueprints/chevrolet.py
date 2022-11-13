@@ -50,7 +50,16 @@ def get_chevrolet_inventory():
         'values': [params['zip']],
         'key': 'zipcode',
       },
-    ]
+    ],
+    "sort": [
+    {
+      "field": "distance",
+      "order": "ASC"
+    }
+  ],
+   "pageInfo": {
+    "rows": 1000
+  },
   }
 
   if validate_request(params.items()):
