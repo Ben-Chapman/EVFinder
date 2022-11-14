@@ -4,10 +4,12 @@
 
 name: Percy Visual Testing
 on:
+  workflow_dispatch:
   pull_request:
     branches:
     - main
-  workflow_dispatch:
+    paths:
+      - 'app/**'
 
 jobs:
   build-and-run-vue-app:
