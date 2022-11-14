@@ -23,6 +23,6 @@ jobs:
         uses: py-actions/flake8@v2
         with:
           path: "api"
-          args: "--config=.flake8"
+          args: "--config=${{ github.workspace }}/api/.flake8"
           plugins: "flake8-bugbear flake8-black"
      
