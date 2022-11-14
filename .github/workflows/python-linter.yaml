@@ -1,11 +1,13 @@
 name: flake8 Lint
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'api/**.py'
   pull_request:
     paths:
       - 'api/**.py'
+
 jobs:
   flake8-lint:
     runs-on: ubuntu-latest
