@@ -25,7 +25,6 @@
     "terser": ">=4.8.1",
     "url-parse": ">=1.5.9",
     "vue": "^2.6.14",
-    "vue-head": "^2.2.0",
     "vue-plausible": "^1.3.2",
     "vue-router": "3.5.3",
     "vuex": "^3.6.2"

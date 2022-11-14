@@ -150,13 +150,6 @@ export default {
         this.heroImage["imageUrl"] = this.heroImage["blurredImageUrl"]
       }
   },  // watch
-
-  // Vue.head config here
-  head: {
-    title: {
-      inner: 'EV Finder'
-    },
-  }
 }
 </script>
 
