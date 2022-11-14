@@ -65,7 +65,6 @@ Vue.component('BIconInfoCircle', BIconInfoCircle)
 Vue.component('BIconPhoneLandscape', BIconPhoneLandscape)
 Vue.component('BIconGithub', BIconGithub)
 
-
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
