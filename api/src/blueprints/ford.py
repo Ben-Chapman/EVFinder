@@ -39,21 +39,22 @@ def main():
     # Ford apparently does not support radius searches > 500 miles. For now, returning
     # an error message to users who attempt a search radius > 500  miles.
     # TODO: Deal with this in the UI, with better info messaging
-    if int(request_args['radius']) > 500:
+    if int(request_args["radius"]) > 500:
         return send_error_response(
             error_message="Retry your request with a radius between 1 and 500 miles.",
             error_data="",
-            status_code=400
+            status_code=400,
         )
     # Retrieve the dealer slug, which is needed for the inventory API call
     if validate_request(request_args.items()):
         slug = get_dealer_slug(headers, common_params)
-        if 'ERROR' in slug:
+        if "ERROR" in slug:
             error_message = f"An error occurred with the Ford API. Try adjusting your search parameters."
             return send_error_response(
                 error_message=error_message,
                 error_data="",
-                status_code=slug.split(':')[1])
+                status_code=slug.split(":")[1],
+            )
     else:
         # Request could not be validated
         return send_error_response(
@@ -80,7 +81,7 @@ def main():
         except TypeError:
             return send_error_response(
                 error_message=f"An error occurred with the Ford API: {inv['errorMessage']}",
-                error_data=inv['errorMessage']
+                error_data=inv["errorMessage"],
             )
         try:
             total_count = inv["data"]["filterResults"]["ExactMatch"]["totalCount"]
@@ -113,7 +114,7 @@ def main():
             response_data=json.dumps(inv),
             content_type="application/json",
             cache_control_age=3600,
-            )
+        )
 
 
 @ford.route("/api/vin/ford", methods=["GET"])
@@ -144,7 +145,7 @@ def get_vin_detail():
             headers=headers,
             params=vin_params,
             timeout=(3.05, 15.05),
-            verify=False
+            verify=False,
         )
         vin_data.raise_for_status()
     except Exception as e:
@@ -171,6 +172,7 @@ def get_ford_inventory(headers, params):
 
     return inventory.json()
 
+
 def get_dealer_slug(headers, params):
     dealers_url = f"https://shop.ford.com/aemservices/cache/inventory/dealer/dealers"
 
@@ -186,5 +188,8 @@ def get_dealer_slug(headers, params):
         return f"ERROR: {dealers.status_code}"
     else:
         dealers = dealers.json()
-        if dealers["status"].lower() == "success" and len(dealers["data"]["Response"]) > 0:
+        if (
+            dealers["status"].lower() == "success"
+            and len(dealers["data"]["Response"]) > 0
+        ):
             return dealers["data"]["firstFDDealerSlug"]
