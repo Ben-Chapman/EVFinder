@@ -1,15 +1,5 @@
 -r requirements.txt
 
 flake8==5.0.4
-google-api-core==2.8.1
-google-auth==2.6.6
-google-cloud-appengine-logging==1.1.1
-google-cloud-audit-log==0.2.2
-google-cloud-core==2.3.0
-google-cloud-logging==3.1.1
-googleapis-common-protos==1.56.2
-grpc-google-iam-v1==0.12.4
-grpcio==1.46.3
-grpcio-status==1.46.3
-pre-commit==2.20.0
 flake8-bugbear==22.10.27
+pre-commit==2.20.0
