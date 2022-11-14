@@ -107,7 +107,7 @@ def get_chevrolet_details():
 
     status_text = data.get("status")
     if status_text and status_text != "success":
-        error_message = f"An error occurred with the Chevrolet API when fetching VIN details for {vin}"
+        error_message = f"An error occurred with the Chevrolet API when fetching VIN details for {vin}"  # noqa: B950
         return send_error_response(error_message=error_message, error_data=data)
     return send_response(
         response_data=data, content_type="application/json", cache_control_age=3600

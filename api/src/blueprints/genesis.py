@@ -25,7 +25,7 @@ def get_genesis_inventory():
     # We'll use the requesting UA to make the request to the Genesis APIs
     user_agent = request.headers["User-Agent"]
 
-    inventory_url = f"https://www.genesis.com/content/genesis/us/en/services/newinventory.js/model/{model}/type/inventory/refreshToken/{refresh_token}.js"
+    inventory_url = f"https://www.genesis.com/content/genesis/us/en/services/newinventory.js/model/{model}/type/inventory/refreshToken/{refresh_token}.js"  # noqa: B950
 
     params = {
         "zip": zip_code,
@@ -36,7 +36,7 @@ def get_genesis_inventory():
 
     headers = {
         "User-Agent": user_agent,
-        "referer": f"https://www.genesis.com/us/en/new/inventory/results/year/{year}/model/{model.upper()}/zip/{zip_code}",
+        "referer": f"https://www.genesis.com/us/en/new/inventory/results/year/{year}/model/{model.upper()}/zip/{zip_code}",  # noqa: B950
     }
 
     if validate_request(params.items()):
@@ -80,7 +80,7 @@ def get_genesis_dealers():
 
     # Genesis seems to limit the number of returned results not to the noOfResults param
     # but rather a distance of <=2000 miles from the origin zip code.
-    dealer_url = f"https://www.genesis.com/content/genesis/us/en/services/dealerservice.js?countryCode=en-US&vehicleName=gOther&zipCode={zip_code}&noOfResults=300&servicetype=new&year={year}&refreshToken={refresh_token}"
+    dealer_url = f"https://www.genesis.com/content/genesis/us/en/services/dealerservice.js?countryCode=en-US&vehicleName=gOther&zipCode={zip_code}&noOfResults=300&servicetype=new&year={year}&refreshToken={refresh_token}"  # noqa: B950
 
     params = {
         "zip": zip_code,
@@ -91,7 +91,7 @@ def get_genesis_dealers():
 
     headers = {
         "User-Agent": user_agent,
-        "referer": f"https://www.genesis.com/us/en/new/inventory/results/year/{year}/model/{model.upper()}/zip/{zip_code}",
+        "referer": f"https://www.genesis.com/us/en/new/inventory/results/year/{year}/model/{model.upper()}/zip/{zip_code}",  # noqa: B950
     }
 
     if validate_request(params.items()):

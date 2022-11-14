@@ -49,7 +49,10 @@ def main():
     if validate_request(request_args.items()):
         slug = get_dealer_slug(headers, common_params)
         if "ERROR" in slug:
-            error_message = f"An error occurred with the Ford API. Try adjusting your search parameters."
+            error_message = (
+                "An error occurred with the Ford API. "
+                "Try adjusting your search parameters."
+            )
             return send_error_response(
                 error_message=error_message,
                 error_data="",
@@ -123,7 +126,11 @@ def get_vin_detail():
 
     headers = {
         # 'User-Agent': request.headers['User-Agent'],  # Use the requesting UA
-        "Referer": f"https://shop.ford.com/inventory/mach-e/results?zipcode={request.args['zip']}&Radius=20&year={request.args['year']}&Order=Distance"
+        "Referer": (
+            f"https://shop.ford.com/inventory/mach-e/results?"
+            f"zipcode={request.args['zip']}&Radius=20&year={request.args['year']}"
+            f"&Order=Distance"
+        )
     }
 
     vin_params = {
@@ -160,7 +167,7 @@ def get_vin_detail():
 
 
 def get_ford_inventory(headers, params):
-    inventory_url = f"https://shop.ford.com/aemservices/cache/inventory/dealer-lot"
+    inventory_url = "https://shop.ford.com/aemservices/cache/inventory/dealer-lot"
 
     inventory = s.get(
         url=inventory_url,
@@ -174,7 +181,7 @@ def get_ford_inventory(headers, params):
 
 
 def get_dealer_slug(headers, params):
-    dealers_url = f"https://shop.ford.com/aemservices/cache/inventory/dealer/dealers"
+    dealers_url = "https://shop.ford.com/aemservices/cache/inventory/dealer/dealers"
 
     dealers = s.get(
         url=dealers_url,

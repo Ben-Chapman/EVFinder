@@ -3,7 +3,7 @@ import os
 
 import google.cloud.logging
 
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, request
 from flask_cors import CORS
 
 from blueprints.ford import ford
@@ -51,8 +51,7 @@ client.setup_logging()
 # import logging
 # logging.getLogger('flask_cors').level = logging.DEBUG
 
-# Ensure we only serve traffic sourced from Cloudflare
-# This will run for all routes in this app
+
 @app.before_request
 def validate_source():
     """Validating that the requestor is Cloudflare through the validation of a
@@ -66,7 +65,8 @@ def validate_source():
             request.headers[clouflare_auth]
         except KeyError:
             logging.info(
-                f"Non-Cloudflare Request: {request.remote_addr}, {request.user_agent}, {request.url}"
+                f"Non-Cloudflare Request: "
+                f"{request.remote_addr}, {request.user_agent}, {request.url}"
             )
             return send_error_response(
                 error_message="The request could not be validated",

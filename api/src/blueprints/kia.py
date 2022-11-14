@@ -39,7 +39,10 @@ def get_kia_inventory():
 
     headers = {
         "User-Agent": user_agent,
-        "Referer": f"https://www.kia.com/us/en/inventory/result?zipCode={zip_code}&seriesId={model}&year={year}",
+        "Referer": (
+            f"https://www.kia.com/us/en/inventory/result?zipCode={zip_code}"
+            f"&seriesId={model}&year={year}"
+        ),
     }
 
     if validate_request(params.items()):

@@ -1,6 +1,5 @@
 from api.src.libs.libs import validate_request
 import pytest
-import requests
 
 
 @pytest.mark.parametrize(

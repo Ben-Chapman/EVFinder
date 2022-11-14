@@ -22,7 +22,10 @@ def get_hyundai_window_sticker():
 
     headers = {
         "User-Agent": user_agent,
-        "Referer": f"https://www.hyundaiusa.com/us/en/inventory-search/details?model={model}&year={year}&vin={vin}",
+        "Referer": (
+            f"https://www.hyundaiusa.com/us/en/inventory-search/details?"
+            f"model={model}&year={year}&vin={vin}"
+        ),
     }
 
     params = {

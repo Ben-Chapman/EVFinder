@@ -1,7 +1,7 @@
 import json
 import logging
 from tokenize import String
-from flask import jsonify, make_response
+from flask import make_response
 
 
 def send_response(response_data, content_type, cache_control_age, status_code=200):
@@ -60,13 +60,12 @@ def validate(validation_type, validation_data):
         "Bolt EUV",  # Chevrolet Bolt EUV
     ]
     valid_radii = [1, 999]
-    valid_vins = []
 
     if "zip" in validation_type:  # Capture variations of "zip code"
         # Can zip be cast to an int?
         try:
             int(validation_data)
-        except ValueError as e:
+        except ValueError:
             return False
 
         # Zip too short
@@ -89,7 +88,7 @@ def validate(validation_type, validation_data):
         # Can radius be cast to an int?
         try:
             int(validation_data)
-        except ValueError as e:
+        except ValueError:
             return False
 
         # Is radius within valid_radii?

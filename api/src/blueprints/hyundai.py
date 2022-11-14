@@ -1,7 +1,4 @@
-from distutils.log import error
-from os import stat
-from tempfile import TemporaryFile
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 
 from libs.libs import (
     flatten_api_results,
@@ -12,10 +9,8 @@ from libs.libs import (
 from libs.http import get
 
 hyundai = Blueprint(name="hyundai", import_name=__name__)
-import requests
 
 
-@hyundai.route("/api/inventory", methods=["GET"])
 @hyundai.route("/api/inventory/hyundai", methods=["GET"])
 def get_inventory():
     request_args = request.args
@@ -42,11 +37,10 @@ def get_inventory():
     }
 
     if validate_request(params.items()):
-        # g = requests.get(url=api_url, params=params, headers=headers)
         # Make a call to the Hyundai API
         g = get(url=api_url, query_params=params, request_headers=headers)
         data = g.json()
-        # Ensure the reponse back from the API has some status, indicating a successful
+        # Ensure the response back from the API has some status, indicating a successful
         # API call
         try:
             data["status"]

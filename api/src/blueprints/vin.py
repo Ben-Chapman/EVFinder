@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 
 from libs.libs import send_error_response, send_response
 
@@ -16,7 +16,7 @@ def get_vin_details():
     vin = request_args["vin"]
 
     # Fetches data from the Hyundai API
-    api_url = "https://www.hyundaiusa.com/var/hyundai/services/inventory/vehicleDetails.vin.json"
+    api_url = "https://www.hyundaiusa.com/var/hyundai/services/inventory/vehicleDetails.vin.json"  # noqa: B950
     params = {
         "model": model,
         "year": year,
@@ -29,7 +29,10 @@ def get_vin_details():
     headers = {
         "authority": "www.hyundaiusa.com",
         "User-Agent": user_agent,
-        "referer": f"https://www.hyundaiusa.com/us/en/inventory-search/details?model={model.capitalize()}&year={year}&vin={vin}",
+        "referer": (
+            f"https://www.hyundaiusa.com/us/en/inventory-search/details?"
+            f"model={model.capitalize()}&year={year}&vin={vin}"
+        ),
     }
 
     g = get(url=api_url, query_params=params, request_headers=headers)
