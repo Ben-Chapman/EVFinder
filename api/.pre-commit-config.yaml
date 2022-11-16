@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pycqa/flake8
+    rev: 5.0.4
+    hooks:
+    - id: flake8
+      name: Run Flake8
+      additional_dependencies: [flake8-bugbear]
+      args: [--config, api/.flake8]
+      language: python
+
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        name: Black Code Formatting
+        language_version: python3.10
+        language: python
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+    - id: trailing-whitespace
+      name: Remove trailing whitespace
+      args: [--markdown-linebreak-ext=md]
+
+    - id: end-of-file-fixer
+      name: Enforce newline at end of file
+
+    - id: detect-private-key
+      name: Detect private keys
