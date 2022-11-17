@@ -1,21 +1,13 @@
 import pytest
 import requests
-import vcr
 from faker import Faker
 
-
-vcr = vcr.VCR(
-    cassette_library_dir="tests/cassettes",
-    record_mode="once",
-)
+from .vcr import program_vcr
 
 
-def get_name(input):
-    return input
+vcr = program_vcr()
 
 
-# @pytest.mark.parametrize("m", ["Bolt EV", "Bolt EUV"])
-# class TestChevroletInventory:
 @pytest.fixture(name="test_cassette", params=["Bolt EV", "Bolt EUV"])
 def _test_cassette(request):
     fake = Faker()
@@ -63,3 +55,8 @@ def test_chevrolet_inventory_has_vehicles(test_cassette):
         "No inventory found in API response. "
         f"It was: {test_cassette.json()['data']['listResponse']}"
     )
+
+
+def test_chevrolet_vin():
+    # Placeholder for now
+    pass
