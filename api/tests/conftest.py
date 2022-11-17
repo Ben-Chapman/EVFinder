@@ -1,4 +1,3 @@
-# flake8: noqa
 import os
 import pytest
 import subprocess
@@ -10,7 +9,7 @@ def start_web_server():
     # https://til.simonwillison.net/pytest/subprocess-server
     cwd = os.getcwd()
     if "api" not in cwd.split("/")[-1]:
-        print(f"Test initialization failed. cd to EVFinder/api and retry.")
+        print("Test initialization failed. cd to EVFinder/api and retry.")
 
     web_server = subprocess.Popen(
         ["python3", f"{cwd}/src/run.py"],
