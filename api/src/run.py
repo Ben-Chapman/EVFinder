@@ -1,3 +1,4 @@
+# flake8: noqa
 import os
 import signal
 import sys
@@ -9,8 +10,8 @@ def signal_handler(sig, frame):
 
 
 if __name__ == "__main__":
-    os.environ["SSL_CERT_FILE"] = os.path.expanduser("~/.proxyman/proxyman-ca.pem")
-    os.environ["REQUESTS_CA_BUNDLE"] = os.path.expanduser("~/.proxyman/proxyman-ca.pem")
+    #    os.environ["SSL_CERT_FILE"] = os.path.expanduser("~/.proxyman/proxyman-ca.pem")
+    #    os.environ["REQUESTS_CA_BUNDLE"] = os.path.expanduser("~/.proxyman/proxyman-ca.pem")
 
     signal.signal(signal.SIGINT, signal_handler)
 
