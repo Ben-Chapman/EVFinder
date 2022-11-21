@@ -16,7 +16,7 @@ def start_web_server():
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
-    time.sleep(3)  # Allow time for the Flask server to startup
+    time.sleep(2)  # Allow time for the Flask server to startup
     yield web_server
 
     print("Terminating Web Server")

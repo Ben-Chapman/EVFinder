@@ -1,3 +1,4 @@
+import urllib
 from flask import Blueprint, request
 
 from libs.libs import (
@@ -20,6 +21,7 @@ def get_inventory():
     model = request_args["model"]
     radius = request_args["radius"]
 
+    print(f"\n\n\n---{model}---\n\n\n")
     # We'll use the requesting UA to make the request to the Hyundai APIs
     user_agent = request.headers["User-Agent"]
     api_url = (
@@ -34,12 +36,17 @@ def get_inventory():
     headers = {
         "User-Agent": user_agent,
         "referer": "https://www.hyundaiusa.com/us/en/vehicles",
+        "Content-Type": "application/json",
     }
 
     if validate_request(params.items()):
         # Make a call to the Hyundai API
+        # Force %20 encoding for the spaces in the model names, instead of the + default
+        params = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
+
         g = get(url=api_url, query_params=params, request_headers=headers)
         data = g.json()
+        print(f"\n\n\n---{g.request.url}---\n\n\n")
         # Ensure the response back from the API has some status, indicating a successful
         # API call
         try:

@@ -44,17 +44,26 @@ def test_volkswagen_inventory_response_is_json(test_cassette):
         pytest.fail(f"API response is not valid JSON. It was: {test_cassette.text}")
 
 
-def test_volkswagen_inventory_contains_success(test_cassette):
-    assert (
-        "success" in test_cassette.json()["status"]
-    ), f"'success' not found in API response. It was: {test_cassette.json()['status']}"
-
-
 def test_volkswagen_inventory_has_vehicles(test_cassette):
-    assert len(test_cassette.json()["data"]["listResponse"]) > 0, (
+    try:
+        inventory = test_cassette.json()["data"]["inventory"]["vehicles"]
+    except KeyError:
+        print(f"Inventory key not found: {test_cassette.json()}")
+    assert len(inventory) > 0, (
         "No inventory found in API response. "
         f"It was: {test_cassette.json()['data']['listResponse']}"
     )
+
+
+def test_volkswagen_inventory_reported_count_matches_inventory(test_cassette):
+    """
+    The VW API provides a totalVehicles element, with the number of vehicles found.
+    Ensuring that value matches the count of vehicles actually returned from the API
+    """
+    inventory = test_cassette.json()
+    assert int(inventory["data"]["inventory"]["totalVehicles"]) == len(
+        inventory["data"]["inventory"]["vehicles"]
+    ), "Volkswagen totalVehicles does not match the number of vehicles returned from the API"
 
 
 def test_volkswagen_vin():

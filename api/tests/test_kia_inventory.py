@@ -8,7 +8,7 @@ from .vcr import program_vcr
 vcr = program_vcr()
 
 
-@pytest.fixture(name="test_cassette", params=["N", "F", "V", "T", "R"])
+@pytest.fixture(name="test_cassette", params=["N", "V"])
 def _test_cassette(request):
     fake = Faker()
     api_base = "http://localhost:8081"
@@ -44,17 +44,25 @@ def test_kia_inventory_response_is_json(test_cassette):
         pytest.fail(f"API response is not valid JSON. It was: {test_cassette.text}")
 
 
-def test_kia_inventory_contains_success(test_cassette):
-    assert (
-        "success" in test_cassette.json()["status"]
-    ), f"'success' not found in API response. It was: {test_cassette.json()['status']}"
-
-
 def test_kia_inventory_has_vehicles(test_cassette):
-    assert len(test_cassette.json()["data"]["listResponse"]) > 0, (
-        "No inventory found in API response. "
-        f"It was: {test_cassette.json()['data']['listResponse']}"
+    try:
+        test_cassette.json()["inventoryVehicles"]
+    except KeyError as e:
+        print(f"\nMissing Key for {test_cassette}: {e}\n{test_cassette.json()}")
+    assert len(test_cassette.json()["inventoryVehicles"]) > 0, (
+        "No inventory found in API response. " f"It was: {test_cassette}"
     )
+
+
+def test_kia_inventory_reported_count_matches_inventory(test_cassette):
+    """
+    The Kia API provides a vehicleCount element, with the number of vehicles found.
+    Ensuring that value matches the count of vehicles actually returned from the API
+    """
+    inventory = test_cassette.json()
+    assert int(inventory["vehicleCount"]) == len(
+        inventory["inventoryVehicles"]
+    ), "Kia vehicleCount does not match the number of vehicles returned from the API"
 
 
 def test_kia_vin():

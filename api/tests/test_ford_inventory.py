@@ -8,7 +8,7 @@ from .vcr import program_vcr
 vcr = program_vcr()
 
 
-@pytest.fixture(name="test_cassette", params=["mache"])
+@pytest.fixture(name="test_cassette", params=["mache"], autouse=True)
 def _test_cassette(request):
     fake = Faker()
     api_base = "http://localhost:8081"
@@ -50,11 +50,45 @@ def test_ford_inventory_contains_success(test_cassette):
     ), f"'success' not found in API response. It was: {test_cassette.json()['status']}"
 
 
+def test_ford_inventory_contains_dealerSlug(test_cassette):
+    """
+    dealerSlug is a hash that the Ford API provides, and is needed for all inventory API
+    calls. It's a string, and appears to be a 64-bit value
+    """
+    dealer_slug = test_cassette.json()["dealerSlug"]
+
+    assert (
+        type(dealer_slug) == str and len(dealer_slug) > 30
+    ), f"No dealer slug was found, or the dealer slug appears to be invalid: {dealer_slug}"
+
+
 def test_ford_inventory_has_vehicles(test_cassette):
-    assert len(test_cassette.json()["data"]["listResponse"]) > 0, (
-        "No inventory found in API response. "
-        f"It was: {test_cassette.json()['data']['listResponse']}"
+    inventory = test_cassette.json()["data"]["filterResults"]["ExactMatch"]["vehicles"]
+
+    assert len(inventory) > 0, (
+        "No inventory found in API response. " f"It was: {test_cassette.json()}"
     )
+
+
+def test_ford_inventory_should_have_paged_inventory_data(test_cassette):
+    """
+    The Ford API provides an initial inventory response of max(12) vehicles for any
+    given search radius. The EVFinder API will make a second API call to get the remaining
+    inventory if needed. Validating the remaining inventory is present in the API response
+    and the inventory count provided by Ford matches the sum of the vehicles array
+    """
+    initial_inventory = test_cassette.json()["data"]["filterResults"]["ExactMatch"][
+        "vehicles"
+    ]
+    if len(initial_inventory) == 12:
+        remaining_inventory = test_cassette.json()["rdata"]["filterResults"][
+            "ExactMatch"
+        ]["vehicles"]
+        assert (
+            len(remaining_inventory) >= 1
+            and (len(initial_inventory) + len(remaining_inventory))
+            == test_cassette.json()["data"]["filterResults"]["ExactMatch"]["totalCount"]
+        )
 
 
 def test_ford_vin():
