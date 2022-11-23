@@ -234,7 +234,6 @@
         if (this.apiErrorDetail.length > 0) {
           this.updateStore({'apiErrorDetail': []})
         }
-        console.log(this.localForm.manufacturer)
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
           const kiaInventory = await getKiaInventory(
             this.localForm.zipcode,
@@ -314,7 +313,6 @@
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'audi') {
-          console.log('audi here')
           const audiInventory = await getAudiInventory(
             this.localForm.zipcode,
             this.localForm.year,
