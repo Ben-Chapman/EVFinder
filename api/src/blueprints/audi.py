@@ -14,7 +14,7 @@ api_url = "https://prod.aoaaudinagateway.svc.audiusa.io/graphql"
 def get_audi_inventory():
     request_args = request.args
 
-    # geo = request_args["geo"]
+    geo = request_args["geo"]
     year = request_args["year"]
     model = request_args["model"]
     radius = request_args["radius"]
@@ -23,7 +23,6 @@ def get_audi_inventory():
     user_agent = request.headers["User-Agent"]
 
     params = {
-        # "geo": geo,
         "year": year,
         "model": model,
         "radius": radius,
@@ -40,7 +39,7 @@ def get_audi_inventory():
             "filters": (
                 "available-from.immediately,"
                 "available-from.soon,"
-                f"geo:34.09502677426613_-118.39972467568994_{radius}_miles_defaultcity,"
+                f"geo:{geo}_{radius}_miles_defaultcity,"
                 f"model-group-range.{model},"
                 "vtp-drivetrain.electrical,"
                 f"model-year.{year}"
