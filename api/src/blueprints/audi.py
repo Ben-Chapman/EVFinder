@@ -49,7 +49,7 @@ def get_audi_inventory():
             "offset": 0,
             "preset": "foreign-brand.no,sold-order.no",
         },
-        "query": "query getFilteredVehiclesForWormwood($version: String, $market: [MarketType]!, $limit: Int, $lang: String!, $filters: String, $sort: String, $offset: Int, $preset: String) {\n  getFilteredVehiclesForWormwood(\n    version: $version\n    market: $market\n    size: $limit\n    lang: $lang\n    filters: $filters\n    sort: $sort\n    from: $offset\n    preset: $preset\n  ) {\n    filterResults {\n      totalCount\n      totalNewCarCount\n      totalUsedCarCount\n      available_from_soon\n      available_from_immediately\n      has_warranties_yes\n      has_warranties_no\n      __typename\n    }\n    vehicles {\n      id\n      interiorColor\n      exteriorColor\n      modelID\n      modelYear\n      modelCode\n      modelName\n      modelPrice\n      modelPowerkW\n      modelMileage\n      audiCode\n      stockNumber\n      trimName\n      kvpsSyncId\n      dealerName\n      dealerRegion\n      vehicleType\n      warrantyType\n      modelImageFromScs\n      isAvailableNow\n      vin\n      bodyType\n      saleOrderType\n      vehicleInventoryType\n      vehicleOrderStatus\n      driveType\n      gearType\n      distanceFromUser\n      __typename\n    }\n    __typename\n  }\n}\n",  # noqa: B950
+        "query": "query getFilteredVehiclesForWormwood($version: String, $market: [MarketType]!, $limit: Int, $lang: String!, $filters: String, $sort: String, $offset: Int, $preset: String) { getFilteredVehiclesForWormwood( version: $version market: $market size: $limit lang: $lang filters: $filters sort: $sort from: $offset preset: $preset ) { filterResults { totalCount totalNewCarCount totalUsedCarCount available_from_soon available_from_immediately has_warranties_yes has_warranties_no __typename } vehicles { id interiorColor exteriorColor modelID modelYear modelCode modelName modelPrice modelPowerkW modelMileage audiCode stockNumber trimName kvpsSyncId dealerName dealerRegion vehicleType warrantyType modelImageFromScs isAvailableNow vin bodyType saleOrderType vehicleInventoryType vehicleOrderStatus driveType gearType distanceFromUser __typename } __typename }\n}\n",  # noqa: B950
     }
 
     if validate_request(params.items()):
@@ -86,18 +86,22 @@ def get_audi_inventory():
 def get_vin_details():
     request_args = request.args
 
-    zip_code = request_args["zip"]
-    vin = request_args["vin"]
+    vehicle_id = request_args["vehicleId"]
 
     # We'll use the requesting UA to make the request to the audi APIs
     user_agent = request.headers["User-Agent"]
 
-    headers = {"User-Agent": user_agent, "referer": "https://www.vw.com/"}
+    headers = {"User-Agent": user_agent, "Referer": "https://www.audiusa.com/"}
 
     vin_post_data = {
-        "operationName": "VehicleData",
-        "variables": {"vin": vin, "zipcode": zip_code},
-        "query": "query VehicleData($vin: String, $zipcode: String) {vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl mpgHighway trimLevel mediaImageUrl mediaImageUrlAlt mediaAssets {   description   type   asset   __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures {   key   title   __typename } factoryModelYear dealerInstalledAccessories {   mdmCode   title   longTitle   description   image   itemPrice   creativeTitle   __typename } dealer {   generatedDate   dealerid   name   dealername   seolookupkey   address1   address2   city   state   postalcode   country   url   phone   latlong   staticMapsUrl   distance   inventoryCount   aor   isSatellite   isAssessing   lmaId   __typename } specifications {   text   values {     key     label     longTitle     value     __typename   }   key   __typename } destinationCharge __typename}}",  # noqa: B950
+        "operationName": "getVehicleInfoForWormwood",
+        "variables": {
+            "version": "2.0.0",
+            "market": "US",
+            "lang": "en",
+            "id": f"{vehicle_id}",
+        },
+        "query": "query getVehicleInfoForWormwood($market: MarketType!, $lang: String!, $id: String!, $version: String) { getVehicleInfoForWormwood( market: $market lang: $lang id: $id version: $version ) { modelName trimName bodyType modelYear trimline gearType driveType modelMileage vehicleType market fuelType equipments { optionalEquipments { headline text imageUrl benefits __typename } standardEquipments { interior { headline text imageUrl __typename } exterior { headline text imageUrl __typename } assistanceSystems { headline text imageUrl __typename } technology { headline text imageUrl __typename } trimsAndPackages { headline text imageUrl __typename } performance { headline text imageUrl __typename } __typename } __typename } exteriorColor upholsteryColor interiorTileImage exteriorTileImage dealerName dealerNote staticDealerInfo { isDealerNoteVisible mapImage dagid __typename } vehicleMedia { mediaRequestString mediaImages { config imageType url __typename } __typename } technicalSpecifications { engineType displacement maxOutput maxTorque gearbox frontAxle rearAxle brakes steering unladenWeight grossWeightLimit tankCapacity luggageCompartmentCapacity topSpeed acceleration fuelType fuelData { fuel_petrol { unit urban extraUrban combined __typename } fuel_electrical { unit urban extraUrban combined __typename } __typename } __typename } __typename }}",  # noqa: B950
     }
 
     vin_detail = requests.post(
@@ -106,10 +110,11 @@ def get_vin_details():
 
     data = vin_detail.json()
 
-    if len(data["data"]["vehicle"]) > 0:
+    try:
+        data["data"]["getVehicleInfoForWormwood"]
         return send_response(
             response_data=data, content_type="application/json", cache_control_age=3600
         )
-    else:
-        error_message = "An error occurred with the audi API"
+    except KeyError:
+        error_message = "An error occurred with the Audi API"
         return send_error_response(error_message=error_message, error_data=data)

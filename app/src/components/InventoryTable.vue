@@ -213,6 +213,7 @@
 
   import { convertToCurrency } from '../helpers/libs'
 
+  import { getAudiVinDetail } from '../manufacturers/audi'
   import { getFordVinDetail } from '../manufacturers/ford'
   import { getGenesisVinDetail } from '../manufacturers/genesis'
   import { getChevroletVinDetail } from '../manufacturers/chevrolet'
@@ -348,26 +349,19 @@
             fordVinData
             )
         }
-        // else if (this.form.manufacturer.toLowerCase() === "audi") {
-        //   // Show users that we're fetching data
-        //   this.vinTableBusy = true
-        //   const audiVinData = await getAudiVinDetail(
-        //     item.dealerSlug,
-        //     this.form.model,
-        //     item.vin,
-        //     item.modelYear,
-        //     item.dealerPaCode,
-        //     this.form.zipcode,
-        //   )
-        //   // Store a new record for each VIN we fetch.
-        //   // this.$set is needed to enable reactive properties on an existing object
-        //   // without this.$set, the nested table will not auto-refresh with this info
-        //   this.$set(
-        //     this.vinDetail,
-        //     item.vin,
-        //     audiVinData
-        //     )
-        // }
+        else if (this.form.manufacturer.toLowerCase() === "audi") {
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          const audiVinData = await getAudiVinDetail(item.id)
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            audiVinData
+            )
+        }
 
         // Remove the table busy indicator
         this.vinTableBusy = false

@@ -1,5 +1,5 @@
-import { titleCase } from "../helpers/libs"
-import { audiInventoryMapping } from "./audiMappings"
+import { stripHTML, titleCase } from "../helpers/libs"
+import { audiInventoryMapping, audiVinMapping } from "./audiMappings"
 
 const apiBase = 'https://api.theevfinder.com'
 
@@ -21,6 +21,17 @@ export async function getAudiInventory(zip, year, model, radius) {
   }
 }
 
+export async function getAudiVinDetail(vehicleId) {
+  const vinData = await fetch(apiBase + '/api/vin/audi?' + new URLSearchParams({
+    vehicleId: vehicleId
+  }), { method: 'GET', mode: 'cors', })
+
+  if (vinData.ok) {
+    return formatAudiVinResults(await vinData.json())
+  } else {
+    return ['ERROR', vinData.status, vinData.text]
+  }
+}
 
 async function getGeoFromZipcode(zip) {
   const osmApi = "https://nominatim.openstreetmap.org/search?"
@@ -70,4 +81,33 @@ function formatAudiInventoryResults(input) {
   })
 
   return res
+}
+
+function formatAudiVinResults(input) {
+  const vinFormattedData = {}
+  const vinData = input.data.getVehicleInfoForWormwood
+
+  // Replace Audi JSON keys with EV Finder JSON keys
+  Object.keys(vinData).forEach(vinKey => {
+    Object.keys(audiVinMapping).includes(vinKey)
+      ? vinFormattedData[audiVinMapping[vinKey]] = vinData[vinKey]
+      : null
+  })
+
+  // The dealer note is provided as raw HTML. Stripping the HTML to display plain text
+  vinFormattedData['Dealer Note'] = stripHTML(vinFormattedData['Dealer Note'])
+
+  // It appears for new vehicles, 'vehicleMilage' is null. Replacing with something descriptive
+  if (vinFormattedData['Vehicle Mileage'] === null) {
+    vinFormattedData['Vehicle Mileage'] = "N/A"
+  }
+
+  // Capitalize Market
+  vinFormattedData['Market'] = vinFormattedData['Market'].toUpperCase()
+
+  // Titlecase Vehicle Type
+  vinFormattedData['Vehicle Type'] = titleCase(vinFormattedData['Vehicle Type'])
+
+
+  return vinFormattedData
 }

@@ -24,6 +24,23 @@ const audiInventoryMapping = {
 }
 
 const audiVinMapping = {
+  'bodyType': 'Body Type',
+  'dealerName': 'Dealer Name',
+  'dealerNote': 'Dealer Note',
+  'driveType': 'Drivetrain',
+  //'equipments': '', //nested object
+  'exteriorColor': 'Exterior Color',
+  'fuelType': 'Fuel Type',
+  'gearType': 'Gear Type',
+  'market': 'Market',
+  'modelMileage': 'Vehicle Mileage',
+  'modelName': 'Model Name',
+  'modelYear': 'Model Year',
+  //'technicalSpecifications': '',  //object
+  'trimName': 'Trim Name',
+  'trimline': 'Trim Line',
+  'upholsteryColor': 'Interior Color',
+  'vehicleType': 'Vehicle Type',
 }
 
 export {
