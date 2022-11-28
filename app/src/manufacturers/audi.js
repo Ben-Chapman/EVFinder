@@ -176,7 +176,6 @@ function formatAudiVinResults(input) {
             }
           });
         }
-        console.log(`${equipmentType}: ${equipment}`);
         if (equipment.length > 0) {
           vinFormattedData[titleCase(equipmentType)] = equipment.join(",  ");
         }
