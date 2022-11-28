@@ -46,8 +46,7 @@ async function getGeoFromZipcode(zip) {
   const osmApi = "https://nominatim.openstreetmap.org/search?";
 
   const geo = await fetch(
-    osmApi +
-      new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
+    osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
     { method: "GET", mode: "cors" }
   );
 
@@ -115,13 +114,74 @@ function formatAudiVinResults(input) {
     vinFormattedData["Vehicle Mileage"] = "N/A";
   }
 
-  // Capitalize Market
+  // Adjust
   vinFormattedData["Market"] = vinFormattedData["Market"].toUpperCase();
 
   // Titlecase Vehicle Type
-  vinFormattedData["Vehicle Type"] = titleCase(
-    vinFormattedData["Vehicle Type"]
+  vinFormattedData["Vehicle Type"] = titleCase(vinFormattedData["Vehicle Type"]);
+
+  // Building the technical specification and equipments data
+  // vinFormattedData["Technical Specifications"] = "";
+  let techSpecs = [];
+  Object.keys(input.data.getVehicleInfoForWormwood.technicalSpecifications).forEach(
+    (key) => {
+      let value = input.data.getVehicleInfoForWormwood.technicalSpecifications[key];
+      if (value === null) value = "N/A";
+
+      // excluding this metadata-related key
+      if (key != "__typename") {
+        techSpecs.push(`${titleCase(key)}: ${value}`);
+      }
+      vinFormattedData["Technical Specifications"] = techSpecs.join(",  ");
+    }
   );
 
+  /**
+   * Audi provide two types of equipment data, standard and optional with slightly
+   * different data structures, hence the nested logic here to deal with that.
+   */
+  Object.keys(input.data.getVehicleInfoForWormwood.equipments).forEach(
+    (equipmentType) => {
+      if (equipmentType != "__typename") {
+        let equipment = [];
+        // Optional equipment
+        if (equipmentType == "optionalEquipments") {
+          input.data.getVehicleInfoForWormwood.equipments[equipmentType].forEach(
+            (e) => {
+              equipment.push(e["headline"]);
+            }
+          );
+        }
+        // Standard equipment
+        else if (equipmentType == "standardEquipments") {
+          Object.keys(
+            input.data.getVehicleInfoForWormwood.equipments[equipmentType]
+          ).forEach((e) => {
+            if (
+              e != "__typename" &&
+              input.data.getVehicleInfoForWormwood.equipments[equipmentType][e] !==
+                null &&
+              input.data.getVehicleInfoForWormwood.equipments[equipmentType][e].length >
+                0
+            ) {
+              Object.keys(
+                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e]
+              ).forEach((key) => {
+                const value =
+                  input.data.getVehicleInfoForWormwood.equipments[equipmentType][e][
+                    key
+                  ];
+                equipment.push(value["headline"]);
+              });
+            }
+          });
+        }
+        console.log(`${equipmentType}: ${equipment}`);
+        if (equipment.length > 0) {
+          vinFormattedData[titleCase(equipmentType)] = equipment.join(",  ");
+        }
+      }
+    }
+  );
   return vinFormattedData;
 }
