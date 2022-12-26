@@ -71,6 +71,15 @@ function formatAudiInventoryResults(input) {
         : null;
     });
 
+    /**
+     * The interiorColor value returned from the Audi API is something like
+     * "Black-Gray, Black, Flint Gray with Orange piping, Black", where Flint Gray...
+     * is the actual interior color. Extracting the actual interiorColor here
+     */
+    const interiorColors = vehicle["interiorColor"].split(",");
+    // The real interior color is the second-to-last element in the array
+    vehicle["interiorColor"] = interiorColors[interiorColors.length - 2];
+
     // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits
     tmp["price"] = tmp["price"].split(".")[0].replace(/\D/g, "");
 
@@ -79,7 +88,6 @@ function formatAudiInventoryResults(input) {
      * Vehicles in stock at the dealer only have availability info in `vehicleInventoryType
      * So dealing with that here
      */
-    //
     vehicle["vehicleOrderStatus"] === null
       ? (tmp["deliveryDate"] = titleCase(
           vehicle["vehicleInventoryType"].replace("-", " ")
@@ -110,11 +118,11 @@ function formatAudiVinResults(input) {
   vinFormattedData["Dealer Note"] = stripHTML(vinFormattedData["Dealer Note"]);
 
   // It appears for new vehicles, 'vehicleMilage' is null. Replacing with something descriptive
-  if (vinFormattedData["Vehicle Mileage"] === null) {
+  if (!vinFormattedData["Vehicle Mileage"]) {
     vinFormattedData["Vehicle Mileage"] = "N/A";
   }
 
-  // Adjust
+  // Adjust Market: us -> US
   vinFormattedData["Market"] = vinFormattedData["Market"].toUpperCase();
 
   // Titlecase Vehicle Type
@@ -138,7 +146,7 @@ function formatAudiVinResults(input) {
 
   /**
    * Audi provide two types of equipment data, standard and optional with slightly
-   * different data structures, hence the nested logic here to deal with that.
+   * different data structures, hence the logic here to deal with that.
    */
   Object.keys(input.data.getVehicleInfoForWormwood.equipments).forEach(
     (equipmentType) => {

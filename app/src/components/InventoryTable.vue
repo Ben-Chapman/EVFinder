@@ -29,7 +29,7 @@
           class="rounded inventory-table"
           :busy="tableBusy"
           :items="this.inventory"
-          :fields="this.fields"
+          :fields="manufacturerSpecificTableFields"
           :sort-by.sync="this.fields.distance"
           :sort-compare="customSort"
           :filter="this.filterSelections"
@@ -244,22 +244,24 @@
         vinTableBusy: false,
 
         fields: [
-          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
-          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
-          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+          { key: 'kvpsSyncId', label: 'Sync', sortable: true, sortDirection: 'desc', showFor: ["Audi"]},
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
+          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
+          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', hideFor: ["Audi"], showFor: []},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency, hideFor: [], showFor: []},
+          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true , hideFor: [], showFor: []},
 
           // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
-          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell"},
+          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell", hideFor: [], showFor: []},
 
           // Display only the Dealer's name on mobile devices (hidden on desktop, iPad landscape, etc)
-          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" },
+          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" , hideFor: [], showFor: []},
 
           // Only show the Distance column on large+ devices (hidden on mobile, iPad portrait, etc)
-          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell'},
-          { key: 'vin-with-more-details', label: "VIN", sortable: false }
+          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell', hideFor: [], showFor: []},
+
+          { key: 'vin-with-more-details', label: "VIN", sortable: false , hideFor: [], showFor: []}
         ],
       } // End of return
     },
@@ -502,6 +504,15 @@
         'inventory',
         'tableBusy',
       ]),
+
+      manufacturerSpecificTableFields() {
+        const f = this.fields.filter(field => {
+          field.showFor.includes(this.form.manufacturer)
+        });
+        console.log(this.form.manufacturer)
+        console.log(f)
+        return f
+      },
 
       showInventoryAlert() {
         if (
