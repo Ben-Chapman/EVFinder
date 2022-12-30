@@ -1,15 +1,16 @@
 <template>
   <b-container fluid class="footer frosted-bg">
     <b-row align-h="center" class="d-flex justify-content-center pt-1 footer-text">
-      Copyright ©{{ this.currentYear }} The EV Finder | 
-      Licensed under&nbsp;
+      Copyright ©2022 &ndash; {{ this.currentYear }} The EV Finder
+    </b-row>
+
+      <b-row align-h="center" class="d-flex justify-content-center py-2 footer-text">
+        Licensed under&nbsp;
       <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
         <u>GNU GPLv3</u>
       </a>
-      </b-row>
 
-      <b-row align-h="center" class="d-flex justify-content-center py-2">
-        <a href="https://github.com/Ben-Chapman/EVFinder">
+      <a href="https://github.com/Ben-Chapman/EVFinder">
           <b-icon-github
             aria-hidden="true"
             class="ml-4"
@@ -17,6 +18,7 @@
             variant="dark">
           </b-icon-github>
         </a>
+
       </b-row>
   </b-container>
 </template>
@@ -34,7 +36,7 @@
 
 <style lang="scss">
   @import '../assets/app_style.scss';
-  
+
   .footer {
     position: sticky;
     bottom: 0;
