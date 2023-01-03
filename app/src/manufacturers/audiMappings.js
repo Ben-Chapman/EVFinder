@@ -15,7 +15,6 @@
  * }
  */
 const audiInventoryMapping = {
-  driveType: "drivetrainDesc",
   modelPrice: "price",
   trimName: "trimDesc",
   distanceFromUser: "distance",

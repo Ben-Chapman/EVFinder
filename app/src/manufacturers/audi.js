@@ -97,6 +97,10 @@ function formatAudiInventoryResults(input) {
     // Populating the Availability filter
     tmp["inventoryStatus"] = tmp["deliveryDate"];
 
+    // Extracting and formatting the various model names.
+    // 2023 Audi e-tron Sportback -> e-tron Sportback
+    tmp["modelDesc"] = vehicle["modelName"].replace(/\d{4}\sAudi\s/, "");
+
     res.push({ ...tmp, ...vehicle });
   });
 

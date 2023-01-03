@@ -243,26 +243,41 @@
         vinDetail: {},
         vinTableBusy: false,
 
+        /**
+         * The table fields which are used for inventory display. The default fields which
+         * are used for all manufacturers are indicated with an "all" element in the showFor
+         * array.
+         * The order of the elements in this array dictates the columns displayed in the UI.
+         */
         fields: [
-          { key: 'kvpsSyncId', label: 'Sync', sortable: true, sortDirection: 'desc', showFor: ["Audi"]},
-          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
-          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
-          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc', hideFor: [], showFor: []},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', hideFor: ["Audi"], showFor: []},
-          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency, hideFor: [], showFor: []},
-          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true , hideFor: [], showFor: []},
+          // Column specific for Audi
+          { key: 'modelDesc', label: 'Model', sortable: true, sortDirection: 'desc', showFor: ["Audi"], hideFor: []},
+
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+
+          // Hiding the Drivetrain column for Audi as they're all "quattro", so not terribly helpful
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: ["Audi"]},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency, showFor: ["all"], hideFor: []},
+          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true , showFor: ["all"], hideFor: []},
 
           // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
-          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell", hideFor: [], showFor: []},
+          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell", showFor: ["all"], hideFor: []},
 
           // Display only the Dealer's name on mobile devices (hidden on desktop, iPad landscape, etc)
-          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" , hideFor: [], showFor: []},
+          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" , showFor: ["all"], hideFor: []},
 
           // Only show the Distance column on large+ devices (hidden on mobile, iPad portrait, etc)
-          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell', hideFor: [], showFor: []},
+          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell', showFor: ["all"], hideFor: []},
 
-          { key: 'vin-with-more-details', label: "VIN", sortable: false , hideFor: [], showFor: []}
+          { key: 'vin-with-more-details', label: "VIN", sortable: false , showFor: ["all"], hideFor: []},
+
+
         ],
+
+
+
       } // End of return
     },
     methods: {
@@ -506,11 +521,11 @@
       ]),
 
       manufacturerSpecificTableFields() {
-        const f = this.fields.filter(field => {
-          field.showFor.includes(this.form.manufacturer)
-        });
-        console.log(this.form.manufacturer)
-        console.log(f)
+        const f = this.fields.filter(field =>
+          (field.showFor.includes("all")
+          || field.showFor.includes(this.form.manufacturer))
+          && !field.hideFor.includes(this.form.manufacturer))
+
         return f
       },
 
