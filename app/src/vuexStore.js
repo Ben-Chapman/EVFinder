@@ -14,13 +14,13 @@ const state = {
 
   filterSelections: {
     dealerName: [],
-    interiorColor: [],
-    inventoryStatus: [],
-    trimDesc: [],
     drivetrainDesc: [],
     exteriorColor: [],
-    price: [],
+    interiorColor: [],
+    inventoryStatus: [],
     modelDesc: [],
+    price: [],
+    trimDesc: [],
   },
 
   form: {

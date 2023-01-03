@@ -101,7 +101,7 @@
           </b-dropdown-form>
         </b-dd>
 
-      <!-- Drivetrain Filter -->
+      <!-- Drivetrain Filter, hidden for Audi -->
         <div v-if="this.form.manufacturer != 'Audi'">
           <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
             <template #button-content>
@@ -293,13 +293,13 @@
         */
         localFilterSelections: {
           'dealerName': [],
-          'interiorColor': [],
-          'inventoryStatus': [],
-          'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],
+          'interiorColor': [],
+          'inventoryStatus': [],
           'modelDesc': [],
           'price': [],
+          'trimDesc': [],
         },
       }
     },
@@ -344,13 +344,13 @@
       resetFilterSelections() {
         this.localFilterSelections = {
           'dealerName': [],
-          'interiorColor': [],
-          'inventoryStatus': [],
-          'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],
-          'price': [],
+          'interiorColor': [],
+          'inventoryStatus': [],
           'modelDesc': [],
+          'price': [],
+          'trimDesc': [],
         }
       },
 
