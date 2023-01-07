@@ -55,7 +55,7 @@ def get_audi_inventory():
     if validate_request(params.items()):
         # Make a call to the audi API
         inventory = requests.post(
-            url=api_url, headers=headers, json=inventory_post_data, verify=False
+            url=api_url, headers=headers, json=inventory_post_data
         )
 
         data = inventory.json()
@@ -70,7 +70,6 @@ def get_audi_inventory():
                 cache_control_age=3600,
             )
         except KeyError:
-            print(f"ERROR Here: {data}")
             error_message = "An error occurred with the audi API"
             return send_error_response(error_message=error_message, error_data=data)
     # Request could not be validated
@@ -104,9 +103,7 @@ def get_vin_details():
         "query": "query getVehicleInfoForWormwood($market: MarketType!, $lang: String!, $id: String!, $version: String) { getVehicleInfoForWormwood( market: $market lang: $lang id: $id version: $version ) { modelName trimName bodyType modelYear trimline gearType driveType modelMileage vehicleType market fuelType equipments { optionalEquipments { headline text imageUrl benefits __typename } standardEquipments { interior { headline text imageUrl __typename } exterior { headline text imageUrl __typename } assistanceSystems { headline text imageUrl __typename } technology { headline text imageUrl __typename } trimsAndPackages { headline text imageUrl __typename } performance { headline text imageUrl __typename } __typename } __typename } exteriorColor upholsteryColor interiorTileImage exteriorTileImage dealerName dealerNote staticDealerInfo { isDealerNoteVisible mapImage dagid __typename } vehicleMedia { mediaRequestString mediaImages { config imageType url __typename } __typename } technicalSpecifications { engineType displacement maxOutput maxTorque gearbox frontAxle rearAxle brakes steering unladenWeight grossWeightLimit tankCapacity luggageCompartmentCapacity topSpeed acceleration fuelType fuelData { fuel_petrol { unit urban extraUrban combined __typename } fuel_electrical { unit urban extraUrban combined __typename } __typename } __typename } __typename }}",  # noqa: B950
     }
 
-    vin_detail = requests.post(
-        url=api_url, headers=headers, json=vin_post_data, verify=False
-    )
+    vin_detail = requests.post(url=api_url, headers=headers, json=vin_post_data)
 
     data = vin_detail.json()
 
