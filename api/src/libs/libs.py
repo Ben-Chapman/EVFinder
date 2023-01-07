@@ -61,6 +61,7 @@ def validate(validation_type, validation_data):
         "Bolt EUV",  # Chevrolet Bolt EUV
         "etron",  # Audi e-tron
         "etrongt",  # Audi e-tron GT
+        "q4",  # Audi Q4 e-tron
     ]
     valid_radii = [1, 999]
 
