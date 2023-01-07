@@ -18,7 +18,7 @@ const state = {
     exteriorColor: [],
     interiorColor: [],
     inventoryStatus: [],
-    modelDesc: [],
+    vehicleDesc: [],
     price: [],
     trimDesc: [],
   },

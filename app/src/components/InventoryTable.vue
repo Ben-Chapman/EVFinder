@@ -251,14 +251,12 @@
          */
         fields: [
           // Column specific for Audi
-          { key: 'modelDesc', label: 'Model', sortable: true, sortDirection: 'desc', showFor: ["Audi"], hideFor: []},
+          { key: 'vehicleDesc', label: 'Model', sortable: true, sortDirection: 'desc', showFor: ["Audi"], hideFor: []},
 
           { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
           { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
           { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
-
-          // Hiding the Drivetrain column for Audi as they're all "quattro", so not terribly helpful
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: ["Audi"]},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
           { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency, showFor: ["all"], hideFor: []},
           { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true , showFor: ["all"], hideFor: []},
 

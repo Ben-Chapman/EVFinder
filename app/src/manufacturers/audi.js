@@ -97,9 +97,18 @@ function formatAudiInventoryResults(input) {
     // Populating the Availability filter
     tmp["inventoryStatus"] = tmp["deliveryDate"];
 
-    // Extracting and formatting the various model names.
-    // 2023 Audi e-tron Sportback -> e-tron Sportback
-    tmp["modelDesc"] = vehicle["modelName"].replace(/\d{4}\sAudi\s/, "");
+    /**
+     * Extracting and formatting the various model names.
+     * 2023 Audi e-tron Sportback -> e-tron Sportback
+     *
+     * Quick note for future me, I would have named this modelDesc. In doing so though,
+     * there's some bug in the buildFilterOptions() function in the Filters component
+     * which would upon submitting the search form, populate a filter query param, with
+     * the model pre-selected. This query param would not match any descriptive model
+     * names, and thus display 0 vehicles in the Inventory table. Debugging was fruitless.
+     * Hence, vehicleDesc and a TODO: to figure this out when I have more time.
+     */
+    tmp["vehicleDesc"] = vehicle["modelName"].replace(/\d{4}\sAudi\s/, "");
 
     res.push({ ...tmp, ...vehicle });
   });

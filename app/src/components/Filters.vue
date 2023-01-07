@@ -5,22 +5,22 @@
 
       <!-- Model Filter for Audi -->
       <div v-if="this.form.manufacturer == 'Audi'">
-          <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
+          <b-dd id="model-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
             <template #button-content>
               Model
-              <span v-if="localFilterSelections.modelDesc.length > 0">
+              <span v-if="localFilterSelections.vehicleDesc.length > 0">
                 <b-badge variant="success">
-                  {{ localFilterSelections.modelDesc.length }}
+                  {{ localFilterSelections.vehicleDesc.length }}
                 </b-badge>
               </span>
             </template>
 
             <b-dropdown-form>
               <b-form-checkbox
-                v-for="item in this.filterOptions.modelDesc" :key=item
+                v-for="item in this.filterOptions.vehicleDesc" :key=item
                 :value="item"
-                v-model="localFilterSelections.modelDesc"
-                name="name-here"
+                v-model="localFilterSelections.vehicleDesc"
+                name="model-description"
                 class="mb-1"
                 >
                 {{ item }}
@@ -101,7 +101,7 @@
           </b-dropdown-form>
         </b-dd>
 
-      <!-- Drivetrain Filter, hidden for Audi -->
+      <!-- Drivetrain Filter -->
         <div v-if="this.form.manufacturer != 'Audi'">
           <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
             <template #button-content>
@@ -297,7 +297,7 @@
           'exteriorColor': [],
           'interiorColor': [],
           'inventoryStatus': [],
-          'modelDesc': [],
+          'vehicleDesc': [],
           'price': [],
           'trimDesc': [],
         },
@@ -348,7 +348,7 @@
           'exteriorColor': [],
           'interiorColor': [],
           'inventoryStatus': [],
-          'modelDesc': [],
+          'vehicleDesc': [],
           'price': [],
           'trimDesc': [],
         }
