@@ -6,6 +6,7 @@ import google.cloud.logging
 from flask import Flask, request
 from flask_cors import CORS
 
+from blueprints.audi import audi
 from blueprints.ford import ford
 from blueprints.chevrolet import chevrolet
 from blueprints.genesis import genesis
@@ -34,6 +35,7 @@ CORS(
 )
 
 # Register Blueprints
+app.register_blueprint(audi)
 app.register_blueprint(ford)
 app.register_blueprint(chevrolet)
 app.register_blueprint(genesis)

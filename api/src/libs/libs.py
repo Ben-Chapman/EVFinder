@@ -43,6 +43,7 @@ def validate(validation_type, validation_data):
     valid_years = ["2022", "2023"]
     valid_models = [
         "Ioniq%205",
+        "Ioniq%206",
         "Ioniq%20Phev",
         "Kona%20Ev",
         "Santa%20Fe%20Phev",
@@ -58,6 +59,9 @@ def validate(validation_type, validation_data):
         "mache",  # Ford Mustang Mach-E
         "Bolt EV",  # Chevrolet Bolt EV
         "Bolt EUV",  # Chevrolet Bolt EUV
+        "etron",  # Audi e-tron
+        "etrongt",  # Audi e-tron GT
+        "q4",  # Audi Q4 e-tron
     ]
     valid_radii = [1, 999]
 

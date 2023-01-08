@@ -2,7 +2,33 @@
   <div v-if="this.inventory.length > 0">
     <b-row align-h="center" class="d-flex justify-content-center pt-3" align-v="center">
       <b-icon-sliders aria-hidden="true" class="mr-2" font-scale="1.3"></b-icon-sliders>
-      
+
+      <!-- Model Filter for Audi -->
+      <div v-if="this.form.manufacturer == 'Audi'">
+          <b-dd id="model-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
+            <template #button-content>
+              Model
+              <span v-if="localFilterSelections.vehicleDesc.length > 0">
+                <b-badge variant="success">
+                  {{ localFilterSelections.vehicleDesc.length }}
+                </b-badge>
+              </span>
+            </template>
+
+            <b-dropdown-form>
+              <b-form-checkbox
+                v-for="item in this.filterOptions.vehicleDesc" :key=item
+                :value="item"
+                v-model="localFilterSelections.vehicleDesc"
+                name="model-description"
+                class="mb-1"
+                >
+                {{ item }}
+              </b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        </div>
+
       <!-- Trim Filter -->
         <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
@@ -26,7 +52,7 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
-      
+
       <!-- Exterior Color Filter -->
         <b-dd id="trim-dd" size="sm" variant="primary" class="px-1">
           <template #button-content>
@@ -74,31 +100,32 @@
             </b-form-checkbox>
           </b-dropdown-form>
         </b-dd>
-      
-      <!-- Drivetrain Filter -->
-        <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
-          <template #button-content>
-            Drivetrain
-            <span v-if="localFilterSelections.drivetrainDesc.length > 0">
-              <b-badge variant="success">
-                {{ localFilterSelections.drivetrainDesc.length }}
-              </b-badge>
-            </span>
-          </template>
 
-          <b-dropdown-form>
-            <b-form-checkbox
-              v-for="item in this.filterOptions.drivetrainDesc" :key=item
-              :value="item"
-              v-model="localFilterSelections.drivetrainDesc"
-              name="name-here"
-              class="mb-1"
-              >
-              {{ item | titleCase }}
-            </b-form-checkbox>
-          </b-dropdown-form>
-        </b-dd>
-  
+      <!-- Drivetrain Filter -->
+        <div v-if="this.form.manufacturer != 'Audi'">
+          <b-dd id="trim-dd" size="sm" variant="primary" class="px-1" boundary="viewport">
+            <template #button-content>
+              Drivetrain
+              <span v-if="localFilterSelections.drivetrainDesc.length > 0">
+                <b-badge variant="success">
+                  {{ localFilterSelections.drivetrainDesc.length }}
+                </b-badge>
+              </span>
+            </template>
+
+            <b-dropdown-form>
+              <b-form-checkbox
+                v-for="item in this.filterOptions.drivetrainDesc" :key=item
+                :value="item"
+                v-model="localFilterSelections.drivetrainDesc"
+                name="name-here"
+                class="mb-1"
+                >
+                {{ item | titleCase }}
+              </b-form-checkbox>
+            </b-dropdown-form>
+          </b-dd>
+        </div>
       <!-- Only show these filters on screens larger than xs -->
       <div class="d-none d-sm-block">
       <!-- Dealer Filter -->
@@ -205,7 +232,7 @@
         </b-icon-x>
       </div>
     </b-row>
-    
+
     <b-row class="d-flex justify-content-center mt-3" align-v="center">
       <b-col cols="12" xs="12" md="4" align-self="center">
         <div v-if="this.inventoryCount == 1">
@@ -239,7 +266,7 @@
 
   export default {
     mounted() {
-      /** 
+      /**
        * On mount, determine if we have any filter-related query params. If so,
        * parse them and populate into localFilterSelections
        */
@@ -266,12 +293,13 @@
         */
         localFilterSelections: {
           'dealerName': [],
-          'interiorColor': [],
-          'inventoryStatus': [],
-          'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],
+          'interiorColor': [],
+          'inventoryStatus': [],
+          'vehicleDesc': [],
           'price': [],
+          'trimDesc': [],
         },
       }
     },
@@ -282,7 +310,7 @@
         'updateQueryParams',
         'updateStore',
           ]),
-      
+
       buildFilterOptions() {
         if (Object.entries(this.filterOptions).length > 0) {
           this.updateStore({'filterOptions': {}})
@@ -316,12 +344,13 @@
       resetFilterSelections() {
         this.localFilterSelections = {
           'dealerName': [],
-          'interiorColor': [],
-          'inventoryStatus': [],
-          'trimDesc': [],
           'drivetrainDesc': [],
           'exteriorColor': [],
+          'interiorColor': [],
+          'inventoryStatus': [],
+          'vehicleDesc': [],
           'price': [],
+          'trimDesc': [],
         }
       },
 
@@ -339,7 +368,7 @@
         catch {
           return Number(parseFloat(priceString))
         }
-        
+
       },
     },  // methods
 
@@ -349,6 +378,7 @@
         'inventory',
         'filterSelections',
         'filterOptions',
+        'form',
         'inventoryCount',
         'urlQueryParameters',
       ]),

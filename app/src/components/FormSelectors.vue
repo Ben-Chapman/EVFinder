@@ -13,7 +13,7 @@
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
           </a>
         </b-col>
-        
+
         <!-- Year -->
         <b-col cols=4 md=2>
           <b-form-group
@@ -92,7 +92,7 @@
             </b-form-input>
           </b-form-group>
         </b-col>
-        
+
         <!-- Enabled Button -->
         <div>
             <span id="enabled-wrapper" class="d-inline-block" tabindex="0">
@@ -126,7 +126,8 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
-  
+
+  import { getAudiInventory } from '../manufacturers/audi'
   import { getFordInventory } from '../manufacturers/ford'
   import { getChevroletInventory } from '../manufacturers/chevrolet'
   import { getGenesisInventory } from '../manufacturers/genesis'
@@ -198,9 +199,9 @@
         }
         if (this.isValidRadius != true) {
           return 'a search distance between 1 and 999 miles.'
-        }      
+        }
       },
-      
+
       routePushandGo() {
         /*
         Push form fields to the Vue router as query params. We have a watch()
@@ -227,13 +228,12 @@
       async getCurrentInventory() {
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
-        
+
         // If we had a previous error from the API, clear it from the vuex store
         // before proceeding
         if (this.apiErrorDetail.length > 0) {
           this.updateStore({'apiErrorDetail': []})
         }
-
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
           const kiaInventory = await getKiaInventory(
             this.localForm.zipcode,
@@ -310,6 +310,19 @@
             this.updateStore({'apiErrorDetail': fordInventory})
           } else {
             this.updateStore({'inventory': fordInventory})
+          }
+        }
+        else if (this.localForm.manufacturer.toLowerCase() === 'audi') {
+          const audiInventory = await getAudiInventory(
+            this.localForm.zipcode,
+            this.localForm.year,
+            this.localForm.model,
+            this.localForm.radius,
+          )
+          if (audiInventory[0] === 'ERROR') {
+            this.updateStore({'apiErrorDetail': audiInventory})
+          } else {
+            this.updateStore({'inventory': audiInventory})
           }
         }
 
@@ -410,7 +423,7 @@
         }
         return false
       },
-    },  // computed 
+    },  // computed
     watch: {
       $route(to) {
         /*
