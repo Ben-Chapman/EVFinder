@@ -116,9 +116,9 @@ export function getHeroImage() {
     },
     {
       imageNames: [
-        ["2022-audi-q4-1.jpg", "center center"],
+        ["2022-audi-q4-1.jpg", "-22rem center"],
         ["2022-audi-q4-2.jpg", "-8rem center"],
-        ["2022-audi-q4-sportback-1.jpg", "center center"],
+        ["2022-audi-q4-sportback-1.jpg", "-29rem center"],
         ["2022-audi-q4-sportback-2.jpg", "-10rem center"],
         ["2023-audi-q4-1.jpg", "-24rem center"],
       ],
