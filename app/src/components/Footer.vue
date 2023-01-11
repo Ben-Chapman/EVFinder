@@ -8,12 +8,13 @@
     </b-row>
 
       <b-row align-h="center" class="d-flex justify-content-center py-2">
-        <a href="https://github.com/Ben-Chapman/EVFinder">
+        <a target="_blank" href="https://github.com/Ben-Chapman/EVFinder">
           <b-icon-github
             aria-hidden="true"
-            class="ml-4"
+            class="ml-4 icon"
             font-scale="1.3"
-            variant="dark">
+            variant="dark"
+            >
           </b-icon-github>
         </a>
       </b-row>
@@ -42,6 +43,10 @@
 
   .footer-text a {
       color: black;
+    }
+
+  .icon:hover {
+      color: $analogous-logo-green !important;
     }
 
   .frosted-bg {
