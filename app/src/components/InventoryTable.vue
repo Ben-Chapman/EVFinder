@@ -8,7 +8,7 @@
          which expands the stacked table to full width of the display
          flex row for all other media sizes, which is the default and
          is needed to properly format the table -->
-    <div class="justify-content-center flex-column flex-md-row ios-landscape">
+    <div class="d-flex justify-content-center flex-column flex-lg-row ios-landscape">
 
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
