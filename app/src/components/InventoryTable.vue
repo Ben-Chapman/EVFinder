@@ -8,8 +8,8 @@
          which expands the stacked table to full width of the display
          flex row for all other media sizes, which is the default and
          is needed to properly format the table -->
-    <div class="d-flex justify-content-center flex-column flex-md-row">
-      
+    <div class="d-flex justify-content-center flex-column flex-lg-row ios-landscape">
+
       <!-- The API returned an error, so display an error message -->
       <div v-if="this.apiErrorDetail.length > 0">
         <ErrorMessage/>
@@ -20,7 +20,7 @@
           No Vehicles Were Found. Adjust your search parameters and try again.
         </b-alert>
       </div>
-      
+
       <div v-else>
         <b-table
           hover
@@ -29,7 +29,7 @@
           class="rounded inventory-table"
           :busy="tableBusy"
           :items="this.inventory"
-          :fields="this.fields"
+          :fields="manufacturerSpecificTableFields"
           :sort-by.sync="this.fields.distance"
           :sort-compare="customSort"
           :filter="this.filterSelections"
@@ -47,7 +47,7 @@
           <template #cell(interior-color)="data">
             {{ data.item.interiorColorCd }}
           </template>
-          
+
           <!-- Dealer Information for Mobile Devices. Displays dealer name only-->
           <template #cell(dealer-name-only)="data">
             <div v-if="data.item.dealerUrl">
@@ -157,7 +157,7 @@
               </div>
               <!-- Window sticker for Ford -->
               <div
-                v-if="form.model == 'mache' && 
+                v-if="form.model == 'mache' &&
                 row.item.windowStickerUrl != '' &&
                 !vinTableBusy"
                 >
@@ -186,8 +186,8 @@
                     <b-list-group-item class="border-0 py-1 px-0">{{ item }}</b-list-group-item>
                   </div>
               </b-list-group>
-              
-          
+
+
             <b-button size="sm" @click="row.toggleDetails" variant="light">Hide Details</b-button>
           </b-card>
         </template>
@@ -212,14 +212,15 @@
   import { has } from 'lodash'
 
   import { convertToCurrency } from '../helpers/libs'
-  
+
+  import { getAudiVinDetail } from '../manufacturers/audi'
   import { getFordVinDetail } from '../manufacturers/ford'
   import { getGenesisVinDetail } from '../manufacturers/genesis'
   import { getChevroletVinDetail } from '../manufacturers/chevrolet'
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
   import { getVolkswagenVinDetail } from '../manufacturers/volkswagen'
-  
+
   export default {
     components: {
       ErrorMessage,
@@ -242,24 +243,39 @@
         vinDetail: {},
         vinTableBusy: false,
 
+        /**
+         * The table fields which are used for inventory display. The default fields which
+         * are used for all manufacturers are indicated with an "all" element in the showFor
+         * array.
+         * The order of the elements in this array dictates the columns displayed in the UI.
+         */
         fields: [
-          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc'},
-          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc'},
-          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc'},
-          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency},
-          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true },
+          // Column specific for Audi
+          { key: 'vehicleDesc', label: 'Model', sortable: true, sortDirection: 'desc', showFor: ["Audi"], hideFor: []},
+
+          { key: 'trimDesc', label: 'Trim', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'exteriorColor', label: 'Ext. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'interiorColor', label: 'Int. Color', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'drivetrainDesc', label: 'Drivetrain', sortable: true, sortDirection: 'desc', showFor: ["all"], hideFor: []},
+          { key: 'price', label: 'MSRP', sortable: true, sortDirection: 'desc', formatter: convertToCurrency, showFor: ["all"], hideFor: []},
+          { key: 'deliveryDate', label: 'Delivery Date', formatter: "formatDate", sortable: true, sortByFormatted: true, filterByFormatted: true , showFor: ["all"], hideFor: []},
 
           // Display the Dealer's name - city, state on large-screen devices (hidden on mobile, iPad portrait, etc)
-          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell"},
+          { key: 'dealer-name-address', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-none d-lg-table-cell", showFor: ["all"], hideFor: []},
 
           // Display only the Dealer's name on mobile devices (hidden on desktop, iPad landscape, etc)
-          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" },
-          
+          { key: 'dealer-name-only', label: 'Dealer', sortable: true, sortByFormatted: true, filterByFormatted: true, class: "d-lg-none" , showFor: ["all"], hideFor: []},
+
           // Only show the Distance column on large+ devices (hidden on mobile, iPad portrait, etc)
-          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell'},
-          { key: 'vin-with-more-details', label: "VIN", sortable: false }
+          { key: 'distance', label: 'Distance', sortable: true, sortDirection: 'desc', class: 'd-none d-lg-table-cell', showFor: ["all"], hideFor: []},
+
+          { key: 'vin-with-more-details', label: "VIN", sortable: false , showFor: ["all"], hideFor: []},
+
+
         ],
+
+
+
       } // End of return
     },
     methods: {
@@ -348,11 +364,24 @@
             fordVinData
             )
         }
+        else if (this.form.manufacturer.toLowerCase() === "audi") {
+          // Show users that we're fetching data
+          this.vinTableBusy = true
+          const audiVinData = await getAudiVinDetail(item.id)
+          // Store a new record for each VIN we fetch.
+          // this.$set is needed to enable reactive properties on an existing object
+          // without this.$set, the nested table will not auto-refresh with this info
+          this.$set(
+            this.vinDetail,
+            item.vin,
+            audiVinData
+            )
+        }
 
         // Remove the table busy indicator
         this.vinTableBusy = false
       },
-      
+
       priceStringToNumber(priceString) {
         return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
       },
@@ -384,7 +413,7 @@
           const _b = new Date(b[key])
           const aDate = Date.parse(_a)  // Convert Date object to epoch
           const bDate = Date.parse(_b)
-          
+
           // Some manufacturers don't include a delivery date in their API response
           // If that's true, fall back to the buit-in sort-compare routine
           if ((_a || _b) == 'Invalid Date') {
@@ -393,7 +422,7 @@
 
           if (aDate < bDate ){
             return -1
-          } 
+          }
           else if (aDate === bDate) {
             return 0
           }
@@ -424,7 +453,7 @@
         var selectedCategories = Object.entries(filterSelections).filter(f => f[1].length > 0)
         var selectedCategoriesCount = selectedCategories.length
         var isMatch = []
-        
+
         if (selectedCategoriesCount == 0) {
           // No filters are selected
           return true
@@ -456,12 +485,12 @@
             isMatch.push(selectedItems.some(s => Object.values(rowRecord).includes(s)))
             }
           }
-         
+
          if (isMatch.includes(false)) {
            return false
          } else {
            return true
-         } 
+         }
         }
       },
 
@@ -479,7 +508,7 @@
       },
 
     }, // methods
-    
+
     computed: {
       ...mapState([
         'apiErrorDetail',
@@ -488,6 +517,15 @@
         'inventory',
         'tableBusy',
       ]),
+
+      manufacturerSpecificTableFields() {
+        const f = this.fields.filter(field =>
+          (field.showFor.includes("all")
+          || field.showFor.includes(this.form.manufacturer))
+          && !field.hideFor.includes(this.form.manufacturer))
+
+        return f
+      },
 
       showInventoryAlert() {
         if (
@@ -521,6 +559,15 @@
 }
   .inventory-table {
     background-color: #ffffffd8;
+    // padding-left: env(safe-area-inset-left);
+    // padding-right: env(safe-area-inset-right);
+  }
+
+  @supports(padding-left: env(safe-area-inset-left)) {
+    .ios-landscape {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
   }
 
   .card {

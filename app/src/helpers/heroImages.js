@@ -7,7 +7,7 @@ export function getHeroImage() {
         ["2023-g80ev-3.jpg", "-10rem center"],
       ],
       overlayText: "2023 Genesis Electrified G80",
-      modelName: "ElectrifiedG80"
+      modelName: "ElectrifiedG80",
     },
     {
       imageNames: [
@@ -16,17 +16,17 @@ export function getHeroImage() {
         ["2022-gv60-3.jpg", "-10rem center"],
       ],
       overlayText: "2022 Genesis GV60",
-      modelName: "GV60"
+      modelName: "GV60",
     },
     {
       imageNames: [
         ["2023-id4-1.jpg", "-18.5rem center"],
         ["2023-id4-2.jpg", "-36rem center"],
         ["2023-id4-3.jpg", "-35rem center"],
-        ["2023-id4-4.jpg","-23.5rem center"],
+        ["2023-id4-4.jpg", "-23.5rem center"],
       ],
       overlayText: "2023 Volkswagen ID.4",
-      modelName: "ID.4"
+      modelName: "ID.4",
     },
     {
       imageNames: [
@@ -36,7 +36,7 @@ export function getHeroImage() {
         ["2023-ioniq5-4.jpg", "-28rem center"], //too low
       ],
       overlayText: "2023 Hyundai Ioniq 5",
-      modelName: "Ioniq%205"
+      modelName: "Ioniq%205",
     },
     {
       imageNames: [
@@ -45,7 +45,7 @@ export function getHeroImage() {
         ["2023-ev6-3.jpg", "-45rem center"],
       ],
       overlayText: "2023 Kia EV6",
-      modelName: "N"
+      modelName: "N",
     },
     {
       imageNames: [
@@ -54,7 +54,7 @@ export function getHeroImage() {
         ["2023-kona-3.jpg", "-10rem center"],
       ],
       overlayText: "2023 Hyundai Kona Electric",
-      modelName: "Kona%20Ev"
+      modelName: "Kona%20Ev",
     },
     {
       imageNames: [
@@ -63,7 +63,7 @@ export function getHeroImage() {
         ["2023-niro-3.jpg", "-26.5rem center"],
       ],
       overlayText: "2023 Kia Niro EV",
-      modelName: "V"
+      modelName: "V",
     },
     {
       imageNames: [
@@ -73,7 +73,7 @@ export function getHeroImage() {
         ["2023-chevrolet-bolt-ev-2.jpg", "-36rem center"],
       ],
       overlayText: "2023 Chevrolet Bolt EV",
-      modelName: "Bolt EV"
+      modelName: "Bolt EV",
     },
     {
       imageNames: [
@@ -83,7 +83,7 @@ export function getHeroImage() {
         ["2022-chevrolet-bolt-euv-4.jpg", "-13rem center"],
       ],
       overlayText: "2023 Chevrolet Bolt EUV",
-      modelName: "Bolt EUV"
+      modelName: "Bolt EUV",
     },
     {
       imageNames: [
@@ -94,40 +94,71 @@ export function getHeroImage() {
         ["2022-mustang-mache-1.jpg", "-20rem center"],
       ],
       overlayText: "2022 Ford Mustang Mach-E",
-      modelName: "mache"
+      modelName: "mache",
     },
-  ]
-  
-  // Random int which will be used to select an element from heroImages
-  const randomVehicle = Math.floor(Math.random() * (heroImages.length))
-  const randomImageIndex = Math.floor(Math.random() * (heroImages[randomVehicle]['imageNames'].length))
-  const randomImage = heroImages[randomVehicle].imageNames[randomImageIndex][0]
+    {
+      imageNames: [
+        ["2022-audi-etron-1.jpg", "-26rem center"],
+        ["2022-audi-etron-s-1.jpg", "-16rem center"],
+        ["2022-audi-etron-s-sportback-1.jpg", "-13rem center"],
+      ],
+      overlayText: "2022 Audi e-tron®",
+      modelName: "etron",
+    },
+    {
+      imageNames: [
+        ["2022-audi-etron-gt-1.jpg", "-25rem center"],
+        ["2022-audi-etron-gt-2.jpg", "-10rem center"],
+        ["2022-audi-etron-gt-3.jpg", "-10rem center"],
+      ],
+      overlayText: "2022 Audi e-tron® GT",
+      modelName: "etrongt",
+    },
+    {
+      imageNames: [
+        ["2022-audi-q4-1.jpg", "-22rem center"],
+        ["2022-audi-q4-2.jpg", "-8rem center"],
+        ["2022-audi-q4-sportback-1.jpg", "-29rem center"],
+        ["2022-audi-q4-sportback-2.jpg", "-10rem center"],
+        ["2023-audi-q4-1.jpg", "-24rem center"],
+      ],
+      overlayText: "2022 Audi Q4 e-tron®",
+      modelName: "q4",
+    },
+  ];
 
-  const baseImagePath = "hero_images/"
-  const blurredImagePath = baseImagePath.concat('blurred/')
-  const mobileImagePath = baseImagePath.concat('mobile/')
-  let imageUrl = ""
+  // Random int which will be used to select an element from heroImages
+  const randomVehicle = Math.floor(Math.random() * heroImages.length);
+  const randomImageIndex = Math.floor(
+    Math.random() * heroImages[randomVehicle]["imageNames"].length
+  );
+  const randomImage = heroImages[randomVehicle].imageNames[randomImageIndex][0];
+
+  const baseImagePath = "hero_images/";
+  const blurredImagePath = baseImagePath.concat("blurred/");
+  const mobileImagePath = baseImagePath.concat("mobile/");
+  let imageUrl = "";
 
   /**
    * Detecting mobile devices with screen max-width dimensions.
    * This will account for phones, portrait and landscape, and smaller
    * tablets. If a mobile device is detected, serve the mobile-optimized
    * hero image.
-   */  
+   */
   // Phones in landscape and other mobile devices.
-  if (window.matchMedia('(max-width: 1024px)').matches) {
-    imageUrl = mobileImagePath + randomImage
+  if (window.matchMedia("(max-width: 1024px)").matches) {
+    imageUrl = mobileImagePath + randomImage;
   } else {
-    imageUrl = baseImagePath + randomImage
+    imageUrl = baseImagePath + randomImage;
   }
 
   return {
-    "imageUrl": imageUrl,
-    "portraitPosition": heroImages[randomVehicle].imageNames[randomImageIndex][1],
-    "blurredImageUrl": blurredImagePath + randomImage,
-    "title": heroImages[randomVehicle].overlayText,
-    "model": heroImages[randomVehicle].modelName
-  }
+    imageUrl: imageUrl,
+    portraitPosition: heroImages[randomVehicle].imageNames[randomImageIndex][1],
+    blurredImageUrl: blurredImagePath + randomImage,
+    title: heroImages[randomVehicle].overlayText,
+    model: heroImages[randomVehicle].modelName,
+  };
 }
 
 export async function preloadBlurredImage(imageUrl) {
