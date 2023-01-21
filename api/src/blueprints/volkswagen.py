@@ -36,7 +36,7 @@ def get_volkswagen_inventory():
         "variables": {
             "zipcode": zip_code,
             "distance": int(radius),
-            "pageSize": 500,  # Hardcoded for now
+            "pageSize": 1000,
             "pageNumber": 0,
             "sortBy": "",
             "filters": str({"modelName": [model], "modelYear": [int(year)]}),
