@@ -125,6 +125,18 @@ export function getHeroImage() {
       overlayText: "2022 Audi Q4 e-tron®",
       modelName: "q4",
     },
+    {
+      imageNames: [
+        ["2023-ioniq6-1.jpg", "-40rem center"],
+        ["2023-ioniq6-2.jpg", "-10rem center"],
+        ["2023-ioniq6-3.jpg", "center center"],
+        ["2023-ioniq6-4.jpg", "-45rem center"],
+        ["2023-ioniq6-5.jpg", "-20rem center"],
+        ["2023-ioniq6-6.jpg", "-23rem center"],
+      ],
+      overlayText: "2023 Hyundai Ioniq 6",
+      modelName: "Ioniq%206",
+    },
   ];
 
   // Random int which will be used to select an element from heroImages
