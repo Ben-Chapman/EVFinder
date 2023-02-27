@@ -22,6 +22,7 @@ const modelOptions = [
     label: "Hyundai",
     options: [
       { value: "Ioniq%205", text: "Ioniq 5" },
+      { value: "Ioniq%206", text: "Ioniq 6" },
       { value: "Ioniq%20Phev", text: "Ioniq Plug-in Hybrid" },
       { value: "Kona%20Ev", text: "Kona Electric" },
       { value: "Santa%20Fe%20Phev", text: "Santa Fe Plug-in Hybrid" },

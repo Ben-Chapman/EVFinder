@@ -28,13 +28,6 @@ generate_desktop_images () {
   -density 96 \
   -quality "${DESKTOP_QUALITY_FACTOR}%" \
   ${1} ${2}
-
-  # Optimizing the desktop images one by one. ImageOptim takes a single file or
-  # a directory as input params, and when the input is a directory ImageOptim will
-  # optimze all images recursively. Becuase the source images are stored in a 
-  # subdir within the desktop images dir, the source images get optimized, which
-  # we don't want.
-  optimize_images $2
 }
 
 generate_blurred_images () {
@@ -58,15 +51,25 @@ generate_mobile_images () {
   -strip \
   -interlace Plane \
   -resize ${MOBILE_IMAGE_WIDTH} \
-  -density 96 \
+  -density 300 \
   -quality "${MOBILE_QUALITY_FACTOR}%" \
   ${1} ${2}
 }
 
 optimize_images () {
   if [ $(uname) = "Darwin" ]; then
-    echo "Optimizing images: $@ 🚀"
+    echo -e "\n🖼️ 🚀 Optimizing images: $@"
+
+    # ImageOptim takes a single file or a directory as input params, and when the input
+    # is a directory ImageOptim will optimze all images recursively. Becuase the source
+    # images are stored in a subdir within the desktop images dir, the source images get
+    # optimized, which we don't want. So moving the source images dir elsewhere
+    # temporarily while we optimize, and then moving it back. Hacky? Indeed it is.
+    TMPDIR=$(mktemp -d)
+
+    mv ${SOURCE_IMAGE_DIR}/* ${TMPDIR}/
     /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${@} > /dev/null 2>&1
+    mv ${TMPDIR}/* ${SOURCE_IMAGE_DIR}/ && rm -rf ${TMPDIR}
   fi
 }
 
@@ -81,6 +84,4 @@ main () {
 }
 
 main
-
-# Desktop images are optimized one by one in generate_desktop_images()
-optimize_images ${BLURRED_IMAGE_DIR} ${MOBILE_IMAGE_DIR}
+optimize_images ${DESKTOP_IMAGE_DIR}
