@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,7 +27,7 @@ jobs:
         
       - name: Build Application
         working-directory: ./app
-        run: export NODE_OPTIONS=--openssl-legacy-provider && npx vue-cli-service build --mode production
+        run: npx vue-cli-service build --mode production
         
       - name: Serve Files
         uses: Eun/http-server-action@v1
