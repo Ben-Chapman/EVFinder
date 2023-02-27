@@ -33,7 +33,7 @@ export function getHeroImage() {
         ["2023-ioniq5-1.jpg", "-20rem center"],
         ["2023-ioniq5-2.jpg", "-44.5rem center"],
         ["2023-ioniq5-3.jpg", "-58rem center"],
-        ["2023-ioniq5-4.jpg", "-28rem center"], //too low
+        ["2023-ioniq5-4.jpg", "-28rem center"],
       ],
       overlayText: "2023 Hyundai Ioniq 5",
       modelName: "Ioniq%205",
