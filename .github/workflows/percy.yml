@@ -23,7 +23,7 @@ jobs:
           node-version: 16
       
       - name: NPM Install Packages
-        run: npm ci
+        run: npm install
         
       - name: Build Application
         working-directory: ./app
