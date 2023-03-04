@@ -1,9 +1,9 @@
 <template>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center border-0">
   <b-card
     class="no-inventory"
-    bg-variant="warning"
-    text-variant="white"
+    bg-variant="secondary"
+    text-variant="dark"
     >
     <b-card-text>
       <p class="h4">{{ infoTitle }}</p>
