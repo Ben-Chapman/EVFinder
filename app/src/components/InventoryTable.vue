@@ -16,9 +16,13 @@
       </div>
 
       <div v-else-if="showInventoryAlert" class="mt-5">
-        <b-alert show variant="success" class="no-inventory px-5">
-          No Vehicles Were Found. Adjust your search parameters and try again.
-        </b-alert>
+        <InfoMessage
+          infoTitle="No Inventory Available  😢"
+          :infoText="`No ${this.form.year} ${this.form.vehicleName}'s were found within
+          ${this.form.radius} miles of ${this.form.zipcode}.<br><br>
+          Adjust your search and try again — you can enter a search radius of up
+          to 999 miles.<br>That's a 16 hour drive (without stops), or a 4 hour flight :)`"
+        />
       </div>
 
       <div v-else>
@@ -207,6 +211,7 @@
 <script>
   import ErrorMessage from './ErrorMessage.vue'
   import Filters from './Filters.vue'
+  import InfoMessage from './InfoMessage.vue'
 
   import { mapActions, mapState } from 'vuex'
   import { has } from 'lodash'
@@ -224,7 +229,8 @@
   export default {
     components: {
       ErrorMessage,
-      Filters
+      Filters,
+      InfoMessage,
       },
 
       created() {
@@ -579,10 +585,4 @@
     font-size: 1rem !important;
     letter-spacing: -.03rem;
 }
-
-  .no-inventory {
-    color: #6c757d !important;
-    font-size: 1.2rem;
-    text-align: center;
-  }
 </style>
