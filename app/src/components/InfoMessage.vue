@@ -1,16 +1,16 @@
 <template>
   <div class="d-flex justify-content-center border-0">
-  <b-card
-    class="no-inventory"
-    bg-variant="secondary"
-    text-variant="dark"
-    >
-    <b-card-text>
-      <p class="h4">{{ infoTitle }}</p>
-      <p class=pt-3 v-html="infoText"></p>
-    </b-card-text>
-  </b-card>
-</div>
+    <b-card
+      class="no-inventory"
+      bg-variant="secondary"
+      text-variant="dark"
+      >
+      <b-card-text>
+        <p class="h4">{{ infoTitle }}</p>
+        <p class=pt-3 v-html="infoText"></p>
+      </b-card-text>
+    </b-card>
+  </div>
 </template>
 
 
