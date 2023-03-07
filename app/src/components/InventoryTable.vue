@@ -20,8 +20,8 @@
           infoTitle="No Inventory Available  😢"
           :infoText="`No ${this.form.year} ${this.form.vehicleName}'s were found within
           ${this.form.radius} miles of ${this.form.zipcode}.<br><br>
-          Adjust your search and try again — you can enter a search radius of up
-          to 999 miles.<br>That's a 16 hour drive (without stops), or a 4 hour flight :)`"
+          Adjust your search and try again.<br><br>You can enter a search radius of up
+          to 999 miles. That's a 16 hour drive (without stops), or a 4 hour flight :)`"
         />
       </div>
 
