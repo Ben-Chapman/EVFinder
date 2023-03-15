@@ -9,8 +9,8 @@
       <b-card-text class="pt-3">
         <!-- This is displayed for shorter HTTP responses like from the EVFinder
         API error text. -->
-        <div v-if="this.apiErrorDetail[2].length <= 60">
-        There was a server error with this request: <code class="error-message">{{ this.apiErrorDetail[2] }} ({{ this.apiErrorDetail[1] }})</code>
+        <div v-if="this.apiErrorDetail[1].length <= 60">
+        There was a server error with this request: <code class="error-message">{{ this.apiErrorDetail[1] }}</code>
           <p class="pt-3">Please refresh this page or retry.</p>
         </div>
         <div v-else>
@@ -24,7 +24,7 @@
 
             <b-collapse id="collapse-2">
               <b-card bg-variant="warning" text-variant="white">
-                <code class="error-message">{{ this.apiErrorDetail[2] }} ({{ this.apiErrorDetail[1] }})</code>
+                <code class="error-message">{{ this.apiErrorDetail[1] }}</code>
               </b-card>
             </b-collapse>
           </p>
