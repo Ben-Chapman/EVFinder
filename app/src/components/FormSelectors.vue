@@ -248,16 +248,22 @@
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
+          try {
           const hyundaiInventory = await getHyundaiInventory(
             this.localForm.zipcode,
             this.localForm.year,
             this.localForm.model,
             this.localForm.radius,
+            this.localForm.manufacturer,
           )
-          if (hyundaiInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': hyundaiInventory})
-          } else {
+          console.log(hyundaiInventory)
+          // if (hyundaiInventory[0] === 'ERROR') {
+          //   this.updateStore({'apiErrorDetail': hyundaiInventory})
+          // } else {
             this.updateStore({'inventory': hyundaiInventory})
+          // }
+          } catch (error) {
+            this.updateStore({'apiErrorDetail': error})
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'chevrolet') {
