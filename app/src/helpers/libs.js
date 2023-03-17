@@ -26,7 +26,7 @@ function normalizeObjectKeys(inputObject, keyMap) {
   return { ...tmp, ...inputObject };
 }
 
-export default function normalizeJson(inputJson, keyMap) {
+export function normalizeJson(inputJson, keyMap) {
   var result = [];
   inputJson.forEach((i) => {
     result.push(normalizeObjectKeys(flattenObject(i, ""), keyMap));
