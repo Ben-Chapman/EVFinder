@@ -235,16 +235,17 @@
           this.updateStore({'apiErrorDetail': []})
         }
         if (this.localForm.manufacturer.toLowerCase() == 'kia') {
-          const kiaInventory = await getKiaInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (kiaInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': kiaInventory})
-          } else {
+          try {
+            const kiaInventory = await getKiaInventory(
+              this.localForm.zipcode,
+              this.localForm.year,
+              this.localForm.model,
+              this.localForm.radius,
+              this.localForm.manufacturer,
+            )
             this.updateStore({'inventory': kiaInventory})
+          } catch (error) {
+            this.updateStore({'apiErrorDetail': error})
           }
         }
         else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
