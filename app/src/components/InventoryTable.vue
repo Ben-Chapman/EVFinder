@@ -306,7 +306,7 @@
         else if (this.form.manufacturer.toLowerCase() === "hyundai") {  // Make a vin API call for Hyundai
           // Show users that we're fetching data
           this.vinTableBusy = true
-          const hyundaiVinData = await getHyundaiVinDetail(item.vin, this.form.model, this.form.year)
+          const hyundaiVinData = await getHyundaiVinDetail(item.vin, this.form.model, this.form.year, this.form.manufacturer)
           // Store a new record for each VIN we fetch.
           // this.$set is needed to enable reactive properties on an existing object
           // without this.$set, the nested table will not auto-refresh with this info
