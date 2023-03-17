@@ -7,60 +7,43 @@ import {
 import { apiRequest } from "../helpers/request";
 import { generateErrorMessage } from "../helpers/libs";
 
-const apiBase = "https://api.theevfinder.com";
+// const apiBase = "https://api.theevfinder.com";
 
 export async function getHyundaiInventory(zip, year, model, radius, manufacturer) {
-  // eslint-disable-line
-
   try {
-    const res = await apiRequest("inventory", manufacturer, [...arguments], 3500);
-    return formatHyundaiInventoryResults(res);
-    // console.log(res);
+    const invResponse = await apiRequest(
+      "inventory",
+      manufacturer,
+      2500,
+      [...arguments],
+      {
+        v2: true,
+      }
+    );
+    return formatHyundaiInventoryResults(invResponse);
   } catch (error) {
     console.log(`Hyundai error here: ${error}`);
     throw generateErrorMessage(error);
   }
-
-  // await fetch(apiBase + '/api/inventory/hyundai?' + new URLSearchParams({
-  //   zip: zip,
-  //   year: year,
-  //   model: model,
-  //   radius: radius,
-  //   v2: true
-  // }),
-  // {method: 'GET', mode: 'cors',})
-
-  // if (!response.ok) {
-  //   return ["ERROR", response.status, await response.text()];
-  // } else {
-  //   return formatHyundaiInventoryResults(await response.json());
-  // }
 }
 
-export async function getHyundaiVinDetail(vin, model, year) {
-  const response = await fetch(
-    apiBase +
-      "/api/vin?" +
-      new URLSearchParams({
-        model: model,
-        year: year,
-        vin: vin,
-      }),
-    {
-      method: "GET",
-      mode: "cors",
+export async function getHyundaiVinDetail(vin, model, year, manufacturer) {
+  try {
+    const vinResponse = await apiRequest("vin", manufacturer, 3500, [...arguments], {
+      year: year,
+      model: model,
+    });
+
+    if (vinResponse["data"].length > 0) {
+      return formatVinDetails(vinResponse["data"][0]["vehicle"][0]);
+    } else if (vinResponse["data"].length == 0) {
+      return generateErrorMessage("No information was found for this VIN");
+    } else {
+      return generateErrorMessage("An error occurred fetching detail for this VIN");
     }
-  );
-
-  // Get VIN detail data for a single vehicle
-  const vinData = await response.json();
-
-  if (vinData["data"].length > 0) {
-    return formatVinDetails(vinData["data"][0]["vehicle"][0]);
-  } else if (vinData["data"].length == 0) {
-    return { "": "No information was found for this VIN" };
-  } else {
-    return { Error: "An error occurred fetching detail for this VIN" };
+  } catch (error) {
+    console.log(`Hyundai error here: ${error}`);
+    throw generateErrorMessage(error);
   }
 }
 
