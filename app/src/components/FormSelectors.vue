@@ -202,6 +202,21 @@
         }
       },
 
+      // async inventoryApiRequest() {
+      //   try {
+      //       const inventoryResponse = await `get${this.manufacturer}Inventory`(
+      //         this.localForm.zipcode,
+      //         this.localForm.year,
+      //         this.localForm.model,
+      //         this.localForm.radius,
+      //         this.localForm.manufacturer,
+      //       )
+      //       this.updateStore({'inventory': kiaInventory})
+      //     } catch (error) {
+      //       this.updateStore({'apiErrorDetail': error})
+      //     }
+      // },
+
       routePushandGo() {
         /*
         Push form fields to the Vue router as query params. We have a watch()
@@ -234,40 +249,42 @@
         if (this.apiErrorDetail.length > 0) {
           this.updateStore({'apiErrorDetail': []})
         }
-        if (this.localForm.manufacturer.toLowerCase() == 'kia') {
-          try {
-            const kiaInventory = await getKiaInventory(
-              this.localForm.zipcode,
-              this.localForm.year,
-              this.localForm.model,
-              this.localForm.radius,
-              this.localForm.manufacturer,
+
+        const inventories = {
+          zipcode: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+          manufacturer: this.localForm.manufacturer,
+
+          async hyundai() {
+            return await getHyundaiInventory(
+            this.zipcode,
+            this.year,
+            this.model,
+            this.radius,
+            this.manufacturer,
             )
-            this.updateStore({'inventory': kiaInventory})
+          },
+          async kia() {
+            return await getKiaInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          }
+        };
+
+        try {
+          const inv = await inventories[this.localForm.manufacturer.toLowerCase()]()
+          this.updateStore({'inventory': inv})
           } catch (error) {
             this.updateStore({'apiErrorDetail': error})
           }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
-          try {
-          const hyundaiInventory = await getHyundaiInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-            this.localForm.manufacturer,
-          )
-          console.log(hyundaiInventory)
-          // if (hyundaiInventory[0] === 'ERROR') {
-          //   this.updateStore({'apiErrorDetail': hyundaiInventory})
-          // } else {
-            this.updateStore({'inventory': hyundaiInventory})
-          // }
-          } catch (error) {
-            this.updateStore({'apiErrorDetail': error})
-          }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'chevrolet') {
+
+        if (this.localForm.manufacturer.toLowerCase() === 'chevrolet') {
           const chevroletInventory = await getChevroletInventory(
             this.localForm.zipcode,
             this.localForm.year,
