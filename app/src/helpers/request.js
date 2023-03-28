@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License along with The EV Finder.
  * If not, see <https://www.gnu.org/licenses/>.
  */
-
 const axios = require("axios").default;
 const controller = new AbortController();
 
@@ -22,32 +21,26 @@ const controller = new AbortController();
  * Helper function which standardizes requests to the EV Finder API.
  * @param {String} apiEndpoint Which EV Finder API endpoint to request. Either "inventory"
  * or "vin"
- * @param {String} manufacturer The name of the manufacturer for which the inventory request
- * is being made.
- * @param {Array} requiredParams An array of query parameter values which are
- * required for any inventory or vin API request. For inventory requests the required
- * params are [zip, year, model, radius]. For VIN requests the only required param is [vin].
+ * @param {String} manufacturer Required only for inventory requests. The name of the
+ * manufacturer for which the inventory request is being made.
  * @param {Number} timeout The timeout value for the HTTP request in milliseconds. If this
  * value has elapsed without a response from the EV Finder API, the request is aborted and
  * an error is returned to the caller.
+ * @param {Array} requiredParams An array of query parameter values which are
+ * required for any inventory or vin API request. For inventory requests the required
+ * params are [zip, year, model, radius]. For VIN requests the only required param is [vin].
  * @param {Object} additionalParams Optional. If there are additional query
  * parameters the Vue app needs to pass into the EV Finder API, include them here.
- * @return {Object} Either the inventory response from the EV Finder API or a descriptive
+ * @returns {Object} Either the inventory response from the EV Finder API or a descriptive
  * error message as a JSON Object.
  */
 export async function apiRequest(
   apiEndpoint,
   manufacturer,
-  requiredParams = [],
   timeout,
+  requiredParams,
   additionalParams = {}
 ) {
-  // Ensure that the apiEndpoint argument is valid
-  const validApiEndpoints = ["inventory", "vin"];
-  if (!validApiEndpoints.includes(apiEndpoint)) return {};
-
-  const requestUri = `/api/${apiEndpoint}/${manufacturer.toLowerCase()}`;
-
   const axiosConfig = {
     method: "get",
     baseURL: "http://localhost",
@@ -56,32 +49,15 @@ export async function apiRequest(
     timeout: timeout,
   };
 
-  /**
-   * The EV Finder API expects query params, so writing the function arguments into an
-   * Object which is used for the Axios request. For those manufacturers which require
-   * additional information from the Vue app (e.g. Audi and it's geo parameter), combining
-   * the requiredParams and additionalParams Objects.
-   */
-  const buildRequestParams = () => {
-    return apiEndpoint === "inventory"
-      ? {
-          zip: requiredParams[0],
-          year: requiredParams[1],
-          model: requiredParams[2],
-          radius: requiredParams[3],
-          ...additionalParams,
-        }
-      : {
-          vin: requiredParams[0],
-          ...additionalParams,
-        };
-  };
+  const requestUri = `/api/${apiEndpoint}/${manufacturer.toLowerCase()}`;
 
   try {
     const response = await axios
       .create(axiosConfig)
-      .get(requestUri, { params: buildRequestParams() });
-    console.log(`Response here: ${JSON.stringify(response.data)}`);
+      .get(requestUri, {
+        params: buildRequestParams(apiEndpoint, requiredParams, additionalParams),
+      });
+    console.log(`request.js response here: ${JSON.stringify(response.data)}`);
     // Return a successful response
     return response.data;
   } catch (error) {
@@ -100,4 +76,35 @@ export async function apiRequest(
       throw error;
     }
   }
+}
+
+/**
+ *
+ * @param {String} apiEndpoint Which EV Finder API endpoint to request from. Either "inventory" or "vin"
+ * @param {Array} requiredParams An array of query parameter values which are
+ * required for any inventory or vin API request. For inventory requests the required
+ * params are [zip, year, model, radius]. For VIN requests the only required param is [vin].
+ * @param {Object} additionalParams Optional. If there are additional query
+ * parameters the Vue app needs to pass into the EV Finder API, include them here.
+ * @returns {Object} An Object containing query parameters required for an EV Finder API request.
+ */
+function buildRequestParams(apiEndpoint, requiredParams, additionalParams = {}) {
+  /**
+   * The EV Finder API expects query params, so writing the function arguments into an
+   * Object which is used for the Axios request. For those manufacturers which require
+   * additional information from the Vue app (e.g. Audi and it's geo parameter), combining
+   * the requiredParams and additionalParams Objects.
+   */
+  return apiEndpoint === "inventory"
+    ? {
+        zip: requiredParams[0],
+        year: requiredParams[1],
+        model: requiredParams[2],
+        radius: requiredParams[3],
+        ...additionalParams,
+      }
+    : {
+        vin: requiredParams[0],
+        ...additionalParams,
+      };
 }
