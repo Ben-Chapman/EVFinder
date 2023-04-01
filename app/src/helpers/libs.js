@@ -1,9 +1,27 @@
-import { camelCase, startCase } from "lodash";
+import { camelCase } from "lodash";
 
-var flattendObj = {};
-const flattenObject = (obj, keyName) => {
+/**
+ * Helper function which flattens a nested Object to an Object containing only key: value pairs
+ * @param {Object} obj An input Object containing nested key: value pairs.
+ * @param {String} keyPrefix A prefix which will be appended to the key name.
+ * @returns {String} A flat Object containing only key: value pairs. The key name will be a concatenation of the strings contained in the original nested object keys. For example, an input Object of
+ * {
+ *   key1:
+ *     {
+ *       childKey1: "value",
+ *       childKey2: "value"
+ *     }
+ * }
+ * will result in a flattened Object of:
+ * {
+ *   prefixNameKey1ChildKey1: 'value',
+ *   prefixNameKey1ChildKey2: 'value'
+ * }
+ */
+let flattendObj = {};
+export function flattenObject(obj, keyPrefix) {
   Object.keys(obj).forEach((key) => {
-    var newKey = camelCase(`${keyName}-${key}`);
+    var newKey = camelCase(`${keyPrefix}-${key}`);
     if (typeof obj[key] === "object") {
       if (obj[key] != null) {
         // Recurse
@@ -14,7 +32,7 @@ const flattenObject = (obj, keyName) => {
     }
   });
   return flattendObj;
-};
+}
 
 function normalizeObjectKeys(inputObject, keyMap) {
   let tmp = {};
@@ -33,7 +51,11 @@ export function normalizeJson(inputJson, keyMap) {
   });
   return result;
 }
-
+/**
+ * Helper function which converts a Number to a USD-formatted string.
+ * @param {Number} item An input Number which is to be converted to a USD currency string. The output value will be rounded to the nearest whole dollar amount.
+ * @returns {String} A USD-formatted string of the input Number. 123 -> $1.23, 24.99 -> $25
+ */
 export function convertToCurrency(item) {
   var formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -47,14 +69,31 @@ export function convertToCurrency(item) {
   return formatter.format(item);
 }
 
-export function titleCase(item) {
-  return startCase(camelCase(item));
+/**
+ * Helper function which converts a string to Title Case
+ * @param {String} str An input string which is to be Title Cased
+ * @returns {String} A Title Cased string
+ */
+export function titleCase(str) {
+  function capitalize(str) {
+    if (str.length == 0) return str;
+    return str[0].toUpperCase() + str.substr(1);
+  }
+  return str.split(" ").map(capitalize).join(" ");
 }
 
+/**
+ * Helper function to sort an Object by it's keys
+ * @param {Object} item An Object which is to be sorted
+ * @returns {Object} An Object whose keys are in alphabetical order
+ */
 export function sortObjectByKey(item) {
   return Object.fromEntries(Object.entries(item).sort());
 }
-
+/**
+ * A helper function to log to console.log
+ * @param {*} whatToLog Any Javascript type which is to be logged to console.log.
+ */
 export function cl(whatToLog) {
   if (typeof whatToLog === "object" && whatToLog != null) {
     console.log(JSON.stringify(whatToLog));
@@ -62,7 +101,11 @@ export function cl(whatToLog) {
     console.log(whatToLog);
   }
 }
-
+/**
+ * A helper function which strips HTML to return plain text
+ * @param {String} html A string containing HTML of which the markup will be stripped
+ * @returns A plain-text string, stripped of HTML
+ */
 export function stripHTML(html) {
   // https://stackoverflow.com/a/47140708
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -93,7 +136,11 @@ export function generateUrlQueryParams(item, sliceLength) {
   // Push query param changes to the URL
   window.history.replaceState({}, "", url.search);
 }
-
+/**
+ *
+ * @param {String} errorText A string error message which is to be returned as an EV Finder error message
+ * @returns {Array} An error message which is consumed by the EV Finder Vue app
+ */
 export function generateErrorMessage(errorText) {
   return ["ERROR", errorText];
 }
