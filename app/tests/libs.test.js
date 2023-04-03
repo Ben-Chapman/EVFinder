@@ -9,6 +9,8 @@ describe("Chatbot", () => {
 
     expect(libs.titleCase("this sHould be a Title")).toBe("This SHould Be A Title");
 
+    expect(libs.titleCase("PLZ STOP SHOUTING!")).toBe("Plz Stop Shouting!");
+
     expect(
       libs.titleCase("This is the thirty-third day of the month — wait, no it's not!")
     ).toBe("This Is The Thirty-third Day Of The Month — Wait, No It's Not!");
