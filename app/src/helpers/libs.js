@@ -72,14 +72,20 @@ export function convertToCurrency(item) {
 /**
  * Helper function which converts a string to Title Case
  * @param {String} str An input string which is to be Title Cased
+ * @param {Boolean} isAllCaps Title Case an ALL CAPS STRING?
  * @returns {String} A Title Cased string
  */
 export function titleCase(str) {
   function capitalize(str) {
     if (str.length == 0) return str;
-    return str[0].toUpperCase() + str.substr(1);
+    return str[0].toUpperCase() + str.slice(1);
   }
-  return str.split(" ").map(capitalize).join(" ");
+  // If the input string is ALL CAPS, lowercase it first so capitalize() can actually
+  // Title Case the string
+  const returnStr =
+    str === str.toUpperCase() ? str.toLowerCase().split(" ") : str.split(" ");
+
+  return returnStr.map(capitalize).join(" ");
 }
 
 /**
