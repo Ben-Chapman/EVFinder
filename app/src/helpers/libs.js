@@ -72,7 +72,6 @@ export function convertToCurrency(item) {
 /**
  * Helper function which converts a string to Title Case
  * @param {String} str An input string which is to be Title Cased
- * @param {Boolean} isAllCaps Title Case an ALL CAPS STRING?
  * @returns {String} A Title Cased string
  */
 export function titleCase(str) {
