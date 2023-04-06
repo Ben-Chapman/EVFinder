@@ -295,93 +295,62 @@
         if (item["_showDetails"]) item["_showDetails"] = false;
         else this.$set(item, "_showDetails", true);
 
-        if (this.form.manufacturer.toLowerCase() === "kia") {
-          const kiaVinData = getKiaVinDetail(item)
-          this.$set(
-            this.vinDetail,  // Where to store
-            item.vin,        // What's the key
-            kiaVinData,            // Data to store
+        // Show users that we're fetching data
+        this.vinTableBusy = true
+        // let manufacturer = this.
+        const vinApiCall = {
+          manufacturer: this.form.manufacturer.toLowerCase(),
+          zipcode: this.form.zipcode,
+          model: this.form.model,
+          // Year is needed for Hyundai. API change needed to remove this
+          year: this.form.year,
+          item: item,
+
+          async hyundai() {
+            return await getHyundaiVinDetail(
+              this.item.vin,
+              this.manufacturer,
+              this.model,
+              this.year,
+              )
+          },
+          async kia() {
+            return getKiaVinDetail(this.item)
+          },
+          async chevrolet() {
+            return await getChevroletVinDetail(this.item.vin)
+          },
+          async genesis() {
+            return getGenesisVinDetail(this.item)
+          },
+          async volkswagen() {
+            return await getVolkswagenVinDetail(
+              this.zipcode,
+              this.item.vin
+              )
+          },
+          async ford() {
+            return await getFordVinDetail(
+              this.item.dealerSlug,
+              this.model,
+              this.item.vin,
+              this.item.modelYear,
+              this.item.dealerPaCode,
+              this.zipcode,
             )
+          },
+          async audi() {
+            return await getAudiVinDetail(this.item.id)
+          }
         }
-        else if (this.form.manufacturer.toLowerCase() === "hyundai") {  // Make a vin API call for Hyundai
-          // Show users that we're fetching data
-          this.vinTableBusy = true
-          const hyundaiVinData = await getHyundaiVinDetail(item.vin, this.form.model, this.form.year, this.form.manufacturer)
-          // Store a new record for each VIN we fetch.
-          // this.$set is needed to enable reactive properties on an existing object
-          // without this.$set, the nested table will not auto-refresh with this info
-          this.$set(
-            this.vinDetail,
-            item.vin,
-            hyundaiVinData
-            )
-        }
-        else if (this.form.manufacturer.toLowerCase() === "chevrolet") {  // Make a vin API call for Chevrolet
-          // Show users that we're fetching data
-          this.vinTableBusy = true
-          const chevroletVinData = await getChevroletVinDetail(item.vin)
-          // Store a new record for each VIN we fetch.
-          // this.$set is needed to enable reactive properties on an existing object
-          // without this.$set, the nested table will not auto-refresh with this info
-          this.$set(
-            this.vinDetail,
-            item.vin,
-            chevroletVinData
-            )
-        }
-        else if (this.form.manufacturer.toLowerCase() === "genesis") {
-          const genesisVinData = getGenesisVinDetail(item)
-          this.$set(
-            this.vinDetail,  // Where to store
-            item.vin,        // What's the key
-            genesisVinData,            // Data to store
-            )
-        }
-        else if (this.form.manufacturer.toLowerCase() === "volkswagen") {  // Make a vin API call for Volkswagen
-          // Show users that we're fetching data
-          this.vinTableBusy = true
-          const volkswagenVinData = await getVolkswagenVinDetail(this.form.zipcode, item.vin)
-          // Store a new record for each VIN we fetch.
-          // this.$set is needed to enable reactive properties on an existing object
-          // without this.$set, the nested table will not auto-refresh with this info
-          this.$set(
-            this.vinDetail,
-            item.vin,
-            volkswagenVinData
-            )
-        }
-        else if (this.form.manufacturer.toLowerCase() === "ford") {
-          // Show users that we're fetching data
-          this.vinTableBusy = true
-          const fordVinData = await getFordVinDetail(
-            item.dealerSlug,
-            this.form.model,
-            item.vin,
-            item.modelYear,
-            item.dealerPaCode,
-            this.form.zipcode,
-          )
-          // Store a new record for each VIN we fetch.
-          // this.$set is needed to enable reactive properties on an existing object
-          // without this.$set, the nested table will not auto-refresh with this info
-          this.$set(
-            this.vinDetail,
-            item.vin,
-            fordVinData
-            )
-        }
-        else if (this.form.manufacturer.toLowerCase() === "audi") {
-          // Show users that we're fetching data
-          this.vinTableBusy = true
-          const audiVinData = await getAudiVinDetail(item.id)
-          // Store a new record for each VIN we fetch.
-          // this.$set is needed to enable reactive properties on an existing object
-          // without this.$set, the nested table will not auto-refresh with this info
-          this.$set(
-            this.vinDetail,
-            item.vin,
-            audiVinData
-            )
+        try {
+          const vinData = await vinApiCall[this.form.manufacturer.toLowerCase()]()
+
+          // $set(where to store, what's the key, data to store)
+          this.$set(this.vinDetail, item.vin, await vinData)
+        } catch (error) {
+          // TODO: Make this a proper error view in the UI
+          this.$set(this.vinDetail, item.vin, error)
         }
 
         // Remove the table busy indicator
