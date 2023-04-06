@@ -95,3 +95,14 @@ test("console.log the text this is a test", () => {
   libs.cl("this is a test");
   expect(logSpy).toHaveBeenCalledWith("this is a test");
 });
+
+test("Price string should be converted to a Number", () => {
+  expect(libs.priceStringToNumber("$38,091")).toBe(38091);
+  expect(libs.priceStringToNumber("$147,062")).toBe(147062);
+  expect(libs.priceStringToNumber("$1,000,000")).toBe(1000000);
+  expect(libs.priceStringToNumber("$1")).toBe(1);
+  // convertToCurrency() rounds to the nearest whole number
+  expect(libs.priceStringToNumber("$0.5")).toBe(0.5);
+  // expect(libs.convertToCurrency(1.99)).toBe("$2");
+  // expect(libs.convertToCurrency(1.45)).toBe("$1");
+});

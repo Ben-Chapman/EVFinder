@@ -70,6 +70,15 @@ export function convertToCurrency(item) {
 }
 
 /**
+ *
+ * @param {String} priceString An string containing a USD currency like $50,000.
+ * @returns {Number} A Number equivalent in value to the input string.
+ */
+export function priceStringToNumber(priceString) {
+  return Number(parseFloat(priceString.replace("$", "").replaceAll(",", "")));
+}
+
+/**
  * Helper function which converts a string to Title Case
  * @param {String} str An input string which is to be Title Cased
  * @returns {String} A Title Cased string

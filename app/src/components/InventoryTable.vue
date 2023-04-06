@@ -216,7 +216,7 @@
   import { mapActions, mapState } from 'vuex'
   import { has } from 'lodash'
 
-  import { convertToCurrency } from '../helpers/libs'
+  import { convertToCurrency, priceStringToNumber } from '../helpers/libs'
 
   import { getAudiVinDetail } from '../manufacturers/audi'
   import { getFordVinDetail } from '../manufacturers/ford'
@@ -331,16 +331,17 @@
           },
           async ford() {
             return await getFordVinDetail(
+              this.item.vin,
               this.item.dealerSlug,
               this.model,
-              this.item.vin,
               this.item.modelYear,
               this.item.dealerPaCode,
               this.zipcode,
+              this.manufacturer,
             )
           },
           async audi() {
-            return await getAudiVinDetail(this.item.id)
+            return await getAudiVinDetail(this.item.id, this.manufacturer)
           }
         }
         try {
@@ -355,10 +356,6 @@
 
         // Remove the table busy indicator
         this.vinTableBusy = false
-      },
-
-      priceStringToNumber(priceString) {
-        return Number(parseFloat(priceString.replace('$', '').replace(',', '')))
       },
 
       formatDate(isoDate) {
@@ -470,7 +467,7 @@
       },
 
       filterByPrice(rowRecord, selectedPrice) {
-        return this.priceStringToNumber(rowRecord.price) < selectedPrice
+        return priceStringToNumber(rowRecord.price) < selectedPrice
       },
 
       hasHyundaiVinDetail(item) {
