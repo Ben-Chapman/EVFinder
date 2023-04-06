@@ -152,7 +152,7 @@ export function generateUrlQueryParams(item, sliceLength) {
 }
 /**
  *
- * @param {String} errorText A string error message which is to be returned as an EV Finder error message
+ * @param {String} errorText A error message String which is to be shown as an Error in the TV Finder UI.
  * @returns {Array} An error message which is consumed by the EV Finder Vue app
  */
 export function generateErrorMessage(errorText) {
