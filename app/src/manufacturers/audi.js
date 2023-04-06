@@ -1,44 +1,48 @@
-import { stripHTML, titleCase } from "../helpers/libs";
+/**
+ * Copyright 2023 Ben Chapman
+ *
+ * This file is part of The EV Finder.
+ *
+ * The EV Finder is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * The EV Finder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with The EV Finder.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import { apiRequest } from "../helpers/request";
+import { generateErrorMessage, stripHTML, titleCase } from "../helpers/libs";
 import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
 
-const apiBase = "https://api.theevfinder.com";
-
-export async function getAudiInventory(zip, year, model, radius) {
-  const geo = await getGeoFromZipcode(zip);
-
-  const inventory = await fetch(
-    apiBase +
-      "/api/inventory/audi?" +
-      new URLSearchParams({
-        geo: geo,
-        year: year,
-        model: model,
-        radius: radius,
-      }),
-    { method: "GET", mode: "cors" }
-  );
-
-  if (inventory.ok) {
-    return formatAudiInventoryResults(await inventory.json());
-  } else {
-    return ["ERROR", inventory.status, await inventory.text()];
+export async function getAudiInventory(zip, year, model, radius, manufacturer) {
+  try {
+    const geo = await getGeoFromZipcode(zip);
+    const invResponse = await apiRequest(
+      "inventory",
+      manufacturer,
+      30000,
+      [...arguments],
+      { geo: geo }
+    );
+    return formatAudiInventoryResults(invResponse);
+  } catch (error) {
+    throw generateErrorMessage(error);
   }
 }
 
-export async function getAudiVinDetail(vehicleId) {
-  const vinData = await fetch(
-    apiBase +
-      "/api/vin/audi?" +
-      new URLSearchParams({
-        vehicleId: vehicleId,
-      }),
-    { method: "GET", mode: "cors" }
-  );
-
-  if (vinData.ok) {
-    return formatAudiVinResults(await vinData.json());
-  } else {
-    return ["ERROR", vinData.status, vinData.text];
+export async function getAudiVinDetail(vehicleId, manufacturer) {
+  try {
+    const vinData = await apiRequest("vin", manufacturer, 30000, [...arguments], {
+      vehicleId: vehicleId,
+    });
+    return formatAudiVinResults(vinData);
+  } catch (error) {
+    throw generateErrorMessage(error);
   }
 }
 
