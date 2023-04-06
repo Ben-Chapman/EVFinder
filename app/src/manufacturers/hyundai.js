@@ -1,3 +1,20 @@
+/**
+ * Copyright 2023 Ben Chapman
+ *
+ * This file is part of The EV Finder.
+ *
+ * The EV Finder is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * The EV Finder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with The EV Finder.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import { convertToCurrency, titleCase } from "../helpers/libs";
 import {
   hyundaiVinDetailMapping,
@@ -7,14 +24,12 @@ import {
 import { apiRequest } from "../helpers/request";
 import { generateErrorMessage } from "../helpers/libs";
 
-// const apiBase = "https://api.theevfinder.com";
-
 export async function getHyundaiInventory(zip, year, model, radius, manufacturer) {
   try {
     const invResponse = await apiRequest(
       "inventory",
       manufacturer,
-      2500,
+      15000,
       [...arguments],
       {
         v2: true,
@@ -22,12 +37,11 @@ export async function getHyundaiInventory(zip, year, model, radius, manufacturer
     );
     return formatHyundaiInventoryResults(invResponse);
   } catch (error) {
-    console.log(`Hyundai error here: ${error}`);
     throw generateErrorMessage(error);
   }
 }
 
-export async function getHyundaiVinDetail(vin, model, year, manufacturer) {
+export async function getHyundaiVinDetail(vin, manufacturer, model, year) {
   try {
     const vinResponse = await apiRequest("vin", manufacturer, 3500, [...arguments], {
       year: year,
