@@ -3,9 +3,8 @@ import { apiRequest } from "../helpers/request";
 import { kiaInventoryMapping, kiaVinMapping } from "./kiaMappings";
 
 export async function getKiaInventory(zip, year, model, radius, manufacturer) {
-  //eslint-ignore-line
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 3500, [
+    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
       ...arguments,
     ]);
     return formatKiaInventoryResults(invResponse);
@@ -89,7 +88,7 @@ function formatKiaInventoryResults(input) {
 }
 
 export function getKiaVinDetail(input) {
-  /** The KIA API response contains all publically available information
+  /** The KIA API response contains all publicly available information
    * about the vehicle, so there's no additional VIN API call needed. Thus
    * storing the /inventory API data directly in the vinDetail local store.
    */
