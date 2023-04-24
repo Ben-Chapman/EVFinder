@@ -27,7 +27,7 @@ import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 
 export async function getFordInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
+    const invResponse = await apiRequest("inventory", manufacturer, 30000, [
       ...arguments,
     ]);
     return formatFordInventoryResults(invResponse);
