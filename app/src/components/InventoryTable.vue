@@ -326,7 +326,8 @@
           async volkswagen() {
             return await getVolkswagenVinDetail(
               this.zipcode,
-              this.item.vin
+              this.item.vin,
+              this.manufacturer
               )
           },
           async ford() {
