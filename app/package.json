@@ -3,7 +3,7 @@
   "version": "1.15.3",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "export NODE_ENV=production && vue-cli-service serve",
     "build": "vue-cli-service build --openssl-legacy-provider --mode production  --dest /workspace/dist",
     "lint": "vue-cli-service lint",
     "test": "jest"

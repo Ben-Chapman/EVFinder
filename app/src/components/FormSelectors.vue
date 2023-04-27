@@ -126,6 +126,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
+  import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
   import { getFordInventory } from '../manufacturers/ford'
@@ -202,21 +203,6 @@
         }
       },
 
-      // async inventoryApiRequest() {
-      //   try {
-      //       const inventoryResponse = await `get${this.manufacturer}Inventory`(
-      //         this.localForm.zipcode,
-      //         this.localForm.year,
-      //         this.localForm.model,
-      //         this.localForm.radius,
-      //         this.localForm.manufacturer,
-      //       )
-      //       this.updateStore({'inventory': kiaInventory})
-      //     } catch (error) {
-      //       this.updateStore({'apiErrorDetail': error})
-      //     }
-      // },
-
       routePushandGo() {
         /*
         Push form fields to the Vue router as query params. We have a watch()
@@ -235,7 +221,7 @@
               error.name !== 'NavigationDuplicated' &&
               !error.message.includes('Avoided redundant navigation to current location')
             ) {
-              console.log(error)
+              logMessage(`Vue router navigation error: ${error}`, "error")
               }
             })
       },
@@ -323,8 +309,6 @@
         };
 
         try {
-          // m = this.localForm.manufacturer.toLowerCase()
-          console.log(`getting inv for ${this.localForm.manufacturer.toLowerCase()}`)
           const inv = await inventories[this.localForm.manufacturer.toLowerCase()]()
           this.updateStore({'inventory': inv})
           } catch (error) {

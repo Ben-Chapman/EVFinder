@@ -56,7 +56,6 @@ export async function getHyundaiVinDetail(vin, manufacturer, model, year) {
       return generateErrorMessage("An error occurred fetching detail for this VIN");
     }
   } catch (error) {
-    console.log(`Hyundai error here: ${error}`);
     throw generateErrorMessage(error);
   }
 }

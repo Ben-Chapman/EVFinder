@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License along with The EV Finder.
  * If not, see <https://www.gnu.org/licenses/>.
  */
+import { logMessage } from "./logger";
 const axios = require("axios").default;
 const controller = new AbortController();
 
@@ -43,7 +44,7 @@ export async function apiRequest(
 ) {
   const axiosConfig = {
     method: "get",
-    baseURL: "http://localhost",
+    baseURL: "https://api.theevfinder.com",
     withCredentials: false,
     responseType: "json",
     timeout: timeout,
@@ -52,26 +53,32 @@ export async function apiRequest(
   const requestUri = `/api/${apiEndpoint}/${manufacturer.toLowerCase()}`;
 
   try {
-    const response = await axios
-      .create(axiosConfig)
-      .get(requestUri, {
-        params: buildRequestParams(apiEndpoint, requiredParams, additionalParams),
-      });
-    console.log(`request.js response here: ${JSON.stringify(response.data)}`);
+    const response = await axios.create(axiosConfig).get(requestUri, {
+      params: buildRequestParams(apiEndpoint, requiredParams, additionalParams),
+    });
     // Return a successful response
     return response.data;
   } catch (error) {
     if (error.response) {
       // Request made and server responded
-      console.log(`This Response error firing: ${error?.message}`);
+      logMessage(
+        `An error occurred with an API request for ${manufacturer}: ${error?.message} | ${error?.response?.data}`,
+        "error"
+      );
       throw error?.response?.data;
     } else if (error.request) {
       // The request was made but no response was received
-      console.log(`This Request error firing: ${error?.message}`);
+      logMessage(
+        `No response was received from the EV Finder API for ${manufacturer}: ${error?.message} | ${error?.response?.data}`,
+        "error"
+      );
       throw error?.message;
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log("Aborting");
+      logMessage(
+        `Something happened in setting up a request for ${manufacturer}: ${error}`,
+        "error"
+      );
       controller.abort();
       throw error;
     }
