@@ -1,14 +1,12 @@
-import logging
 import os
-
-import google.cloud.logging
 
 from flask import Flask, request
 from flask_cors import CORS
 
 from blueprints.audi import audi
-from blueprints.ford import ford
 from blueprints.chevrolet import chevrolet
+from blueprints.ford import ford
+from blueprints.logger import logger
 from blueprints.genesis import genesis
 from blueprints.hyundai import hyundai
 from blueprints.kia import kia
@@ -17,6 +15,7 @@ from blueprints.volkswagen import volkswagen
 from blueprints.window_sticker import ws
 
 from libs.libs import send_error_response
+from blueprints.logger import send_gcp_log_message, send_gcp_error_message
 
 app = Flask(__name__)
 
@@ -31,27 +30,20 @@ CORS(
         "http://bs-local.com:8080",
         "http://localhost:8080",
     ],
-    methods="GET",
+    methods=["GET", "POST"],
 )
 
 # Register Blueprints
 app.register_blueprint(audi)
-app.register_blueprint(ford)
 app.register_blueprint(chevrolet)
+app.register_blueprint(ford)
+app.register_blueprint(logger)
 app.register_blueprint(genesis)
 app.register_blueprint(hyundai)
 app.register_blueprint(kia)
 app.register_blueprint(volkswagen)
 app.register_blueprint(vin)
 app.register_blueprint(ws)
-
-# Setup logging to GCP Cloud Logging
-client = google.cloud.logging.Client()
-client.setup_logging()
-
-# CORS Debug Logging
-# import logging
-# logging.getLogger('flask_cors').level = logging.DEBUG
 
 
 @app.before_request
@@ -66,7 +58,7 @@ def validate_source():
         try:
             request.headers[clouflare_auth]
         except KeyError:
-            logging.info(
+            send_gcp_log_message(
                 f"Non-Cloudflare Request: "
                 f"{request.remote_addr}, {request.user_agent}, {request.url}"
             )
@@ -76,4 +68,4 @@ def validate_source():
                 status_code=418,
             )
     else:
-        logging.error("CLOUDFLARE_AUTH Env Variable not found.")
+        send_gcp_error_message("CLOUDFLARE_AUTH Env Variable not found.")
