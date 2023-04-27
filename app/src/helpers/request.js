@@ -44,7 +44,10 @@ export async function apiRequest(
 ) {
   const axiosConfig = {
     method: "get",
-    baseURL: "https://api.theevfinder.com",
+    baseURL:
+      manufacturer.toLowerCase() == "ford"
+        ? "https://api-ford.theevfinder.com"
+        : "https://api.theevfinder.com",
     withCredentials: false,
     responseType: "json",
     timeout: timeout,
