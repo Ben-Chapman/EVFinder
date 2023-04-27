@@ -76,12 +76,16 @@ function formatAudiInventoryResults(input) {
      * "Black-Gray, Black, Flint Gray with Orange piping, Black", where Flint Gray...
      * is the actual interior color. Extracting the actual interiorColor here
      */
-    const interiorColors = vehicle["interiorColor"].split(",");
+    const interiorColors = vehicle["interiorColor"]
+      ? vehicle["interiorColor"].split(",")
+      : "Unknown";
+
     // The real interior color is the second-to-last element in the array
     vehicle["interiorColor"] = interiorColors[interiorColors.length - 2];
 
-    // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits
-    tmp["price"] = tmp["price"].split(".")[0].replace(/\D/g, "");
+    // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits.
+    // If the API-provided price is null, write 0 for the price.
+    tmp["price"] = tmp["price"] ? tmp["price"].split(".")[0].replace(/\D/g, "") : 0;
 
     /**
      * Vehicles in transit have more specific availability data in 'vehicleOrderStatus'.
