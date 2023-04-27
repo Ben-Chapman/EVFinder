@@ -1,5 +1,4 @@
 import json
-import math
 import requests
 
 from flask import Blueprint, request
@@ -75,7 +74,6 @@ def main():
         }
 
         inv = get_ford_inventory(headers=headers, params=inventory_params)
-
         # Add the dealer_slug to the response, the frontend will need this for future
         # API calls
         inv["dealerSlug"] = slug
@@ -88,22 +86,57 @@ def main():
             )
         try:
             total_count = inv["data"]["filterResults"]["ExactMatch"]["totalCount"]
-            if total_count > 12:
-                remainder_inventory_params = {
-                    **inventory_params,
-                    "beginIndex": "12",
-                    # The Ford inventory API pages 12 vehicles at a time, and their API does
-                    # not seem to accept a random high value for endIndex, so calculating
-                    # the actual value here
-                    "endIndex": math.ceil(total_count / 12) * 12,
-                }
+            # The Ford inventory API pages 12 vehicles at a time, and their API does not
+            # accept a random high value for endIndex, nor does it seem to allow for
+            # paging by greater than 100 vehicles at a time. So making N number of API
+            # requests, incremented by amount_to_index_by each loop.
 
-                remainder = get_ford_inventory(
-                    headers=headers, params=remainder_inventory_params
-                )
+            begin_index = 12
+            end_index = 0
+            amount_to_index_by = 90
 
-                # Return the merged inventory + remainder JSON objects
-                inv["rdata"] = remainder["data"]
+            if (
+                total_count > begin_index
+            ):  # If we have more than 12 vehicles in inventory
+                vehicles = []
+                dealers = []
+                while (
+                    begin_index < total_count
+                ):  # Loop until we've paged through all vehicles
+                    # The Ford API seems to be picky about the value of end_index, so
+                    # if a run of this loop would calculate the end_index to be greater
+                    # than the total amount of inventory, just use the total_count as the
+                    # end_index value
+                    if (end_index + amount_to_index_by) > total_count:
+                        end_index = total_count
+                    else:
+                        end_index = begin_index + amount_to_index_by
+
+                    remainder_inventory_params = {
+                        **inventory_params,
+                        "beginIndex": begin_index,
+                        "endIndex": end_index,
+                    }
+                    remainder = get_ford_inventory(
+                        headers=headers, params=remainder_inventory_params
+                    )
+
+                    # A ton of data is returned from the Ford API, most of it unused by
+                    # the site. Just storing what's actually used to dramatically reduce
+                    # the response size back to the front end.
+                    vehicles.append(
+                        remainder["data"]["filterResults"]["ExactMatch"]["vehicles"]
+                    )
+                    dealers.append(
+                        remainder["data"]["filterSet"]["filterGroupsMap"]["Dealer"][0][
+                            "filterItemsMetadata"
+                        ]["filterItems"]
+                    )
+
+                    begin_index += amount_to_index_by  # move to end
+
+                # Return the inventory results + the data from the remainder api calls
+                inv["rdata"] = {"vehicles": vehicles, "dealers": dealers}
 
                 return send_response(
                     response_data=json.dumps(inv),

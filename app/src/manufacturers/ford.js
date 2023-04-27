@@ -68,19 +68,31 @@ export async function getFordVinDetail(
 function formatFordInventoryResults(input) {
   if (Object.keys(input.data.filterResults).length == 0) {
     // filterResults is empty when no vehicles are found for a given search
-    // So returning an empty object so the UI displays the no vehicles found message
+    // Returning an empty object so the UI displays the no vehicles found message
     return {};
   }
 
-  // Merging the initial inventory results with any paginated vehicle results
-  let vehicles = [];
+  let vehicles = input.data.filterResults.ExactMatch.vehicles;
+  let d =
+    input.data.filterSet.filterGroupsMap.Dealer[0].filterItemsMetadata.filterItems;
+
+  // rdata is returned from the EV Finder API when it has to page to retrieve all available
+  // inventory information for a given search. Here we're merging the initial inventory
+  // results with any paginated inventory results
   if (Object.hasOwn(input, "rdata")) {
-    vehicles = input.data.filterResults.ExactMatch.vehicles.concat(
-      input.rdata.filterResults.ExactMatch.vehicles
-    );
-  } else {
-    // No paginated inventory results
-    vehicles = input.data.filterResults.ExactMatch.vehicles;
+    Object.keys(input.rdata).forEach((key) => {
+      if (key == "vehicles") {
+        // Merging vehicle information
+        input.rdata[key].forEach((vehiclePaginationResult) => {
+          vehicles = vehicles.concat(vehiclePaginationResult);
+        });
+      } else {
+        // Merging dealer information
+        input.rdata[key].forEach((dealerPaginationResult) => {
+          d = d.concat(dealerPaginationResult);
+        });
+      }
+    });
   }
 
   var n = normalizeJson(vehicles, fordInventoryMapping);
@@ -90,15 +102,14 @@ function formatFordInventoryResults(input) {
    * populate information displayed in the UI
    */
   const dealers = {};
-  input.data.filterSet.filterGroupsMap.Dealer[0].filterItemsMetadata.filterItems.forEach(
-    (dealer) => {
-      dealers[dealer["value"]] = {
-        // 'value' is the key for the dealer ID
-        displayName: dealer["displayName"],
-        distance: dealer["distance"],
-      };
-    }
-  );
+
+  d.forEach((dealer) => {
+    dealers[dealer["value"]] = {
+      // 'value' is the key for the dealer ID
+      displayName: dealer["displayName"],
+      distance: dealer["distance"],
+    };
+  });
 
   n.forEach((vehicle) => {
     // The dealerSlug is needed for VIN detail calls. Storing here for use later
