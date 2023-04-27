@@ -87,7 +87,8 @@ function formatAudiInventoryResults(input) {
     // The real interior color is the second-to-last element in the array
     vehicle["interiorColor"] = interiorColors[interiorColors.length - 2];
 
-    // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits
+    // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits.
+    // If the API-provided price is null, write 0 for the price.
     tmp["price"] = tmp["price"] ? tmp["price"].split(".")[0].replace(/\D/g, "") : 0;
 
     /**
