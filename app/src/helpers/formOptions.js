@@ -23,10 +23,7 @@ const modelOptions = [
     options: [
       { value: "Ioniq%205", text: "Ioniq 5" },
       { value: "Ioniq%206", text: "Ioniq 6" },
-      { value: "Ioniq%20Phev", text: "Ioniq Plug-in Hybrid" },
       { value: "Kona%20Ev", text: "Kona Electric" },
-      { value: "Santa%20Fe%20Phev", text: "Santa Fe Plug-in Hybrid" },
-      { value: "Tucson%20Phev", text: "Tucson Plug-in Hybrid" },
     ],
   },
   {
@@ -40,10 +37,7 @@ const modelOptions = [
     label: "Kia",
     options: [
       { value: "N", text: "EV6" },
-      { value: "F", text: "Niro Plug-In Hybrid" },
       { value: "V", text: "Niro EV" },
-      { value: "T", text: "Sorento Plug-in Hybrid" },
-      { value: "R", text: "Sportage Plug-in Hybrid" },
     ],
   },
   {
