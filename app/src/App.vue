@@ -6,7 +6,7 @@
     id="background"
     >
     <div class="justify-content-center">
-      <FormSelectors/>
+      <SearchForm/>
     </div>
 
     <b-row class="flex-fill">
@@ -26,7 +26,7 @@ import { mapActions, mapState } from 'vuex'
 import { version } from '../package.json'
 
 import Footer from './components/Footer.vue'
-import FormSelectors from './components/FormSelectors.vue'
+import SearchForm from './components/SearchForm.vue'
 import InventoryTable from './components/InventoryTable.vue'
 
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
@@ -46,7 +46,7 @@ export default {
   name: 'App',
   components: {
     Footer,
-    FormSelectors,
+    SearchForm,
     InventoryTable,
   },
   data() {
