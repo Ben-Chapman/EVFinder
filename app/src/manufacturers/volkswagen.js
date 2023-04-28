@@ -82,17 +82,17 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
     });
     const needsCurrencyConversion = ["destinationCharge", "msrp"];
     const vinFormattedData = {};
-    Object.keys(vinData[0].data.vehicle).forEach((vinKey) => {
+    Object.keys(vinData.data.vehicle).forEach((vinKey) => {
       // Map VW-specific keys to EVFinder-specific keys
       Object.keys(volkswagenVinMapping).includes(vinKey)
         ? (vinFormattedData[volkswagenVinMapping[vinKey]] =
-            vinData[0].data.vehicle[vinKey])
+            vinData.data.vehicle[vinKey])
         : null;
 
       // Need to format some values to display as dollars
       needsCurrencyConversion.includes(vinKey)
         ? (vinFormattedData[volkswagenVinMapping[vinKey]] = convertToCurrency(
-            vinData[0].data.vehicle[vinKey]
+            vinData.data.vehicle[vinKey]
           ))
         : null;
     });
@@ -104,7 +104,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Dealer Installed Accessories
     const dealerAccessory = [];
-    vinData[0].data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
+    vinData.data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
       dealerAccessory.push(
         `${acc["longTitle"]}: ${convertToCurrency(acc["itemPrice"])}`
       );
@@ -114,7 +114,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Highlighted features
     const highlightFeatures = [];
-    vinData[0].data.vehicle["highlightFeatures"].forEach((feat) => {
+    vinData.data.vehicle["highlightFeatures"].forEach((feat) => {
       highlightFeatures.push(`${feat["title"]}`);
     });
 
@@ -122,7 +122,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Specifications
     vinFormattedData["Specifications:"] = "";
-    vinData[0].data.vehicle["specifications"].forEach((spec) => {
+    vinData.data.vehicle["specifications"].forEach((spec) => {
       const specType = spec["text"];
       const specTmp = [];
       spec["values"].forEach((value) => {

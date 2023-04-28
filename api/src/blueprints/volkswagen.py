@@ -99,9 +99,12 @@ def get_vin_details():
     )
 
     data = vin_detail.json()
+
     if len(data[0]["data"]["vehicle"]) > 0:
         return send_response(
-            response_data=data, content_type="application/json", cache_control_age=3600
+            response_data=data[0],
+            content_type="application/json",
+            cache_control_age=3600,
         )
     else:
         error_message = "An error occurred with the Volkswagen API"
