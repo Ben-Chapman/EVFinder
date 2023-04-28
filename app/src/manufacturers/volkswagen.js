@@ -20,7 +20,6 @@ import { convertToCurrency, generateErrorMessage } from "../helpers/libs";
 import { volkswagenInventoryMapping } from "./volkswagenMappings";
 import { volkswagenVinMapping } from "./volkswagenMappings";
 
-// const apiBase = "https://api.theevfinder.com";
 export async function getVolkswagenInventory(zip, year, model, radius, manufacturer) {
   try {
     const invResponse = await apiRequest("inventory", manufacturer, 15000, [
@@ -77,24 +76,23 @@ function formatVolkswagenInventoryResults(input) {
 
 export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
   try {
-    const vinData = await apiRequest("vin", manufacturer, 3500, [...arguments], {
+    const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
       zip: zip,
       vin: vin,
     });
     const needsCurrencyConversion = ["destinationCharge", "msrp"];
     const vinFormattedData = {};
-
-    Object.keys(vinData["data"]["vehicle"]).forEach((vinKey) => {
+    Object.keys(vinData[0].data.vehicle).forEach((vinKey) => {
       // Map VW-specific keys to EVFinder-specific keys
       Object.keys(volkswagenVinMapping).includes(vinKey)
         ? (vinFormattedData[volkswagenVinMapping[vinKey]] =
-            vinData["data"]["vehicle"][vinKey])
+            vinData[0].data.vehicle[vinKey])
         : null;
 
       // Need to format some values to display as dollars
       needsCurrencyConversion.includes(vinKey)
         ? (vinFormattedData[volkswagenVinMapping[vinKey]] = convertToCurrency(
-            vinData["data"]["vehicle"][vinKey]
+            vinData[0].data.vehicle[vinKey]
           ))
         : null;
     });
@@ -106,7 +104,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Dealer Installed Accessories
     const dealerAccessory = [];
-    vinData["data"]["vehicle"]["dealerInstalledAccessories"].forEach((acc) => {
+    vinData[0].data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
       dealerAccessory.push(
         `${acc["longTitle"]}: ${convertToCurrency(acc["itemPrice"])}`
       );
@@ -116,7 +114,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Highlighted features
     const highlightFeatures = [];
-    vinData["data"]["vehicle"]["highlightFeatures"].forEach((feat) => {
+    vinData[0].data.vehicle["highlightFeatures"].forEach((feat) => {
       highlightFeatures.push(`${feat["title"]}`);
     });
 
@@ -124,18 +122,23 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
 
     // Specifications
     vinFormattedData["Specifications:"] = "";
-    vinData["data"]["vehicle"]["specifications"].forEach((spec) => {
+    vinData[0].data.vehicle["specifications"].forEach((spec) => {
       const specType = spec["text"];
       const specTmp = [];
       spec["values"].forEach((value) => {
-        const specName = value["label"];
-        const specDesc = value["value"].replace(" VISIBLE", "");
-        specName != ""
-          ? specTmp.push(`${specName}: ${specDesc}`)
-          : specTmp.push(specDesc);
+        const specName = value?.label;
+        const specDesc = value?.value.replace(" VISIBLE", "");
+        // Sometime either the specification name or value is blank, if we have both the
+        // name and description, write to specTmp
+        if ((specName && specDesc) != "") {
+          specTmp.push(`${specName}: ${specDesc}`);
+        }
       });
 
-      vinFormattedData[specType] = specTmp.join(", ");
+      // If we have specification data, write it to vinFormattedData
+      if (specTmp.length > 0) {
+        vinFormattedData[specType] = specTmp.join(", ");
+      }
     });
 
     return vinFormattedData;

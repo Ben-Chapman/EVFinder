@@ -86,19 +86,21 @@ def get_vin_details():
 
     headers = {"User-Agent": user_agent, "referer": "https://www.vw.com/"}
 
-    vin_post_data = {
-        "operationName": "VehicleData",
-        "variables": {"vin": vin, "zipcode": zip_code},
-        "query": "query VehicleData($vin: String, $zipcode: String) {vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl mpgHighway trimLevel mediaImageUrl mediaImageUrlAlt mediaAssets {   description   type   asset   __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures {   key   title   __typename } factoryModelYear dealerInstalledAccessories {   mdmCode   title   longTitle   description   image   itemPrice   creativeTitle   __typename } dealer {   generatedDate   dealerid   name   dealername   seolookupkey   address1   address2   city   state   postalcode   country   url   phone   latlong   staticMapsUrl   distance   inventoryCount   aor   isSatellite   isAssessing   lmaId   __typename } specifications {   text   values {     key     label     longTitle     value     __typename   }   key   __typename } destinationCharge __typename}}",  # noqa: B950
-    }
+    vin_post_data = (
+        {
+            "operationName": "VehicleData",
+            "variables": {"vin": vin, "zipcode": zip_code},
+            "query": "query VehicleData($vin: String, $zipcode: String) { vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl factoryExteriorCode factoryInteriorCode mpgHighway trimLevel mediaAssets { view type url __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures { key title __typename } factoryModelYear dealerInstalledAccessories { mdmCode title longTitle description image itemPrice creativeTitle __typename } dealer { generatedDate dealerid name dealername seolookupkey address1 address2 city state postalcode country url phone latlong staticMapsUrl distance inventoryCount aor isSatellite isAssessing lmaId __typename } specifications { text values { key label longTitle value __typename } key __typename } destinationCharge __typename }}",  # noqa: B950
+        },
+    )
 
     vin_detail = requests.post(
         url=api_url, headers=headers, json=vin_post_data, verify=False
     )
 
     data = vin_detail.json()
-
-    if len(data["data"]["vehicle"]) > 0:
+    print(f"\n\n{data}\n\n")
+    if len(data[0]["data"]["vehicle"]) > 0:
         return send_response(
             response_data=data, content_type="application/json", cache_control_age=3600
         )
