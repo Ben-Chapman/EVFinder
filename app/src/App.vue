@@ -95,7 +95,7 @@ export default {
         preloadBlurredImage(this.heroImage["blurredImageUrl"])
       })
 
-      
+
   },  // mounted
 
   computed: {
@@ -142,9 +142,9 @@ export default {
   watch: {
       showTable() {
         /**
-         * When the inventory table is shown, swapping the existing background
-         * image for the blurred variant. This blurred variant is now an out
-         * of focus (literally and figuratively) element on the page.
+         * When the inventory table is shown, swap the existing background image for the
+         * blurred variant. This blurred variant is now an out of focus element on the
+         * page (literally and figuratively).
          */
         this.transition = ".3s background ease"
         this.heroImage["imageUrl"] = this.heroImage["blurredImageUrl"]
@@ -165,14 +165,14 @@ export default {
   }
 
   /*
-  This is needed to prevent horizontal scrolling when using a fluid (full-width) 
+  This is needed to prevent horizontal scrolling when using a fluid (full-width)
   container
   */
   .container-fluid {
       padding-right: 15px;
       padding-left: 15px;
       margin-right: auto;
-      margin-left: auto;   
+      margin-left: auto;
   }
 
   .fade-enter-active, .fade-leave-active {

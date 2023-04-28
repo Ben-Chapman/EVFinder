@@ -30,5 +30,5 @@ __pycache__/
 app/cypress/videos
 app/cypress/screenshots
 
-# Jest
+# Jest Code Coverage Reports
 app/coverage

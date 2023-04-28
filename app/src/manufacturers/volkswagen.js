@@ -1,126 +1,148 @@
-import { convertToCurrency } from "../helpers/libs"
-import { volkswagenInventoryMapping } from "./volkswagenMappings"
-import { volkswagenVinMapping } from "./volkswagenMappings"
+/**
+ * Copyright 2023 Ben Chapman
+ *
+ * This file is part of The EV Finder.
+ *
+ * The EV Finder is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * The EV Finder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with The EV Finder.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
 
-const apiBase = 'https://api.theevfinder.com'
-export async function getVolkswagenInventory(zip, year, model, radius) {
-  const inventory = await fetch(apiBase + '/api/inventory/volkswagen?' + new URLSearchParams({
-    zip: zip,
-    year: year,
-    model: model,
-    radius: radius,
-  }),
-  {method: 'GET', mode: 'cors',})
-  
-  if (inventory.ok) {
-    return formatVolkswagenInventoryResults(await inventory.json())
-  } else {
-    return ['ERROR', inventory.status, await inventory.text()]
+import { apiRequest } from "../helpers/request";
+import { convertToCurrency, generateErrorMessage } from "../helpers/libs";
+import { volkswagenInventoryMapping } from "./volkswagenMappings";
+import { volkswagenVinMapping } from "./volkswagenMappings";
+
+export async function getVolkswagenInventory(zip, year, model, radius, manufacturer) {
+  try {
+    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
+      ...arguments,
+    ]);
+    return formatVolkswagenInventoryResults(invResponse);
+  } catch (error) {
+    throw generateErrorMessage(error);
   }
-  
 }
 
 function formatVolkswagenInventoryResults(input) {
   /**
    * Volkswagen has an amazingly sane GraphQL-powered inventory API!
    */
-   const res = []
-   input['data']['inventory']['vehicles'].forEach(vehicle => {
+  const res = [];
+  input["data"]["inventory"]["vehicles"].forEach((vehicle) => {
     // Pulling the dealer info up to the top-level object
-    const tmp = {...vehicle, ...vehicle['dealer']}
-    delete tmp['dealer']  // Don't need the nested object, so deleting
+    const tmp = { ...vehicle, ...vehicle["dealer"] };
+    delete tmp["dealer"]; // Don't need the nested object, so deleting
 
     // Map VW-specific keys to EVFinder-specific keys
-    Object.keys(tmp).forEach(key => {
-      Object.keys(volkswagenInventoryMapping).includes(key) ? tmp[volkswagenInventoryMapping[key]] = tmp[key] : null
-    })
+    Object.keys(tmp).forEach((key) => {
+      Object.keys(volkswagenInventoryMapping).includes(key)
+        ? (tmp[volkswagenInventoryMapping[key]] = tmp[key])
+        : null;
+    });
 
     // Distance to 2 decimal places
-    tmp['distance'] = tmp['distance'].toFixed(2)
+    tmp["distance"] = tmp["distance"].toFixed(2);
 
     // price needs to be a string
-    tmp['price'] = String(tmp['price'])
-    res.push(tmp)
+    tmp["price"] = String(tmp["price"]);
+    res.push(tmp);
 
     // VW does not expose the drivetrain directly, so inferring from the trim level
-    tmp['trimDesc'].includes('AWD') ? tmp['drivetrainDesc'] = 'AWD' : tmp['drivetrainDesc'] = 'RWD'
+    tmp["trimDesc"].includes("AWD")
+      ? (tmp["drivetrainDesc"] = "AWD")
+      : (tmp["drivetrainDesc"] = "RWD");
 
     // Inventory Status
-    tmp['inTransit'] === true ? tmp['deliveryDate'] = 'In Transit' : tmp['deliveryDate'] = 'Check With Dealer'
-    tmp['inventoryStatus'] = tmp['deliveryDate']
+    tmp["inTransit"] === true
+      ? (tmp["deliveryDate"] = "In Transit")
+      : (tmp["deliveryDate"] = "Check With Dealer");
+    tmp["inventoryStatus"] = tmp["deliveryDate"];
 
-    // VW provides a FQDN for the dealer URL. Some manufacturers don't so the 
+    // VW provides a FQDN for the dealer URL. Some manufacturers don't so the
     // scheme is inserted in the table template. So removing the scheme here
-    tmp['dealerUrl'] = tmp['dealerUrl'].replace('https://', '')
-   })
-   
-   return res
+    tmp["dealerUrl"] = tmp["dealerUrl"].replace("https://", "");
+  });
+
+  return res;
 }
 
-export async function getVolkswagenVinDetail(zip, vin) {
-  /** 
-   */
+export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
+  try {
+    const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
+      zip: zip,
+      vin: vin,
+    });
+    const needsCurrencyConversion = ["destinationCharge", "msrp"];
+    const vinFormattedData = {};
+    Object.keys(vinData[0].data.vehicle).forEach((vinKey) => {
+      // Map VW-specific keys to EVFinder-specific keys
+      Object.keys(volkswagenVinMapping).includes(vinKey)
+        ? (vinFormattedData[volkswagenVinMapping[vinKey]] =
+            vinData[0].data.vehicle[vinKey])
+        : null;
 
-  const response = await fetch(apiBase + '/api/vin/volkswagen?' + new URLSearchParams({
-  zip: zip,
-  vin: vin,
-  }),
-  {
-  method: 'GET',
-  mode: 'cors', 
-  })
+      // Need to format some values to display as dollars
+      needsCurrencyConversion.includes(vinKey)
+        ? (vinFormattedData[volkswagenVinMapping[vinKey]] = convertToCurrency(
+            vinData[0].data.vehicle[vinKey]
+          ))
+        : null;
+    });
 
-// Get VIN detail data for a single vehicle
-const vinData = await response.json()
+    /**
+     * VW exposes the various options and specifications in nested Objects.
+     * Dealing with those here
+     */
 
-const needsCurrencyConversion = [
-  'destinationCharge',
-  'msrp'
-]
-const vinFormattedData = {}
+    // Dealer Installed Accessories
+    const dealerAccessory = [];
+    vinData[0].data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
+      dealerAccessory.push(
+        `${acc["longTitle"]}: ${convertToCurrency(acc["itemPrice"])}`
+      );
+    });
 
-Object.keys(vinData['data']['vehicle']).forEach(vinKey => {
-  // Map VW-specific keys to EVFinder-specific keys
-  Object.keys(volkswagenVinMapping).includes(vinKey) ? vinFormattedData[volkswagenVinMapping[vinKey]] = vinData['data']['vehicle'][vinKey] : null
+    vinFormattedData["Dealer Installed Accessories"] = dealerAccessory.join(",  ");
 
-  // Need to format some values to display as dollars
-  needsCurrencyConversion.includes(vinKey) ? vinFormattedData[volkswagenVinMapping[vinKey]] = convertToCurrency(vinData['data']['vehicle'][vinKey]) : null
-})
+    // Highlighted features
+    const highlightFeatures = [];
+    vinData[0].data.vehicle["highlightFeatures"].forEach((feat) => {
+      highlightFeatures.push(`${feat["title"]}`);
+    });
 
-/**
- * VW exposes the various options and specifications in nested Objects. 
- * Dealing with those here
- */
+    vinFormattedData["Highlighted Features"] = highlightFeatures.join(",  ");
 
-// Dealer Installed Accessories
-const dealerAccessory = []
-vinData['data']['vehicle']['dealerInstalledAccessories'].forEach(acc => {
-dealerAccessory.push(`${acc['longTitle']}: ${convertToCurrency(acc['itemPrice'])}`)
-})
+    // Specifications
+    vinFormattedData["Specifications:"] = "";
+    vinData[0].data.vehicle["specifications"].forEach((spec) => {
+      const specType = spec["text"];
+      const specTmp = [];
+      spec["values"].forEach((value) => {
+        const specName = value?.label;
+        const specDesc = value?.value.replace(" VISIBLE", "");
+        // Sometime either the specification name or value is blank, if we have both the
+        // name and description, write to specTmp
+        if ((specName && specDesc) != "") {
+          specTmp.push(`${specName}: ${specDesc}`);
+        }
+      });
 
-vinFormattedData['Dealer Installed Accessories'] = dealerAccessory.join(',  ')
+      // If we have specification data, write it to vinFormattedData
+      if (specTmp.length > 0) {
+        vinFormattedData[specType] = specTmp.join(", ");
+      }
+    });
 
-// Highlighted features
-const highlightFeatures = []
-vinData['data']['vehicle']['highlightFeatures'].forEach(feat => {
-  highlightFeatures.push(`${feat['title']}`)
-  })
-
-  vinFormattedData['Highlighted Features'] = highlightFeatures.join(',  ')
-
-  // Specifications
-vinFormattedData['Specifications:'] = ""
-vinData['data']['vehicle']['specifications'].forEach(spec => {
-  const specType = spec['text']
-  const specTmp = []
-  spec['values'].forEach(value => {
-    const specName = value['label']
-    const specDesc = value['value'].replace(' VISIBLE', '')
-    specName != "" ? specTmp.push(`${specName}: ${specDesc}`) : specTmp.push(specDesc)
-  })
-
-  vinFormattedData[specType] = specTmp.join(', ')
-})
-
-return vinFormattedData
+    return vinFormattedData;
+  } catch (error) {
+    throw generateErrorMessage(error);
+  }
 }

@@ -1,54 +1,66 @@
-import normalizeJson from "../helpers/libs";
-import { convertToCurrency, sortObjectByKey, titleCase } from "../helpers/libs";
+/**
+ * Copyright 2023 Ben Chapman
+ *
+ * This file is part of The EV Finder.
+ *
+ * The EV Finder is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * The EV Finder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with The EV Finder.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import { apiRequest } from "../helpers/request";
+import {
+  convertToCurrency,
+  generateErrorMessage,
+  normalizeJson,
+  sortObjectByKey,
+  titleCase,
+} from "../helpers/libs";
 import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 
-const apiBase = "https://api-ford.theevfinder.com";
-
-export async function getFordInventory(zip, year, model, radius) {
-  const inventory = await fetch(
-    apiBase +
-      "/api/inventory/ford?" +
-      new URLSearchParams({
-        zip: zip,
-        year: year,
-        model: model,
-        radius: radius,
-      }),
-    { method: "GET", mode: "cors" }
-  );
-
-  if (inventory.ok) {
-    return formatFordInventoryResults(await inventory.json());
-  } else {
-    return ["ERROR", inventory.status, await inventory.text()];
+export async function getFordInventory(zip, year, model, radius, manufacturer) {
+  try {
+    const invResponse = await apiRequest("inventory", manufacturer, 30000, [
+      ...arguments,
+    ]);
+    return formatFordInventoryResults(invResponse);
+  } catch (error) {
+    throw generateErrorMessage(error);
   }
 }
 
-export async function getFordVinDetail(dealerSlug, model, vin, year, paCode, zip) {
+export async function getFordVinDetail(
+  vin,
+  dealerSlug,
+  model,
+  year,
+  paCode,
+  zip,
+  manufacturer
+) {
   if (dealerSlug === undefined) {
     const errorMessage = `Additional information could not be be retrieved for VIN ${vin}`;
-    return { Error: errorMessage };
+    return generateErrorMessage(errorMessage);
   } else {
-    const vinData = await fetch(
-      apiBase +
-        "/api/vin/ford?" +
-        new URLSearchParams({
-          dealerSlug: dealerSlug,
-          modelSlug: `${year}-${model}`.toLowerCase(), // 2022-mache
-          vin: vin,
-          paCode: paCode,
-          zip: zip,
-          model: model,
-          year: year,
-        }),
-      { method: "GET", mode: "cors" }
-    );
-
-    // Get VIN detail data for a single vehicle
-    if (vinData.ok) {
-      return formatFordVinResults(await vinData.json());
-    } else {
-      return ["ERROR", vinData.status, await vinData.text()];
+    try {
+      const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
+        dealerSlug: dealerSlug,
+        modelSlug: `${year}-${model}`.toLowerCase(), // 2022-mache
+        paCode: paCode,
+        zip: zip,
+        model: model,
+        year: year,
+      });
+      return formatFordVinResults(vinData);
+    } catch (error) {
+      throw generateErrorMessage(error);
     }
   }
 }
@@ -90,15 +102,14 @@ function formatFordInventoryResults(input) {
    * populate information displayed in the UI
    */
   const dealers = {};
-  input.data.filterSet.filterGroupsMap.Dealer[0].filterItemsMetadata.filterItems.forEach(
-    (dealer) => {
-      dealers[dealer["value"]] = {
-        // 'value' is the key for the dealer ID
-        displayName: dealer["displayName"],
-        distance: dealer["distance"],
-      };
-    }
-  );
+
+  d.forEach((dealer) => {
+    dealers[dealer["value"]] = {
+      // 'value' is the key for the dealer ID
+      displayName: dealer["displayName"],
+      distance: dealer["distance"],
+    };
+  });
 
   n.forEach((vehicle) => {
     // The dealerSlug is needed for VIN detail calls. Storing here for use later

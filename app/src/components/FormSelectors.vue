@@ -126,6 +126,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
+  import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
   import { getFordInventory } from '../manufacturers/ford'
@@ -220,7 +221,7 @@
               error.name !== 'NavigationDuplicated' &&
               !error.message.includes('Avoided redundant navigation to current location')
             ) {
-              console.log(error)
+              logMessage(`Vue router navigation error: ${error}`, "error")
               }
             })
       },
@@ -234,97 +235,85 @@
         if (this.apiErrorDetail.length > 0) {
           this.updateStore({'apiErrorDetail': []})
         }
-        if (this.localForm.manufacturer.toLowerCase() == 'kia') {
-          const kiaInventory = await getKiaInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (kiaInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': kiaInventory})
-          } else {
-            this.updateStore({'inventory': kiaInventory})
+
+        const inventories = {
+          zipcode: this.localForm.zipcode,
+          year: this.localForm.year,
+          model: this.localForm.model,
+          radius: this.localForm.radius,
+          manufacturer: this.localForm.manufacturer,
+
+          async hyundai() {
+            return await getHyundaiInventory(
+            this.zipcode,
+            this.year,
+            this.model,
+            this.radius,
+            this.manufacturer,
+            )
+          },
+          async kia() {
+            return await getKiaInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          },
+          async chevrolet() {
+            return await getChevroletInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          },
+          async genesis() {
+            return await getGenesisInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          },
+          async volkswagen() {
+            return await getVolkswagenInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          },
+          async ford() {
+            return await getFordInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
+          },
+          async audi() {
+            return await getAudiInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            )
           }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'hyundai') {
-          const hyundaiInventory = await getHyundaiInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (hyundaiInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': hyundaiInventory})
-          } else {
-            this.updateStore({'inventory': hyundaiInventory})
+        };
+
+        try {
+          const inv = await inventories[this.localForm.manufacturer.toLowerCase()]()
+          this.updateStore({'inventory': inv})
+          } catch (error) {
+            this.updateStore({'apiErrorDetail': error})
           }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'chevrolet') {
-          const chevroletInventory = await getChevroletInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (chevroletInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': chevroletInventory})
-          } else {
-            this.updateStore({'inventory': chevroletInventory})
-          }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'genesis') {
-          const genesisInventory = await getGenesisInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (genesisInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': genesisInventory})
-          } else {
-            this.updateStore({'inventory': genesisInventory})
-          }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'volkswagen') {
-          const volkswagenInventory = await getVolkswagenInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (volkswagenInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': volkswagenInventory})
-          } else {
-            this.updateStore({'inventory': volkswagenInventory})
-          }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'ford') {
-          const fordInventory = await getFordInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (fordInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': fordInventory})
-          } else {
-            this.updateStore({'inventory': fordInventory})
-          }
-        }
-        else if (this.localForm.manufacturer.toLowerCase() === 'audi') {
-          const audiInventory = await getAudiInventory(
-            this.localForm.zipcode,
-            this.localForm.year,
-            this.localForm.model,
-            this.localForm.radius,
-          )
-          if (audiInventory[0] === 'ERROR') {
-            this.updateStore({'apiErrorDetail': audiInventory})
-          } else {
-            this.updateStore({'inventory': audiInventory})
-          }
-        }
 
         this.updateStore({
           'tableBusy': false,  // Remove the table busy indicator
@@ -332,7 +321,6 @@
           })
       },
 
-      // TODO: Convert this to a mixin
       parseQueryParams(inputParams) {
         if (Object.keys(inputParams).length > 0) {
           const paramMapping = {
