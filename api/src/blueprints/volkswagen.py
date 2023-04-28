@@ -99,7 +99,6 @@ def get_vin_details():
     )
 
     data = vin_detail.json()
-    print(f"\n\n{data}\n\n")
     if len(data[0]["data"]["vehicle"]) > 0:
         return send_response(
             response_data=data, content_type="application/json", cache_control_age=3600
