@@ -1,14 +1,14 @@
 steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
-  entrypoint: 'bash'
-  args: ['./app/build.sh']
-  secretEnv: ['GITHUB_TOKEN']
-  env:
-  - 'TAG_NAME=$TAG_NAME'
-  - '_APP_BUCKET_NAME=theevfinder.com'
+  - name: "gcr.io/google.com/cloudsdktool/node"
+    entrypoint: "bash"
+    args: ["./app/build.sh"]
+    secretEnv: ["GITHUB_TOKEN"]
+    env:
+      - "TAG_NAME=$TAG_NAME"
+      - "_APP_BUCKET_NAME=theevfinder.com"
 availableSecrets:
   secretManager:
-  - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest
-    env: 'GITHUB_TOKEN'
+    - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest
+      env: "GITHUB_TOKEN"
 options:
- logging: CLOUD_LOGGING_ONLY
+  logging: CLOUD_LOGGING_ONLY

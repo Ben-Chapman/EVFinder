@@ -14,7 +14,7 @@ function git_push() {
 }
 
 # Install Node and NPM
-/sbin/apk -U add nodejs npm
+/sbin/apk -U add nodejs-current npm
 
 cd ./app
 npm install
@@ -41,7 +41,7 @@ if [ $? -eq 0 ]; then
   cp -r -z html,js,css,scss,xml,svg \
   /workspace/dist/* \
   gs://${_APP_BUCKET_NAME}
-  
+
   # Don't cache index.html
   echo -e "\nSetting no-cache on index.html..."
   gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}/index.html
