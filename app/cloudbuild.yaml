@@ -1,5 +1,5 @@
 steps:
-  - name: "gcr.io/google.com/cloudsdktool/node"
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:alpine"
     entrypoint: "bash"
     args: ["./app/build.sh"]
     secretEnv: ["GITHUB_TOKEN"]
