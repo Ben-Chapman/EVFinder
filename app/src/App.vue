@@ -33,7 +33,7 @@ import { version } from '../package.json'
 import Footer from './components/Footer.vue'
 import InventoryTable from './components/InventoryTable.vue'
 import SearchForm from './components/SearchForm.vue'
-import Trademark from './components/Trademark.vue'
+import Trademark from './components/Slogan.vue'
 
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
 
