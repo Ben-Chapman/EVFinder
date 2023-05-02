@@ -5,9 +5,14 @@
     :style="heroImageStyle"
     id="background"
     >
-    <div class="justify-content-center">
+
+
+    <div flex class="justify-content-center">
       <SearchForm/>
     </div>
+    <b-row>
+      <Trademark :displayName="this.heroImage['displayName']"/>
+    </b-row>
 
     <b-row class="flex-fill">
       <transition name="fade" mode="out-in">
@@ -26,10 +31,12 @@ import { mapActions, mapState } from 'vuex'
 import { version } from '../package.json'
 
 import Footer from './components/Footer.vue'
-import SearchForm from './components/SearchForm.vue'
 import InventoryTable from './components/InventoryTable.vue'
+import SearchForm from './components/SearchForm.vue'
+import Trademark from './components/Trademark.vue'
 
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
+
 
 console.log(`
 The EVFinder release version ${version}
@@ -46,8 +53,9 @@ export default {
   name: 'App',
   components: {
     Footer,
-    SearchForm,
     InventoryTable,
+    SearchForm,
+    Trademark,
   },
   data() {
     return {
@@ -94,8 +102,6 @@ export default {
       window.addEventListener('load', () => {
         preloadBlurredImage(this.heroImage["blurredImageUrl"])
       })
-
-
   },  // mounted
 
   computed: {

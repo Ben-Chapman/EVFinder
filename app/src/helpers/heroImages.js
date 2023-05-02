@@ -6,7 +6,7 @@ export function getHeroImage() {
         ["2023-g80ev-2.jpg", "-48rem center"],
         ["2023-g80ev-3.jpg", "-10rem center"],
       ],
-      overlayText: "2023 Genesis Electrified G80",
+      displayName: "Genesis Electrified G80",
       modelName: "ElectrifiedG80",
     },
     {
@@ -15,7 +15,7 @@ export function getHeroImage() {
         ["2022-gv60-2.jpg", "-10rem center"],
         ["2022-gv60-3.jpg", "-10rem center"],
       ],
-      overlayText: "2022 Genesis GV60",
+      displayName: "Genesis GV60",
       modelName: "GV60",
     },
     {
@@ -25,7 +25,7 @@ export function getHeroImage() {
         ["2023-id4-3.jpg", "-35rem center"],
         ["2023-id4-4.jpg", "-23.5rem center"],
       ],
-      overlayText: "2023 Volkswagen ID.4",
+      displayName: "Volkswagen ID.4",
       modelName: "ID.4",
     },
     {
@@ -35,7 +35,7 @@ export function getHeroImage() {
         ["2023-ioniq5-3.jpg", "-58rem center"],
         ["2023-ioniq5-4.jpg", "-28rem center"],
       ],
-      overlayText: "2023 Hyundai Ioniq 5",
+      displayName: "Hyundai Ioniq 5",
       modelName: "Ioniq%205",
     },
     {
@@ -44,7 +44,7 @@ export function getHeroImage() {
         ["2023-ev6-2.jpg", "-43.5rem center"],
         ["2023-ev6-3.jpg", "-45rem center"],
       ],
-      overlayText: "2023 Kia EV6",
+      displayName: "Kia EV6",
       modelName: "N",
     },
     {
@@ -53,7 +53,7 @@ export function getHeroImage() {
         ["2023-kona-2.jpg", "-20rem center"],
         ["2023-kona-3.jpg", "-10rem center"],
       ],
-      overlayText: "2023 Hyundai Kona Electric",
+      displayName: "Hyundai Kona Electric",
       modelName: "Kona%20Ev",
     },
     {
@@ -62,7 +62,7 @@ export function getHeroImage() {
         ["2023-niro-2.jpg", "-38rem center"],
         ["2023-niro-3.jpg", "-26.5rem center"],
       ],
-      overlayText: "2023 Kia Niro EV",
+      displayName: "Kia Niro EV",
       modelName: "V",
     },
     {
@@ -72,7 +72,7 @@ export function getHeroImage() {
         ["2023-chevrolet-bolt-ev-1.jpg", "-30rem center"],
         ["2023-chevrolet-bolt-ev-2.jpg", "-36rem center"],
       ],
-      overlayText: "2023 Chevrolet Bolt EV",
+      displayName: "Chevrolet Bolt EV",
       modelName: "Bolt EV",
     },
     {
@@ -82,7 +82,7 @@ export function getHeroImage() {
         ["2022-chevrolet-bolt-euv-3.jpg", "-24.5rem center"],
         ["2022-chevrolet-bolt-euv-4.jpg", "-13rem center"],
       ],
-      overlayText: "2023 Chevrolet Bolt EUV",
+      displayName: "Chevrolet Bolt EUV",
       modelName: "Bolt EUV",
     },
     {
@@ -93,7 +93,7 @@ export function getHeroImage() {
         ["2021-mustang-mache-4.jpg", "-21rem center"],
         ["2022-mustang-mache-1.jpg", "-20rem center"],
       ],
-      overlayText: "2022 Ford Mustang Mach-E",
+      displayName: "Ford Mustang Mach-E",
       modelName: "mache",
     },
     {
@@ -102,7 +102,7 @@ export function getHeroImage() {
         ["2022-audi-etron-s-1.jpg", "-16rem center"],
         ["2022-audi-etron-s-sportback-1.jpg", "-13rem center"],
       ],
-      overlayText: "2022 Audi e-tron®",
+      displayName: "Audi e-tron®",
       modelName: "etron",
     },
     {
@@ -111,7 +111,7 @@ export function getHeroImage() {
         ["2022-audi-etron-gt-2.jpg", "-10rem center"],
         ["2022-audi-etron-gt-3.jpg", "-10rem center"],
       ],
-      overlayText: "2022 Audi e-tron® GT",
+      displayName: "Audi e-tron® GT",
       modelName: "etrongt",
     },
     {
@@ -122,7 +122,7 @@ export function getHeroImage() {
         ["2022-audi-q4-sportback-2.jpg", "-10rem center"],
         ["2023-audi-q4-1.jpg", "-24rem center"],
       ],
-      overlayText: "2022 Audi Q4 e-tron®",
+      displayName: "Audi Q4 e-tron®",
       modelName: "q4",
     },
     {
@@ -134,7 +134,7 @@ export function getHeroImage() {
         ["2023-ioniq6-5.jpg", "-20rem center"],
         ["2023-ioniq6-6.jpg", "-23rem center"],
       ],
-      overlayText: "2023 Hyundai Ioniq 6",
+      displayName: "Hyundai Ioniq 6",
       modelName: "Ioniq%206",
     },
   ];
@@ -168,7 +168,7 @@ export function getHeroImage() {
     imageUrl: imageUrl,
     portraitPosition: heroImages[randomVehicle].imageNames[randomImageIndex][1],
     blurredImageUrl: blurredImagePath + randomImage,
-    title: heroImages[randomVehicle].overlayText,
+    displayName: heroImages[randomVehicle].displayName,
     model: heroImages[randomVehicle].modelName,
   };
 }
