@@ -5,21 +5,27 @@
     :style="heroImageStyle"
     id="background"
     >
-
-
+    <!-- Search form -->
     <div flex class="justify-content-center">
       <SearchForm/>
     </div>
-    <b-row>
-      <Trademark :displayName="this.heroImage['displayName']"/>
+
+    <!-- Slogan Text -->
+    <b-row class="flex-fill">
+      <Slogan
+        :display-name="this.heroImage['displayName']"
+        :text-color="this.heroImage['textColor']"
+      />
     </b-row>
 
+    <!-- Inventory Table -->
     <b-row class="flex-fill">
       <transition name="fade" mode="out-in">
         <InventoryTable v-if="this.showTable"/>
       </transition>
     </b-row>
 
+    <!-- Footer -->
     <b-row>
       <Footer/>
     </b-row>
@@ -33,7 +39,7 @@ import { version } from '../package.json'
 import Footer from './components/Footer.vue'
 import InventoryTable from './components/InventoryTable.vue'
 import SearchForm from './components/SearchForm.vue'
-import Trademark from './components/Slogan.vue'
+import Slogan from './components/Slogan.vue'
 
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
 
@@ -55,7 +61,7 @@ export default {
     Footer,
     InventoryTable,
     SearchForm,
-    Trademark,
+    Slogan,
   },
   data() {
     return {
@@ -66,7 +72,6 @@ export default {
   },
   mounted() {
       this.heroImage = getHeroImage()  // Get the hero image URL on mount
-
       if (window.matchMedia("(orientation: portrait)").matches) {
         this.imagePosition = this.heroImage['portraitPosition']
       }
