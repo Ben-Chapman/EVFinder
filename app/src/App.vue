@@ -12,14 +12,15 @@
 
     <!-- Slogan Text -->
     <b-row class="flex-fill">
+      <transition name="slide-fade" mode="out">
       <Slogan
+        v-if="!this.showTable"
         :display-name="this.heroImage['displayName']"
         :text-color="this.heroImage['textColor']"
       />
-    </b-row>
+    </transition>
 
     <!-- Inventory Table -->
-    <b-row class="flex-fill">
       <transition name="fade" mode="out-in">
         <InventoryTable v-if="this.showTable"/>
       </transition>
@@ -192,5 +193,15 @@ export default {
 
   .fade-enter, .fade-leave-to {
       opacity: 0
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
   }
 </style>
