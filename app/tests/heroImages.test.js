@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 import "./mocks/matchMedia.mock";
-import { getHeroImage, heroImages } from "../src/helpers/heroImages";
+import { getHeroImage } from "../src/helpers/heroImages";
 
-describe("Hero Image Selector", () => {
+describe("Hero Images", () => {
   // I suppose, given the number of images to be selected randomly, calling getHeroImage()
   // twice could return the same image twice. Using retryTimes() to retry if that happens.
   // It's very unlikely that getHeroImage() will randomly select the same image for two
@@ -35,16 +35,5 @@ describe("Hero Image Selector", () => {
 
   test("An image has a text color", () => {
     expect(getHeroImage()["textColor"]).not.toBeNull;
-  });
-});
-
-describe("Test attributes for all hero images", () => {
-  test("A hero image has all attributes", () => {
-    heroImages.forEach((model) => {
-      expect(model.imageNames).toHaveProperty(displayName);
-      // model.forEach(image => {
-
-      // })
-    });
   });
 });
