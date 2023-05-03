@@ -383,8 +383,9 @@
        *  1  where a[key] > b[key]
        */
       customSort(a, b, key) {
-
-        if (key == 'PlannedDeliveryDate') {
+        // This custom sort function was designed to sort dates, so only working with the
+        // deliveryDate column
+        if (key == 'deliveryDate') {
           const _a = new Date(a[key])  // New Date object
           const _b = new Date(b[key])
           const aDate = Date.parse(_a)  // Convert Date object to epoch
@@ -406,7 +407,7 @@
             return 1
           }
         }
-        // Fall back to the built-in sort-compare routine for all other keys
+        // Fall back to the built-in sort-compare routine for all other columns
         return false
       },
 
