@@ -1,5 +1,5 @@
 import * as libs from "../src/helpers/libs";
-describe("Chatbot", () => {
+describe("Helper Tests", () => {
   test("Input should be Title Cased", () => {
     expect(libs.titleCase("title case here")).toBe("Title Case Here");
 
