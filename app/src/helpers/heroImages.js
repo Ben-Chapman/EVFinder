@@ -11,8 +11,8 @@ export function getHeroImage() {
     },
     {
       imageNames: [
-        ["2022-gv60-1.jpg", "-26rem center", "dark"],
-        ["2022-gv60-2.jpg", "-10rem center", "dark"],
+        ["2022-gv60-1.jpg", "-15rem center", "light"],
+        ["2022-gv60-2.jpg", "-40rem center", "light"],
         ["2022-gv60-3.jpg", "-10rem center", "light"],
       ],
       displayName: "Genesis GV60",
@@ -21,7 +21,7 @@ export function getHeroImage() {
     {
       imageNames: [
         ["2023-id4-1.jpg", "-18.5rem center", "dark"],
-        ["2023-id4-2.jpg", "-36rem center", "light"],
+        ["2023-id4-2.jpg", "-36rem center", "dark"],
         ["2023-id4-3.jpg", "-35rem center", "dark"],
         ["2023-id4-4.jpg", "-23.5rem center", "light"],
       ],
@@ -42,7 +42,7 @@ export function getHeroImage() {
       imageNames: [
         ["2023-ev6-1.jpg", "-28rem center", "light"],
         ["2023-ev6-2.jpg", "-43.5rem center", "light"],
-        ["2023-ev6-3.jpg", "-45rem center", "dark"],
+        ["2023-ev6-3.jpg", "-45rem center", "light"],
       ],
       displayName: "Kia EV6",
       modelName: "N",
@@ -79,7 +79,7 @@ export function getHeroImage() {
       imageNames: [
         ["2022-chevrolet-bolt-euv-1.jpg", "-12rem center", "light"],
         ["2022-chevrolet-bolt-euv-2.jpg", "-28rem center", "dark"],
-        ["2022-chevrolet-bolt-euv-3.jpg", "-24.5rem center", "dark"],
+        ["2022-chevrolet-bolt-euv-3.jpg", "-24.5rem center", "light"],
         ["2022-chevrolet-bolt-euv-4.jpg", "-13rem center", "dark"],
       ],
       displayName: "Chevrolet Bolt EUV",
@@ -108,7 +108,7 @@ export function getHeroImage() {
     {
       imageNames: [
         ["2022-audi-etron-gt-1.jpg", "-25rem center", "dark"],
-        ["2022-audi-etron-gt-2.jpg", "-10rem center", "dark"],
+        ["2022-audi-etron-gt-2.jpg", "-10rem center", "light"],
         ["2022-audi-etron-gt-3.jpg", "-10rem center", "dark"],
       ],
       displayName: "Audi e-tron® GT",

@@ -55,8 +55,9 @@ export default {
 }
 
 .dark-text {
-  color: #1d1d1d;
-  backdrop-filter: blur(3px) saturate(70%);
+  color: #2d2d2d;
+  text-shadow: 2px 5px 5px rgba(139, 139, 139, 0.3),
+    0px -4px 10px rgba(255, 255, 255, 0.789);
 }
 
 .light-text {
