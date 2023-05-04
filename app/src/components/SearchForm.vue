@@ -5,9 +5,10 @@
         <a href="/">
           <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
+
       </b-row>
       <!-- For all other screen sizes, show this logo -->
-      <b-row class="d-flex my-3" align-h="center">
+      <b-row class="d-flex mt-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
             <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>

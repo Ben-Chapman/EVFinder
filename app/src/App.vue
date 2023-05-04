@@ -5,16 +5,28 @@
     :style="heroImageStyle"
     id="background"
     >
-    <div class="justify-content-center">
-      <FormSelectors/>
+    <!-- Search form -->
+    <div flex class="justify-content-center">
+      <SearchForm/>
     </div>
 
+    <!-- Slogan Text -->
     <b-row class="flex-fill">
+      <transition name="slide-fade" mode="out">
+      <Slogan
+        v-if="!this.showTable"
+        :display-name="this.heroImage['displayName']"
+        :text-color="this.heroImage['textColor']"
+      />
+    </transition>
+
+    <!-- Inventory Table -->
       <transition name="fade" mode="out-in">
         <InventoryTable v-if="this.showTable"/>
       </transition>
     </b-row>
 
+    <!-- Footer -->
     <b-row>
       <Footer/>
     </b-row>
@@ -26,10 +38,12 @@ import { mapActions, mapState } from 'vuex'
 import { version } from '../package.json'
 
 import Footer from './components/Footer.vue'
-import FormSelectors from './components/FormSelectors.vue'
 import InventoryTable from './components/InventoryTable.vue'
+import SearchForm from './components/SearchForm.vue'
+import Slogan from './components/Slogan.vue'
 
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
+
 
 console.log(`
 The EVFinder release version ${version}
@@ -46,8 +60,9 @@ export default {
   name: 'App',
   components: {
     Footer,
-    FormSelectors,
     InventoryTable,
+    SearchForm,
+    Slogan,
   },
   data() {
     return {
@@ -58,7 +73,6 @@ export default {
   },
   mounted() {
       this.heroImage = getHeroImage()  // Get the hero image URL on mount
-
       if (window.matchMedia("(orientation: portrait)").matches) {
         this.imagePosition = this.heroImage['portraitPosition']
       }
@@ -94,8 +108,6 @@ export default {
       window.addEventListener('load', () => {
         preloadBlurredImage(this.heroImage["blurredImageUrl"])
       })
-
-
   },  // mounted
 
   computed: {
@@ -181,5 +193,15 @@ export default {
 
   .fade-enter, .fade-leave-to {
       opacity: 0
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
   }
 </style>

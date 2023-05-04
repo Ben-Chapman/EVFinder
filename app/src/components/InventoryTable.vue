@@ -34,7 +34,7 @@
           :busy="tableBusy"
           :items="this.inventory"
           :fields="manufacturerSpecificTableFields"
-          :sort-by.sync="this.fields.distance"
+          :sort-by="this.fields.distance"
           :sort-compare="customSort"
           :filter="this.filterSelections"
           @row-clicked="toggleDetails"
@@ -373,22 +373,26 @@
         return ''
       },
 
+      /**
+       * @param {Object} a A record Object for the first row to be compared
+       * @param {Object} b A record Object for the second row to be compared
+       * @param {String} key The field key being sorted on (sortBy)
+       * @returns {Number} One of:
+       * -1 where a[key] < b[key]
+       *  0 where a[key] === b[key]
+       *  1  where a[key] > b[key]
+       */
       customSort(a, b, key) {
-        /*
-         Only apply this custom sort to date columns
-         Return either
-         -1 for a[key] < b[key]
-          0 for a[key] === b[key]
-          1  for a[key] > b[key].
-        */
-        if (key == 'PlannedDeliveryDate') {
+        // This custom sort function was designed to sort dates, so only working with the
+        // deliveryDate column
+        if (key == 'deliveryDate') {
           const _a = new Date(a[key])  // New Date object
           const _b = new Date(b[key])
           const aDate = Date.parse(_a)  // Convert Date object to epoch
           const bDate = Date.parse(_b)
 
           // Some manufacturers don't include a delivery date in their API response
-          // If that's true, fall back to the buit-in sort-compare routine
+          // If that's true, fall back to the built-in sort-compare routine
           if ((_a || _b) == 'Invalid Date') {
             return false
           }
@@ -403,7 +407,7 @@
             return 1
           }
         }
-        // Fall back to the built-in sort-compare routine for all other keys
+        // Fall back to the built-in sort-compare routine for all other columns
         return false
       },
 

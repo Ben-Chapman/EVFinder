@@ -61,7 +61,7 @@ optimize_images () {
     echo -e "\n🖼️ 🚀 Optimizing images: $@"
 
     # ImageOptim takes a single file or a directory as input params, and when the input
-    # is a directory ImageOptim will optimze all images recursively. Becuase the source
+    # is a directory ImageOptim will optimze all images recursively. Because the source
     # images are stored in a subdir within the desktop images dir, the source images get
     # optimized, which we don't want. So moving the source images dir elsewhere
     # temporarily while we optimize, and then moving it back. Hacky? Indeed it is.
