@@ -1,6 +1,6 @@
 {
   "name": "evfinder",
-  "version": "1.15.8",
+  "version": "1.15.9",
   "private": true,
   "scripts": {
     "serve": "export NODE_ENV=development && vue-cli-service serve",
