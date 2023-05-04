@@ -12,7 +12,7 @@
 
     <!-- Slogan Text -->
     <b-row class="flex-fill">
-      <transition name="slide-fade" mode="out">
+      <transition name="slide-fade" mode="out-in">
       <Slogan
         v-if="!this.showTable"
         :display-name="this.heroImage['displayName']"
