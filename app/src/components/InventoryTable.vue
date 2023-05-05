@@ -132,7 +132,7 @@
                 </div>
               </div>
               <!-- Window sticker for Genesis -->
-              <div v-if="form.model == 'GV60'">
+              <div v-if="form.manufacturer == 'Genesis'">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
@@ -321,7 +321,7 @@
             return await getChevroletVinDetail(this.item.vin)
           },
           async genesis() {
-            return getGenesisVinDetail(this.item)
+            return getGenesisVinDetail(this.item.vin, this.zipcode, this.manufacturer)
           },
           async volkswagen() {
             return await getVolkswagenVinDetail(
