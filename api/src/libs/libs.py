@@ -54,7 +54,8 @@ def validate(validation_type, validation_data):
         "R",  # Sportage Plug-in Hybrid
         "T",  # Sorento Plug-in Hybrid
         "GV60",  # Genesis GV60
-        "ElectrifiedG80",  # Genesis Electrified G80
+        "ELECTRIFIED-G80",  # Genesis Electrified G80
+        "ELECTRIFIED-GV70",  # Genesis Electrified GV70
         "ID.4",  # VW ID.4
         "mache",  # Ford Mustang Mach-E
         "Bolt EV",  # Chevrolet Bolt EV
@@ -85,7 +86,11 @@ def validate(validation_type, validation_data):
     elif validation_type == "year":
         return validation_data in valid_years
 
-    elif validation_type == "model" or validation_type == "series":
+    elif (
+        validation_type == "model"
+        or validation_type == "series"
+        or validation_type == "modelname"
+    ):
         return validation_data in valid_models
 
     elif validation_type == "radius":

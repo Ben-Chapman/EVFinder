@@ -321,7 +321,7 @@
             return await getChevroletVinDetail(this.item.vin)
           },
           async genesis() {
-            return getGenesisVinDetail(this.item)
+            return getGenesisVinDetail(this.item.vin, this.zipcode, this.manufacturer)
           },
           async volkswagen() {
             return await getVolkswagenVinDetail(
