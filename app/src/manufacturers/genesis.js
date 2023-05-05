@@ -26,7 +26,6 @@ export async function getGenesisInventory(zip, year, model, radius, manufacturer
    * an empty array without making an API call.
    * TODO: Create an info-message Vue component, and display a helpful info message.
    */
-
   if (year == 2022) {
     return [];
   }
@@ -55,17 +54,24 @@ function formatGenesisInventoryResults(input, radius) {
           k[genesisInventoryMapping[key]] = vehicle["Veh"][key];
         }
       } else {
-        // If there's no EV Finder-specific key, just append the Genesis key
+        // If there's no EV Finder-specific key, just use the Genesis key
         k[key] = vehicle["Veh"][key];
+      }
+
+      if (vehicle["Veh"]["Model"].match(/GV?[7,8]0/)) {
+        k["trimDesc"] = vehicle["Veh"]["Package"]
+          ? vehicle["Veh"]["Package"]
+          : "Standard";
       }
     });
     // The Genesis Inventory API does not seem to provide a way to limit results by distance
     // So after receiving all inventory results, filtering out the results which are >
     // the radius selected by the user
-    if (k["distance"] <= radius) {
+    if (Number(k["distance"]) <= radius) {
       res.push(k);
     }
   });
+  console.log(radius);
   return res;
 }
 

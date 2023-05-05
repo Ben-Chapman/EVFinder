@@ -105,6 +105,8 @@ def validate(validation_type, validation_data):
             int(validation_data) >= valid_radii[0]
             and int(validation_data) <= valid_radii[1]
         )
+    elif validation_type == "maxdealers":
+        return True
 
 
 # TODO: Move this logic to the Vue app

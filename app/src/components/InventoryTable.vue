@@ -132,7 +132,7 @@
                 </div>
               </div>
               <!-- Window sticker for Genesis -->
-              <div v-if="form.model == 'GV60'">
+              <div v-if="form.manufacturer == 'Genesis'">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"

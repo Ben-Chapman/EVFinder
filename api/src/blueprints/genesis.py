@@ -10,7 +10,6 @@ def get_genesis_inventory():
     request_args = request.args
 
     zip_code = request_args["zip"]
-    year = request_args["year"]
     model = request_args["model"]
 
     # We'll use the requesting UA to make the request to the Genesis APIs
@@ -18,15 +17,11 @@ def get_genesis_inventory():
 
     inventory_url = "https://www.genesis.com/bin/api/v1/inventory"
 
-    params = {
-        "zip": zip_code,
-        "year": year,
-        "modelname": model,
-    }
+    params = {"zip": zip_code, "modelname": model, "maxdealers": 25}
 
     headers = {
         "User-Agent": user_agent,
-        "referer": "https://www.genesis.com/us/en/new/inventory.html",
+        "Referer": "https://www.genesis.com/us/en/new/inventory.html",
     }
 
     if validate_request(params.items()):
@@ -68,7 +63,7 @@ def get_genesis_vin_detail():
 
     headers = {
         "User-Agent": user_agent,
-        "referer": f"https://www.genesis.com/us/en/new/inventory.html?vin={vin_params['vin']}",
+        "Referer": f"https://www.genesis.com/us/en/new/inventory.html?vin={vin_params['vin']}",
     }
 
     try:

@@ -29,8 +29,9 @@ const modelOptions = [
   {
     label: "Genesis",
     options: [
-      { value: "ElectrifiedG80", text: "Electrified G80" },
+      { value: "ELECTRIFIED-G80", text: "Electrified G80" },
       { value: "GV60", text: "GV60" },
+      { value: "ELECTRIFIED-GV70", text: "Electrified GV70" },
     ],
   },
   {
