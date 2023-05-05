@@ -7,7 +7,7 @@ export function getHeroImage() {
         ["2023-g80ev-3.jpg", "-10rem center", "dark"],
       ],
       displayName: "Genesis Electrified G80",
-      modelName: "ElectrifiedG80",
+      modelName: "ELECTRIFIED-G80",
     },
     {
       imageNames: [
@@ -17,6 +17,15 @@ export function getHeroImage() {
       ],
       displayName: "Genesis GV60",
       modelName: "GV60",
+    },
+    {
+      imageNames: [
+        ["2023-g70ev-1.jpg", "-38rem center", "light"],
+        ["2023-g70ev-2.jpg", "-25rem center", "light"],
+        ["2023-g70ev-3.jpg", "-27rem center", "light"],
+      ],
+      displayName: "Genesis Electrified GV70",
+      modelName: "ELECTRIFIED-GV70",
     },
     {
       imageNames: [
