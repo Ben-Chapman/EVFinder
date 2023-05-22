@@ -14,7 +14,7 @@ api_url = "https://www.bmwusa.com/inventory/graphql"
 def get_bmw_inventory():
     # The BMW API has a pageSize attribute which is 24 by default. Setting a larger
     # pageSize to avoid API request pagination
-    max_page_size = 100
+    max_page_size = 2000
 
     zip_code = request.args["zip"]
     year = request.args["year"]
@@ -43,9 +43,9 @@ def get_bmw_inventory():
         + params["radius"]
         + " excludeStopSale: false series: "
         + f'"{params["model"]}"'
-        + ', statuses:["0","1","2","3"] }, sorting: [{order: ASC, criteria: DISTANCE_TO_LOCATOR_ZIP},{order:ASC,criteria:PRICE}] pagination: {pageIndex: 1, '  # noqa: B950
+        + ', statuses:["0","1","2","3","4","5"] }, sorting: [{order: ASC, criteria: DISTANCE_TO_LOCATOR_ZIP},{order:ASC,criteria:PRICE}] pagination: {pageIndex: 1, '  # noqa: B950
         + f"pageSize: {max_page_size}"
-        + "}) { numberOfFilteredVehicles pageNumber totalPages errorCode filter { modelsWithSeries { series { code name } model { code name } } } dealerInfo { centerID newVehicleSales { dealerName distance longitude locationID dealerURL phoneNumber address { lineOne lineTwo city state zipcode } } } result { name modelYear sold daysOnLot orderType dealerEstArrivalDate marketingText technicalText interiorGenericColor exteriorGenericColor hybridFlag sportsFlag vehicleDetailsPage milesPerGallon milesPerGallonEqv code bodyStyle { name } engineDriveType { name } series { name code } qualifiedModelCode technicalText totalMsrp dealerId dealerLocation distanceToLocatorZip orderStatus vin vehicleDetailsPage vehicleProcessingCenter isAtPmaDealer } } }"  # noqa: B950
+        + "}) { numberOfFilteredVehicles pageNumber totalPages errorCode filter { modelsWithSeries { series { code name } model { code name } } } dealerInfo { centerID newVehicleSales { dealerName distance longitude locationID dealerURL phoneNumber address { lineOne lineTwo city state zipcode } } } result { name modelYear sold daysOnLot orderType dealerEstArrivalDate marketingText technicalText interiorGenericColor exteriorGenericColor hybridFlag sportsFlag vehicleDetailsPage milesPerGallon milesPerGallonEqv code bodyStyle { name } engineDriveType { name } series { name code } qualifiedModelCode technicalText totalMsrp dealerId dealerLocation distanceToLocatorZip orderStatus vin initialCOSYURL cosy { panoramaViewUrlPart walkaround360DegViewUrlPart } vehicleDetailsPage vehicleProcessingCenter isAtPmaDealer } } }"  # noqa: B950
     }
 
     if validate_request(params.items()):
