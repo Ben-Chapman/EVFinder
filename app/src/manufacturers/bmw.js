@@ -16,13 +16,8 @@
  */
 
 import { apiRequest } from "../helpers/request";
-import { generateErrorMessage } from "../helpers/libs";
-import {
-  bmwExteriorColorMapping,
-  bmwInteriorColorMapping,
-  bmwInventoryMapping,
-  bmwVinMapping,
-} from "./bmwMappings";
+import { generateErrorMessage, queryParamStringToObject } from "../helpers/libs";
+import { bmwColorMapping, bmwInventoryMapping, bmwVinMapping } from "./bmwMappings";
 
 export async function getBMWInventory(zip, year, model, radius, manufacturer) {
   try {
@@ -65,8 +60,13 @@ function formatBMWInventoryResults(input) {
       );
 
       // Populate descriptive color names
-      tmp["exteriorColor"] = bmwExteriorColorMapping[vehicle?.exteriorGenericColor];
-      tmp["interiorColor"] = bmwInteriorColorMapping[vehicle?.interiorGenericColor];
+      // The BMW API does not provide an actual vehicle color except embedded in a URL
+      // Pulling the query params from initialCOSYURL, and using bmwColorMapping to
+      // derive the actual interior and exterior colors.
+      const colorMap = queryParamStringToObject(vehicle?.initialCOSYURL);
+
+      tmp["exteriorColor"] = bmwColorMapping[colorMap["paint"]];
+      tmp["interiorColor"] = bmwColorMapping[colorMap["fabric"]];
     });
 
     res.push({ ...tmp, ...vehicle });
