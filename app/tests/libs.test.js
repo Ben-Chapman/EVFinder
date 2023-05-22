@@ -1,3 +1,4 @@
+import { values } from "lodash";
 import * as libs from "../src/helpers/libs";
 describe("Helper Tests", () => {
   test("Input should be Title Cased", () => {
@@ -105,4 +106,24 @@ test("Price string should be converted to a Number", () => {
   expect(libs.priceStringToNumber("$0.5")).toBe(0.5);
   // expect(libs.convertToCurrency(1.99)).toBe("$2");
   // expect(libs.convertToCurrency(1.45)).toBe("$1");
+});
+
+test("Query parameter string should be converted to an Object", () => {
+  const testData = "name=value&name1=value1&1r6y=00967";
+  const validQueryParamObject = {
+    name: "value",
+    name1: "value1",
+    "1r6y": "00967",
+  };
+  expect(libs.queryParamStringToObject(testData)).toMatchObject(validQueryParamObject);
+  expect(libs.queryParamStringToObject("?" + testData)).toMatchObject(
+    validQueryParamObject
+  );
+});
+
+test("Invalid query param should throw error", () => {
+  function invalidQueryParam() {
+    libs.queryParamStringToObject("This is not a query param");
+  }
+  expect(invalidQueryParam).toThrow(/not a valid query param/);
 });

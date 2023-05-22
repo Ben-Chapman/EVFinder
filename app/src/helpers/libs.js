@@ -175,3 +175,32 @@ export function generateUrlQueryParams(item, sliceLength) {
 export function generateErrorMessage(errorText) {
   return ["ERROR", errorText];
 }
+
+/**
+ *
+ * @param {String} input A string containing valid HTML query parameter(s). An example
+ * would be: "name=value&name1=value1"
+ * @returns {Object} The query parameter as an Object
+ */
+export function queryParamStringToObject(input) {
+  // Validate input looks like a query param
+  if (!input.includes("=")) {
+    throw new Error("Input is not a valid query parameter");
+  }
+
+  // If input has the leading ?, strip it
+  if (input.includes("?")) {
+    input = input.split("?")[1];
+  }
+
+  const res = {};
+  // Split the string into individual query parameters
+  input.split("&").forEach((element) => {
+    // Split each query param into it's name / value pair
+    const kv = element.split("=");
+    const name = kv[0];
+    const value = kv[1];
+    res[name] = value;
+  });
+  return res;
+}
