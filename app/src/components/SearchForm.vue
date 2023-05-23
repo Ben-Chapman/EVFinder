@@ -130,6 +130,7 @@
   import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
+  import { getBMWInventory } from '../manufacturers/bmw'
   import { getFordInventory } from '../manufacturers/ford'
   import { getChevroletInventory } from '../manufacturers/chevrolet'
   import { getGenesisInventory } from '../manufacturers/genesis'
@@ -244,6 +245,15 @@
           radius: this.localForm.radius,
           manufacturer: this.localForm.manufacturer,
 
+          async bmw() {
+            return await getBMWInventory(
+            this.zipcode,
+            this.year,
+            this.model,
+            this.radius,
+            this.manufacturer,
+            )
+          },
           async hyundai() {
             return await getHyundaiInventory(
             this.zipcode,

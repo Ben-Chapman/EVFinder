@@ -8,6 +8,14 @@ const modelOptions = [
     ],
   },
   {
+    label: "BMW",
+    options: [
+      { value: "i4", text: "i4" },
+      { value: "i7", text: "i7" },
+      { value: "9", text: "iX" },
+    ],
+  },
+  {
     label: "Chevrolet",
     options: [
       { value: "Bolt EUV", text: "Bolt EUV" },

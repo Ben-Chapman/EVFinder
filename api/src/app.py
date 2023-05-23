@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 
 from blueprints.audi import audi
+from blueprints.bmw import bmw
 from blueprints.chevrolet import chevrolet
 from blueprints.ford import ford
 from blueprints.logger import logger
@@ -35,6 +36,7 @@ CORS(
 
 # Register Blueprints
 app.register_blueprint(audi)
+app.register_blueprint(bmw)
 app.register_blueprint(chevrolet)
 app.register_blueprint(ford)
 app.register_blueprint(logger)

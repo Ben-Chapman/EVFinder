@@ -177,6 +177,20 @@
                     </b-button>
                   </b-row>
               </div>
+              <!-- Direct Dealer URL for BMW -->
+              <div v-if="row.item.vehicleDetailsPage">
+                  <b-row class="py-2" align-h="center">
+                    <b-button
+                      size="md"
+                      variant="light"
+                      @click="openUrlInNewWindow(row.item.vehicleDetailsPage)"
+                      class="mr-2 align-middle"
+                      >
+                      Dealer's Website for This Vehicle
+                      <b-icon-box-arrow-up-right aria-hidden="true" class="ml-2" shift-v="5" font-scale=".8"></b-icon-box-arrow-up-right>
+                    </b-button>
+                  </b-row>
+              </div>
                 <!-- VIN Detail Section -->
                 <b-list-group
                   horizontal
@@ -219,6 +233,7 @@
   import { convertToCurrency, priceStringToNumber } from '../helpers/libs'
 
   import { getAudiVinDetail } from '../manufacturers/audi'
+  import { getBMWVinDetail } from '../manufacturers/bmw'
   import { getFordVinDetail } from '../manufacturers/ford'
   import { getGenesisVinDetail } from '../manufacturers/genesis'
   import { getChevroletVinDetail } from '../manufacturers/chevrolet'
@@ -306,6 +321,16 @@
           year: this.form.year,
           item: item,
 
+          async bmw() {
+            return await getBMWVinDetail(
+              this.item.vin,
+              this.manufacturer,
+              // A lot of additional detail is included in the inventory data, so
+              // passing the inventory API response into getVinDetail to display in the
+              // VIN detail section
+              this.item,
+              )
+          },
           async hyundai() {
             return await getHyundaiVinDetail(
               this.item.vin,
