@@ -43,6 +43,8 @@ def get_bmw_inventory():
         + params["radius"]
         + " excludeStopSale: false series: "
         + f'"{params["model"]}"'
+        # Order statuses 0 and 1: Vehicle is at the dealership
+        # 2, 3, 4, and 5: Vehicle is in transit or in production"
         + ', statuses:["0","1","2","3","4","5"] }, sorting: [{order: ASC, criteria: DISTANCE_TO_LOCATOR_ZIP},{order:ASC,criteria:PRICE}] pagination: {pageIndex: 1, '  # noqa: B950
         + f"pageSize: {max_page_size}"
         + "}) { numberOfFilteredVehicles pageNumber totalPages errorCode filter { modelsWithSeries { series { code name } model { code name } } } dealerInfo { centerID newVehicleSales { dealerName distance longitude locationID dealerURL phoneNumber address { lineOne lineTwo city state zipcode } } } result { name modelYear sold daysOnLot orderType dealerEstArrivalDate marketingText technicalText interiorGenericColor exteriorGenericColor hybridFlag sportsFlag vehicleDetailsPage milesPerGallon milesPerGallonEqv code bodyStyle { name } engineDriveType { name } series { name code } qualifiedModelCode technicalText totalMsrp dealerId dealerLocation distanceToLocatorZip orderStatus vin initialCOSYURL cosy { panoramaViewUrlPart walkaround360DegViewUrlPart } vehicleDetailsPage vehicleProcessingCenter isAtPmaDealer } } }"  # noqa: B950
@@ -82,19 +84,18 @@ def get_bmw_inventory():
 def get_vin_details():
     request_args = request.args
 
-    zip_code = request_args["zip"]
     vin = request_args["vin"]
 
     # We'll use the requesting UA to make the request to the  BMW APIs
     user_agent = request.headers["User-Agent"]
 
-    headers = {"User-Agent": user_agent, "referer": "https://www.vw.com/"}
+    headers = {"User-Agent": user_agent, "Referer": "https://www.bmwusa.com/inventory/"}
 
     vin_post_data = (
         {
-            "operationName": "VehicleData",
-            "variables": {"vin": vin, "zipcode": zip_code},
-            "query": "query VehicleData($vin: String, $zipcode: String) { vehicle: getVehicleByVinAndZip(vin: $vin, zipcode: $zipcode) { portInstalledOptions vin model modelCode modelYear modelVersion carlineKey msrp mpgCity subTrimLevel engineDescription exteriorColorDescription exteriorColorBaseColor exteriorColorCode exteriorSwatchUrl interiorColorDescription interiorColorBaseColor interiorColorCode interiorSwatchUrl factoryExteriorCode factoryInteriorCode mpgHighway trimLevel mediaAssets { view type url __typename } onlineSalesURL dealerEnrollmentStatusInd highlightFeatures { key title __typename } factoryModelYear dealerInstalledAccessories { mdmCode title longTitle description image itemPrice creativeTitle __typename } dealer { generatedDate dealerid name dealername seolookupkey address1 address2 city state postalcode country url phone latlong staticMapsUrl distance inventoryCount aor isSatellite isAssessing lmaId __typename } specifications { text values { key label longTitle value __typename } key __typename } destinationCharge __typename }}",  # noqa: B950
+            "query": "query inventory { getInventoryByIdentifier("
+            + f'identifier: "{vin}")'
+            + " { result { code id dealerId dealerLocation vin totalMsrp name powertrain fuelType marketingText orderStatus technicalText acceleration horsepower milesPerGallon milesPerGallonEqv modelYear productionNumber sold hybridFlag sportsFlag vehicleDetailsPage destinationAndHandling qualifiedModelCode series { code name } bodyStyle { code name } engineDriveType { code name } options { name code optionPackageCodeKey price wholesalePrice optionType optionAttribute isPaint isUpholstery isPackage isTrim isAccessory isWheel isStandard isLine isTop isUni isMetallic isIndividual isMarketing } vehicleDetailsPage vehicleProcessingCenter isAtPmaDealer } dealerInfo { centerID newVehicleSales { dealerName distance longitude locationID dealerURL phoneNumber address { lineOne lineTwo city state zipcode } } } } }"  # noqa: B950
         },
     )
 
@@ -104,7 +105,7 @@ def get_vin_details():
 
     data = vin_detail.json()
 
-    if len(data[0]["data"]["vehicle"]) > 0:
+    if len(data[0]["data"]["getInventoryByIdentifier"]["result"]) > 0:
         return send_response(
             response_data=data[0],
             content_type="application/json",
