@@ -88,7 +88,7 @@ export async function getBMWVinDetail(vin, manufacturer, inventoryData) {
     // to avoid having to reference this long string everywhere
     vinData = vinData?.data?.getInventoryByIdentifier?.result[0];
 
-    const needsCurrencyConversion = ["totalMsrp"];
+    const needsCurrencyConversion = ["destinationAndHandling", "totalMsrp"];
 
     const vinFormattedData = {};
     Object.keys(vinData).forEach((key) => {
