@@ -178,7 +178,7 @@
                   </b-row>
               </div>
               <!-- Direct Dealer URL for BMW -->
-              <div v-if="row?.item?.vehicleDetailsPage != ''">
+              <div v-if="row.item.vehicleDetailsPage">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
