@@ -74,7 +74,7 @@ export function normalizeJson(inputJson, keyMap) {
  * @returns {String} A USD-formatted string of the input Number. 123 -> $1.23, 24.99 -> $25
  */
 export function convertToCurrency(item) {
-  var formatter = new Intl.NumberFormat("en-US", {
+  const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     // minimumFractionDigits must also be set when maximumFractionDigits is < 2
