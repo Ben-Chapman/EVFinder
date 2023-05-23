@@ -16,7 +16,12 @@
  */
 
 import { apiRequest } from "../helpers/request";
-import { generateErrorMessage, queryParamStringToObject } from "../helpers/libs";
+import {
+  convertToCurrency,
+  generateErrorMessage,
+  queryParamStringToObject,
+  sortObjectByKey,
+} from "../helpers/libs";
 import { bmwColorMapping, bmwInventoryMapping, bmwVinMapping } from "./bmwMappings";
 
 export async function getBMWInventory(zip, year, model, radius, manufacturer) {
@@ -74,21 +79,48 @@ function formatBMWInventoryResults(input) {
   return res;
 }
 
-export async function getBMWVinDetail(vin, manufacturer) {
+export async function getBMWVinDetail(vin, manufacturer, inventoryData) {
   try {
-    const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
+    let vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
       vin: vin,
     });
-    // const needsCurrencyConversion = ["destinationCharge", "msrp"];
+    // The information for this VIN is buried in the API response, so redefining vinData
+    // to avoid having to reference this long string everywhere
+    vinData = vinData?.data?.getInventoryByIdentifier?.result[0];
+
+    const needsCurrencyConversion = ["totalMsrp"];
+
     const vinFormattedData = {};
-    vinData[0]?.data?.getInventoryByIdentifier?.result.forEach((detail) => {
-      Object.keys(bmwVinMapping).includes(detail)
-        ? (vinFormattedData[bmwVinMapping[detail]] =
-            vinData[0].data.getInventoryByIdentifier.result[detail])
+    Object.keys(vinData).forEach((key) => {
+      Object.keys(bmwVinMapping).includes(key) && vinData[key] != ""
+        ? (vinFormattedData[bmwVinMapping[key]] = vinData[key])
         : null;
+
+      if (needsCurrencyConversion.includes(key)) {
+        vinFormattedData[bmwVinMapping[key]] = convertToCurrency(
+          Number(vinFormattedData[bmwVinMapping[key]])
+        );
+      }
     });
 
-    return vinFormattedData;
+    // Options for this vehicle
+    const vehicleOptions = vinData.options;
+    const options = [];
+    vehicleOptions.forEach((option) => options.push(option?.name));
+    vinFormattedData["Vehicle Options"] = options.join(", ");
+
+    // Pulling interesting information from the inventory data
+    vinFormattedData["Dealer Name"] = inventoryData?.dealerName;
+    vinFormattedData["Dealer Website"] = inventoryData?.dealerUrl;
+    vinFormattedData["Estimated Delivery Date"] = inventoryData?.deliveryDate;
+    vinFormattedData["Dealer Estimated Arrival Date"] =
+      inventoryData?.dealerEstArrivalDate;
+    vinFormattedData["Body Style"] = inventoryData?.bodyStyle?.name;
+    vinFormattedData["Days On Lot"] = inventoryData?.daysOnLot;
+    vinFormattedData["Order Type"] = inventoryData?.orderType;
+    vinFormattedData["Is Vehicle Sold"] = inventoryData?.sold;
+
+    return sortObjectByKey(vinFormattedData);
   } catch (error) {
     throw generateErrorMessage(error);
   }
