@@ -17,14 +17,9 @@
 
 const bmwInventoryMapping = {
   interiorGenericColor: "interiorColor",
-  // exteriorGenericColor: "exteriorColor",
   name: "trimDesc",
   totalMsrp: "price",
-  // status: "inTransit",
-  // name: "dealerName",
   dealerEstArrivalDate: "deliveryDate",
-  // distanceToLocatorZip: "distance",
-  // engineDriveType: "drivetrainDesc",
 };
 
 const bmwVinMapping = {
