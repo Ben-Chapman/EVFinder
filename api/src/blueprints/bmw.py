@@ -53,7 +53,7 @@ def get_bmw_inventory():
     if validate_request(params.items()):
         # Make a call to the  BMW API
         inventory = requests.post(
-            url=api_url, headers=headers, json=inventory_post_data, verify=False
+            url=api_url, headers=headers, json=inventory_post_data
         )
 
         data = inventory.json()
@@ -99,9 +99,7 @@ def get_vin_details():
         },
     )
 
-    vin_detail = requests.post(
-        url=api_url, headers=headers, json=vin_post_data, verify=False
-    )
+    vin_detail = requests.post(url=api_url, headers=headers, json=vin_post_data)
 
     data = vin_detail.json()
 
