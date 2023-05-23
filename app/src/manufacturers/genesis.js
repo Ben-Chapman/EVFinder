@@ -71,7 +71,6 @@ function formatGenesisInventoryResults(input, radius) {
       res.push(k);
     }
   });
-  console.log(radius);
   return res;
 }
 
