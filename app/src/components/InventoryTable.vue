@@ -225,6 +225,7 @@
   import { getHyundaiVinDetail } from '../manufacturers/hyundai'
   import { getKiaVinDetail } from '../manufacturers/kia'
   import { getVolkswagenVinDetail } from '../manufacturers/volkswagen'
+import { getBMWVinDetail } from '../manufacturers/bmw'
 
   export default {
     components: {
@@ -306,6 +307,12 @@
           year: this.form.year,
           item: item,
 
+          async bmw() {
+            return await getBMWVinDetail(
+              this.item.vin,
+              this.manufacturer,
+              )
+          },
           async hyundai() {
             return await getHyundaiVinDetail(
               this.item.vin,

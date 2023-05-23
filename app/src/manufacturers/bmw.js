@@ -74,18 +74,17 @@ function formatBMWInventoryResults(input) {
   return res;
 }
 
-export async function getBMWVinDetail(zip, vin, manufacturer) {
+export async function getBMWVinDetail(vin, manufacturer) {
   try {
     const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
-      zip: zip,
       vin: vin,
     });
     // const needsCurrencyConversion = ["destinationCharge", "msrp"];
     const vinFormattedData = {};
-    Object.keys(vinData.data.vehicle).forEach((vinKey) => {
-      // Map BMW-specific keys to EVFinder-specific keys
-      Object.keys(bmwVinMapping).includes(vinKey)
-        ? (vinFormattedData[bmwVinMapping[vinKey]] = vinData.data.vehicle[vinKey])
+    vinData[0]?.data?.getInventoryByIdentifier?.result.forEach((detail) => {
+      Object.keys(bmwVinMapping).includes(detail)
+        ? (vinFormattedData[bmwVinMapping[detail]] =
+            vinData[0].data.getInventoryByIdentifier.result[detail])
         : null;
     });
 
