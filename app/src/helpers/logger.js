@@ -40,6 +40,7 @@ export async function logMessage(logData, severity) {
             userAgent: window.navigator.userAgent,
             appVersion: version,
           };
+          console.log(JSON.stringify({ ...data, ...{ additionalData } }));
           return JSON.stringify({ ...data, ...additionalData });
         },
       ],
@@ -64,7 +65,7 @@ export async function logMessage(logData, severity) {
       },
     };
 
-    let apiEndpoint = severity === "error" ? "/error" : "/info";
+    let apiEndpoint = severity.toLowerCase() === "error" ? "/error" : "/info";
 
     try {
       axios.create(axiosConfig).post(apiEndpoint, logData);

@@ -105,10 +105,13 @@ export function titleCase(str) {
     if (str.length == 0) return str;
     return str[0].toUpperCase() + str.slice(1);
   }
-  // If the input string is ALL CAPS, lowercase it first so capitalize() can actually
-  // Title Case the string
-  const returnStr =
-    str === str.toUpperCase() ? str.toLowerCase().split(" ") : str.split(" ");
+  // If the input string is undefined, return an empty string, if the input string is
+  // ALL CAPS, lowercase it first so capitalize() can actually Title Case the string
+  const returnStr = !str
+    ? []
+    : str === str.toUpperCase()
+    ? str.toLowerCase().split(" ")
+    : str.split(" ");
 
   return returnStr.map(capitalize).join(" ");
 }
