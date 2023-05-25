@@ -18,6 +18,10 @@ describe("Helper Tests", () => {
   });
 });
 
+test("Title case for an undefined string should return an empty string", () => {
+  expect(libs.titleCase(undefined)).toBe("");
+});
+
 test("Number should be converted to currency", () => {
   expect(libs.convertToCurrency(38091)).toBe("$38,091");
   expect(libs.convertToCurrency(147062)).toBe("$147,062");

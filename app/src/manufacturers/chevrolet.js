@@ -77,7 +77,7 @@ function formatChevroletInventoryResults(input) {
     // bring some nested values up to the top level and create entries that don't exist
     const enhancedResult = {
       ...vehicle,
-      dealerName: titleCase(vehicle.dealer?.name),
+      dealerName: titleCase(vehicle?.dealer?.name),
       dealerDistance: vehicle.dealer?.distance,
       trimName: vehicle.trim?.name,
       totalPrice: vehicle.pricing?.cash?.summary?.items
