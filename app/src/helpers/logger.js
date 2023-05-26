@@ -20,11 +20,14 @@ const axios = require("axios").default;
 import { version } from "../../package.json";
 
 /**
- * @param {String} logData
+ * @param {Array} logData
  * @param {String} severity
  */
 export async function logMessage(logData, severity = "error") {
-  if (process.env.NODE_ENV == "development") {
+  if (typeof logData === "string") {
+    logData = [logData];
+  }
+  if (process.env.NODE_ENV == "foo") {
     console.error(logData);
   } else {
     const axiosConfig = {
@@ -34,13 +37,16 @@ export async function logMessage(logData, severity = "error") {
       // Allows changes to the request data before it is sent to the server
       transformRequest: [
         function (data) {
-          data = { errorMessage: data };
+          data = { errorMessage: data[0] };
           // Include some non-PII data to assist in troubleshooting
-          const additionalData = {
-            userAgent: window.navigator.userAgent,
-            appVersion: version,
+          const diagData = {
+            additionalData: {
+              userAgent: window.navigator.userAgent,
+              appVersion: version,
+              additionalData: data[1],
+            },
           };
-          return JSON.stringify({ ...data, ...additionalData });
+          return JSON.stringify({ ...data, ...diagData });
         },
       ],
 

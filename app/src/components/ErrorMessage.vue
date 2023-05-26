@@ -45,7 +45,7 @@ export default {
     // If this component is called, we're showing an error message
     // Logging the error text and form data which contains the detail of the user's
     // search
-    logMessage(`${this.apiErrorDetail[1]} | ${JSON.stringify(this.form)}`)
+    logMessage([this.apiErrorDetail[1], JSON.stringify(this.form)])
   },
   methods: {
     refreshPage() {
