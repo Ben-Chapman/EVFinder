@@ -40,7 +40,6 @@ export async function logMessage(logData, severity = "error") {
             userAgent: window.navigator.userAgent,
             appVersion: version,
           };
-          console.log(JSON.stringify({ ...data, ...{ additionalData } }));
           return JSON.stringify({ ...data, ...additionalData });
         },
       ],
