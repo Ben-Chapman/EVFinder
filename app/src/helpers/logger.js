@@ -23,7 +23,7 @@ import { version } from "../../package.json";
  * @param {String} logData
  * @param {String} severity
  */
-export async function logMessage(logData, severity) {
+export async function logMessage(logData, severity = "error") {
   if (process.env.NODE_ENV == "development") {
     console.error(logData);
   } else {

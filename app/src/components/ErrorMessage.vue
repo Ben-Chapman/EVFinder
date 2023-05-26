@@ -37,21 +37,15 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { logMessage } from '../helpers/logger'
+import { mapState } from 'vuex'
+
 export default {
   mounted() {
-    /**
-     * If this component is called, we're showing an error message. Logging this
-     * to Plausible
-    */
-    this.$plausible.trackEvent(
-      'Error Message', {
-        props: {
-          statusCode: this.apiErrorDetail[1],
-          queryParam: window.location.search,
-        }
-      }
-    )
+    // If this component is called, we're showing an error message
+    // Logging the error text and form data which contains the detail of the user's
+    // search
+    logMessage(`${this.apiErrorDetail[1]} | ${JSON.stringify(this.form)}`)
   },
   methods: {
     refreshPage() {
@@ -62,6 +56,7 @@ export default {
   computed: {
       ...mapState([
         'apiErrorDetail',
+        'form',
       ]),
   }
 }
