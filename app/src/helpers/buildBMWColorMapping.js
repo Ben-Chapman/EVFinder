@@ -45,5 +45,3 @@ endpoints.forEach(async (endpoint) => {
     console.error(error);
   }
 });
-
-console.log(colorMappings);
