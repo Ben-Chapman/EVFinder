@@ -26,6 +26,8 @@ const hyundaiInteriorColors = {
   UUE: "Beige",
   REY: "Gray",
   MMF: "Tan",
+  YTH: "Gray",
+  RNE: "Dark Green",
 };
 
 const hyundaiTransitStatus = {
