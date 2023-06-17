@@ -26,9 +26,7 @@ import { bmwColorMapping, bmwInventoryMapping, bmwVinMapping } from "./bmwMappin
 
 export async function getBMWInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatBMWInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -81,7 +79,7 @@ function formatBMWInventoryResults(input) {
 
 export async function getBMWVinDetail(vin, manufacturer, inventoryData) {
   try {
-    let vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
+    let vinData = await apiRequest("vin", manufacturer, [...arguments], {
       vin: vin,
     });
     // The information for this VIN is buried in the API response, so redefining vinData

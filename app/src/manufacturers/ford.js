@@ -27,9 +27,7 @@ import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 
 export async function getFordInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 60000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatFordInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -50,7 +48,7 @@ export async function getFordVinDetail(
     return generateErrorMessage(errorMessage);
   } else {
     try {
-      const vinData = await apiRequest("vin", manufacturer, 30000, [...arguments], {
+      const vinData = await apiRequest("vin", manufacturer, [...arguments], {
         dealerSlug: dealerSlug,
         modelSlug: `${year}-${model}`.toLowerCase(), // 2022-mache
         paCode: paCode,

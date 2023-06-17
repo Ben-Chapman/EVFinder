@@ -32,9 +32,7 @@ const manufacturer = "chevrolet";
  */
 export async function getChevroletInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatChevroletInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -123,7 +121,7 @@ function formatChevroletInventoryResults(input) {
  */
 export async function getChevroletVinDetail(vin) {
   try {
-    var vinData = await apiRequest("vin", manufacturer, 15000, [vin]);
+    var vinData = await apiRequest("vin", manufacturer, [vin]);
   } catch (error) {
     throw generateErrorMessage(error);
   }

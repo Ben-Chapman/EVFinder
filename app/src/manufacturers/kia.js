@@ -21,9 +21,7 @@ import { kiaInventoryMapping, kiaVinMapping } from "./kiaMappings";
 
 export async function getKiaInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatKiaInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);

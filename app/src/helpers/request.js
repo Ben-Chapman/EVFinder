@@ -24,23 +24,23 @@ const controller = new AbortController();
  * or "vin"
  * @param {String} manufacturer Required only for inventory requests. The name of the
  * manufacturer for which the inventory request is being made.
- * @param {Number} timeout The timeout value for the HTTP request in milliseconds. If this
- * value has elapsed without a response from the EV Finder API, the request is aborted and
- * an error is returned to the caller.
  * @param {Array} requiredParams An array of query parameter values which are
  * required for any inventory or vin API request. For inventory requests the required
  * params are [zip, year, model, radius]. For VIN requests the only required param is [vin].
  * @param {Object} additionalParams Optional. If there are additional query
  * parameters the Vue app needs to pass into the EV Finder API, include them here.
+ * @param {Number} timeout The timeout value for the HTTP request in milliseconds. If this
+ * value has elapsed without a response from the EV Finder API, the request is aborted and
+ * an error is returned to the caller.
  * @returns {Object} Either the inventory response from the EV Finder API or a descriptive
  * error message as a JSON Object.
  */
 export async function apiRequest(
   apiEndpoint,
   manufacturer,
-  timeout,
   requiredParams,
-  additionalParams = {}
+  additionalParams = {},
+  timeout = 60000
 ) {
   const axiosConfig = {
     method: "get",
