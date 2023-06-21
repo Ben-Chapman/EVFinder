@@ -17,7 +17,7 @@ function git_push() {
 /sbin/apk -U add nodejs-current npm
 
 cd ./app
-npm install
+npm clean-install
 
 # Setup git
 configure_git

@@ -22,9 +22,7 @@ import { volkswagenVinMapping } from "./volkswagenMappings";
 
 export async function getVolkswagenInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatVolkswagenInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -76,7 +74,7 @@ function formatVolkswagenInventoryResults(input) {
 
 export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
   try {
-    const vinData = await apiRequest("vin", manufacturer, 15000, [...arguments], {
+    const vinData = await apiRequest("vin", manufacturer, [...arguments], {
       zip: zip,
       vin: vin,
     });

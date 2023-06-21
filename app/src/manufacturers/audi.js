@@ -22,13 +22,9 @@ import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
 export async function getAudiInventory(zip, year, model, radius, manufacturer) {
   try {
     const geo = await getGeoFromZipcode(zip);
-    const invResponse = await apiRequest(
-      "inventory",
-      manufacturer,
-      30000,
-      [...arguments],
-      { geo: geo }
-    );
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments], {
+      geo: geo,
+    });
     return formatAudiInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);

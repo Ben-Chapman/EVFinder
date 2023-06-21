@@ -26,15 +26,9 @@ import { generateErrorMessage } from "../helpers/libs";
 
 export async function getHyundaiInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest(
-      "inventory",
-      manufacturer,
-      15000,
-      [...arguments],
-      {
-        v2: true,
-      }
-    );
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments], {
+      v2: true,
+    });
     return formatHyundaiInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -43,7 +37,7 @@ export async function getHyundaiInventory(zip, year, model, radius, manufacturer
 
 export async function getHyundaiVinDetail(vin, manufacturer, model, year) {
   try {
-    const vinResponse = await apiRequest("vin", manufacturer, 3500, [...arguments], {
+    const vinResponse = await apiRequest("vin", manufacturer, [...arguments], {
       year: year,
       model: model,
     });

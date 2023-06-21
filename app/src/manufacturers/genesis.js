@@ -31,9 +31,7 @@ export async function getGenesisInventory(zip, year, model, radius, manufacturer
   }
 
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, 15000, [
-      ...arguments,
-    ]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatGenesisInventoryResults(await invResponse, radius);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -81,7 +79,7 @@ export async function getGenesisVinDetail(vin, zip, manufacturer) {
    * local store.
    */
   try {
-    const vinResponse = await apiRequest("vin", manufacturer, 5000, [...arguments], {
+    const vinResponse = await apiRequest("vin", manufacturer, [...arguments], {
       zip: zip,
     });
 
