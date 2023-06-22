@@ -48,12 +48,6 @@ if [ $? -eq 0 ]; then
   echo -e "\nSetting no-cache on index.html..."
   gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}/index.html
   RETVAL=$?
-
-  # gsutil cp does not provide a way to exclude files from upload, so performing a
-  # second operation to remove the hero images sources, as they're not publically
-  # accessed
-  echo -e "\nRemoving hero images source images..."
-  gsutil -m rm -r gs://${_APP_BUCKET_NAME}/hero_images/src
 fi
 
 exit $RETVAL

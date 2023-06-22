@@ -6,7 +6,7 @@
 
 set -e
 
-SOURCE_IMAGE_DIR="public/hero_images/src"
+SOURCE_IMAGE_DIR="hero_source_images"
 DESKTOP_IMAGE_DIR="public/hero_images"
 BLURRED_IMAGE_DIR="public/hero_images/blurred"
 MOBILE_IMAGE_DIR="public/hero_images/mobile"
@@ -65,11 +65,11 @@ optimize_images () {
     # images are stored in a subdir within the desktop images dir, the source images get
     # optimized, which we don't want. So moving the source images dir elsewhere
     # temporarily while we optimize, and then moving it back. Hacky? Indeed it is.
-    TMPDIR=$(mktemp -d)
+    # TMPDIR=$(mktemp -d)
 
-    mv ${SOURCE_IMAGE_DIR}/* ${TMPDIR}/
+    # mv ${SOURCE_IMAGE_DIR}/* ${TMPDIR}/
     /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${@} > /dev/null 2>&1
-    mv ${TMPDIR}/* ${SOURCE_IMAGE_DIR}/ && rm -rf ${TMPDIR}
+    # mv ${TMPDIR}/* ${SOURCE_IMAGE_DIR}/ && rm -rf ${TMPDIR}
   fi
 }
 
