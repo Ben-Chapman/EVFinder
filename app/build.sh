@@ -22,6 +22,8 @@ NODE_PATH="node-${NODE_VERSION}-linux-x64"
 curl -s "https://nodejs.org/dist/${NODE_VERSION}/${NODE_PATH}.tar.xz" | tar -xJf - -C /tmp
 export PATH=/tmp/${NODE_PATH}/bin:$PATH
 
+apk -U add gcompat
+
 cd ./app
 npm clean-install
 
