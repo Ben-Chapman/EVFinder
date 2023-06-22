@@ -4,6 +4,8 @@
 # Helper script to build The EVFinder Vue app
 ###
 
+set -e
+
 function configure_git() {
   git config --global user.email "cloudbuild@theevfinder.com"
   git config --global user.name "Cloud Build"
