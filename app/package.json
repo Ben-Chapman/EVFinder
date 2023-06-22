@@ -38,14 +38,14 @@
     "yaml": ">=2.2.2"
   },
   "devDependencies": {
-    "@percy/cli": "^1.16.0",
+    "@percy/cli": "^1.26.0",
     "@percy/cypress": "^3.1.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "browserslist": "^4.21.1",
-    "cypress": "^12.11.0",
+    "cypress": "^12.15.0",
     "decode-uri-component": ">=0.2.1",
     "ejs": ">=3.1.7",
     "eslint": "^6.7.2",
