@@ -31,6 +31,7 @@ echo "Pushing changes to Github..."
 git_push
 
 # Now build
+export NODE_OPTIONS=--openssl-legacy-provider
 npm run build
 
 if [ $? -eq 0 ]; then
