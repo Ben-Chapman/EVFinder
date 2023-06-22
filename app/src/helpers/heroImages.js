@@ -102,7 +102,7 @@ export function getHeroImage() {
         ["2021-mustang-mache-4.jpg", "-21rem center", "dark"],
         ["2022-mustang-mache-1.jpg", "-20rem center", "light"],
       ],
-      displayName: "Ford Mustang Mach-E",
+      displayName: "Ford Mustang Mach-E®",
       modelName: "mache",
     },
     {
@@ -145,6 +145,50 @@ export function getHeroImage() {
       ],
       displayName: "Hyundai Ioniq 6",
       modelName: "Ioniq%206",
+    },
+    {
+      imageNames: [
+        ["2023-bmw-i4-1.jpg", "-20rem center", "light"],
+        ["2023-bmw-i4-2.jpg", "-31rem center", "light"],
+        ["2023-bmw-i4-3.jpg", "-25rem center", "dark"],
+        ["2023-bmw-i4-4.jpg", "-30rem center", "light"],
+        ["2023-bmw-i4-5.jpg", "-23rem center", "light"],
+      ],
+      displayName: "BMW i4",
+      modelName: "i4",
+    },
+    {
+      imageNames: [
+        ["2023-bmw-i7-1.jpg", "-45rem center", "dark"],
+        ["2023-bmw-i7-2.jpg", "-18rem center", "dark"],
+        ["2023-bmw-i7-3.jpg", "-26rem center", "light"],
+        ["2023-bmw-i7-4.jpg", "-8rem center", "light"],
+        ["2023-bmw-i7-5.jpg", "-22rem center", "dark"],
+      ],
+      displayName: "BMW i7",
+      modelName: "i7",
+    },
+    {
+      imageNames: [
+        ["2023-bmw-ix-1.jpg", "-20rem center", "dark"],
+        ["2023-bmw-ix-2.jpg", "-25rem center", "dark"],
+        ["2023-bmw-ix-3.jpg", "-33rem center", "light"],
+        ["2023-bmw-ix-4.jpg", "-34rem center", "dark"],
+        ["2023-bmw-ix-5.jpg", "-23rem center", "light"],
+      ],
+      displayName: "BMW iX",
+      modelName: "9",
+    },
+    {
+      imageNames: [
+        ["2022-ford-f-150-lightning-1.jpg", "-8rem center", "dark"],
+        ["2022-ford-f-150-lightning-2.jpg", "-36rem center", "light"],
+        ["2022-ford-f-150-lightning-3.jpg", "-32rem center", "light"],
+        ["2022-ford-f-150-lightning-4.jpg", "-5rem center", "dark"],
+        ["2022-ford-f-150-lightning-5.jpg", "-40rem center", "dark"],
+      ],
+      displayName: "Ford F-150 Lightning®",
+      modelName: "f-150 lightning",
     },
   ];
 
