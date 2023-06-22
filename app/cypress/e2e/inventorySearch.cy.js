@@ -1,8 +1,8 @@
-describe("Search for Vehicle Inventory", () => {
+describe("Search for Vehicle Inventory and Validate Results", () => {
   before(() => {
     cy.visit("/index.html");
     cy.get(".form-group > div > #form-zipcode").clear().type("90210");
-    cy.get(".form-group > div > #form-radius").clear().type("100");
+    cy.get(".form-group > div > #form-radius").clear().type("20");
     cy.wait(500);
     cy.get('[id="submit-button"]').click();
   });

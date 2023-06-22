@@ -24,7 +24,10 @@ const modelOptions = [
   },
   {
     label: "Ford",
-    options: [{ value: "mache", text: "Mustang Mach-E" }],
+    options: [
+      { value: "f-150 lightning", text: "F-150 Lightning®" },
+      { value: "mache", text: "Mustang Mach-E®" },
+    ],
   },
   {
     label: "Hyundai",

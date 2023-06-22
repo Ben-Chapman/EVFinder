@@ -21,7 +21,9 @@ import { camelCase } from "lodash";
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
  * @param {Object} obj An input Object containing nested key: value pairs.
  * @param {String} keyPrefix A prefix which will be appended to the key name.
- * @returns {String} A flat Object containing only key: value pairs. The key name will be a concatenation of the strings contained in the original nested object keys. For example, an input Object of
+ * @returns {String} A flat Object containing only key: value pairs. The key name will
+ * be a concatenation of the strings contained in the original nested object keys.
+ * For example, an input Object of
  * {
  *   key1:
  *     {
