@@ -13,16 +13,7 @@ function git_push() {
   git push https://${GITHUB_TOKEN}@github.com/Ben-Chapman/EVFinder.git HEAD:main
 }
 
-# The Node and NPM versions available through apk are old (v17.9.0). When using this
-# version with the version of Webpack required for Vue JS 2, the build results in a SSL
-# cypher error when building the app. To work around this, downloading and installing
-# from source
-NODE_VERSION=v18.16.1
-NODE_PATH="node-${NODE_VERSION}-linux-x64"
-curl -s "https://nodejs.org/dist/${NODE_VERSION}/${NODE_PATH}.tar.xz" | tar -xJf - -C /tmp
-export PATH=/tmp/${NODE_PATH}/bin:$PATH
-
-apk -U add gcompat
+apk -U add nodejs npm
 
 cd ./app
 npm clean-install
