@@ -60,20 +60,15 @@ optimize_images () {
   if [ $(uname) = "Darwin" ]; then
     echo -e "\n🖼️ 🚀 Optimizing images: $@"
 
-    # ImageOptim takes a single file or a directory as input params, and when the input
-    # is a directory ImageOptim will optimze all images recursively. Because the source
-    # images are stored in a subdir within the desktop images dir, the source images get
-    # optimized, which we don't want. So moving the source images dir elsewhere
-    # temporarily while we optimize, and then moving it back. Hacky? Indeed it is.
-    # TMPDIR=$(mktemp -d)
-
-    # mv ${SOURCE_IMAGE_DIR}/* ${TMPDIR}/
     /Applications/ImageOptim.app/Contents/MacOS/ImageOptim ${@} > /dev/null 2>&1
-    # mv ${TMPDIR}/* ${SOURCE_IMAGE_DIR}/ && rm -rf ${TMPDIR}
   fi
 }
 
 main () {
+  # Removing existing hero image renditions, to be generated anew
+  rm -rf ${DESKTOP_IMAGE_DIR}/*
+  for i in ${BLURRED_IMAGE_DIR} ${MOBILE_IMAGE_DIR}; do mkdir -p $i; done
+
   find -E ${SOURCE_IMAGE_DIR} -depth 1 -regex '.*(png|jpg|jpeg|webp)' -print |while read file; do
   echo -e "\n"
     IMAGE_NAME=$(basename ${file})
