@@ -33,7 +33,7 @@ export async function getAudiInventory(zip, year, model, radius, manufacturer) {
 
 export async function getAudiVinDetail(vehicleId, manufacturer) {
   try {
-    const vinData = await apiRequest("vin", manufacturer, 30000, [...arguments], {
+    const vinData = await apiRequest("vin", manufacturer, 30000, {
       vehicleId: vehicleId,
     });
     return formatAudiVinResults(vinData);
