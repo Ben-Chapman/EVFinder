@@ -137,6 +137,7 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
+  import { getGeoFromZipcode } from '../helpers/libs'
 
   export default {
     mounted() {
@@ -152,7 +153,7 @@
           }
         } else {
           /**
-           * When a random image is selected, the vehicle model is pushed into
+           * When a random image is selected onload, the vehicle model is pushed into
            * Vuex. Grabbing that data, and pushing it into the localForm which
            * will update the vehicle model dropdown menu. The dropdown menu will
            * now match the vehicle background image being displayed.
@@ -174,10 +175,11 @@
         localForm: {
           zipcode: '',
           year: '2023',
-          model: 'Ioniq%205',
+          model: '',
           radius: '',
           manufacturer: '',
           vehicleName: '',
+          geo: '',
         },
 
         modelOptions,
@@ -244,6 +246,7 @@
           model: this.localForm.model,
           radius: this.localForm.radius,
           manufacturer: this.localForm.manufacturer,
+          geo: this.localForm.geo,
 
           async bmw() {
             return await getBMWInventory(
@@ -315,6 +318,7 @@
               this.model,
               this.radius,
               this.manufacturer,
+              this.geo
             )
           }
         };
@@ -371,11 +375,11 @@
          * specific logic.
          */
         Object.values(this.modelOptions).forEach(model => {
-          var manu = model.label
-          model.options.forEach(v => {
-            if (v.value.includes(vehicleModelName)) {
-              this.localForm.manufacturer = manu
-              this.localForm.vehicleName = v.text  // The Kia API needs this
+          var manufacturer = model.label
+          model.options.forEach(option => {
+            if (option.value.includes(vehicleModelName)) {
+              this.localForm.manufacturer = manufacturer
+              this.localForm.vehicleName = option.text  // The Kia API needs this
             }
           })
         })
@@ -394,16 +398,16 @@
       ]),
 
       isValidZipCode() {
-        const zip = this.localForm.zipcode
+        const zipCode = this.localForm.zipcode
         // Hide the error indicator when this field is blank
-        if(zip.length == 0) {
+        if(zipCode.length == 0) {
             return null
         }
         // https://facts.usps.com/42000-zip-codes/
         const validZipCodes = [501, 99950]  // Starting zip code is 00501
 
         // Is the input zip code a 5 digit number between 501 and 99950
-        return /^\d{5}$/.test(zip) && (parseInt(zip) >= validZipCodes[0] && parseInt(zip) <= validZipCodes[1])
+        return /^\d{5}$/.test(zipCode) && (parseInt(zipCode) >= validZipCodes[0] && parseInt(zipCode) <= validZipCodes[1])
       },
 
       isValidRadius() {
@@ -457,8 +461,33 @@
         // When the inventory changes, update the $num vehicles found message
         this.updateStore({'inventoryCount': this.inventory.length})
       },
-    },
-  } // export
+
+      "localForm.model"() {
+        // When a model is selected, populate additional detail
+        this.populateVehicleModelDetail(this.localForm.model)
+      },
+
+      "localForm": {
+        /**
+         * Watch and react to changes in this.localForm.
+         * This watcher is used to detect if the user selected an Audi vehicle, and
+         * entered a valid zip code. When those conditions are met, fire a request to
+         * OpenStreetMap to get the lat/lon for the user's zip code in an attempt to
+         * prefetch this information (needed for the Audi API) and speed up the inventory
+         * request process.
+         */
+        handler: async function (f) {
+          if (f.manufacturer == "Audi" && this.isValidZipCode) {
+            // If we don't already have the geo information
+            if (!this.localForm.geo) {
+              this.localForm.geo = await getGeoFromZipcode(f.zipcode)
+            }
+          }
+        },
+        deep: true
+      },
+  }  // watch
+ } // export
 </script>
 
 <style>
