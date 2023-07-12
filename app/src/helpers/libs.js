@@ -16,6 +16,7 @@
  */
 
 import { camelCase } from "lodash";
+import { logMessage } from "./logger";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
@@ -228,11 +229,12 @@ export async function getGeoFromZipcode(zip) {
   if (geo.ok) {
     const mapData = await geo.json();
     return {
+      zipcode: zip,
       lat: mapData[0].lat,
       lon: mapData[0].lon,
     };
   } else {
-    return ["ERROR", geo.status, geo.text];
+    logMessage(`Geo Lookup Failure for ${zip} (${geo.status}): ${geo.text}`);
   }
 }
 
