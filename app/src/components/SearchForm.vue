@@ -55,7 +55,7 @@
               oninvalid="this.setCustomValidity('Please Enter valid email')"
               oninput="setCustomValidity('')"
               autocomplete="off"
-              name="search"
+              name="searchzip"
               id="form-zipcode"
               v-model="localForm.zipcode"
               :state="isValidZipCode"
@@ -383,6 +383,15 @@
             }
           })
         })
+      },
+
+      async prefetchGeoCoordinatesForAudi(zipCode) {
+        if (this.localForm.manufacturer == "Audi") {
+            // If we don't already have the geo information
+            if (this.localForm.zipcode != this.localForm.geo.zipcode) {
+              this.localForm.geo = await getGeoFromZipcode(zipCode)
+            }
+          }
       }
     },  //methods
 
@@ -400,14 +409,25 @@
       isValidZipCode() {
         const zipCode = this.localForm.zipcode
         // Hide the error indicator when this field is blank
-        if(zipCode.length == 0) {
+        if (zipCode.length == 0) {
             return null
         }
         // https://facts.usps.com/42000-zip-codes/
         const validZipCodes = [501, 99950]  // Starting zip code is 00501
 
         // Is the input zip code a 5 digit number between 501 and 99950
-        return /^\d{5}$/.test(zipCode) && (parseInt(zipCode) >= validZipCodes[0] && parseInt(zipCode) <= validZipCodes[1])
+        if (
+            /^\d{5}$/.test(zipCode)
+            && (parseInt(zipCode) >= validZipCodes[0]
+            && parseInt(zipCode) <= validZipCodes[1])
+          ) {
+          // If we have a valid zip code, call out to this function which will
+          // prefetch geo coordinates needed for Audi
+          this.prefetchGeoCoordinatesForAudi(zipCode)
+          return true
+        } else {
+          return false
+        }
       },
 
       isValidRadius() {
@@ -467,25 +487,27 @@
         this.populateVehicleModelDetail(this.localForm.model)
       },
 
-      "localForm": {
-        /**
-         * Watch and react to changes in this.localForm.
-         * This watcher is used to detect if the user selected an Audi vehicle, and
-         * entered a valid zip code. When those conditions are met, fire a request to
-         * OpenStreetMap to get the lat/lon for the user's zip code in an attempt to
-         * prefetch this information (needed for the Audi API) and speed up the inventory
-         * request process.
-         */
-        handler: async function (f) {
-          if (f.manufacturer == "Audi" && this.isValidZipCode) {
-            // If we don't already have the geo information
-            if (!this.localForm.geo) {
-              this.localForm.geo = await getGeoFromZipcode(f.zipcode)
-            }
-          }
-        },
-        deep: true
-      },
+      // "localForm": {
+      //   /**
+      //    * Watch and react to changes in this.localForm.
+      //    * This watcher is used to detect if the user selected an Audi vehicle, and
+      //    * entered a valid zip code. When those conditions are met, fire a request to
+      //    * OpenStreetMap to get the lat/lon for the user's zip code in an attempt to
+      //    * prefetch this information (needed for the Audi API) and speed up the inventory
+      //    * request process.
+      //    */
+      //   handler: async function(f, old) {
+      //     console.log(`\nOld: ${JSON.stringify(JSON.parse(JSON.stringify(old)))}`)
+      //     console.log(`New: ${JSON.stringify(f.zipcode)}`)
+      //     if (f.manufacturer == "Audi" && this.isValidZipCode) {
+      //       // If we don't already have the geo information
+      //       if (!this.localForm.geo) {
+      //         this.localForm.geo = await getGeoFromZipcode(f.zipcode)
+      //       }
+      //     }
+      //   },
+      //   deep: true
+      // },
   }  // watch
  } // export
 </script>
