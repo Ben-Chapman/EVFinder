@@ -1,33 +1,31 @@
 <template>
-  <div class="d-flex justify-content-center border-0">
+  <div class="d-flex justify-content-center border-0 pt-4">
     <b-card
-      style="max-width: 60vw"
+      class="error-card"
       bg-variant="warning"
       text-variant="white"
       title="Hmm, There's Been an Error"
     >
-      <b-card-text class="pt-3">
-        <!-- This is displayed for shorter HTTP responses like from the EVFinder
-        API error text. -->
-        <div v-if="this.apiErrorDetail[1].length <= 60">
-        There was a server error with this request: <code class="error-message">{{ this.apiErrorDetail[1] }}</code>
-          <p class="pt-3">Please refresh this page or retry.</p>
-        </div>
-        <div v-else>
-          <!-- For longer error responses passed through from the various manufacturer
-          APIs, we're collapsing the actual error text, accessible from an info button -->
-          There was a server error with this request.
-          <p class="pt-3">Please refresh this page or retry.
-            <b-button size="sm" variant="link" class="px-0 info-button" v-b-toggle.collapse-2>
+      <b-card-text class="pt-3 error-message">
+        <!-- Displaying the errorMessage returned from the EV Finder API and collapsing
+        any error detail, accessible from an info button -->
+        {{ errorMessage }}
+
+        <div v-if="errorDetail">
+          <p class="pt-3">Please adjust your search and retry.
+            <b-button size="sm" variant="link" class="px-0 pl-2 info-button" v-b-toggle.collapse-2>
               <b-icon-info-circle aria-hidden="true"></b-icon-info-circle>
             </b-button>
 
             <b-collapse id="collapse-2">
               <b-card bg-variant="warning" text-variant="white">
-                <code class="error-message">{{ this.apiErrorDetail[1] }}</code>
+                <code class="error-detail">{{ errorDetail }}</code>
               </b-card>
             </b-collapse>
           </p>
+        </div>
+        <div v-else>
+          <p class="pt-3">Please adjust your search and retry.</p>
         </div>
       </b-card-text>
 
@@ -45,7 +43,7 @@ export default {
     // If this component is called, we're showing an error message
     // Logging the error text and form data which contains the detail of the user's
     // search
-    logMessage(`${this.apiErrorDetail[1]} | ${JSON.stringify(this.form)}`)
+    logMessage(`${this.errorMessage}, ${this.errorDetail}`)
   },
   methods: {
     refreshPage() {
@@ -58,6 +56,15 @@ export default {
         'apiErrorDetail',
         'form',
       ]),
+
+      errorMessage() {
+        return this.apiErrorDetail[1].detail.errorMessage
+      },
+
+      errorDetail() {
+        return this.apiErrorDetail[1].detail.errorData
+      },
+
   }
 }
 </script>
@@ -65,7 +72,25 @@ export default {
 <style lang="scss">
   @import '../assets/app_style.scss';
 
+  // Mobile portrait
+  @include media-breakpoint-down(sm) {
+  .error-card {
+    width: 80vw;
+  }
+}
+
+  // Everything larger than mobile portrait
+  @include media-breakpoint-up(sm) {
+    .error-card {
+      width: 40vw;
+    }
+  }
+
   .error-message {
+    font-size: 1.1rem;
+  }
+
+  .error-detail {
     color: #fff;
     font-family: $font-family-monospace;
     font-size: 1.1rem;
