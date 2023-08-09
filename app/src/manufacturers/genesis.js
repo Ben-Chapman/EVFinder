@@ -19,12 +19,10 @@ import { genesisInventoryMapping, genesisVinMapping } from "./genesisMappings";
 import { apiRequest } from "../helpers/request";
 import { convertToCurrency, titleCase, generateErrorMessage } from "../helpers/libs";
 
-// const apiBase = "https://api.theevfinder.com";
 export async function getGenesisInventory(zip, year, model, radius, manufacturer) {
   /**
-   * Genesis EVs are 2023 model year and newer. If the user selects 2022 return
-   * an empty array without making an API call.
-   * TODO: Create an info-message Vue component, and display a helpful info message.
+   * Genesis EVs are 2023 model year and newer. If the user selects 2022 return an empty
+   * array without making an API call.
    */
   if (year == 2022) {
     return [];
@@ -32,13 +30,13 @@ export async function getGenesisInventory(zip, year, model, radius, manufacturer
 
   try {
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
-    return formatGenesisInventoryResults(await invResponse, radius);
+    return formatGenesisInventoryResults(await invResponse, radius, year);
   } catch (error) {
     throw generateErrorMessage(error);
   }
 }
 
-function formatGenesisInventoryResults(input, radius) {
+function formatGenesisInventoryResults(input, radius, year) {
   const res = [];
   input?.data?.Vehicles.forEach((vehicle) => {
     const k = {};
@@ -50,6 +48,10 @@ function formatGenesisInventoryResults(input, radius) {
           k[genesisInventoryMapping[key]] = vehicle["Veh"][key].toString();
         } else {
           k[genesisInventoryMapping[key]] = vehicle["Veh"][key];
+        }
+
+        if (key == "IntColor") {
+          k[genesisInventoryMapping[key]] = titleCase(vehicle["Veh"][key]);
         }
       } else {
         // If there's no EV Finder-specific key, just use the Genesis key
@@ -65,7 +67,7 @@ function formatGenesisInventoryResults(input, radius) {
     // The Genesis Inventory API does not seem to provide a way to limit results by distance
     // So after receiving all inventory results, filtering out the results which are >
     // the radius selected by the user
-    if (Number(k["distance"]) <= radius) {
+    if (Number(k["distance"]) <= radius && Number(k["ModelYear"] == year)) {
       res.push(k);
     }
   });
