@@ -61,6 +61,7 @@ const modelOptions = [
 const yearOptions = [
   { value: "2022", text: "2022" },
   { value: "2023", text: "2023" },
+  { value: "2024", text: "2024" },
 ];
 
 export { modelOptions, yearOptions };
