@@ -64,7 +64,6 @@ export async function getFordVinDetail(
 }
 
 function formatFordInventoryResults(input, year) {
-  const start = Date.now();
   if (Object.keys(input.data.filterResults).length == 0) {
     // filterResults is empty when no vehicles are found for a given search
     // Returning an empty object so the UI displays the no vehicles found message
@@ -110,50 +109,42 @@ function formatFordInventoryResults(input, year) {
     };
   });
 
-  let results = [];
-
   n.forEach((vehicle) => {
+    // The dealerSlug is needed for VIN detail calls. Storing here for use later
+    vehicle["dealerSlug"] = input["dealerSlug"];
+
+    // Format the inventory status
+    vehicle["daysOnDealerLot"] > 0
+      ? ((vehicle["deliveryDate"] = `In Stock for ${vehicle["daysOnDealerLot"]} days`),
+        (vehicle["inventoryStatus"] = "In Stock"))
+      : ((vehicle["deliveryDate"] = "Unknown"),
+        (vehicle["inventoryStatus"] = "In Stock"));
+
     /**
-     * If no vehicles are found for a given model year the Ford API will return inventory
-     * for the current model year. After receiving the API response we need to filter it
-     * so we only return results for the requested model year
+     * In testing, I've seen where the dealerId provided in an individual
+     * vehicle response, doesn't match any dealerId provided by the inventory
+     * API response (API error?). So catching that and falling back to deriving
+     * the dealer's name from another field.
      */
-    if (vehicle.year == year) {
-      // The dealerSlug is needed for VIN detail calls. Storing here for use later
-      vehicle["dealerSlug"] = input["dealerSlug"];
-
-      // Format the inventory status
-      vehicle["daysOnDealerLot"] > 0
-        ? ((vehicle[
-            "deliveryDate"
-          ] = `In Stock for ${vehicle["daysOnDealerLot"]} days`),
-          (vehicle["inventoryStatus"] = "In Stock"))
-        : ((vehicle["deliveryDate"] = "Unknown"),
-          (vehicle["inventoryStatus"] = "In Stock"));
-
-      /**
-       * In testing, I've seen where the dealerId provided in an individual
-       * vehicle response, doesn't match any dealerId provided by the inventory
-       * API response (API error?). So catching that and falling back to deriving
-       * the dealer's name from another field.
-       */
-      const dealerId = vehicle["dealerPaCode"];
-      try {
-        vehicle["distance"] = dealers[dealerId]["distance"];
-        vehicle["dealerName"] = dealers[dealerId]["displayName"];
-      } catch (error) {
-        // /dealer/Santa-Monica-Ford-12345/model/2022-Mache/ -> Santa Monica Ford 12345
-        vehicle["dealerName"] = vehicle["detailPageUrl"]
-          .split("/")[2]
-          .replaceAll("-", " ");
-        vehicle["distance"] = "0";
-      }
-      results.push(vehicle);
+    const dealerId = vehicle["dealerPaCode"];
+    try {
+      vehicle["distance"] = dealers[dealerId]["distance"];
+      vehicle["dealerName"] = dealers[dealerId]["displayName"];
+    } catch (error) {
+      // /dealer/Santa-Monica-Ford-12345/model/2022-Mache/ -> Santa Monica Ford 12345
+      vehicle["dealerName"] = vehicle["detailPageUrl"]
+        .split("/")[2]
+        .replaceAll("-", " ");
+      vehicle["distance"] = "0";
     }
   });
 
-  console.log(`Inventory result parsing took ${Date.now() - start} ms`);
-  return results;
+  /**
+   * If no vehicles are found for a given model year the Ford API will return inventory
+   * for the current model year. After receiving the API response we need to filter it
+   * so we only return results for the requested model year
+   */
+  return n.filter((vehicle) => vehicle.year == year);
 }
 
 function formatFordVinResults(input) {
