@@ -18,8 +18,11 @@ const modelOptions = [
   {
     label: "Chevrolet",
     options: [
+      { value: "Blazer EV", text: "Blazer EV" },
       { value: "Bolt EUV", text: "Bolt EUV" },
       { value: "Bolt EV", text: "Bolt EV" },
+      { value: "Equinox EV", text: "Equinox EV" },
+      { value: "Silverado EV", text: "Silverado EV" },
     ],
   },
   {
