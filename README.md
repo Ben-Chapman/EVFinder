@@ -23,3 +23,6 @@ If you'd like to help out with new feature development or bug fixes, review and 
 that issue to discuss.
 
 - Before contributing please review the [Code of Conduct](CODE_OF_CONDUCT.md) and [contributing guidelines](CONTRIBUTING.md).
+
+## Disclaimer
+This code, application, website and service is not affiliated with, provided by, endorsed by, or supported by any vehicle manufacturer in any way.  It is intended for personal, non-commercial use only.
