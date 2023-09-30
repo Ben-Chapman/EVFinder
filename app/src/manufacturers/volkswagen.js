@@ -95,48 +95,40 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
         : null;
     });
 
-    /**
-     * VW exposes the various options and specifications in nested Objects.
-     * Dealing with those here
-     */
-
-    // Dealer Installed Accessories
+    // Accessories
     const dealerAccessory = [];
     vinData.data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
       dealerAccessory.push(
-        `${acc["longTitle"]}: ${convertToCurrency(acc["itemPrice"])}`
+        `${acc["optionDescription"]}: ${convertToCurrency(acc["price"])}`
       );
     });
-
     vinFormattedData["Dealer Installed Accessories"] = dealerAccessory.join(",  ");
 
     // Highlighted features
     const highlightFeatures = [];
     vinData.data.vehicle["highlightFeatures"].forEach((feat) => {
-      highlightFeatures.push(`${feat["title"]}`);
+      highlightFeatures.push(`${feat["name"]}`);
     });
-
     vinFormattedData["Highlighted Features"] = highlightFeatures.join(",  ");
 
     // Specifications
-    vinFormattedData["Specifications:"] = "";
+    const specTmp = {};
     vinData.data.vehicle["specifications"].forEach((spec) => {
-      const specType = spec["text"];
-      const specTmp = [];
-      spec["values"].forEach((value) => {
-        const specName = value?.label;
-        const specDesc = value?.value.replace(" VISIBLE", "");
-        // Sometime either the specification name or value is blank, if we have both the
-        // name and description, write to specTmp
-        if ((specName && specDesc) != "") {
-          specTmp.push(`${specName}: ${specDesc}`);
-        }
-      });
+      const specType = spec["salesFamily"];
+      if (!specTmp[specType]) {
+        specTmp[specType] = [];
+      }
+      specTmp[specType].push(
+        spec?.optionDescription != "" ? spec?.optionDescription : "N/A"
+      );
 
       // If we have specification data, write it to vinFormattedData
       if (specTmp.length > 0) {
         vinFormattedData[specType] = specTmp.join(", ");
       }
+    });
+    Object.keys(specTmp).forEach((specKey) => {
+      vinFormattedData[`${specKey} Specs: `] = specTmp[specKey].join(", ");
     });
 
     return vinFormattedData;
