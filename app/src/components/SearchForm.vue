@@ -40,6 +40,7 @@
               v-model="localForm.model"
               :options="modelOptions"
               required
+              @input="populateVehicleModelDetail"
             >
             </b-form-select>
           </b-form-group>
@@ -127,7 +128,8 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
-  import { logMessage } from '../helpers/logger'
+  import { camelCase} from 'lodash';
+  // import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
   import { getBMWInventory } from '../manufacturers/bmw'
@@ -212,20 +214,14 @@
         API call if they're valid.
         */
         this.$router.push({
+          path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${camelCase(this.localForm.vehicleName)}`,
           query: {
-            y: this.localForm.year,
-            m: this.localForm.model,
-            z: this.localForm.zipcode,
-            r: this.localForm.radius,
+            // year: this.localForm.year,
+            // model: this.localForm.model,
+            zipcode: this.localForm.zipcode,
+            radius: this.localForm.radius,
           }
-          }).catch(error => {
-            if (
-              error.name !== 'NavigationDuplicated' &&
-              !error.message.includes('Avoided redundant navigation to current location')
-            ) {
-              logMessage(`Vue router navigation error: ${error}`, "error")
-              }
-            })
+        })
       },
 
       async getCurrentInventory() {
@@ -334,32 +330,12 @@
 
       parseQueryParams(inputParams) {
         if (Object.keys(inputParams).length > 0) {
-          const paramMapping = {
-            'z': 'zipcode',
-            'y': 'year',
-            'm': 'model',
-            'r': 'radius',
-          }
-
-          const queryParams = inputParams  // z, y, m, r
-
           // Write query params to local data store
-          Object.keys(queryParams).forEach(k => {
-            const key = k
-            const longName = paramMapping[k]
-            const value = queryParams[k]
-
-            if (Object.keys(paramMapping).includes(key)) {
-              this.localForm[longName] = value
-            }
+          Object.keys(inputParams).forEach(p => {
+              this.localForm[p] = inputParams[p]
           })
-
-          // Now store some additional detail for the selected vehicle
-          this.populateVehicleModelDetail(this.localForm.model)
-
           return true  // Successfully parsed query params
-        }
-        else {
+        } else {
           return false
         }
       },
@@ -396,7 +372,7 @@
       isValidZipCode() {
         const zip = this.localForm.zipcode
         // Hide the error indicator when this field is blank
-        if(zip.length == 0) {
+        if( zip.length == 0 ) {
             return null
         }
         // https://facts.usps.com/42000-zip-codes/
