@@ -65,14 +65,14 @@ export async function apiRequest(
     if (error.response) {
       // Request made and server responded
       logMessage(
-        `An error occurred with an API request for ${manufacturer}: ${error?.message} | ${error?.response?.data}`,
+        `An error occurred with an API request for ${manufacturer}: ${error?.message}. ${JSON.stringify(error?.response?.data)}`,
         "error"
       );
       throw error?.response?.data;
     } else if (error.request) {
       // The request was made but no response was received
       logMessage(
-        `No response was received from the EV Finder API for ${manufacturer}: ${error?.message} | ${error?.response?.data}`,
+        `No response was received from the EV Finder API for ${manufacturer}: ${error?.message}. ${JSON.stringify(error?.response?.data)}`,
         "error"
       );
       throw error?.message;
