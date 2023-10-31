@@ -159,6 +159,15 @@ export function getHeroImage() {
     },
     {
       imageNames: [
+        ["2024-bmw-i5-1.jpg", "-36rem center", "light"],
+        ["2024-bmw-i5-2.jpg", "-43rem center", "light"],
+        ["2024-bmw-i5-3.jpg", "-15rem center", "light"],
+      ],
+      displayName: "BMW i5",
+      modelName: "i5",
+    },
+    {
+      imageNames: [
         ["2023-bmw-i7-1.jpg", "-45rem center", "dark"],
         ["2023-bmw-i7-2.jpg", "-18rem center", "dark"],
         ["2023-bmw-i7-3.jpg", "-26rem center", "light"],
