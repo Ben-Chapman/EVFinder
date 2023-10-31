@@ -12,7 +12,6 @@ describe("Homepage Background is Correct", () => {
       cy.get("#background")
         .should("have.css", "background-color", "rgba(0, 0, 0, 0)")
         .should("have.css", "background-image");
-      // .should('match', /hero_images\/[0-9a-z\-]+.jpg/)
     });
 
     it("Has the site slogan", () => {
@@ -44,8 +43,6 @@ describe("Homepage Background is Correct", () => {
         cy.get("#background")
           .should("have.css", "background-position")
           .should("match", /-\d+px\s50%/); // -67px 50%
-
-        cy.wait(500);
       });
     });
   });
@@ -63,8 +60,6 @@ describe("Homepage Background is Correct", () => {
         cy.get("#background")
           .should("have.css", "background-position")
           .should("match", /50%\s50%/);
-
-        cy.wait(500);
       });
     });
   });
@@ -81,8 +76,6 @@ describe("Homepage Background is Correct", () => {
         cy.get("#background")
           .should("have.css", "background-position")
           .should("match", /50%\s50%/);
-
-        cy.wait(200);
       });
     });
   });

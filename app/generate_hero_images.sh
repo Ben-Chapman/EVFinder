@@ -67,16 +67,23 @@ optimize_images () {
 main () {
   # Removing existing hero image renditions, to be generated anew
   rm -rf ${DESKTOP_IMAGE_DIR}/*
-  for i in ${BLURRED_IMAGE_DIR} ${MOBILE_IMAGE_DIR}; do mkdir -p $i; done
+  mkdir -p ${BLURRED_IMAGE_DIR} ${MOBILE_IMAGE_DIR}
 
   find -E ${SOURCE_IMAGE_DIR} -depth 1 -regex '.*(png|jpg|jpeg|webp)' -print |while read file; do
-  echo -e "\n"
+    echo ""
     IMAGE_NAME=$(basename ${file})
+    # Use the source image to generate the desktop image
     generate_desktop_images ${file} ${DESKTOP_IMAGE_DIR}/${IMAGE_NAME}
-    generate_blurred_images ${file} ${BLURRED_IMAGE_DIR}/${IMAGE_NAME}
-    generate_mobile_images ${file} ${MOBILE_IMAGE_DIR}/${IMAGE_NAME}
+
+    # Use the previously-optimized desktop image to generate the blurred and mobile images.
+    generate_blurred_images ${DESKTOP_IMAGE_DIR}/${IMAGE_NAME} ${BLURRED_IMAGE_DIR}/${IMAGE_NAME} &
+    generate_mobile_images ${DESKTOP_IMAGE_DIR}/${IMAGE_NAME} ${MOBILE_IMAGE_DIR}/${IMAGE_NAME} &
   done
 }
 
 main
-optimize_images ${DESKTOP_IMAGE_DIR}
+
+# When testing locally, don't spend the time to optimize images.
+if [[ $1 != "dev" ]]; then
+  optimize_images ${DESKTOP_IMAGE_DIR}
+fi
