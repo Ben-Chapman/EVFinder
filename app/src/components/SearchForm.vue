@@ -175,7 +175,7 @@
         */
         localForm: {
           zipcode: '',
-          year: '2023',
+          year: '2024',
           model: 'Ioniq%205',
           radius: '',
           manufacturer: '',

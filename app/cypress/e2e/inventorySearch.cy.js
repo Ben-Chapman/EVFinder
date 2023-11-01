@@ -2,12 +2,23 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
   before(() => {
     cy.visit("/index.html");
     cy.get(".form-group > div > #form-zipcode").clear().type("90210");
-    cy.get(".form-group > div > #form-radius").clear().type("20");
+    cy.get(".form-group > div > #form-radius").clear().type("100");
     cy.wait(500);
     cy.get('[id="submit-button"]').click();
   });
 
   it("Confirms Inventory Results", () => {
+    /**
+     * Upon page load a random vehicle model is pre-selected. This test uses that random
+     * model as the initial inventory search. If there is no inventory for this inventory
+     * search, manually select Ioniq 5, and re-run the search.
+     */
+    if ((cy.get(".no-inventory"), { timeout: 60000 })) {
+      cy.get(".form-group > div > #form-model").select("Ioniq 5");
+      cy.wait(500);
+      cy.get('[id="submit-button"]').click();
+    }
+
     // The XX Vehicles Available Message
     cy.get(".vehicles-available", { timeout: 60000 }).contains("Vehicles Available");
 

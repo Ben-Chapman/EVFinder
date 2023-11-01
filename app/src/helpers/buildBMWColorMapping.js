@@ -21,11 +21,21 @@
  * The BMW vehicle configurator has an API endpoint which provides a color code -> color name
  * mapping, so this script grabs that color mapping and builds a JS Object containing
  * the colorCode/colorName pairs.
+ *
+ * To find new model endpoints, navigate to the Build Your Own section of the BMW website
+ * and select the appropriate model. The model code is appended to theBMW Studio URL.
  */
 const endpoints = [
-  "f0cg8pjp", // iX
-  "f0cqppr8", // i4
-  "f1m40x0z", // i7
+  "24II", // iX
+  "24IJ", // iX M60
+  "24DD", // i4 eDrive35
+  "24DA", // i4 eDrive40
+  "24DF", // i4 xDrive40
+  "24DB", // i4 M50
+  "245T", // i5 eDrive40
+  "245U", // i5 M60
+  "247R", // i7 eDrive50 Sedan
+  "247Q", // i7 xDrive60 Sedan
 ];
 
 const baseUrl = "https://configure.bmwusa.com/UBYOConfigurator/v4/configuration/start/";
@@ -45,3 +55,5 @@ endpoints.forEach(async (endpoint) => {
     console.error(error);
   }
 });
+
+console.log(colorMappings);
