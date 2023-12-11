@@ -5,6 +5,8 @@ const modelOptions = [
       { value: "etron", text: "e-tron®" },
       { value: "etrongt", text: "e-tron® GT" },
       { value: "q4", text: "Q4 e-tron®" },
+      { value: "q8etron", text: "Q8 e-tron®" },
+      { value: "sq8etron", text: "SQ8 e-tron®" },
     ],
   },
   {
