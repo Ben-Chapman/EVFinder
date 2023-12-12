@@ -13,14 +13,13 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
      * model as the initial inventory search. If there is no inventory for this inventory
      * search, manually select Ioniq 5, and re-run the search.
      */
-    if ((cy.get(".no-inventory"), { timeout: 60000 })) {
+    if (
+      !cy.get(".vehicles-available", { timeout: 60000 }).contains("Vehicles Available")
+    ) {
       cy.get(".form-group > div > #form-model").select("Ioniq 5");
       cy.wait(500);
       cy.get('[id="submit-button"]').click();
     }
-
-    // The XX Vehicles Available Message
-    cy.get(".vehicles-available", { timeout: 60000 }).contains("Vehicles Available");
 
     // Do we have at least 1 table row?
     cy.get("tbody").first();
@@ -29,7 +28,12 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
 
   it("Clicks on Table Row", () => {
     cy.get("tbody > :nth-child(1)").click();
-    cy.get("td").contains("MSRP");
+    /**
+     * Match for "Foo Bar", "Model Name" in the VIN detail section. There is variability
+     * between manufacturers and what's displayed in this section. Using a regex to match
+     * for some text which is expected to the Title Cased.
+     */
+    cy.get("td").contains(/^[A-Z]{1}\w+\s[A-Z]{1}\w+$/);
 
     // Take a snapshot while the VIN Detail section is expanded
     cy.percySnapshot("VIN Detail Expanded");
