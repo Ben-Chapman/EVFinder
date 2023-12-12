@@ -13,9 +13,10 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
      * model as the initial inventory search. If there is no inventory for this inventory
      * search, manually select Ioniq 5, and re-run the search.
      */
-    if (
-      !cy.get(".vehicles-available", { timeout: 60000 }).contains("Vehicles Available")
-    ) {
+    // Look for either .vehicles-available or .no-inventory
+    cy.get(".vehicles-available, .no-inventory", { timeout: 60000 });
+
+    if (cy.get(".no-inventory")) {
       cy.get(".form-group > div > #form-model").select("Ioniq 5");
       cy.wait(500);
       cy.get('[id="submit-button"]').click();
@@ -31,7 +32,7 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
     /**
      * Match for "Foo Bar", "Model Name" in the VIN detail section. There is variability
      * between manufacturers and what's displayed in this section. Using a regex to match
-     * for some text which is expected to the Title Cased.
+     * for some text which is expected to be Title Cased.
      */
     cy.get("td").contains(/^[A-Z]{1}\w+\s[A-Z]{1}\w+$/);
 
