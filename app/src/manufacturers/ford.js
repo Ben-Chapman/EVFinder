@@ -28,7 +28,7 @@ import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 export async function getFordInventory(zip, year, model, radius, manufacturer) {
   try {
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
-    return formatFordInventoryResults(invResponse);
+    return formatFordInventoryResults(invResponse, year);
   } catch (error) {
     throw generateErrorMessage(error);
   }
@@ -63,7 +63,7 @@ export async function getFordVinDetail(
   }
 }
 
-function formatFordInventoryResults(input) {
+function formatFordInventoryResults(input, year) {
   if (Object.keys(input.data.filterResults).length == 0) {
     // filterResults is empty when no vehicles are found for a given search
     // Returning an empty object so the UI displays the no vehicles found message
@@ -131,8 +131,7 @@ function formatFordInventoryResults(input) {
       vehicle["distance"] = dealers[dealerId]["distance"];
       vehicle["dealerName"] = dealers[dealerId]["displayName"];
     } catch (error) {
-      // /dealer/Santa-Monica-Ford-12345/model/2022-Mache/... ->
-      // Santa Monica Ford 12345
+      // /dealer/Santa-Monica-Ford-12345/model/2022-Mache/ -> Santa Monica Ford 12345
       vehicle["dealerName"] = vehicle["detailPageUrl"]
         .split("/")[2]
         .replaceAll("-", " ");
@@ -140,7 +139,12 @@ function formatFordInventoryResults(input) {
     }
   });
 
-  return n;
+  /**
+   * If no vehicles are found for a given model year the Ford API will return inventory
+   * for the current model year. After receiving the API response we need to filter it
+   * so we only return results for the requested model year
+   */
+  return n.filter((vehicle) => vehicle.year == year);
 }
 
 function formatFordVinResults(input) {

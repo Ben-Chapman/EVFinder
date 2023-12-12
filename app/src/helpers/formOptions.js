@@ -5,12 +5,15 @@ const modelOptions = [
       { value: "etron", text: "e-tron®" },
       { value: "etrongt", text: "e-tron® GT" },
       { value: "q4", text: "Q4 e-tron®" },
+      { value: "q8etron", text: "Q8 e-tron®" },
+      { value: "sq8etron", text: "SQ8 e-tron®" },
     ],
   },
   {
     label: "BMW",
     options: [
       { value: "i4", text: "i4" },
+      { value: "i5", text: "i5" },
       { value: "i7", text: "i7" },
       { value: "9", text: "iX" },
     ],
@@ -18,8 +21,11 @@ const modelOptions = [
   {
     label: "Chevrolet",
     options: [
+      { value: "Blazer EV", text: "Blazer EV" },
       { value: "Bolt EUV", text: "Bolt EUV" },
       { value: "Bolt EV", text: "Bolt EV" },
+      { value: "Equinox EV", text: "Equinox EV" },
+      { value: "Silverado EV", text: "Silverado EV" },
     ],
   },
   {
@@ -61,6 +67,7 @@ const modelOptions = [
 const yearOptions = [
   { value: "2022", text: "2022" },
   { value: "2023", text: "2023" },
+  { value: "2024", text: "2024" },
 ];
 
 export { modelOptions, yearOptions };

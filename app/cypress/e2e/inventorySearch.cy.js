@@ -2,14 +2,25 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
   before(() => {
     cy.visit("/index.html");
     cy.get(".form-group > div > #form-zipcode").clear().type("90210");
-    cy.get(".form-group > div > #form-radius").clear().type("20");
+    cy.get(".form-group > div > #form-radius").clear().type("100");
     cy.wait(500);
     cy.get('[id="submit-button"]').click();
   });
 
   it("Confirms Inventory Results", () => {
-    // The XX Vehicles Available Message
-    cy.get(".vehicles-available", { timeout: 60000 }).contains("Vehicles Available");
+    /**
+     * Upon page load a random vehicle model is pre-selected. This test uses that random
+     * model as the initial inventory search. If there is no inventory for this inventory
+     * search, manually select Ioniq 5, and re-run the search.
+     */
+    // Look for either .vehicles-available or .no-inventory
+    cy.get(".vehicles-available, .no-inventory", { timeout: 60000 });
+
+    if (cy.get(".no-inventory")) {
+      cy.get(".form-group > div > #form-model").select("Ioniq 5");
+      cy.wait(500);
+      cy.get('[id="submit-button"]').click();
+    }
 
     // Do we have at least 1 table row?
     cy.get("tbody").first();
@@ -18,7 +29,12 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
 
   it("Clicks on Table Row", () => {
     cy.get("tbody > :nth-child(1)").click();
-    cy.get("td").contains("MSRP");
+    /**
+     * Match for "Foo Bar", "Model Name" in the VIN detail section. There is variability
+     * between manufacturers and what's displayed in this section. Using a regex to match
+     * for some text which is expected to be Title Cased.
+     */
+    cy.get("td").contains(/^[A-Z]{1}\w+\s[A-Z]{1}\w+$/);
 
     // Take a snapshot while the VIN Detail section is expanded
     cy.percySnapshot("VIN Detail Expanded");

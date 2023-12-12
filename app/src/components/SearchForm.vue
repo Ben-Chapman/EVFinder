@@ -174,8 +174,8 @@
         */
         localForm: {
           zipcode: '',
-          year: '2023',
-          model: '',
+          year: '2024',
+          model: 'Ioniq%205',
           radius: '',
           manufacturer: '',
           vehicleName: '',

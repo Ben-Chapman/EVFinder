@@ -96,7 +96,10 @@ function formatAudiInventoryResults(input) {
       ? (tmp["deliveryDate"] = titleCase(
           vehicle["vehicleInventoryType"].replace("-", " ")
         ))
-      : null;
+      : (tmp["deliveryDate"] = titleCase(vehicle["vehicleOrderStatus"]).replace(
+          "Intransit",
+          "In Transit"
+        ));
 
     // Populating the Availability filter
     tmp["inventoryStatus"] = tmp["deliveryDate"];

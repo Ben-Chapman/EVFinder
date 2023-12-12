@@ -136,6 +136,20 @@ export function getHeroImage() {
     },
     {
       imageNames: [
+        ["2024-audi-q8-1.jpg", "-18rem center", "light"],
+        ["2024-audi-q8-2.jpg", "-34rem center", "light"],
+        ["2024-audi-q8-3.jpg", "-14rem center", "light"],
+      ],
+      displayName: "Audi Q8 e-tron®",
+      modelName: "q8etron",
+    },
+    {
+      imageNames: [["2024-audi-sq8-1.jpg", "-32rem center", "dark"]],
+      displayName: "Audi SQ8 e-tron®",
+      modelName: "sq8etron",
+    },
+    {
+      imageNames: [
         ["2023-ioniq6-1.jpg", "-40rem center", "light"],
         ["2023-ioniq6-3.jpg", "center center", "light"],
         ["2023-ioniq6-4.jpg", "-45rem center", "light"],
@@ -156,6 +170,15 @@ export function getHeroImage() {
       ],
       displayName: "BMW i4",
       modelName: "i4",
+    },
+    {
+      imageNames: [
+        ["2024-bmw-i5-1.jpg", "-36rem center", "light"],
+        ["2024-bmw-i5-2.jpg", "-43rem center", "light"],
+        ["2024-bmw-i5-3.jpg", "-15rem center", "light"],
+      ],
+      displayName: "BMW i5",
+      modelName: "i5",
     },
     {
       imageNames: [
