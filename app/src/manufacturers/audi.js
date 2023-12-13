@@ -25,7 +25,6 @@ import {
 import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
 
 export async function getAudiInventory(zip, year, model, radius, manufacturer, geo) {
-  console.log(JSON.stringify(geo));
   /**
    * The Audi API requires the zip code to be provided as latitude_longitude. When a
    * user selects an Audi vehicle and provides a valid zip code in the search form
