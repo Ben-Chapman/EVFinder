@@ -1,6 +1,7 @@
 describe("Search for Vehicle Inventory and Validate Results", () => {
   before(() => {
     cy.visit("/index.html");
+    cy.get(".form-group > div > #form-model").select("Ioniq 5");
     cy.get(".form-group > div > #form-zipcode").clear().type("90210");
     cy.get(".form-group > div > #form-radius").clear().type("100");
     cy.wait(500);
@@ -14,13 +15,7 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
      * search, manually select Ioniq 5, and re-run the search.
      */
     // Look for either .vehicles-available or .no-inventory
-    cy.get(".vehicles-available, .no-inventory", { timeout: 60000 });
-
-    if (cy.get(".no-inventory")) {
-      cy.get(".form-group > div > #form-model").select("Ioniq 5");
-      cy.wait(500);
-      cy.get('[id="submit-button"]').click();
-    }
+    cy.get(".vehicles-available", { timeout: 60000 });
 
     // Do we have at least 1 table row?
     cy.get("tbody").first();
@@ -63,5 +58,23 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
       }
       // TODO: Actually make this validation work...
     }
+  });
+});
+
+describe("Search for Unavailable Vehicle Inventory", () => {
+  before(() => {
+    cy.visit("/index.html");
+    cy.get(".form-group > div > #form-model").select("Electrified G80");
+    cy.get(".form-group > div > #form-zipcode").clear().type("90210");
+    cy.get(".form-group > div > #form-radius").clear().type("100");
+    cy.get(".form-group > div > #form-year").select("2022");
+    cy.wait(500);
+    cy.get('[id="submit-button"]').click();
+  });
+
+  it("Confirms Unavailable Vehicle Inventory Message", () => {
+    cy.get(".no-inventory", { timeout: 60000 });
+    cy.get(".h4").contains("No Inventory Available");
+    cy.percySnapshot("No Inventory Found");
   });
 });
