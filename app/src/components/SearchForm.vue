@@ -175,7 +175,7 @@
         localForm: {
           zipcode: '',
           year: '2024',
-          model: 'Ioniq%205',
+          model: '',
           radius: '',
           manufacturer: '',
           vehicleName: '',
@@ -486,28 +486,6 @@
         // When a model is selected, populate additional detail
         this.populateVehicleModelDetail(this.localForm.model)
       },
-
-      // "localForm": {
-      //   /**
-      //    * Watch and react to changes in this.localForm.
-      //    * This watcher is used to detect if the user selected an Audi vehicle, and
-      //    * entered a valid zip code. When those conditions are met, fire a request to
-      //    * OpenStreetMap to get the lat/lon for the user's zip code in an attempt to
-      //    * prefetch this information (needed for the Audi API) and speed up the inventory
-      //    * request process.
-      //    */
-      //   handler: async function(f, old) {
-      //     console.log(`\nOld: ${JSON.stringify(JSON.parse(JSON.stringify(old)))}`)
-      //     console.log(`New: ${JSON.stringify(f.zipcode)}`)
-      //     if (f.manufacturer == "Audi" && this.isValidZipCode) {
-      //       // If we don't already have the geo information
-      //       if (!this.localForm.geo) {
-      //         this.localForm.geo = await getGeoFromZipcode(f.zipcode)
-      //       }
-      //     }
-      //   },
-      //   deep: true
-      // },
   }  // watch
  } // export
 </script>
