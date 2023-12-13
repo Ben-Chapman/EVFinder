@@ -375,11 +375,13 @@
          * specific logic.
          */
         Object.values(this.modelOptions).forEach(model => {
-          var manufacturer = model.label
+          const manufacturer = model.label
           model.options.forEach(option => {
             if (option.value.includes(vehicleModelName)) {
               this.localForm.manufacturer = manufacturer
-              this.localForm.vehicleName = option.text  // The Kia API needs this
+              if (option.value === vehicleModelName) {
+                this.localForm.vehicleName = option.text
+              }
             }
           })
         })
