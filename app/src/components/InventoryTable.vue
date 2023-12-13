@@ -530,10 +530,7 @@
       },
 
       showInventoryAlert() {
-        if (
-          !this.tableBusy
-          && Object.values(this.inventory).length == 0
-          && Object.values(this.form).filter(f => f.length > 0).length == Object.keys(this.form).length){
+        if (!this.tableBusy && Object.values(this.inventory).length == 0) {
           return true
         }
         else {

@@ -16,12 +16,29 @@
  */
 
 import { apiRequest } from "../helpers/request";
-import { generateErrorMessage, stripHTML, titleCase } from "../helpers/libs";
+import {
+  generateErrorMessage,
+  getGeoFromZipcode,
+  stripHTML,
+  titleCase,
+} from "../helpers/libs";
 import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
 
-export async function getAudiInventory(zip, year, model, radius, manufacturer) {
+export async function getAudiInventory(zip, year, model, radius, manufacturer, geo) {
+  /**
+   * The Audi API requires the zip code to be provided as latitude_longitude. When a
+   * user selects an Audi vehicle and provides a valid zip code in the search form
+   * a request is fired to Open Street Map to get the geo coordinates. If for some reason
+   * that request failed, detect that here and send a new request to get the coords.
+   */
+  if (!geo.lat || !geo.lon) {
+    var geo = await getGeoFromZipcode(zip); // eslint-disable-line no-redeclare
+  }
+
   try {
-    const geo = await getGeoFromZipcode(zip);
+    // The Audi API expects the lat/long to be provided as latitude_longitude
+    geo = `${geo.lat}_${geo.lon}`;
+
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments], {
       geo: geo,
     });
@@ -39,24 +56,6 @@ export async function getAudiVinDetail(vehicleId, manufacturer) {
     return formatAudiVinResults(vinData);
   } catch (error) {
     throw generateErrorMessage(error);
-  }
-}
-
-async function getGeoFromZipcode(zip) {
-  const osmApi = "https://nominatim.openstreetmap.org/search?";
-
-  const geo = await fetch(
-    osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
-    { method: "GET", mode: "cors" }
-  );
-
-  if (geo.ok) {
-    const mapData = await geo.json();
-
-    // The Audi API expects the lat/long to be provided as latitude_longitude
-    return `${mapData[0].lat}_${mapData[0].lon}`;
-  } else {
-    return ["ERROR", geo.status, geo.text];
   }
 }
 

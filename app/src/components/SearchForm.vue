@@ -55,7 +55,7 @@
               oninvalid="this.setCustomValidity('Please Enter valid email')"
               oninput="setCustomValidity('')"
               autocomplete="off"
-              name="search"
+              name="searchzip"
               id="form-zipcode"
               v-model="localForm.zipcode"
               :state="isValidZipCode"
@@ -137,6 +137,7 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
+  import { getGeoFromZipcode } from '../helpers/libs'
 
   export default {
     mounted() {
@@ -152,7 +153,7 @@
           }
         } else {
           /**
-           * When a random image is selected, the vehicle model is pushed into
+           * When a random image is selected onload, the vehicle model is pushed into
            * Vuex. Grabbing that data, and pushing it into the localForm which
            * will update the vehicle model dropdown menu. The dropdown menu will
            * now match the vehicle background image being displayed.
@@ -174,10 +175,11 @@
         localForm: {
           zipcode: '',
           year: '2024',
-          model: 'Ioniq%205',
+          model: '',
           radius: '',
           manufacturer: '',
           vehicleName: '',
+          geo: '',
         },
 
         modelOptions,
@@ -244,6 +246,7 @@
           model: this.localForm.model,
           radius: this.localForm.radius,
           manufacturer: this.localForm.manufacturer,
+          geo: this.localForm.geo,
 
           async bmw() {
             return await getBMWInventory(
@@ -315,6 +318,7 @@
               this.model,
               this.radius,
               this.manufacturer,
+              this.geo
             )
           }
         };
@@ -371,14 +375,25 @@
          * specific logic.
          */
         Object.values(this.modelOptions).forEach(model => {
-          var manu = model.label
-          model.options.forEach(v => {
-            if (v.value.includes(vehicleModelName)) {
-              this.localForm.manufacturer = manu
-              this.localForm.vehicleName = v.text  // The Kia API needs this
+          const manufacturer = model.label
+          model.options.forEach(option => {
+            if (option.value.includes(vehicleModelName)) {
+              this.localForm.manufacturer = manufacturer
+              if (option.value === vehicleModelName) {
+                this.localForm.vehicleName = option.text
+              }
             }
           })
         })
+      },
+
+      async prefetchGeoCoordinatesForAudi(zipCode) {
+        if (this.localForm.manufacturer == "Audi") {
+            // If we don't already have the geo information
+            if (this.localForm.zipcode != this.localForm.geo.zipcode) {
+              this.localForm.geo = await getGeoFromZipcode(zipCode)
+            }
+          }
       }
     },  //methods
 
@@ -394,16 +409,27 @@
       ]),
 
       isValidZipCode() {
-        const zip = this.localForm.zipcode
+        const zipCode = this.localForm.zipcode
         // Hide the error indicator when this field is blank
-        if(zip.length == 0) {
+        if (zipCode.length == 0) {
             return null
         }
         // https://facts.usps.com/42000-zip-codes/
         const validZipCodes = [501, 99950]  // Starting zip code is 00501
 
         // Is the input zip code a 5 digit number between 501 and 99950
-        return /^\d{5}$/.test(zip) && (parseInt(zip) >= validZipCodes[0] && parseInt(zip) <= validZipCodes[1])
+        if (
+            /^\d{5}$/.test(zipCode)
+            && (parseInt(zipCode) >= validZipCodes[0]
+            && parseInt(zipCode) <= validZipCodes[1])
+          ) {
+          // If we have a valid zip code, call out to this function which will
+          // prefetch geo coordinates needed for Audi
+          this.prefetchGeoCoordinatesForAudi(zipCode)
+          return true
+        } else {
+          return false
+        }
       },
 
       isValidRadius() {
@@ -457,8 +483,13 @@
         // When the inventory changes, update the $num vehicles found message
         this.updateStore({'inventoryCount': this.inventory.length})
       },
-    },
-  } // export
+
+      "localForm.model"() {
+        // When a model is selected, populate additional detail
+        this.populateVehicleModelDetail(this.localForm.model)
+      },
+  }  // watch
+ } // export
 </script>
 
 <style>

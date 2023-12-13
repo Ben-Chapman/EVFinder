@@ -16,6 +16,7 @@
  */
 
 import { camelCase } from "lodash";
+import { logMessage } from "./logger";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
@@ -72,7 +73,8 @@ export function normalizeJson(inputJson, keyMap) {
 }
 /**
  * Helper function which converts a Number to a USD-formatted string.
- * @param {Number} item An input Number which is to be converted to a USD currency string. The output value will be rounded to the nearest whole dollar amount.
+ * @param {Number} item An input Number which is to be converted to a USD currency string.
+ * The output value will be rounded to the nearest whole dollar amount.
  * @returns {String} A USD-formatted string of the input Number. 123 -> $1.23, 24.99 -> $25
  */
 export function convertToCurrency(item) {
@@ -174,7 +176,8 @@ export function generateUrlQueryParams(item, sliceLength) {
 }
 /**
  *
- * @param {String} errorText A error message String which is to be shown as an Error in the TV Finder UI.
+ * @param {String} errorText A error message String which is to be shown as an Error in
+ * the EV Finder UI.
  * @returns {Array} An error message which is consumed by the EV Finder Vue app
  */
 export function generateErrorMessage(errorText) {
@@ -208,4 +211,41 @@ export function queryParamStringToObject(input) {
     res[name] = value;
   });
   return res;
+}
+
+/**
+ * Obtain latitude and longitude information for a given zip code.
+ * @param {String} zip A US zip code which is used to determine it's geographic location
+ * @returns {Object} An Object containing the latitude and longitude of the provided zip code
+ */
+export async function getGeoFromZipcode(zip) {
+  const osmApi = "https://nominatim.openstreetmap.org/search?";
+
+  const geo = await fetch(
+    osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
+    { method: "GET", mode: "cors" }
+  );
+
+  if (geo.ok) {
+    const mapData = await geo.json();
+    return {
+      zipcode: zip,
+      lat: mapData[0].lat,
+      lon: mapData[0].lon,
+    };
+  } else {
+    logMessage(`Geo Lookup Failure for ${zip} (${geo.status}): ${geo.text}`);
+  }
+}
+
+/**
+ * Search an Array of Objects for a given key, returning the object if found
+ * @param {Array} arr An Array containing N number of Objects within.
+ * @param {String} searchKey The Object.key() you wish to find.
+ * @returns {Object} If found, the Object containing the searchKey
+ */
+export function searchArrayOfObjects(arrayToSearch, searchKey) {
+  return arrayToSearch.filter((obj) =>
+    Object.keys(obj).some((key) => obj[key].includes(searchKey))
+  );
 }
