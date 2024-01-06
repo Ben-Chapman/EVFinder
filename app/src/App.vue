@@ -1,4 +1,4 @@
-<template>
+ <template>
   <b-container
     fluid
     class="d-flex flex-column justify-content-center min-vh-100"
