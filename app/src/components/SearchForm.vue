@@ -147,6 +147,11 @@
        * If found, parse them for validity, show the table component and proceed
        * to fetch inventory
        */
+
+       /**
+        * When this component is mounted, if we have a URL path, parse and validate it,
+        * show the table component and proceed to fetch inventory.
+        */
       if (this.parseQueryParams(this.$route.query)) {
           if (this.validateSubmitButton) {
             this.updateStore({'showTable': true})
