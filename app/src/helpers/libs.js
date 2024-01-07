@@ -15,7 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { camelCase } from "lodash";
+import { camelCase, includes } from "lodash";
+import { modelOptions, yearOptions } from "./formOptions";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
@@ -208,4 +209,42 @@ export function queryParamStringToObject(input) {
     res[name] = value;
   });
   return res;
+}
+
+/**
+ *
+ * @param {Object} inputObject An Object to search through
+ * @param {String} valueToSearchFor The value you wish to search for
+ * @returns Boolean True if valueToSearchFor was found in inputObject. False if
+ * valueToSearchFor was not found in inputObject
+ */
+export function doesObjectContainValue(inputObject, valueToSearchFor) {
+  return inputObject.filter((obj) =>
+    Object.keys(obj).some((key) => obj[key].includes(valueToSearchFor))
+  );
+}
+
+export function validateUrlPath(urlPath) {
+  // Split the URL
+  // /inventory/2024/kia/ev6?zipcode=07040&radius=20
+  urlPath = urlPath.split("/");
+  const urlComponents = {
+    requestType: urlPath[0],
+    requestYear: urlPath[1],
+    requestManufacturer: urlPath[2],
+    requestModel: urlPath[3],
+  };
+
+  if (urlComponents.requestType === "/inventory|vin/") {
+    if (yearOptions.includes(urlComponents.requestYear)) {
+      if (
+        modelOptions.includes(urlComponents.requestManufacturer) &&
+        modelOptions.includes(urlComponents.requestModel)
+      ) {
+        return true;
+      }
+    }
+  } else {
+    return false;
+  }
 }

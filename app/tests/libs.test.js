@@ -131,3 +131,20 @@ test("Invalid query param should throw error", () => {
   }
   expect(invalidQueryParam).toThrow(/not a valid query param/);
 });
+
+test("Searching for a key in this Object should return true", () => {
+  const testData = [
+    {
+      apple: 2,
+      banana: 4,
+      mango: 30,
+    },
+    { foo: "bar", fiz: "buz" },
+  ];
+  const yearOptions = [
+    { value: "2022", text: "2022" },
+    { value: "2023", text: "2023" },
+    { value: "2024", text: "2024" },
+  ];
+  expect(libs.doesObjectContainValue(yearOptions, 2025)).toBeTruthy;
+});
