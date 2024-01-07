@@ -11,6 +11,7 @@ const state = {
   inventoryCount: 0,
   filterOptions: {},
   apiErrorDetail: [],
+  geo: {},
 
   filterSelections: {
     dealerName: [],

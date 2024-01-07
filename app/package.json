@@ -1,6 +1,6 @@
 {
   "name": "evfinder",
-  "version": "1.21.0",
+  "version": "1.22.2",
   "private": true,
   "scripts": {
     "serve": "export NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
@@ -12,7 +12,7 @@
     "@babel/traverse": ">=7.23.2",
     "ansi-regex": ">=4.1.1",
     "async": ">=2.6.4",
-    "axios": "^1.3.4",
+    "axios": ">=1.6.0",
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.23.1",
     "browserify-sign": ">=4.2.2",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@babel/traverse": ">=7.23.2",
-    "@percy/cli": "^1.26.0",
+    "@percy/cli": ">=1.27.0",
     "@percy/cypress": "^3.1.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -51,7 +51,7 @@
     "babel-eslint": "^10.1.0",
     "browserify-sign": ">=4.2.2",
     "browserslist": "^4.21.1",
-    "cypress": "^12.15.0",
+    "cypress": "^13.6.1",
     "decode-uri-component": ">=0.2.1",
     "ejs": ">=3.1.7",
     "eslint": "^6.7.2",
