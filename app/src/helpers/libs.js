@@ -214,7 +214,6 @@ export function queryParamStringToObject(input) {
 }
 
 /**
-<<<<<<< HEAD
  *
  * @param {Object} inputObject An Object to search through
  * @param {String} valueToSearchFor The value you wish to search for
@@ -251,7 +250,8 @@ export function validateUrlPath(urlPath) {
     return false;
   }
 }
-=======
+
+/**
  * Obtain latitude and longitude information for a given zip code.
  * @param {String} zip A US zip code which is used to determine it's geographic location
  * @returns {Object} An Object containing the latitude and longitude of the provided zip code
@@ -287,4 +287,3 @@ export function searchArrayOfObjects(arrayToSearch, searchKey) {
     Object.keys(obj).some((key) => obj[key].includes(searchKey))
   );
 }
->>>>>>> main
