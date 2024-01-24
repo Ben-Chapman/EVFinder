@@ -42,6 +42,7 @@ import InventoryTable from './components/InventoryTable.vue'
 import SearchForm from './components/SearchForm.vue'
 import Slogan from './components/Slogan.vue'
 
+import { isValidUrlPath, segmentUrlPath } from './helpers/libs'
 import { getHeroImage, preloadBlurredImage } from './helpers/heroImages'
 
 
@@ -72,13 +73,27 @@ export default {
     }
   },
   mounted() {
-      this.heroImage = getHeroImage()  // Get the hero image URL on mount
+    // When mounted, check the URL path for a deep link. If found do stuff
+    const uri = this.$route.path
+    const urlPath = segmentUrlPath(uri)
+    if (urlPath.length > 0 && isValidUrlPath(uri)) {
+      // Push the requested URL information into Vuex
+      this.updateStore({
+        'form': {
+          'year': urlPath[1],
+          'model': urlPath[3]
+        }
+      })
+      // this.updateStore({'showTable': true})
+      // this.getCurrentInventory()
+    }
+      // Fetch the background image
+      this.heroImage = getHeroImage(this.form.model)
+      console.log(this.heroImage)
+
       if (window.matchMedia("(orientation: portrait)").matches) {
         this.imagePosition = this.heroImage['portraitPosition']
       }
-
-      // Listen for orientation changes, and adjust the image position as needed
-      window.addEventListener("resize", this.handleOrientationChange)
 
       /**
        * When a random image is selected, push the vehicle model into Vuex.
@@ -87,27 +102,31 @@ export default {
        */
       this.updateStore({'form': {'model': this.heroImage['model']}})
 
-      // Push display dimensions to Plausible
-      const width  = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth
-      const height = window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight
 
-      this.$plausible.trackEvent(
-        'Display Dimensions', {props: {dimensions: `${width}x${height}`}}
-      )
+    // Listen for orientation changes, and adjust the image position as needed
+    window.addEventListener("resize", this.handleOrientationChange)
 
-      /**
-       * Finally, prefetch the blurred background image, which will be swapped in when
-       * the user performs an inventory search. This helps to ensure the we can swap into
-       * the blurred image smoothly, without waiting for it to download at search time.
-       * Using the load event to fetch this image after the entire page has loaded.
-       */
-      window.addEventListener('load', () => {
-        preloadBlurredImage(this.heroImage["blurredImageUrl"])
-      })
+    // Push display dimensions to Plausible
+    const width  = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth
+    const height = window.innerHeight
+      || document.documentElement.clientHeight
+      || document.body.clientHeight
+
+    this.$plausible.trackEvent(
+      'Display Dimensions', {props: {dimensions: `${width}x${height}`}}
+    )
+
+    /**
+     * Finally, prefetch the blurred background image, which will be swapped in when
+     * the user performs an inventory search. This helps to ensure the we can swap into
+     * the blurred image smoothly, without waiting for it to download at search time.
+     * Using the load event to fetch this image after the entire page has loaded.
+     */
+    window.addEventListener('load', () => {
+      preloadBlurredImage(this.heroImage["blurredImageUrl"])
+    })
   },  // mounted
 
   computed: {
@@ -120,7 +139,7 @@ export default {
 
     heroImageStyle() {
         return {
-          backgroundImage: `url('${this.heroImage['imageUrl']}')`,
+          backgroundImage: `url(${this.heroImage.imageUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: this.imagePosition,
           backgroundAttachment: 'fixed',

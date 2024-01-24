@@ -3,7 +3,7 @@
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
-          <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
+          <b-img src="/theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
 
       </b-row>
@@ -11,7 +11,7 @@
       <b-row class="d-flex mt-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
-            <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
+            <b-img src="/theevfinder.png" alt="The EV Finder Logo"></b-img>
           </a>
         </b-col>
 
@@ -128,8 +128,6 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
-  import { camelCase} from 'lodash';
-  // import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
   import { getBMWInventory } from '../manufacturers/bmw'
@@ -143,32 +141,83 @@
 
   export default {
     mounted() {
+
+      // On mount, pull any Vuex form data into the local form for display in the form fields
+
+      console.log(this.$store.state)
+      this.$nextTick(() => {
+        Object.keys(this.form).forEach(item => {
+          // console.log("before " + this.localForm[item])
+          this.localForm[item] = this.form[item]
+          // console.log("after " + this.localForm[item])
+        })
+        // console.log(this.localForm)
+    })
+
+      // this.$store.state.form.forEach(item => {
+      //   this.localForm[item] = this.form[item]
+      // })
       /**
        * When this component is mounted, check for query params in the URL
        * If found, parse them for validity, show the table component and proceed
        * to fetch inventory
        */
+    //   const uri = this.$route.path
 
-       /**
-        * When this component is mounted, if we have a URL path, parse and validate it,
-        * show the table component and proceed to fetch inventory.
-        */
-      if (this.parseQueryParams(this.$route.query)) {
-          if (this.validateSubmitButton) {
-            this.updateStore({'showTable': true})
-            this.getCurrentInventory()
-          }
-        } else {
-          /**
-           * When a random image is selected onload, the vehicle model is pushed into
-           * Vuex. Grabbing that data, and pushing it into the localForm which
-           * will update the vehicle model dropdown menu. The dropdown menu will
-           * now match the vehicle background image being displayed.
-           */
-          this.$nextTick(() => {
-            this.localForm.model = this.form.model
-          });
-        }
+    //   if (isValidURL(uri)) {
+    //   // Update the local form
+    //     this.localForm.year == uri[1]
+    //     // this.localForm.manufacturer == uri[2]
+    //     this.localForm.model == uri[3]
+
+    // //  }&& this.validateSubmitButton) {
+    //     console.log('foo')
+    //     this.updateStore({'showTable': true})
+    //     this.getCurrentInventory()
+    //   } else {
+    //   console.log(isValidURL(uri), this.validateSubmitButton)
+      // this.$nextTick(() => {
+      //   this.localForm.model = this.form.model
+      //   });
+    //   }
+      // if (isValidURL(window.location.href) {
+      //   if (this.validateSubmitButton) {
+      //   console.log('foo')
+      //   this.updateStore({'showTable': true})
+      //   this.getCurrentInventory()
+      //   }
+      // } else {
+      //     /**
+      //      * When a random image is selected onload, the vehicle model is pushed into
+      //      * Vuex. Grabbing that data, and pushing it into the localForm which
+      //      * will update the vehicle model dropdown menu. The dropdown menu will
+      //      * now match the vehicle background image being displayed.
+      //      */
+      //     this.$nextTick(() => {
+      //       this.localForm.model = this.form.model
+      //     });
+      //   }
+
+      //  /**
+      //   * When this component is mounted, if we have a URL path, parse and validate it,
+      //   * show the table component and proceed to fetch inventory.
+      //   */
+      // if (this.parseQueryParams(this.$route.query)) {
+      //     if (this.validateSubmitButton) {
+      //       this.updateStore({'showTable': true})
+      //       this.getCurrentInventory()
+      //     }
+      //   } else {
+      //     /**
+      //      * When a random image is selected onload, the vehicle model is pushed into
+      //      * Vuex. Grabbing that data, and pushing it into the localForm which
+      //      * will update the vehicle model dropdown menu. The dropdown menu will
+      //      * now match the vehicle background image being displayed.
+      //      */
+      //     this.$nextTick(() => {
+      //       this.localForm.model = this.form.model
+      //     });
+      //   }
     },
 
     data() {
@@ -221,7 +270,7 @@
         API call if they're valid.
         */
         this.$router.push({
-          path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${camelCase(this.localForm.vehicleName)}`,
+          path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model}`,
           query: {
             // year: this.localForm.year,
             // model: this.localForm.model,
@@ -431,34 +480,34 @@
       },
     },  // computed
     watch: {
-      $route(to) {
-        /*
-        This watches for route changes, and if valid will call getCurrentInventory()
-        If someone directly edits the URL query parameters, this will catch the
-        changes and update the components as needed
-        */
-        if (this.parseQueryParams(to.query)) {
-          if (this.validateSubmitButton) {
-            // Clear any existing inventory from vuex, before fetching anew
-            if (this.inventory.length > 0) {
-              this.updateStore({'inventory': []})
-            }
-            this.updateStore({'showTable': true})
-            this.getCurrentInventory()
+      // $route(to) {
+      //   /*
+      //   This watches for route changes, and if valid will call getCurrentInventory()
+      //   If someone directly edits the URL query parameters, this will catch the
+      //   changes and update the components as needed
+      //   */
+      //   if (this.parseQueryParams(to.query)) {
+      //     if (this.validateSubmitButton) {
+      //       // Clear any existing inventory from vuex, before fetching anew
+      //       if (this.inventory.length > 0) {
+      //         this.updateStore({'inventory': []})
+      //       }
+      //       this.updateStore({'showTable': true})
+      //       this.getCurrentInventory()
 
-          // Fire an event to Plausible to allow reporting on which manufacturers
-          // and vehicle models are being selected
-          this.$plausible.trackEvent(
-            'Selected Vehicle', {
-              props: {
-                vehicleManufacturer: this.localForm.manufacturer,
-                vehicleModel: this.localForm.vehicleName,
-              }
-            }
-          )
-          }
-        }
-      },
+      //     // Fire an event to Plausible to allow reporting on which manufacturers
+      //     // and vehicle models are being selected
+      //     this.$plausible.trackEvent(
+      //       'Selected Vehicle', {
+      //         props: {
+      //           vehicleManufacturer: this.localForm.manufacturer,
+      //           vehicleModel: this.localForm.vehicleName,
+      //         }
+      //       }
+      //     )
+      //     }
+      //   }
+      // },
 
       inventory() {
         // When the inventory changes, update the $num vehicles found message
