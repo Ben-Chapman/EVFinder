@@ -228,58 +228,69 @@ export function doesObjectContainValue(inputObject, valueToSearchFor) {
 }
 
 /**
- * Splits a give URL Path into it's various path segments.
+ * Splits a give URL Path into it's various path segments, removing any query parameters.
  * @param {String} urlPath A URL path which will be split on it's segments
  * @returns Array An array containing the elements of a URLs path.
  */
 export function segmentUrlPath(urlPath) {
-  return urlPath.split("/").filter((segment) => segment);
+  return urlPath
+    .split("?")[0]
+    .split("/")
+    .filter((segment) => segment);
 }
 
 /**
- * Validate a given URL path against known valid elements derived from both modelOptions and yearOptions found in formOptions.js
+ * Validate a given URL path against known valid elements derived from both modelOptions
+ * and yearOptions found in formOptions.js
  * @param {String} urlPath A URL path to validate.
- * @returns Boolean If there is no URL path returns null.
- * If the URL path contains elements which are not present in formOptions returns false.
- * If the URL path contains all elements which are present in formOptions returns true.
+ * @returns Boolean null if there is no URL path.
+ * false if the URL path contains elements which are not present in formOptions.
+ * true if the URL path contains all elements which are present in formOptions in the
+ * expected order.
  */
 export function isValidUrlPath(urlPath) {
-  // const url = new URL(urlPath);
   const segments = segmentUrlPath(urlPath);
 
-  // If we have no segments we have no URIs, so bypass the URL validation
-  if (segments.length == 0) {
+  // A valid URL scheme is the following: /inventory/year/manufacturer/model
+  // If the length of our segments is less than this, bypass the URL validation as we
+  // have an incomplete URL path
+  if (segments.length < 4) {
     return null;
   } else {
     // Define the values which make up a valid URL. This includes api endpoints, models and years
-    const validValues = ["inventory", "vin"];
+    const validValues = {
+      requestType: /^inventory$|^vin$/,
+      manufacturer: [],
+      modelNameForUrl: [],
+      requestYear: [],
+    };
 
-    // Valid models
-    Object.keys(modelOptions).forEach((key) => {
+    Object.keys(modelOptions).forEach((model) => {
       // Manufacturer name
-      validValues.push(modelOptions[key].label.toLowerCase());
+      validValues["manufacturer"].push(modelOptions[model].label.toLowerCase());
 
-      modelOptions[key].options.forEach((option) => {
-        // Model name(s)
-        validValues.push(
-          option.value.toLowerCase().replace(" ", ""),
-          option.text.toLowerCase().replace(" ", "")
-        );
+      // Model names for this manufacturer
+      modelOptions[model].options.forEach((option) => {
+        validValues["modelNameForUrl"].push(option.value.toLowerCase());
       });
     });
 
     // Valid years
-    Object.values(yearOptions).forEach((year) => validValues.push(year.text));
-    // console.log(validValues);
-
-    let validUrl = true;
-    segments.forEach((segment) => {
-      // console.log(`segment: ${segment}`);
-      if (!validValues.includes(segment.toLowerCase())) {
-        validUrl = false;
+    Object.values(yearOptions).forEach((year) =>
+      validValues["requestYear"].push(year.text)
+    );
+    // A valid URL scheme is the following: /inventory|vin/year/manufacturer/model
+    let validUrl = false;
+    if (validValues.requestType.test(segments[0])) {
+      if (validValues.requestYear.includes(segments[1])) {
+        if (validValues.manufacturer.includes(segments[2].toLowerCase())) {
+          if (validValues.modelNameForUrl.includes(segments[3].toLowerCase())) {
+            validUrl = true;
+          }
+        }
       }
-    });
-    // console.log(`Function URL is valid: ${validUrl}`);
+    }
+
     return validUrl;
   }
 }
