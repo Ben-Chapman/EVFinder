@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 Ben Chapman
+ * Copyright 2023 - 2024 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -15,8 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { camelCase, includes } from "lodash";
+import { camelCase } from "lodash";
 import { logMessage } from "./logger";
+import { modelOptions, yearOptions } from "./formOptions";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
@@ -226,28 +227,60 @@ export function doesObjectContainValue(inputObject, valueToSearchFor) {
   );
 }
 
-export function validateUrlPath(urlPath) {
-  // Split the URL
-  // /inventory/2024/kia/ev6?zipcode=07040&radius=20
-  urlPath = urlPath.split("/");
-  const urlComponents = {
-    requestType: urlPath[0],
-    requestYear: urlPath[1],
-    requestManufacturer: urlPath[2],
-    requestModel: urlPath[3],
-  };
+/**
+ * Splits a give URL Path into it's various path segments.
+ * @param {String} urlPath A URL path which will be split on it's segments
+ * @returns Array An array containing the elements of a URLs path.
+ */
+export function segmentUrlPath(urlPath) {
+  return urlPath.split("/").filter((segment) => segment);
+}
 
-  if (urlComponents.requestType === "/inventory|vin/") {
-    if (yearOptions.includes(urlComponents.requestYear)) {
-      if (
-        modelOptions.includes(urlComponents.requestManufacturer) &&
-        modelOptions.includes(urlComponents.requestModel)
-      ) {
-        return true;
-      }
-    }
+/**
+ * Validate a given URL path against known valid elements derived from both modelOptions and yearOptions found in formOptions.js
+ * @param {String} urlPath A URL path to validate.
+ * @returns Boolean If there is no URL path returns null.
+ * If the URL path contains elements which are not present in formOptions returns false.
+ * If the URL path contains all elements which are present in formOptions returns true.
+ */
+export function isValidUrlPath(urlPath) {
+  // const url = new URL(urlPath);
+  const segments = segmentUrlPath(urlPath);
+
+  // If we have no segments we have no URIs, so bypass the URL validation
+  if (segments.length == 0) {
+    return null;
   } else {
-    return false;
+    // Define the values which make up a valid URL. This includes api endpoints, models and years
+    const validValues = ["inventory", "vin"];
+
+    // Valid models
+    Object.keys(modelOptions).forEach((key) => {
+      // Manufacturer name
+      validValues.push(modelOptions[key].label.toLowerCase());
+
+      modelOptions[key].options.forEach((option) => {
+        // Model name(s)
+        validValues.push(
+          option.value.toLowerCase().replace(" ", ""),
+          option.text.toLowerCase().replace(" ", "")
+        );
+      });
+    });
+
+    // Valid years
+    Object.values(yearOptions).forEach((year) => validValues.push(year.text));
+    // console.log(validValues);
+
+    let validUrl = true;
+    segments.forEach((segment) => {
+      // console.log(`segment: ${segment}`);
+      if (!validValues.includes(segment.toLowerCase())) {
+        validUrl = false;
+      }
+    });
+    // console.log(`Function URL is valid: ${validUrl}`);
+    return validUrl;
   }
 }
 
