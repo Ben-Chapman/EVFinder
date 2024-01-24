@@ -3,10 +3,10 @@ const modelOptions = [
     label: "Audi",
     options: [
       { value: "etron", text: "e-tron®" },
-      { value: "etrongt", text: "e-tron® GT" },
-      { value: "q4", text: "Q4 e-tron®" },
-      { value: "q8etron", text: "Q8 e-tron®" },
-      { value: "sq8etron", text: "SQ8 e-tron®" },
+      { value: "etron-gt", text: "e-tron® GT" },
+      { value: "q4-etron", text: "Q4 e-tron®" },
+      { value: "q8-etron", text: "Q8 e-tron®" },
+      { value: "sq8-etron", text: "SQ8 e-tron®" },
     ],
   },
   {
@@ -15,47 +15,47 @@ const modelOptions = [
       { value: "i4", text: "i4" },
       { value: "i5", text: "i5" },
       { value: "i7", text: "i7" },
-      { value: "9", text: "iX" },
+      { value: "iX", text: "iX" },
     ],
   },
   {
     label: "Chevrolet",
     options: [
-      { value: "Blazer EV", text: "Blazer EV" },
-      { value: "Bolt EUV", text: "Bolt EUV" },
-      { value: "Bolt EV", text: "Bolt EV" },
-      { value: "Equinox EV", text: "Equinox EV" },
-      { value: "Silverado EV", text: "Silverado EV" },
+      { value: "Blazer-EV", text: "Blazer EV" },
+      { value: "Bolt-EUV", text: "Bolt EUV" },
+      { value: "Bolt-EV", text: "Bolt EV" },
+      { value: "Equinox-EV", text: "Equinox EV" },
+      { value: "Silverado-EV", text: "Silverado EV" },
     ],
   },
   {
     label: "Ford",
     options: [
-      { value: "f-150 lightning", text: "F-150 Lightning®" },
-      { value: "mache", text: "Mustang Mach-E®" },
+      { value: "f-150-lightning", text: "F-150 Lightning®" },
+      { value: "mustang-mache", text: "Mustang Mach-E®" },
     ],
   },
   {
     label: "Hyundai",
     options: [
-      { value: "Ioniq%205", text: "Ioniq 5" },
-      { value: "Ioniq%206", text: "Ioniq 6" },
-      { value: "Kona%20Ev", text: "Kona Electric" },
+      { value: "Ioniq-5", text: "Ioniq 5" },
+      { value: "Ioniq-6", text: "Ioniq 6" },
+      { value: "Kona-Ev", text: "Kona Electric" },
     ],
   },
   {
     label: "Genesis",
     options: [
-      { value: "ELECTRIFIED-G80", text: "Electrified G80" },
+      { value: "Electrified-G80", text: "Electrified G80" },
       { value: "GV60", text: "GV60" },
-      { value: "ELECTRIFIED-GV70", text: "Electrified GV70" },
+      { value: "Electrified-GV70", text: "Electrified GV70" },
     ],
   },
   {
     label: "Kia",
     options: [
-      { value: "N", text: "EV6" },
-      { value: "V", text: "Niro EV" },
+      { value: "EV6", text: "EV6" },
+      { value: "Niro-EV", text: "Niro EV" },
     ],
   },
   {
