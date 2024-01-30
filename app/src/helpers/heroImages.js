@@ -213,6 +213,16 @@ export function getHeroImage() {
       displayName: "Ford F-150 Lightning®",
       modelName: "f-150 lightning",
     },
+    {
+      imageNames: [
+        ["2024-kia-ev9-1.jpg", "-22rem center", "light"],
+        ["2024-kia-ev9-2.jpg", "-30rem center", "light"],
+        ["2024-kia-ev9-3.jpg", "-18rem center", "light"],
+        ["2024-kia-ev9-4.jpg", "-23rem center", "light"],
+      ],
+      displayName: "Kia EV9",
+      modelName: "P",
+    },
   ];
 
   // Random int which will be used to select an element from heroImages
