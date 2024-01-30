@@ -55,6 +55,7 @@ const modelOptions = [
     label: "Kia",
     options: [
       { value: "N", text: "EV6" },
+      { value: "P", text: "EV9" },
       { value: "V", text: "Niro EV" },
     ],
   },
