@@ -137,88 +137,39 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
-  import { getGeoFromZipcode } from '../helpers/libs'
+  import { getGeoFromZipcode, isValidUrlPath } from '../helpers/libs'
 
   export default {
     mounted() {
-
-      // On mount, pull any Vuex form data into the local form for display in the form fields
-
-      console.log(this.$store.state)
       this.$nextTick(() => {
         Object.keys(this.form).forEach(item => {
-          // console.log("before " + this.localForm[item])
           this.localForm[item] = this.form[item]
-          // console.log("after " + this.localForm[item])
         })
-        // console.log(this.localForm)
-    })
 
-      // this.$store.state.form.forEach(item => {
-      //   this.localForm[item] = this.form[item]
-      // })
-      /**
-       * When this component is mounted, check for query params in the URL
-       * If found, parse them for validity, show the table component and proceed
-       * to fetch inventory
-       */
-    //   const uri = this.$route.path
+        // If an invalid URL path is detected App.vue will issue a redirect to / but does
+        // not clear the form fields. Detecting that condition and clearing these fields
+        if (this.$route.path == '/' && (this.localForm.radius || this.localForm.zipcode)) {
+          this.localForm.radius = ""
+          this.localForm.zipcode = ""
+        }
 
-    //   if (isValidURL(uri)) {
-    //   // Update the local form
-    //     this.localForm.year == uri[1]
-    //     // this.localForm.manufacturer == uri[2]
-    //     this.localForm.model == uri[3]
-
-    // //  }&& this.validateSubmitButton) {
-    //     console.log('foo')
-    //     this.updateStore({'showTable': true})
-    //     this.getCurrentInventory()
-    //   } else {
-    //   console.log(isValidURL(uri), this.validateSubmitButton)
-      // this.$nextTick(() => {
-      //   this.localForm.model = this.form.model
-      //   });
-    //   }
-      // if (isValidURL(window.location.href) {
-      //   if (this.validateSubmitButton) {
-      //   console.log('foo')
-      //   this.updateStore({'showTable': true})
-      //   this.getCurrentInventory()
-      //   }
-      // } else {
-      //     /**
-      //      * When a random image is selected onload, the vehicle model is pushed into
-      //      * Vuex. Grabbing that data, and pushing it into the localForm which
-      //      * will update the vehicle model dropdown menu. The dropdown menu will
-      //      * now match the vehicle background image being displayed.
-      //      */
-      //     this.$nextTick(() => {
-      //       this.localForm.model = this.form.model
-      //     });
-      //   }
-
-      //  /**
-      //   * When this component is mounted, if we have a URL path, parse and validate it,
-      //   * show the table component and proceed to fetch inventory.
-      //   */
-      // if (this.parseQueryParams(this.$route.query)) {
-      //     if (this.validateSubmitButton) {
-      //       this.updateStore({'showTable': true})
-      //       this.getCurrentInventory()
-      //     }
-      //   } else {
-      //     /**
-      //      * When a random image is selected onload, the vehicle model is pushed into
-      //      * Vuex. Grabbing that data, and pushing it into the localForm which
-      //      * will update the vehicle model dropdown menu. The dropdown menu will
-      //      * now match the vehicle background image being displayed.
-      //      */
-      //     this.$nextTick(() => {
-      //       this.localForm.model = this.form.model
-      //     });
-      //   }
-    },
+        /**
+        * When this component is mounted, if we have a URL path, parse and validate it,
+        * show the table component and proceed to fetch inventory.
+        */
+        if (this.parseQueryParams(this.$route.query)) {
+          console.log('parsed params')
+          console.log(this.$route.query)
+          this.updateStore({'showTable': true})
+            this.getCurrentInventory()
+          if (this.validateSubmitButton) {
+            console.log('submit validated')
+            this.updateStore({'showTable': true})
+            this.getCurrentInventory()
+          }
+        }
+      })
+    },  // mounted
 
     data() {
       return {
@@ -269,18 +220,21 @@
         configured which monitors for changes to the routes, and will trigger an
         API call if they're valid.
         */
-        this.$router.push({
-          path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model}`,
-          query: {
-            // year: this.localForm.year,
-            // model: this.localForm.model,
-            zipcode: this.localForm.zipcode,
-            radius: this.localForm.radius,
-          }
-        })
+        console.log('route pushing and going!')
+
+        if (! isValidUrlPath(this.$route.path)) {
+          this.$router.push({
+            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model}`,
+            query: {
+              zipcode: this.localForm.zipcode,
+              radius: this.localForm.radius,
+            }
+          })
+        }
       },
 
       async getCurrentInventory() {
+        console.log('fetching inventory')
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
 
@@ -471,43 +425,49 @@
       },
 
       validateSubmitButton() {
-        if (this.localForm.zipcode && this.localForm.year && this.localForm.model && this.localForm.radius != '') {
-          if (this.isValidZipCode && this.isValidRadius) {
-            return true
-          }
-        }
+        if (
+            this.localForm.year
+            && this.localForm.model
+            && this.isValidZipCode
+            && this.isValidRadius
+            ) {
+              console.log('validateSubmitButton is true')
+              return true
+            }
+        console.log('validateSubmitButton is false')
         return false
       },
     },  // computed
     watch: {
-      // $route(to) {
-      //   /*
-      //   This watches for route changes, and if valid will call getCurrentInventory()
-      //   If someone directly edits the URL query parameters, this will catch the
-      //   changes and update the components as needed
-      //   */
-      //   if (this.parseQueryParams(to.query)) {
-      //     if (this.validateSubmitButton) {
-      //       // Clear any existing inventory from vuex, before fetching anew
-      //       if (this.inventory.length > 0) {
-      //         this.updateStore({'inventory': []})
-      //       }
-      //       this.updateStore({'showTable': true})
-      //       this.getCurrentInventory()
+      $route(to) {
+        /*
+        This watches for route changes, and if valid will call getCurrentInventory()
+        If someone directly edits the URL query parameters, this will catch the
+        changes and update the components as needed
+        */
+       console.log('watch here')
+        if (this.parseQueryParams(to.query)) {
+          if (this.validateSubmitButton) {
+            // Clear any existing inventory from vuex, before fetching anew
+            if (this.inventory.length > 0) {
+              this.updateStore({'inventory': []})
+            }
+            this.updateStore({'showTable': true})
+            this.getCurrentInventory()
 
-      //     // Fire an event to Plausible to allow reporting on which manufacturers
-      //     // and vehicle models are being selected
-      //     this.$plausible.trackEvent(
-      //       'Selected Vehicle', {
-      //         props: {
-      //           vehicleManufacturer: this.localForm.manufacturer,
-      //           vehicleModel: this.localForm.vehicleName,
-      //         }
-      //       }
-      //     )
-      //     }
-      //   }
-      // },
+          // Fire an event to Plausible to allow reporting on which manufacturers
+          // and vehicle models are being selected
+          this.$plausible.trackEvent(
+            'Selected Vehicle', {
+              props: {
+                vehicleManufacturer: this.localForm.manufacturer,
+                vehicleModel: this.localForm.vehicleName,
+              }
+            }
+          )
+          }
+        }
+      },
 
       inventory() {
         // When the inventory changes, update the $num vehicles found message

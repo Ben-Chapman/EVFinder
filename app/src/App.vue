@@ -76,7 +76,8 @@ export default {
     // When mounted, check the URL path for a deep link. If found do stuff
     const uri = this.$route.path
     const urlPath = segmentUrlPath(uri)
-    if (urlPath.length > 0 && isValidUrlPath(uri)) {
+
+    if (urlPath.length == 4 && isValidUrlPath(uri)) {
       // Push the requested URL information into Vuex
       this.updateStore({
         'form': {
@@ -84,12 +85,13 @@ export default {
           'model': urlPath[3]
         }
       })
-      // this.updateStore({'showTable': true})
-      // this.getCurrentInventory()
+      // We have an invalid URL path, so redirect back to /
+    } else if (uri != '/') {
+      // The query params (if present) are stripped in SearchForm.vue
+      this.$router.push({ path: '/' })
     }
       // Fetch the background image
       this.heroImage = getHeroImage(this.form.model)
-      console.log(this.heroImage)
 
       if (window.matchMedia("(orientation: portrait)").matches) {
         this.imagePosition = this.heroImage['portraitPosition']
