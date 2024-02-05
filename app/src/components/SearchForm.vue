@@ -137,11 +137,12 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
-  import { getGeoFromZipcode, isValidUrlPath } from '../helpers/libs'
+  import { getGeoFromZipcode } from '../helpers/libs'
 
   export default {
     mounted() {
       this.$nextTick(() => {
+        // Populate localForm items into Vuex
         Object.keys(this.form).forEach(item => {
           this.localForm[item] = this.form[item]
         })
@@ -153,21 +154,20 @@
           this.localForm.zipcode = ""
         }
 
-        /**
-        * When this component is mounted, if we have a URL path, parse and validate it,
-        * show the table component and proceed to fetch inventory.
-        */
-        if (this.parseQueryParams(this.$route.query)) {
-          console.log('parsed params')
-          console.log(this.$route.query)
-          this.updateStore({'showTable': true})
-            this.getCurrentInventory()
-          if (this.validateSubmitButton) {
-            console.log('submit validated')
-            this.updateStore({'showTable': true})
-            this.getCurrentInventory()
+        // There's a race condition wherein this.localForm.manufacturer is not populated
+        // before the URL is parsed and getCurrentInventory() is called. This results
+        // in getCurrentInventory() failing. Rather than mucking about with retry logic
+        // simply deferring this call to after Vue updates the virtual DOM.
+        this.$nextTick(() => {
+          // When this component is mounted, if we have a URL path, parse and validate it,
+          // show the table component and proceed to fetch inventory.
+          if (this.parseQueryParams(this.$route.query)) {
+            if (this.validateSubmitButton) {
+              this.updateStore({'showTable': true})
+              this.getCurrentInventory()
+            }
           }
-        }
+        })
       })
     },  // mounted
 
@@ -187,6 +187,7 @@
           manufacturer: '',
           vehicleName: '',
           geo: '',
+          apiEndpoint: '',
         },
 
         modelOptions,
@@ -220,21 +221,16 @@
         configured which monitors for changes to the routes, and will trigger an
         API call if they're valid.
         */
-        console.log('route pushing and going!')
-
-        if (! isValidUrlPath(this.$route.path)) {
           this.$router.push({
-            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model}`,
+            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer}/${this.localForm.model}`,
             query: {
               zipcode: this.localForm.zipcode,
               radius: this.localForm.radius,
             }
           })
-        }
       },
 
       async getCurrentInventory() {
-        console.log('fetching inventory')
         // Show users that we're fetching data
         this.updateStore({'tableBusy': true})
 
@@ -247,7 +243,7 @@
         const inventories = {
           zipcode: this.localForm.zipcode,
           year: this.localForm.year,
-          model: this.localForm.model,
+          model: this.localForm.apiEndpoint,
           radius: this.localForm.radius,
           manufacturer: this.localForm.manufacturer,
           geo: this.localForm.geo,
@@ -365,6 +361,7 @@
               this.localForm.manufacturer = manufacturer
               if (option.value === vehicleModelName) {
                 this.localForm.vehicleName = option.text
+                this.localForm.apiEndpoint = option.api
               }
             }
           })
@@ -431,10 +428,8 @@
             && this.isValidZipCode
             && this.isValidRadius
             ) {
-              console.log('validateSubmitButton is true')
               return true
             }
-        console.log('validateSubmitButton is false')
         return false
       },
     },  // computed
@@ -445,7 +440,6 @@
         If someone directly edits the URL query parameters, this will catch the
         changes and update the components as needed
         */
-       console.log('watch here')
         if (this.parseQueryParams(to.query)) {
           if (this.validateSubmitButton) {
             // Clear any existing inventory from vuex, before fetching anew
