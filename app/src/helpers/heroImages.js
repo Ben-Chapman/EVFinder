@@ -23,7 +23,7 @@ const heroImages = [
       ["2023-g80ev-3.jpg", "-10rem center", "dark"],
     ],
     displayName: "Genesis Electrified G80",
-    modelName: "Electrified-G80",
+    modelName: "electrified-g80",
   },
   {
     imageNames: [
@@ -32,7 +32,7 @@ const heroImages = [
       ["2022-gv60-3.jpg", "-10rem center", "light"],
     ],
     displayName: "Genesis GV60",
-    modelName: "GV60",
+    modelName: "gv60",
   },
   {
     imageNames: [
@@ -41,7 +41,7 @@ const heroImages = [
       ["2023-g70ev-3.jpg", "-27rem center", "light"],
     ],
     displayName: "Genesis Electrified GV70",
-    modelName: "Electrified-GV70",
+    modelName: "electrified-gv70",
   },
   {
     imageNames: [
@@ -51,7 +51,7 @@ const heroImages = [
       ["2023-id4-4.jpg", "-23.5rem center", "light"],
     ],
     displayName: "Volkswagen ID.4",
-    modelName: "ID.4",
+    modelName: "id.4",
   },
   {
     imageNames: [
@@ -61,7 +61,7 @@ const heroImages = [
       ["2023-ioniq5-4.jpg", "-28rem center", "light"],
     ],
     displayName: "Hyundai Ioniq 5",
-    modelName: "Ioniq-5",
+    modelName: "ioniq-5",
   },
   {
     imageNames: [
@@ -70,7 +70,17 @@ const heroImages = [
       ["2023-ev6-3.jpg", "-45rem center", "light"],
     ],
     displayName: "Kia EV6",
-    modelName: "EV6",
+    modelName: "ev6",
+  },
+  {
+    imageNames: [
+      ["2024-kia-ev9-1.jpg", "-22rem center", "light"],
+      ["2024-kia-ev9-2.jpg", "-30rem center", "light"],
+      ["2024-kia-ev9-3.jpg", "-18rem center", "light"],
+      ["2024-kia-ev9-4.jpg", "-23rem center", "light"],
+    ],
+    displayName: "Kia EV9",
+    modelName: "ev9",
   },
   {
     imageNames: [
@@ -79,7 +89,7 @@ const heroImages = [
       ["2023-kona-3.jpg", "-10rem center", "dark"],
     ],
     displayName: "Hyundai Kona Electric",
-    modelName: "Kona-EV",
+    modelName: "kona-ev",
   },
   {
     imageNames: [
@@ -88,7 +98,7 @@ const heroImages = [
       ["2023-niro-3.jpg", "-26.5rem center", "light"],
     ],
     displayName: "Kia Niro EV",
-    modelName: "Niro-EV",
+    modelName: "niro-ev",
   },
   {
     imageNames: [
@@ -98,7 +108,7 @@ const heroImages = [
       ["2023-chevrolet-bolt-ev-2.jpg", "-36rem center", "light"],
     ],
     displayName: "Chevrolet Bolt EV",
-    modelName: "Bolt-EV",
+    modelName: "bolt-ev",
   },
   {
     imageNames: [
@@ -108,8 +118,41 @@ const heroImages = [
       ["2022-chevrolet-bolt-euv-4.jpg", "-13rem center", "dark"],
     ],
     displayName: "Chevrolet Bolt EUV",
-    modelName: "Bolt-EUV",
+    modelName: "bolt-euv",
   },
+  {
+    imageNames: [
+      ["2024-chevrolet-silverado-ev-1.jpg", "-32rem center", "light"],
+      ["2024-chevrolet-silverado-ev-2.jpg", "-16rem center", "light"],
+    ],
+    displayName: "Chevrolet Silverado EV",
+    modelName: "silverado-ev",
+  },
+  {
+    imageNames: [
+      ["2024-chevrolet-blazer-ev-1.jpg", "-20rem center", "light"],
+      ["2024-chevrolet-blazer-ev-2.jpg", "-34rem center", "dark"],
+    ],
+    displayName: "Chevrolet Blazer EV",
+    modelName: "blazer-ev",
+  },
+  {
+    imageNames: [
+      ["2024-chevrolet-equinox-ev-1.jpg", "-25rem center", "light"],
+      ["2024-chevrolet-equinox-ev-2.jpg", "-14rem center", "light"],
+    ],
+    displayName: "Chevrolet Equinox EV",
+    modelName: "equinox-ev",
+  },
+  // {
+  //   imageNames: [
+  //     ["2024-chevrolet-corvette-e-ray-1.jpg", "-18rem center", "light"],
+  //     ["2024-chevrolet-corvette-e-ray-2.jpg", "-16rem center", "dark"],
+  //     ["2024-chevrolet-corvette-e-ray-3.jpg", "-40rem center", "light"],
+  //   ],
+  //   displayName: "Chevrolet Corvette E-Ray",
+  //   modelName: "corvette-e-ray",
+  // },
   {
     imageNames: [
       ["2021-mustang-mache-1.jpg", "-45rem center", "dark"],
@@ -119,7 +162,7 @@ const heroImages = [
       ["2022-mustang-mache-1.jpg", "-20rem center", "light"],
     ],
     displayName: "Ford Mustang Mach-E®",
-    modelName: "mustang-mache",
+    modelName: "mustang-mach-e",
   },
   {
     imageNames: [
@@ -174,7 +217,7 @@ const heroImages = [
       ["2023-ioniq6-6.jpg", "-23rem center", "light"],
     ],
     displayName: "Hyundai Ioniq 6",
-    modelName: "Ioniq-6",
+    modelName: "ioniq-6",
   },
   {
     imageNames: [
@@ -216,7 +259,7 @@ const heroImages = [
       ["2023-bmw-ix-5.jpg", "-23rem center", "light"],
     ],
     displayName: "BMW iX",
-    modelName: "iX",
+    modelName: "ix",
   },
   {
     imageNames: [
@@ -232,6 +275,7 @@ const heroImages = [
 ];
 
 export function getHeroImage(modelName) {
+  console.log(`Model name: ${modelName}`);
   const i = pickImage(modelName);
   const selectedImage = i.singleImageDetail[0];
 
@@ -265,7 +309,7 @@ export function getHeroImage(modelName) {
 
 function pickImage(modelName) {
   // We have no model selected, so select a random image
-  if (modelName === "") {
+  if (!modelName) {
     const randomVehicle = Math.floor(Math.random() * heroImages.length);
     const randomImageIndex = Math.floor(
       Math.random() * heroImages[randomVehicle]["imageNames"].length
