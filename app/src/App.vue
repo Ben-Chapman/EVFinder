@@ -82,7 +82,7 @@ export default {
       this.updateStore({
         'form': {
           'year': urlPath[1],
-          'model': urlPath[3]
+          'model': urlPath[3].toLowerCase()
         }
       })
       // We have an invalid URL path, so redirect back to /

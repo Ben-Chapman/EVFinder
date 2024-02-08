@@ -137,11 +137,20 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
-  import { getGeoFromZipcode } from '../helpers/libs'
+  import { getGeoFromZipcode, isValidUrlPath, segmentUrlPath } from '../helpers/libs'
 
   export default {
     mounted() {
       this.$nextTick(() => {
+        const uri = this.$route.path
+        const urlPath = segmentUrlPath(uri)
+
+        // Populate form fields if we have a valid URL path
+        if (urlPath.length == 4 && isValidUrlPath(uri)) {
+          this.localForm.year = urlPath[1]
+          this.localForm.model = urlPath[3]
+        }
+
         // Populate localForm items into Vuex
         Object.keys(this.form).forEach(item => {
           this.localForm[item] = this.form[item]
@@ -150,8 +159,7 @@
         // If an invalid URL path is detected App.vue will issue a redirect to / but does
         // not clear the form fields. Detecting that condition and clearing these fields
         if (this.$route.path == '/' && (this.localForm.radius || this.localForm.zipcode)) {
-          this.localForm.radius = ""
-          this.localForm.zipcode = ""
+          this.resetLocalFormData()
         }
 
         // There's a race condition wherein this.localForm.manufacturer is not populated
@@ -159,8 +167,7 @@
         // in getCurrentInventory() failing. Rather than mucking about with retry logic
         // simply deferring this call to after Vue updates the virtual DOM.
         this.$nextTick(() => {
-          // When this component is mounted, if we have a URL path, parse and validate it,
-          // show the table component and proceed to fetch inventory.
+          // If we have a valid URL and query params, proceed to fetch inventory.
           if (this.parseQueryParams(this.$route.query)) {
             if (this.validateSubmitButton) {
               this.updateStore({'showTable': true})
@@ -201,6 +208,14 @@
         'updateStore'
         ]),
 
+      resetLocalFormData() {
+        Object.keys(this.localForm).forEach(key => {
+          if (key != 'year') {
+            this.localForm[key] = ""
+          }
+        })
+      },
+
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
@@ -217,12 +232,11 @@
 
       routePushandGo() {
         /*
-        Push form fields to the Vue router as query params. We have a watch()
-        configured which monitors for changes to the routes, and will trigger an
-        API call if they're valid.
+         * Push form fields to the Vue router. A watch() is configured which monitors
+         * for changes to the routes, and will trigger an API call if they're valid.
         */
           this.$router.push({
-            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer}/${this.localForm.model}`,
+            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model.toLowerCase()}`,
             query: {
               zipcode: this.localForm.zipcode,
               radius: this.localForm.radius,
