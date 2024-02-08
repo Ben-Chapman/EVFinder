@@ -1,4 +1,21 @@
 /**
+ * Copyright 2023 - 2024 Ben Chapman
+ *
+ * This file is part of The EV Finder.
+ *
+ * The EV Finder is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * The EV Finder is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with The EV Finder.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/**
  * App-specific detail for each model available on the site. modelOptions is used to
  * populate the form fields used to search for inventory.
  *
@@ -28,53 +45,53 @@ const modelOptions = [
       { value: "i4", text: "i4", api: "i4" },
       { value: "i5", text: "i5", api: "i5" },
       { value: "i7", text: "i7", api: "i7" },
-      { value: "iX", text: "iX", api: "9" },
+      { value: "ix", text: "iX", api: "9" },
     ],
   },
   {
     label: "Chevrolet",
     options: [
-      { value: "Blazer-EV", text: "Blazer EV", api: "Blazer EV" },
-      { value: "Bolt-EV", text: "Bolt EV", api: "Bolt EV" },
-      { value: "Bolt-EUV", text: "Bolt EUV", api: "Bolt EUV" },
-      { value: "Equinox-EV", text: "Equinox EV", api: "Equinox EV" },
-      { value: "Silverado-EV", text: "Silverado EV", api: "Silverado EV" },
+      { value: "blazer-ev", text: "Blazer EV", api: "Blazer EV" },
+      { value: "bolt-ev", text: "Bolt EV", api: "Bolt EV" },
+      { value: "bolt-euv", text: "Bolt EUV", api: "Bolt EUV" },
+      { value: "equinox-ev", text: "Equinox EV", api: "Equinox EV" },
+      { value: "silverado-ev", text: "Silverado EV", api: "Silverado EV" },
     ],
   },
   {
     label: "Ford",
     options: [
-      { value: "F-150-Lightning", text: "F-150 Lightning®", api: "f-150 lightning" },
-      { value: "Mustang-Mach-E", text: "Mustang Mach-E®", api: "mache" },
+      { value: "f-150-lightning", text: "F-150 Lightning®", api: "f-150 lightning" },
+      { value: "mustang-mach-e", text: "Mustang Mach-E®", api: "mache" },
     ],
   },
   {
     label: "Hyundai",
     options: [
-      { value: "Ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
-      { value: "Ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
-      { value: "Kona-Ev", text: "Kona Electric", api: "Kona%20Ev" },
+      { value: "ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
+      { value: "ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
+      { value: "kona-ev", text: "Kona Electric", api: "Kona%20Ev" },
     ],
   },
   {
     label: "Genesis",
     options: [
-      { value: "Electrified-G80", text: "Electrified G80", api: "ELECTRIFIED-G80" },
-      { value: "GV60", text: "GV60", api: "GV60" },
-      { value: "Electrified-GV70", text: "Electrified GV70", api: "ELECTRIFIED-GV70" },
+      { value: "electrified-g80", text: "Electrified G80", api: "ELECTRIFIED-G80" },
+      { value: "gv60", text: "GV60", api: "GV60" },
+      { value: "electrified-gv70", text: "Electrified GV70", api: "ELECTRIFIED-GV70" },
     ],
   },
   {
     label: "Kia",
     options: [
-      { value: "EV6", text: "EV6", api: "N" },
-      { value: "EV9", text: "EV9", api: "P" },
-      { value: "Niro-EV", text: "Niro EV", api: "V" },
+      { value: "ev6", text: "EV6", api: "N" },
+      { value: "ev9", text: "EV9", api: "P" },
+      { value: "niro-ev", text: "Niro EV", api: "V" },
     ],
   },
   {
     label: "Volkswagen",
-    options: [{ value: "ID.4", text: "ID.4", api: "ID.4" }],
+    options: [{ value: "id.4", text: "ID.4", api: "ID.4" }],
   },
 ];
 
