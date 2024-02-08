@@ -8,13 +8,6 @@ const routes = [
   {
     path: "/",
     component: App,
-    // props: (route) => ({
-    //   // These are the available query params
-    //   // zipcode: route.query.z, // ?z=90210
-    //   // year: route.query.y, // ?y=2022
-    //   // model: route.query.m,
-    //   // radius: route.query.r,
-    // }),
   },
   {
     path: "/inventory/:year/:manufacturer/:model",
