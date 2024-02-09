@@ -140,6 +140,22 @@
   import { getGeoFromZipcode, isValidUrlPath, segmentUrlPath } from '../helpers/libs'
 
   export default {
+    metaInfo() {
+      // Dynamically set page title and metadata description based upon the selected vehicle
+      // Global metadata is set in App.vue
+      const pageTitle = this.localForm.pageTitle
+      const pageDescription = `Easily search hundreds of car dealers in your area to find
+      your perfect new ${this.localForm.manufacturer} ${this.localForm.vehicleName}
+      with the EV Finder.`
+
+      return {
+        title: pageTitle,
+        meta: [
+          { vmid: 'description', name: 'description', content: pageDescription }
+        ]
+      }
+      },
+
     mounted() {
       this.$nextTick(() => {
         const uri = this.$route.path
@@ -170,6 +186,7 @@
           // If we have a valid URL and query params, proceed to fetch inventory.
           if (this.parseQueryParams(this.$route.query)) {
             if (this.validateSubmitButton) {
+              this.updatePageTitle()
               this.updateStore({'showTable': true})
               this.getCurrentInventory()
             }
@@ -195,6 +212,7 @@
           vehicleName: '',
           geo: '',
           apiEndpoint: '',
+          pageTitle: undefined,
         },
 
         modelOptions,
@@ -389,7 +407,12 @@
               this.localForm.geo = await getGeoFromZipcode(zipCode)
             }
           }
-      }
+      },
+
+      updatePageTitle() {
+        this.localForm.pageTitle = `${this.localForm.manufacturer} ${this.localForm.vehicleName}
+        Inventory | The EV Finder`
+      },
     },  //methods
 
     computed: {
@@ -461,6 +484,7 @@
               this.updateStore({'inventory': []})
             }
             this.updateStore({'showTable': true})
+            this.updatePageTitle()
             this.getCurrentInventory()
 
           // Fire an event to Plausible to allow reporting on which manufacturers
