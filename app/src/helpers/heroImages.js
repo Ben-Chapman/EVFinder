@@ -275,7 +275,6 @@ const heroImages = [
 ];
 
 export function getHeroImage(modelName) {
-  console.log(`Model name: ${modelName}`);
   const i = pickImage(modelName);
   const selectedImage = i.singleImageDetail[0];
 
