@@ -144,9 +144,9 @@
       // Dynamically set page title and metadata description based upon the selected vehicle
       // Global metadata is set in App.vue
       const pageTitle = this.localForm.pageTitle
-      const pageDescription = `Easily search hundreds of car dealers in your area to find
-      your perfect new ${this.localForm.manufacturer} ${this.localForm.vehicleName}
-      with the EV Finder.`
+      const pageDescription = `Easily search hundreds of car dealers in your area to \
+find your perfect new ${this.localForm.manufacturer} ${this.localForm.vehicleName} \
+with the EV Finder.`
 
       return {
         title: pageTitle,
