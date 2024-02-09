@@ -78,3 +78,23 @@ describe("Search for Unavailable Vehicle Inventory", () => {
     cy.percySnapshot("No Inventory Found");
   });
 });
+
+describe("Confirm page title and description are correct", () => {
+  it("Page title is correct", () => {
+    cy.title().should("eq", "Genesis Electrified G80 Inventory | The EV Finder");
+  });
+
+  it("Page description is correct", () => {
+    cy.get('meta[name="description"]').should(
+      "have.attr",
+      "content",
+      "Easily search hundreds of car dealers in your area to find your perfect new Genesis Electrified G80 with the EV Finder."
+    );
+  });
+
+  it("Confirms Unavailable Vehicle Inventory Message", () => {
+    cy.get(".no-inventory", { timeout: 60000 });
+    cy.get(".h4").contains("No Inventory Available");
+    cy.percySnapshot("No Inventory Found");
+  });
+});
