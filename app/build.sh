@@ -21,7 +21,7 @@ cd ./app
 npm clean-install
 
 # Only write and push the Git release tag during a production build.
-if [[ ${_ENVIRONMENT} = "production" ]]; then
+if [[ ${ENVIRONMENT} = "production" ]]; then
   # Setup git
   configure_git
 
@@ -45,11 +45,11 @@ if [ $? -eq 0 ]; then
   gsutil -m -h "Cache-Control:public max-age=3600" \
   cp -r -z html,js,css,scss,xml,svg \
   /workspace/dist/* \
-  gs://${_APP_BUCKET_NAME}
+  gs://${APP_BUCKET_NAME}
 
   # Don't cache index.html
   echo -e "\nSetting no-cache on index.html..."
-  gsutil setmeta -h "Cache-Control:no-cache" gs://${_APP_BUCKET_NAME}/index.html
+  gsutil setmeta -h "Cache-Control:no-cache" gs://${APP_BUCKET_NAME}/index.html
   RETVAL=$?
 fi
 

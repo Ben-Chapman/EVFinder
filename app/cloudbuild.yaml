@@ -3,10 +3,13 @@ steps:
     entrypoint: "bash"
     args: ["./app/build.sh"]
     secretEnv: ["GITHUB_TOKEN"]
+    env:
+      - "TAG_NAME=$TAG_NAME"
+      - "APP_BUCKET_NAME=$_APP_BUCKET_NAME"
+      - "ENVIRONMENT=$_ENVIRONMENT"
 availableSecrets:
   secretManager:
     - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest
       env: "GITHUB_TOKEN"
 options:
-  automapSubstitutions: true
   logging: CLOUD_LOGGING_ONLY
