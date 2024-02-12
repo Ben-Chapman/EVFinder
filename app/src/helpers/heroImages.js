@@ -278,9 +278,9 @@ export function getHeroImage(modelName) {
   const i = pickImage(modelName);
   const selectedImage = i.singleImageDetail[0];
 
-  const baseImagePath = "/hero_images";
-  const blurredImagePath = baseImagePath.concat("/blurred/");
-  const mobileImagePath = baseImagePath.concat("/mobile/");
+  const baseImagePath = "/hero_images/";
+  const blurredImagePath = baseImagePath.concat("blurred/");
+  const mobileImagePath = baseImagePath.concat("mobile/");
   let imageUrl = "";
 
   /**
