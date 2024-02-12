@@ -5,7 +5,6 @@ steps:
     secretEnv: ["GITHUB_TOKEN"]
     env:
       - "TAG_NAME=$TAG_NAME"
-      - "_APP_BUCKET_NAME=theevfinder.com"
 availableSecrets:
   secretManager:
     - versionName: projects/1020317645786/secrets/EVFinder-Github-Token/versions/latest

@@ -20,17 +20,20 @@ apk -U add nodejs npm
 cd ./app
 npm clean-install
 
-# Setup git
-configure_git
+# Only write and push the Git release tag during a production build.
+if [[ ${_ENVIRONMENT} = "production" ]]; then
+  # Setup git
+  configure_git
 
-# Update the NPM package version from the git tag version
-VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.x
-npm version ${VER} -m "Build: Version bump to %s"
-git commit -am "Build: Version bump to ${VER}"
+  # Update the NPM package version from the git tag version
+  VER=$(echo $TAG_NAME |sed -e 's/v//g') # Removing v from tag name v1.x.x -> 1.x.x
+  npm version ${VER} -m "Build: Version bump to %s"
+  git commit -am "Build: Version bump to ${VER}"
 
-# Push changes to Github
-echo "Pushing changes to Github..."
-git_push
+  # Push changes to Github
+  echo "Pushing changes to Github..."
+  git_push
+fi
 
 # Now build
 export NODE_OPTIONS=--openssl-legacy-provider
