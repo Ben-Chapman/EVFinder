@@ -16,16 +16,27 @@ describe("The application responds correctly to deep links", () => {
     });
   });
 
-  it("An invalid URL redirects to /", () => {
+  it("An invalid inventory URL redirects to /", () => {
     const invalidUrls = [
       "/inventory/2021/chevrolet/bolt-ev", // invalid year
-      "/2024/chevrolet/bolt-ev/", // missing /inventory
       "/inventory/2024/chevrolet/bolt-lightning", // invalid model
-      "/foo", // bar baz
     ];
     invalidUrls.forEach((url) => {
       cy.visit(url);
       cy.url().should("eq", `${Cypress.config("baseUrl")}/`);
+    });
+  });
+
+  it("A malformed URL shows the 404 page", () => {
+    const malformedUrls = [
+      "/2024/chevrolet/bolt-ev/", // missing /inventory
+      "/foo", // bar baz
+    ];
+    malformedUrls.forEach((url) => {
+      cy.visit(url, { failOnStatusCode: false });
+      cy.get(".error-text").contains(
+        "Looks like you've taken a wrong turn and the page you're looking for does not exist."
+      );
     });
   });
 
