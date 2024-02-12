@@ -66,23 +66,6 @@ export default {
     Slogan,
   },
 
-  // Default HTML <meta> information. SearchForm.vue will provide a unique page title and
-  // description for each vehicle. The metaInfo below is the default across the site.
-  metaInfo: {
-    // Default page title if none is provided.
-    title: 'The EV Finder | Find Your New Electric Vehicle',
-
-    htmlAttrs: {
-      lang: 'en-US',
-    },
-
-    meta: [
-      // Static <meta> tags are defined in public/index.html
-      { charset: 'utf-8' },
-      { vmid: 'description', name: 'description', content: 'Find your new electric vehicle with the EV Finder.' },
-    ]
-  },
-
   data() {
     return {
       heroImage: {},

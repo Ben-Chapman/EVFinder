@@ -1,5 +1,4 @@
 import Vue from "vue";
-import Meta from "vue-meta";
 import { VuePlausible } from "vue-plausible";
 
 import App from "./App.vue";
@@ -78,8 +77,6 @@ Vue.use(VuePlausible, {
   enableAutoPageviews: true,
   enableAutoOutboundTracking: true,
 });
-
-Vue.use(Meta);
 
 import "./assets/app_style.scss";
 Vue.config.productionTip = false;
