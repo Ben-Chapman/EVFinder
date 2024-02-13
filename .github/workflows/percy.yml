@@ -4,14 +4,12 @@
 
 name: Percy Visual Testing
 on:
-  check_run:
-    types: [completed]
-  # workflow_dispatch:
-  # pull_request:
-  #   branches:
-  #   - main
-  #   paths:
-  #     - 'app/**'
+  workflow_dispatch:
+  pull_request:
+    branches:
+    - main
+    paths:
+      - 'app/**'
 
 jobs:
   run-visual-tests:
@@ -19,6 +17,11 @@ jobs:
     env:
       PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+
       - name: Wait for GCP Cloud Build to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
         id: wait-for-build
@@ -27,10 +30,6 @@ jobs:
           checkName: "Build-EVFinder-App-From-PR (evfinder)"
           ref: ${{ github.event.pull_request.head.sha }}
           intervalSeconds: 30
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 21
 
       - name: NPM Install Packages
         run: npm install @percy/cli @percy/cypress cypress
@@ -49,7 +48,7 @@ jobs:
 
       - name: Run Cypress Tests with Percy against Development environment
         if: steps.wait-for-build.outputs.conclusion == 'success'
-        # working-directory: ./app
+        working-directory: ./app
         run: npx percy exec -- cypress run --env host=https://dev.theevfinder.com
 
       - name: Upload Screenshots and Video on Failure
