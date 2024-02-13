@@ -22,6 +22,9 @@ jobs:
         with:
           node-version: 21
 
+      - name: NPM Install Packages
+        run: npm install @percy/cli @percy/cypress cypress
+
       - name: Wait for GCP Cloud Build to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
         id: wait-for-build
@@ -31,8 +34,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           intervalSeconds: 30
 
-      - name: NPM Install Packages
-        run: npm install @percy/cli @percy/cypress cypress
+
 
       # - name: Build Application
       #   working-directory: ./app
@@ -49,7 +51,7 @@ jobs:
       - name: Run Cypress Tests with Percy against Development environment
         if: steps.wait-for-build.outputs.conclusion == 'success'
         working-directory: ./app
-        run: npx percy exec -- cypress run --env host=https://dev.theevfinder.com
+        run: CYPRESS_BASE_URL=https://dev.theevfinder.com npx percy exec -- cypress run
 
       - name: Upload Screenshots and Video on Failure
         uses: actions/upload-artifact@v3
