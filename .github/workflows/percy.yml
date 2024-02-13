@@ -4,12 +4,14 @@
 
 name: Percy Visual Testing
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-    - main
-    paths:
-      - 'app/**'
+  check_run:
+    types: [completed]
+  # workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #   - main
+  #   paths:
+  #     - 'app/**'
 
 jobs:
   run-visual-tests:
@@ -24,13 +26,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           checkName: "Build-EVFinder-App-From-PR (evfinder)"
           ref: ${{ github.event.pull_request.head.sha }}
-      # - uses: actions/checkout@v3
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16
+          intervalSeconds: 30
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
 
-      # - name: NPM Install Packages
-      #   run: npm install
+      - name: NPM Install Packages
+        run: npm install @percy/cli @percy/cypress cypress
 
       # - name: Build Application
       #   working-directory: ./app
