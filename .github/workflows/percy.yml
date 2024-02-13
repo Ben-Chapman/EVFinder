@@ -46,7 +46,7 @@ jobs:
 
       - name: Run Cypress Tests with Percy against Development environment
         if: steps.wait-for-build.outputs.conclusion == 'success'
-        working-directory: ./app
+        # working-directory: ./app
         run: npx percy exec -- cypress run --env host=https://dev.theevfinder.com
 
       - name: Upload Screenshots and Video on Failure
