@@ -14,10 +14,15 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
 // Browserstack Percy Integration
-import '@percy/cypress';
+import "@percy/cypress";
+
+// Disable Plausible metrics tracking for all tests
+before(() => {
+  window.localStorage.setItem("plausible_ignore", true);
+});

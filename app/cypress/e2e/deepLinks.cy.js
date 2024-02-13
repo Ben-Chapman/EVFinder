@@ -14,6 +14,7 @@ describe("The application responds correctly to deep links", () => {
         `Find Your New ${link.text} With The EV Finder`
       );
     });
+    cy.percySnapshot("Valid slogan copy is shown");
   });
 
   it("An invalid inventory URL redirects to /", () => {
@@ -25,6 +26,7 @@ describe("The application responds correctly to deep links", () => {
       cy.visit(url);
       cy.url().should("eq", `${Cypress.config("baseUrl")}/`);
     });
+    cy.percySnapshot("Invalid URL redirected to home and valid homepage is shown.");
   });
 
   it("A malformed URL shows the 404 page", () => {
@@ -38,6 +40,7 @@ describe("The application responds correctly to deep links", () => {
         "Looks like you've taken a wrong turn and the page you're looking for does not exist."
       );
     });
+    cy.percySnapshot("Malformed URL Shows 404 page");
   });
 
   it("A complete URL populates search form fields and performs an inventory search", () => {
@@ -59,6 +62,9 @@ describe("The application responds correctly to deep links", () => {
 
       // Validate that the inventory API call was made and successful
       cy.get(".inventory-table", { timeout: 15000 });
+      cy.percySnapshot(
+        "A complete URL populates search form and performs an inventory search."
+      );
     });
   });
 

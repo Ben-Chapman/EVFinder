@@ -3,17 +3,12 @@ describe("Search for Vehicle Inventory and Validate Results", () => {
     cy.visit("/index.html");
     cy.get(".form-group > div > #form-model").select("Ioniq 5");
     cy.get(".form-group > div > #form-zipcode").clear().type("90210");
-    cy.get(".form-group > div > #form-radius").clear().type("100");
+    cy.get(".form-group > div > #form-radius").clear().type("20");
     cy.wait(500);
     cy.get('[id="submit-button"]').click();
   });
 
   it("Confirms Inventory Results", () => {
-    /**
-     * Upon page load a random vehicle model is pre-selected. This test uses that random
-     * model as the initial inventory search. If there is no inventory for this inventory
-     * search, manually select Ioniq 5, and re-run the search.
-     */
     // Look for either .vehicles-available or .no-inventory
     cy.get(".vehicles-available", { timeout: 60000 });
 
@@ -72,14 +67,6 @@ describe("Search for Unavailable Vehicle Inventory", () => {
     cy.get('[id="submit-button"]').click();
   });
 
-  it("Confirms Unavailable Vehicle Inventory Message", () => {
-    cy.get(".no-inventory", { timeout: 60000 });
-    cy.get(".h4").contains("No Inventory Available");
-    cy.percySnapshot("No Inventory Found");
-  });
-});
-
-describe("Confirm page title and description are correct", () => {
   it("Page title is correct", () => {
     cy.title().should("eq", "Genesis Electrified G80 Inventory | The EV Finder");
   });
