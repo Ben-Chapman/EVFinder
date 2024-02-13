@@ -13,11 +13,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 
+    <!-- Plausible 404 tracking -->
+    <script defer data-domain="theevfinder.com" src="https://plausible.io/js/script.js"></script>
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <script>document.addEventListener('DOMContentLoaded', function () { plausible('404', { props: { path: document.location.pathname } }); });</script>
+
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@500');
 
       body {
-        /* Stable diffusion GenAI:
+        /* Stable diffusion prompt:
          * A futuristic looking photo of an electric vehicle. The setting should be a
          * beach with no clouds in the sky. The lighting should be dramatic. The car
          * should glow. The image should be huge and highly detailed.
