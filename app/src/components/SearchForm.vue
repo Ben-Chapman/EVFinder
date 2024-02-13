@@ -3,7 +3,7 @@
       <!-- Only show this version of the logo on xs screens -->
       <b-row class="d-flex py-2 d-sm-none" align-h="center">
         <a href="/">
-          <b-img src="theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
+          <b-img src="/theevfinder.png" height="40%" alt="The EV Finder Logo"></b-img>
         </a>
 
       </b-row>
@@ -11,7 +11,7 @@
       <b-row class="d-flex mt-3" align-h="center">
         <b-col cols="1" cols-sm="2" class="d-none d-sm-block d-md-block">
           <a href="/">
-            <b-img src="theevfinder.png" alt="The EV Finder Logo"></b-img>
+            <b-img src="/theevfinder.png" alt="The EV Finder Logo"></b-img>
           </a>
         </b-col>
 
@@ -40,6 +40,7 @@
               v-model="localForm.model"
               :options="modelOptions"
               required
+              @input="populateVehicleModelDetail"
             >
             </b-form-select>
           </b-form-group>
@@ -127,7 +128,6 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { modelOptions, yearOptions } from '../helpers/formOptions'
-  import { logMessage } from '../helpers/logger'
 
   import { getAudiInventory } from '../manufacturers/audi'
   import { getBMWInventory } from '../manufacturers/bmw'
@@ -137,32 +137,47 @@
   import { getHyundaiInventory } from '../manufacturers/hyundai'
   import { getKiaInventory } from '../manufacturers/kia'
   import { getVolkswagenInventory } from '../manufacturers/volkswagen'
-  import { getGeoFromZipcode } from '../helpers/libs'
+  import { getGeoFromZipcode, isValidUrlPath, segmentUrlPath } from '../helpers/libs'
 
   export default {
     mounted() {
-      /**
-       * When this component is mounted, check for query params in the URL
-       * If found, parse them for validity, show the table component and proceed
-       * to fetch inventory
-       */
-      if (this.parseQueryParams(this.$route.query)) {
-          if (this.validateSubmitButton) {
-            this.updateStore({'showTable': true})
-            this.getCurrentInventory()
-          }
-        } else {
-          /**
-           * When a random image is selected onload, the vehicle model is pushed into
-           * Vuex. Grabbing that data, and pushing it into the localForm which
-           * will update the vehicle model dropdown menu. The dropdown menu will
-           * now match the vehicle background image being displayed.
-           */
-          this.$nextTick(() => {
-            this.localForm.model = this.form.model
-          });
+      this.$nextTick(() => {
+        const uri = this.$route.path
+        const urlPath = segmentUrlPath(uri)
+
+        // Populate form fields if we have a valid URL path
+        if (urlPath.length == 4 && isValidUrlPath(uri)) {
+          this.localForm.year = urlPath[1]
+          this.localForm.model = urlPath[3]
         }
-    },
+
+        // Populate localForm items into Vuex
+        Object.keys(this.form).forEach(item => {
+          this.localForm[item] = this.form[item]
+        })
+
+        // If an invalid URL path is detected App.vue will issue a redirect to / but does
+        // not clear the form fields. Detecting that condition and clearing these fields
+        if (this.$route.path == '/' && (this.localForm.radius || this.localForm.zipcode)) {
+          this.resetLocalFormData()
+        }
+
+        // There's a race condition wherein this.localForm.manufacturer is not populated
+        // before the URL is parsed and getCurrentInventory() is called. This results
+        // in getCurrentInventory() failing. Rather than mucking about with retry logic
+        // simply deferring this call to after Vue updates the virtual DOM.
+        this.$nextTick(() => {
+          // If we have a valid URL and query params, proceed to fetch inventory.
+          if (this.parseQueryParams(this.$route.query)) {
+            if (this.validateSubmitButton) {
+              this.updatePageTitleAndDescription()
+              this.updateStore({'showTable': true})
+              this.getCurrentInventory()
+            }
+          }
+        })
+      })
+    },  // mounted
 
     data() {
       return {
@@ -180,6 +195,8 @@
           manufacturer: '',
           vehicleName: '',
           geo: '',
+          apiEndpoint: '',
+          // pageTitle: undefined,
         },
 
         modelOptions,
@@ -192,6 +209,14 @@
       ...mapActions([
         'updateStore'
         ]),
+
+      resetLocalFormData() {
+        Object.keys(this.localForm).forEach(key => {
+          if (key != 'year') {
+            this.localForm[key] = ""
+          }
+        })
+      },
 
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
@@ -209,25 +234,16 @@
 
       routePushandGo() {
         /*
-        Push form fields to the Vue router as query params. We have a watch()
-        configured which monitors for changes to the routes, and will trigger an
-        API call if they're valid.
+         * Push form fields to the Vue router. A watch() is configured which monitors
+         * for changes to the routes, and will trigger an API call if they're valid.
         */
-        this.$router.push({
-          query: {
-            y: this.localForm.year,
-            m: this.localForm.model,
-            z: this.localForm.zipcode,
-            r: this.localForm.radius,
-          }
-          }).catch(error => {
-            if (
-              error.name !== 'NavigationDuplicated' &&
-              !error.message.includes('Avoided redundant navigation to current location')
-            ) {
-              logMessage(`Vue router navigation error: ${error}`, "error")
-              }
-            })
+          this.$router.push({
+            path: `/inventory/${this.localForm.year}/${this.localForm.manufacturer.toLowerCase()}/${this.localForm.model.toLowerCase()}`,
+            query: {
+              zipcode: this.localForm.zipcode,
+              radius: this.localForm.radius,
+            }
+          })
       },
 
       async getCurrentInventory() {
@@ -243,7 +259,7 @@
         const inventories = {
           zipcode: this.localForm.zipcode,
           year: this.localForm.year,
-          model: this.localForm.model,
+          model: this.localForm.apiEndpoint,
           radius: this.localForm.radius,
           manufacturer: this.localForm.manufacturer,
           geo: this.localForm.geo,
@@ -338,32 +354,12 @@
 
       parseQueryParams(inputParams) {
         if (Object.keys(inputParams).length > 0) {
-          const paramMapping = {
-            'z': 'zipcode',
-            'y': 'year',
-            'm': 'model',
-            'r': 'radius',
-          }
-
-          const queryParams = inputParams  // z, y, m, r
-
           // Write query params to local data store
-          Object.keys(queryParams).forEach(k => {
-            const key = k
-            const longName = paramMapping[k]
-            const value = queryParams[k]
-
-            if (Object.keys(paramMapping).includes(key)) {
-              this.localForm[longName] = value
-            }
+          Object.keys(inputParams).forEach(p => {
+              this.localForm[p] = inputParams[p]
           })
-
-          // Now store some additional detail for the selected vehicle
-          this.populateVehicleModelDetail(this.localForm.model)
-
           return true  // Successfully parsed query params
-        }
-        else {
+        } else {
           return false
         }
       },
@@ -381,6 +377,7 @@
               this.localForm.manufacturer = manufacturer
               if (option.value === vehicleModelName) {
                 this.localForm.vehicleName = option.text
+                this.localForm.apiEndpoint = option.api
               }
             }
           })
@@ -394,7 +391,15 @@
               this.localForm.geo = await getGeoFromZipcode(zipCode)
             }
           }
-      }
+      },
+
+      updatePageTitleAndDescription() {
+        document.title = `${this.localForm.manufacturer} ${this.localForm.vehicleName} \
+Inventory | The EV Finder`
+        document.querySelector('meta[name="description"]').setAttribute("content",
+        `Easily search hundreds of car dealers in your area to find your perfect new \
+${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.`);
+      },
     },  //methods
 
     computed: {
@@ -441,11 +446,14 @@
       },
 
       validateSubmitButton() {
-        if (this.localForm.zipcode && this.localForm.year && this.localForm.model && this.localForm.radius != '') {
-          if (this.isValidZipCode && this.isValidRadius) {
-            return true
-          }
-        }
+        if (
+            this.localForm.year
+            && this.localForm.model
+            && this.isValidZipCode
+            && this.isValidRadius
+            ) {
+              return true
+            }
         return false
       },
     },  // computed
@@ -463,6 +471,7 @@
               this.updateStore({'inventory': []})
             }
             this.updateStore({'showTable': true})
+            this.updatePageTitleAndDescription()
             this.getCurrentInventory()
 
           // Fire an event to Plausible to allow reporting on which manufacturers

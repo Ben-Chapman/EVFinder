@@ -1,6 +1,6 @@
 describe("Homepage Background is Correct", () => {
   beforeEach(() => {
-    cy.visit("/index.html");
+    cy.visit("/");
   });
 
   context("Desktop Browsers", () => {

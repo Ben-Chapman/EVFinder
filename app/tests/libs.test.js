@@ -1,5 +1,5 @@
-import { values } from "lodash";
 import * as libs from "../src/helpers/libs";
+
 describe("Helper Tests", () => {
   test("Input should be Title Cased", () => {
     expect(libs.titleCase("title case here")).toBe("Title Case Here");
@@ -130,4 +130,66 @@ test("Invalid query param should throw error", () => {
     libs.queryParamStringToObject("This is not a query param");
   }
   expect(invalidQueryParam).toThrow(/not a valid query param/);
+});
+
+test("Searching for a key in this Object should return true", () => {
+  const testData = [
+    {
+      apple: 2,
+      banana: 4,
+      mango: 30,
+    },
+    { foo: "bar", fiz: "buz" },
+  ];
+  const yearOptions = [
+    { value: "2022", text: "2022" },
+    { value: "2023", text: "2023" },
+    { value: "2024", text: "2024" },
+  ];
+  expect(libs.doesObjectContainValue(yearOptions, 2025)).toBeTruthy;
+});
+
+describe("URL Validation Tests", () => {
+  test("Valid URL should return true", () => {
+    expect(libs.isValidUrlPath("/inventory/2024/hyundai/ioniq-5")).toBe(true);
+  });
+
+  test("No URL path should return null", () => {
+    expect(libs.isValidUrlPath("")).toBe(null);
+    expect(libs.isValidUrlPath("/")).toBe(null);
+  });
+
+  test("Incomplete URL path should return false", () => {
+    expect(libs.isValidUrlPath("/inventory")).toBeFalsy();
+    expect(libs.isValidUrlPath("/inventory/2024")).toBeFalsy();
+    expect(libs.isValidUrlPath("/inventory/2024/hyundai/")).toBeFalsy();
+  });
+
+  test("URL path in wrong order should return false", () => {
+    expect(libs.isValidUrlPath("/inventory/hyundai/2024/ioniq-5")).toBeFalsy();
+    expect(libs.isValidUrlPath("/inventory/2024/ioniq-5/hyundai")).toBeFalsy();
+  });
+
+  test("Correct URL with query params should return true", () => {
+    expect(
+      libs.isValidUrlPath("/inventory/2024/chevrolet/Bolt-EV?zipcode=90210&radius=10")
+    ).toBeTruthy();
+  });
+
+  test("Incorrect URL with query params should return false", () => {
+    expect(
+      libs.isValidUrlPath(
+        "/inventory/2024/chevrolet/Lightning-Bolt?zipcode=90210&radius=10"
+      )
+    ).toBeFalsy();
+  });
+
+  test("Correct URL should true", () => {
+    expect(libs.isValidUrlPath("/inventory/2024/chevrolet/Bolt-EV")).toBeTruthy();
+    expect(libs.isValidUrlPath("/inventory/2023/ford/f-150-lightning")).toBeTruthy();
+  });
+
+  test("URL path should be split accurately", () => {
+    expect(libs.segmentUrlPath("/a/url/path/here").length).toEqual(4);
+  });
 });
