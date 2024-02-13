@@ -1,5 +1,5 @@
 ###
-# Workflow which runs a Percy Test for each PR
+# Workflow which runs Percy Visual Tests for each PR
 ###
 
 name: Percy Visual Testing
@@ -23,7 +23,16 @@ jobs:
           node-version: 21
 
       - name: NPM Install Packages
-        run: npm install @percy/cli @percy/cypress cypress
+        run: npm clean-install
+
+      - name: Disable Cloudflare Bot Fight
+        id: disable-bot-fight-mode
+        run: |
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.EVFINDER_ZONE_ID }}/bot_management \
+          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_TOKEN }}" \
+          -H "Content-Type:application/json" \
+          -X PUT \
+          --data-raw '{"fight_mode":false}'
 
       - name: Wait for GCP Cloud Build to succeed
         uses: fountainhead/action-wait-for-check@v1.1.0
@@ -34,24 +43,19 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           intervalSeconds: 30
 
-
-
-      # - name: Build Application
-      #   working-directory: ./app
-      #   run: npx vue-cli-service build --mode production
-
-      # - name: Serve Files
-      #   uses: Eun/http-server-action@v1
-      #   with:
-      #     directory: "./app/dist"
-      #     port: 8080
-      #     index-files: |
-      #       ["index.html", "index.htm"]
-
       - name: Run Cypress Tests with Percy against Development environment
         if: steps.wait-for-build.outputs.conclusion == 'success'
         working-directory: ./app
         run: CYPRESS_BASE_URL=https://dev.theevfinder.com npx percy exec -- cypress run
+
+      - name: Enable Cloudflare Bot Fight
+        id: enable-bot-fight-mode
+        run: |
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.EVFINDER_ZONE_ID }}/bot_management \
+          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_TOKEN }}" \
+          -H "Content-Type:application/json" \
+          -X PUT \
+          --data-raw '{"fight_mode":true}'
 
       - name: Upload Screenshots and Video on Failure
         uses: actions/upload-artifact@v3
