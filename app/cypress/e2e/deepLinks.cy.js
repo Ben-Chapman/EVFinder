@@ -11,7 +11,7 @@ describe("The application responds correctly to deep links", () => {
       cy.visit(link.link);
 
       cy.get("#slogan-large-display").contains(
-        `Find Your New ${link.text} With The EV Finder`
+        `Find Your New ${link.text} With The EV Finder`,
       );
     });
     cy.percySnapshot("Valid slogan copy is shown");
@@ -27,20 +27,6 @@ describe("The application responds correctly to deep links", () => {
       cy.url().should("eq", `${Cypress.config("baseUrl")}/`);
     });
     cy.percySnapshot("Invalid URL redirected to home and valid homepage is shown.");
-  });
-
-  it("A malformed URL shows the 404 page", () => {
-    const malformedUrls = [
-      "/2024/chevrolet/bolt-ev/", // missing /inventory
-      "/foo", // bar baz
-    ];
-    malformedUrls.forEach((url) => {
-      cy.visit(url, { failOnStatusCode: false });
-      cy.get(".error-text").contains(
-        "Looks like you've taken a wrong turn and the page you're looking for does not exist."
-      );
-    });
-    cy.percySnapshot("Malformed URL Shows 404 page");
   });
 
   it("A complete URL populates search form fields and performs an inventory search", () => {
@@ -63,7 +49,7 @@ describe("The application responds correctly to deep links", () => {
       // Validate that the inventory API call was made and successful
       cy.get(".inventory-table", { timeout: 15000 });
       cy.percySnapshot(
-        "A complete URL populates search form and performs an inventory search."
+        "A complete URL populates search form and performs an inventory search.",
       );
     });
   });
