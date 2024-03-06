@@ -27,7 +27,13 @@ import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 
 export async function getFordInventory(zip, year, model, radius, manufacturer) {
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
+    const invResponse = await apiRequest(
+      "inventory",
+      manufacturer,
+      [...arguments],
+      [],
+      45000,
+    );
     return formatFordInventoryResults(invResponse, year);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -41,7 +47,7 @@ export async function getFordVinDetail(
   year,
   paCode,
   zip,
-  manufacturer
+  manufacturer,
 ) {
   if (dealerSlug === undefined) {
     const errorMessage = `Additional information could not be be retrieved for VIN ${vin}`;
@@ -170,9 +176,8 @@ function formatFordVinResults(input) {
   });
 
   // Provide dealer details
-  vinFormattedData[
-    "Dealer Address"
-  ] = `${v["dealerName"]}\n${v["dealerDealerAddressStreet1"]} ${v["dealerDealerAddressStreet2"]} ${v["dealerDealerAddressStreet3"]}\n${v["dealerAddressCity"]}, ${v["dealerAddressState"]} ${v["dealerAddressZipCode"]}`;
+  vinFormattedData["Dealer Address"] =
+    `${v["dealerName"]}\n${v["dealerDealerAddressStreet1"]} ${v["dealerDealerAddressStreet2"]} ${v["dealerDealerAddressStreet3"]}\n${v["dealerAddressCity"]}, ${v["dealerAddressState"]} ${v["dealerAddressZipCode"]}`;
 
   vinFormattedData["Dealer Phone"] = v["dealerDealerPhone"];
 
