@@ -23,6 +23,7 @@ jobs:
           node-version: 21
 
       - name: NPM Install Packages
+        working-directory: ./app
         run: npm clean-install
 
       - name: Disable Cloudflare Bot Fight
