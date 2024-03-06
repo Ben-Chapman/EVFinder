@@ -40,7 +40,7 @@ export async function apiRequest(
   manufacturer,
   requiredParams,
   additionalParams = {},
-  timeout = 60000
+  timeout = 35000,
 ) {
   const axiosConfig = {
     method: "get",
@@ -65,22 +65,26 @@ export async function apiRequest(
     if (error.response) {
       // Request made and server responded
       logMessage(
-        `An error occurred with an API request for ${manufacturer}: ${error?.message}. ${JSON.stringify(error?.response?.data)}`,
-        "error"
+        `An error occurred with an API request for ${manufacturer}: ${
+          error?.message
+        }. ${JSON.stringify(error?.response?.data)}`,
+        "error",
       );
       throw error?.response?.data;
     } else if (error.request) {
       // The request was made but no response was received
       logMessage(
-        `No response was received from the EV Finder API for ${manufacturer}: ${error?.message}. ${JSON.stringify(error?.response?.data)}`,
-        "error"
+        `No response was received from the EV Finder API for ${manufacturer}: ${
+          error?.message
+        }. ${JSON.stringify(error?.response?.data)}`,
+        "error",
       );
       throw error?.message;
     } else {
       // Something happened in setting up the request that triggered an Error
       logMessage(
         `Something happened in setting up a request for ${manufacturer}: ${error}`,
-        "error"
+        "error",
       );
       controller.abort();
       throw error;
