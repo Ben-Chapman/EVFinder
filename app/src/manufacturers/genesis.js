@@ -113,8 +113,8 @@ function formatVinDetails(input) {
       vinData[key].forEach((accessory) => {
         accTmp.push(
           `${titleCase(accessory["AccessoryNm"])}: ${convertToCurrency(
-            accessory["AccessoryPrice"]
-          )}`
+            accessory["AccessoryPrice"],
+          )}`,
         );
       });
       k["Accessories"] = accTmp.join(", ");
@@ -134,7 +134,7 @@ function formatVinDetails(input) {
   k["Dealer Name"] = titleCase(dealerData["DlrName"]);
   k["Dealer Address"] =
     titleCase(
-      `${dealerData["Address1"]} ${dealerData["Address2"]} ${dealerData["City"]}`
+      `${dealerData["Address1"]} ${dealerData["Address2"]} ${dealerData["City"]}`,
     ) + `,  ${dealerData["State"]} ${dealerData["DlrZipCode"]}`;
   k["Dealer Phone Number"] = dealerData["Phone"];
   k["Dealer Website"] = dealerData["DealerUrl"];

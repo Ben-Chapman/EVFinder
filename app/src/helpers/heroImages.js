@@ -311,7 +311,7 @@ function pickImage(modelName) {
   if (!modelName) {
     const randomVehicle = Math.floor(Math.random() * heroImages.length);
     const randomImageIndex = Math.floor(
-      Math.random() * heroImages[randomVehicle]["imageNames"].length
+      Math.random() * heroImages[randomVehicle]["imageNames"].length,
     );
 
     return {
@@ -325,7 +325,7 @@ function pickImage(modelName) {
       if (image.modelName.toLowerCase() === modelName.toLowerCase()) {
         // Select a random image from the available images for this vehicle
         const randomImageIndex = Math.floor(
-          Math.random() * heroImages[i]["imageNames"].length
+          Math.random() * heroImages[i]["imageNames"].length,
         );
 
         returnData = {

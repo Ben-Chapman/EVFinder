@@ -53,13 +53,13 @@ function formatBMWInventoryResults(input) {
 
       // Lookup and populate dealer information
       const dealerDetail = input.data.getInventory.dealerInfo.find(
-        ({ centerID }) => centerID === vehicle?.dealerId
+        ({ centerID }) => centerID === vehicle?.dealerId,
       );
 
       tmp["dealerName"] = dealerDetail.newVehicleSales[0].dealerName;
       tmp["dealerUrl"] = dealerDetail.newVehicleSales[0].dealerURL.replace(
         "https://",
-        ""
+        "",
       );
 
       // Populate descriptive color names
@@ -96,7 +96,7 @@ export async function getBMWVinDetail(vin, manufacturer, inventoryData) {
 
       if (needsCurrencyConversion.includes(key)) {
         vinFormattedData[bmwVinMapping[key]] = convertToCurrency(
-          Number(vinFormattedData[bmwVinMapping[key]])
+          Number(vinFormattedData[bmwVinMapping[key]]),
         );
       }
     });
