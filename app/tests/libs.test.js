@@ -13,7 +13,7 @@ describe("Helper Tests", () => {
     expect(libs.titleCase("PLZ STOP SHOUTING!")).toBe("Plz Stop Shouting!");
 
     expect(
-      libs.titleCase("This is the thirty-third day of the month — wait, no it's not!")
+      libs.titleCase("This is the thirty-third day of the month — wait, no it's not!"),
     ).toBe("This Is The Thirty-third Day Of The Month — Wait, No It's Not!");
   });
 });
@@ -121,7 +121,7 @@ test("Query parameter string should be converted to an Object", () => {
   };
   expect(libs.queryParamStringToObject(testData)).toMatchObject(validQueryParamObject);
   expect(libs.queryParamStringToObject("?" + testData)).toMatchObject(
-    validQueryParamObject
+    validQueryParamObject,
   );
 });
 
@@ -172,15 +172,15 @@ describe("URL Validation Tests", () => {
 
   test("Correct URL with query params should return true", () => {
     expect(
-      libs.isValidUrlPath("/inventory/2024/chevrolet/Bolt-EV?zipcode=90210&radius=10")
+      libs.isValidUrlPath("/inventory/2024/chevrolet/Bolt-EV?zipcode=90210&radius=10"),
     ).toBeTruthy();
   });
 
   test("Incorrect URL with query params should return false", () => {
     expect(
       libs.isValidUrlPath(
-        "/inventory/2024/chevrolet/Lightning-Bolt?zipcode=90210&radius=10"
-      )
+        "/inventory/2024/chevrolet/Lightning-Bolt?zipcode=90210&radius=10",
+      ),
     ).toBeFalsy();
   });
 

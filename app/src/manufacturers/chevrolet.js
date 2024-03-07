@@ -51,7 +51,7 @@ function formatChevroletInventoryResults(input) {
     .find((item) => item.key == "extColor")
     .values.reduce(
       (colors, color) => ({ ...colors, [color.value]: color.displayValue }),
-      {}
+      {},
     );
 
   // for interior colors, also include a hint for the material type
@@ -64,7 +64,7 @@ function formatChevroletInventoryResults(input) {
           color.displayValue.split(",")[1].split(" ")[1]
         }`,
       }),
-      {}
+      {},
     );
 
   const results = [];
@@ -82,7 +82,7 @@ function formatChevroletInventoryResults(input) {
         .find((item) => item.type == "total_vehicle_price")
         .value.toString(),
       vehicleAvailabilityDisplayStatus: titleCase(
-        vehicle.vehicleAvailabilityStatus?.displayStatus
+        vehicle.vehicleAvailabilityStatus?.displayStatus,
       ),
       extColor: extColors[colorCodeFromUrl(vehicle.extImages[0])],
       intColor: intColors[colorCodeFromUrl(vehicle.intImages[0])],
@@ -135,7 +135,7 @@ export async function getChevroletVinDetail(vin) {
     totalVehiclePrice: convertToCurrency(
       vinData.data.prices?.summary
         .find((item) => item.type == "total_vehicle_price")
-        .value.toString() ?? "0"
+        .value.toString() ?? "0",
     ),
     trimName: vinData.data.trim?.name,
     extColorOptionCode: vinData.data.extColor?.optionCode,

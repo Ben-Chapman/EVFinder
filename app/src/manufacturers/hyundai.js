@@ -124,8 +124,8 @@ function formatVinDetails(input) {
       for (var a = 0; a < input[key].length; a++) {
         aTmp.push(
           `${titleCase(input[key][a]["accessoryNm"])}: ${convertToCurrency(
-            input[key][a]["accessoryPrice"]
-          )}`
+            input[key][a]["accessoryPrice"],
+          )}`,
         );
       }
       tmp["Accessories"] = aTmp.join(",  ");

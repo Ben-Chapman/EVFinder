@@ -93,11 +93,11 @@ function formatAudiInventoryResults(input) {
      */
     vehicle["vehicleOrderStatus"] === null
       ? (tmp["deliveryDate"] = titleCase(
-          vehicle["vehicleInventoryType"].replace("-", " ")
+          vehicle["vehicleInventoryType"].replace("-", " "),
         ))
       : (tmp["deliveryDate"] = titleCase(vehicle["vehicleOrderStatus"]).replace(
           "Intransit",
-          "In Transit"
+          "In Transit",
         ));
 
     // Populating the Availability filter
@@ -160,7 +160,7 @@ function formatAudiVinResults(input) {
         techSpecs.push(`${titleCase(key)}: ${value}`);
       }
       vinFormattedData["Technical Specifications"] = techSpecs.join(",  ");
-    }
+    },
   );
 
   /**
@@ -176,13 +176,13 @@ function formatAudiVinResults(input) {
           input.data.getVehicleInfoForWormwood.equipments[equipmentType].forEach(
             (e) => {
               equipment.push(e["headline"]);
-            }
+            },
           );
         }
         // Standard equipment
         else if (equipmentType == "standardEquipments") {
           Object.keys(
-            input.data.getVehicleInfoForWormwood.equipments[equipmentType]
+            input.data.getVehicleInfoForWormwood.equipments[equipmentType],
           ).forEach((e) => {
             if (
               e != "__typename" &&
@@ -192,7 +192,7 @@ function formatAudiVinResults(input) {
                 0
             ) {
               Object.keys(
-                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e]
+                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e],
               ).forEach((key) => {
                 const value =
                   input.data.getVehicleInfoForWormwood.equipments[equipmentType][e][
@@ -207,7 +207,7 @@ function formatAudiVinResults(input) {
           vinFormattedData[titleCase(equipmentType)] = equipment.join(",  ");
         }
       }
-    }
+    },
   );
   return vinFormattedData;
 }

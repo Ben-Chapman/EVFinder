@@ -75,7 +75,7 @@ describe("Search for Unavailable Vehicle Inventory", () => {
     cy.get('meta[name="description"]').should(
       "have.attr",
       "content",
-      "Easily search hundreds of car dealers in your area to find your perfect new Genesis Electrified G80 with the EV Finder."
+      "Easily search hundreds of car dealers in your area to find your perfect new Genesis Electrified G80 with the EV Finder.",
     );
   });
 

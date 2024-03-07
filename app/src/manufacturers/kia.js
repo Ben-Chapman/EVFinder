@@ -36,7 +36,7 @@ function formatKiaInventoryResults(input) {
       // Lookup the dealer name/address from the dealer code
       const dCode = vehicle["dealerCode"];
       const dealerDetail = r["filterSet"]["dealers"].find(
-        (dealer) => dealer["code"] === dCode
+        (dealer) => dealer["code"] === dCode,
       );
 
       // Some results have a fqdn for a dealerUrl, some not. Stripping the

@@ -12,8 +12,14 @@
         {{ errorMessage }}
 
         <div v-if="errorDetail">
-          <p class="pt-3">Please adjust your search and retry.
-            <b-button size="sm" variant="link" class="px-0 pl-2 info-button" v-b-toggle.collapse-2>
+          <p class="pt-3">
+            Please adjust your search and retry.
+            <b-button
+              size="sm"
+              variant="link"
+              class="px-0 pl-2 info-button"
+              v-b-toggle.collapse-2
+            >
               <b-icon-info-circle aria-hidden="true"></b-icon-info-circle>
             </b-button>
 
@@ -29,55 +35,53 @@
         </div>
       </b-card-text>
 
-      <b-button @click="refreshPage()" class="float-right" variant="primary">Retry</b-button>
+      <b-button @click="refreshPage()" class="float-right" variant="primary"
+        >Retry</b-button
+      >
     </b-card>
   </div>
 </template>
 
 <script>
-import { logMessage } from '../helpers/logger'
-import { mapState } from 'vuex'
+  import { logMessage } from "../helpers/logger";
+  import { mapState } from "vuex";
 
-export default {
-  mounted() {
-    // If this component is called, we're showing an error message
-    // Logging the error text and form data which contains the detail of the user's
-    // search
-    logMessage(`${this.errorMessage}, ${this.errorDetail}`)
-  },
-  methods: {
-    refreshPage() {
-      location.reload()
+  export default {
+    mounted() {
+      // If this component is called, we're showing an error message
+      // Logging the error text and form data which contains the detail of the user's
+      // search
+      logMessage(`${this.errorMessage}, ${this.errorDetail}`);
     },
-  },
+    methods: {
+      refreshPage() {
+        location.reload();
+      },
+    },
 
-  computed: {
-      ...mapState([
-        'apiErrorDetail',
-        'form',
-      ]),
+    computed: {
+      ...mapState(["apiErrorDetail", "form"]),
 
       errorMessage() {
-        return this.apiErrorDetail[1].detail.errorMessage
+        return this.apiErrorDetail[1].detail.errorMessage;
       },
 
       errorDetail() {
-        return this.apiErrorDetail[1].detail.errorData
+        return this.apiErrorDetail[1].detail.errorData;
       },
-
-  }
-}
+    },
+  };
 </script>
 
 <style lang="scss">
-  @import '../assets/app_style.scss';
+  @import "../assets/app_style.scss";
 
   // Mobile portrait
   @include media-breakpoint-down(sm) {
-  .error-card {
-    width: 80vw;
+    .error-card {
+      width: 80vw;
+    }
   }
-}
 
   // Everything larger than mobile portrait
   @include media-breakpoint-up(sm) {
@@ -94,10 +98,10 @@ export default {
     color: #fff;
     font-family: $font-family-monospace;
     font-size: 1.1rem;
-    letter-spacing: -.03rem;
-}
+    letter-spacing: -0.03rem;
+  }
 
-.info-button {
-  color: #fff !important;
-}
+  .info-button {
+    color: #fff !important;
+  }
 </style>

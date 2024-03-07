@@ -1,21 +1,21 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-import {startCase, camelCase} from 'lodash';
+import { startCase, camelCase } from "lodash";
 
-Vue.filter('myFilter', value => {
+Vue.filter("myFilter", (value) => {
   return value.toUpperCase();
 });
 
-Vue.filter('titleCase', value => {
-  return startCase(camelCase(value))
+Vue.filter("titleCase", (value) => {
+  return startCase(camelCase(value));
 });
 
-Vue.filter('convertToCurrency', value => {
-  var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+Vue.filter("convertToCurrency", (value) => {
+  var formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-    })
-  return formatter.format(value)
+  });
+  return formatter.format(value);
 });

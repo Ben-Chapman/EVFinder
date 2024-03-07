@@ -1,36 +1,37 @@
 @use "sass:map";
 
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300;500&family=Inconsolata:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300;500&family=Inconsolata:wght@300&display=swap");
 
-$font-family-sans-serif: 'Encode Sans Condensed', Helvetica, Arial, sans-serif;
-$font-family-monospace: 'Inconsolata', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-family-sans-serif: "Encode Sans Condensed", Helvetica, Arial, sans-serif;
+$font-family-monospace: "Inconsolata", SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace;
 
 $font-family-base: $font-family-sans-serif;
 
-$font-weight-normal:          300;
-$font-weight-bold:            500;
+$font-weight-normal: 300;
+$font-weight-bold: 500;
 
-$attention: #DB5461;
-$soothing-green: #93C0A4;
-$persian-green: #00A896;
-$electric-blue: #38AECC;
-$grey: #605F5E;
+$attention: #db5461;
+$soothing-green: #93c0a4;
+$persian-green: #00a896;
+$electric-blue: #38aecc;
+$grey: #605f5e;
 $dark: #3f3f3f;
 
 // https://coolors.co/d0ccd0-2d82b7-f06543-70e000-3d3d3d-fbfcff
-$green-blue: #2D82B7;
-$orange-crayola: #FE7139;
-$logo-green: #70E000;
-$analogous-logo-green: #00E025;
-$highlight-bluegreen: #F0F8FA;
+$green-blue: #2d82b7;
+$orange-crayola: #fe7139;
+$logo-green: #70e000;
+$analogous-logo-green: #00e025;
+$highlight-bluegreen: #f0f8fa;
 $action-blue: #219bec;
-$light-bluegray: #F2F6FA;
+$light-bluegray: #f2f6fa;
 $dark-blue: #0389e3;
 $primary-blue: #3884fe;
 $warning-red: #f95b5b;
 $mustard-yellow: #e4dc62;
-$info-yellow: #E8FE67;
+$info-yellow: #e8fe67;
 
 // Adding custom variants
 $theme-colors: () !default;
@@ -39,21 +40,21 @@ $custom-variants: map.merge(
     "action-blue": $action-blue,
     "dark": $dark,
   ),
-  $theme-colors,
+  $theme-colors
 );
 
 // Customization of the standard variants
-$primary:       $primary-blue;
-$secondary:     $info-yellow;
-$success:       $logo-green;
-$info:          $orange-crayola;
-$warning:       $warning-red;
-$light:         $light-bluegray;
+$primary: $primary-blue;
+$secondary: $info-yellow;
+$success: $logo-green;
+$info: $orange-crayola;
+$warning: $warning-red;
+$light: $light-bluegray;
 
 .attention {
   color: $grey;
 }
 
 // Include Bootstrap and BootstrapVue SCSS files
-@import '~bootstrap/scss/bootstrap.scss';
-@import '~bootstrap-vue/src/index.scss';
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";

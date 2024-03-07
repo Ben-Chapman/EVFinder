@@ -90,7 +90,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
       // Need to format some values to display as dollars
       needsCurrencyConversion.includes(vinKey)
         ? (vinFormattedData[volkswagenVinMapping[vinKey]] = convertToCurrency(
-            vinData.data.vehicle[vinKey]
+            vinData.data.vehicle[vinKey],
           ))
         : null;
     });
@@ -99,7 +99,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
     const dealerAccessory = [];
     vinData.data.vehicle["dealerInstalledAccessories"].forEach((acc) => {
       dealerAccessory.push(
-        `${acc["optionDescription"]}: ${convertToCurrency(acc["price"])}`
+        `${acc["optionDescription"]}: ${convertToCurrency(acc["price"])}`,
       );
     });
     vinFormattedData["Dealer Installed Accessories"] = dealerAccessory.join(",  ");
@@ -119,7 +119,7 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
         specTmp[specType] = [];
       }
       specTmp[specType].push(
-        spec?.optionDescription != "" ? spec?.optionDescription : "N/A"
+        spec?.optionDescription != "" ? spec?.optionDescription : "N/A",
       );
 
       // If we have specification data, write it to vinFormattedData

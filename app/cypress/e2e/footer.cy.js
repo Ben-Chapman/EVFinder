@@ -10,7 +10,7 @@ describe("Footer has correct text", () => {
 
   it("Github link is clickable", () => {
     cy.get(
-      "#background > div:nth-child(3) > div > div > span:nth-child(2) > div > div > a"
+      "#background > div:nth-child(3) > div > div > span:nth-child(2) > div > div > a",
     ).click();
     cy.percySnapshot("Github Repo from Logo in Footer");
   });
