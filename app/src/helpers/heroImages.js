@@ -65,6 +65,15 @@ const heroImages = [
   },
   {
     imageNames: [
+      ["2025-hyundai-ioniq5n-1.jpg", "-38rem center", "light"],
+      ["2025-hyundai-ioniq5n-2.jpg", "-25rem center", "light"],
+      ["2025-hyundai-ioniq5n-3.jpg", "-30rem center", "dark"],
+    ],
+    displayName: "Hyundai Ioniq 5 N",
+    modelName: "ioniq-5n",
+  },
+  {
+    imageNames: [
       ["2023-ev6-1.jpg", "-28rem center", "light"],
       ["2023-ev6-2.jpg", "-43.5rem center", "light"],
       ["2023-ev6-3.jpg", "-45rem center", "light"],
