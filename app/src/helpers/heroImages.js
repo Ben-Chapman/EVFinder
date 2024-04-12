@@ -144,15 +144,6 @@ const heroImages = [
     displayName: "Chevrolet Equinox EV",
     modelName: "equinox-ev",
   },
-  // {
-  //   imageNames: [
-  //     ["2024-chevrolet-corvette-e-ray-1.jpg", "-18rem center", "light"],
-  //     ["2024-chevrolet-corvette-e-ray-2.jpg", "-16rem center", "dark"],
-  //     ["2024-chevrolet-corvette-e-ray-3.jpg", "-40rem center", "light"],
-  //   ],
-  //   displayName: "Chevrolet Corvette E-Ray",
-  //   modelName: "corvette-e-ray",
-  // },
   {
     imageNames: [
       ["2021-mustang-mache-1.jpg", "-45rem center", "dark"],
