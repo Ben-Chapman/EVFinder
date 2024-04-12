@@ -69,6 +69,7 @@ const modelOptions = [
     label: "Hyundai",
     options: [
       { value: "ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
+      { value: "ioniq-5n", text: "Ioniq 5 N", api: "Ioniq-5-N" },
       { value: "ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
       { value: "kona-ev", text: "Kona Electric", api: "Kona%20Ev" },
     ],
@@ -99,6 +100,7 @@ const yearOptions = [
   { value: "2022", text: "2022" },
   { value: "2023", text: "2023" },
   { value: "2024", text: "2024" },
+  { value: "2025", text: "2025" },
 ];
 
 export { modelOptions, yearOptions };

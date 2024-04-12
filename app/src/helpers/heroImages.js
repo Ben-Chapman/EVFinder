@@ -65,6 +65,15 @@ const heroImages = [
   },
   {
     imageNames: [
+      ["2025-hyundai-ioniq5n-1.jpg", "-38rem center", "light"],
+      ["2025-hyundai-ioniq5n-2.jpg", "-25rem center", "light"],
+      ["2025-hyundai-ioniq5n-3.jpg", "-30rem center", "dark"],
+    ],
+    displayName: "Hyundai Ioniq 5 N",
+    modelName: "ioniq-5n",
+  },
+  {
+    imageNames: [
       ["2023-ev6-1.jpg", "-28rem center", "light"],
       ["2023-ev6-2.jpg", "-43.5rem center", "light"],
       ["2023-ev6-3.jpg", "-45rem center", "light"],
@@ -144,15 +153,6 @@ const heroImages = [
     displayName: "Chevrolet Equinox EV",
     modelName: "equinox-ev",
   },
-  // {
-  //   imageNames: [
-  //     ["2024-chevrolet-corvette-e-ray-1.jpg", "-18rem center", "light"],
-  //     ["2024-chevrolet-corvette-e-ray-2.jpg", "-16rem center", "dark"],
-  //     ["2024-chevrolet-corvette-e-ray-3.jpg", "-40rem center", "light"],
-  //   ],
-  //   displayName: "Chevrolet Corvette E-Ray",
-  //   modelName: "corvette-e-ray",
-  // },
   {
     imageNames: [
       ["2021-mustang-mache-1.jpg", "-45rem center", "dark"],
