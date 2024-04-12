@@ -69,7 +69,7 @@ const modelOptions = [
     label: "Hyundai",
     options: [
       { value: "ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
-      { value: "ioniq-5n", text: "Ioniq 5 N", api: "Ioniq%205%20N" },
+      { value: "ioniq-5n", text: "Ioniq 5 N", api: "Ioniq-5-N" },
       { value: "ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
       { value: "kona-ev", text: "Kona Electric", api: "Kona%20Ev" },
     ],
