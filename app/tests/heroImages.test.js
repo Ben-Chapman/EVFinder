@@ -42,7 +42,6 @@ describe("Hero Images", () => {
     modelOptions.forEach((vehicle) => {
       vehicle.options.forEach((model) => {
         modelName = model.value;
-        console.log(modelName);
         expect(getHeroImage(modelName)["displayName"]).not.toBeNull;
       });
     });
