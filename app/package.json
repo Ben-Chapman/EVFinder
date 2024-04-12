@@ -74,7 +74,6 @@
     "url-parse": ">=1.5.9",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.46.0",
-    "webpack-dev-middleware": ">=5.3.4",
     "yaml": ">=2.2.2"
   },
   "dependenciesComments": {
@@ -101,7 +100,6 @@
     "tough-cookie": "CVE-2023-26136",
     "nth-check": "CVE-2021-3803",
     "url-parse": "CVE-2022-0686",
-    "webpack-dev-middleware": "CVE-2024-29180",
     "yaml": "CVE-2023-2251"
   },
   "eslintConfig": {
