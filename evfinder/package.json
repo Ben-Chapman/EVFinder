@@ -1,0 +1,37 @@
+{
+  "name": "evfinder",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
+    "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
+    "test:unit": "cypress run --component",
+    "test:unit:dev": "cypress open --component",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.8.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "cypress": "^13.7.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-cypress": "^2.15.1",
+    "eslint-plugin-vue": "^9.23.0",
+    "prettier": "^3.2.5",
+    "start-server-and-test": "^2.0.3",
+    "vite": "^5.2.8",
+    "vite-plugin-vue-devtools": "^7.0.25"
+  }
+}
