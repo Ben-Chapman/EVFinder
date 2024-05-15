@@ -1,20 +1,22 @@
 <template>
-  <v-container fluid class="footer frosted-bg">
-    <v-row align="center" justify="center" class="d-flex py-2 footer-text">
-      <span>©2022 &ndash; {{ this.currentYear }} The EV Finder</span>
+  <v-layout>
+    <v-footer class="frosted-bg text-center d-flex flex-column">
+      <v-row justify="center" no-gutters>
+        <span>©2022 &ndash; {{ this.currentYear }} The EV Finder</span>
 
-      <span>
-        <GithubLogo />
-      </span>
+        <span>
+          <GithubLogo />
+        </span>
 
-      <span
-        >Licensed under&nbsp;
-        <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
-          <u>GNU GPLv3</u>
-        </a>
-      </span>
-    </v-row>
-  </v-container>
+        <span
+          >Licensed under&nbsp;
+          <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
+            <u>GNU GPLv3</u>
+          </a>
+        </span>
+      </v-row>
+    </v-footer>
+  </v-layout>
 </template>
 
 <script>
