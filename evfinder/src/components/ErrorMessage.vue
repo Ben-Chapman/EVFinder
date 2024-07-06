@@ -1,107 +1,50 @@
 <template>
-  <div class="d-flex justify-content-center border-0 pt-4">
-    <b-card
-      class="error-card"
-      bg-variant="warning"
-      text-variant="white"
-      title="Hmm, There's Been an Error"
-    >
-      <b-card-text class="pt-3 error-message">
-        <!-- Displaying the errorMessage returned from the EV Finder API and collapsing
-        any error detail, accessible from an info button -->
+  <v-container class="d-flex justify-center pt-4">
+    <v-card class="error-card" color="amber darken-2" dark>
+      <v-card-title> Hmm, There's Been an Error </v-card-title>
+      <v-card-text class="pt-3 error-message">
         {{ errorMessage }}
 
         <div v-if="errorDetail">
           <p class="pt-3">
             Please adjust your search and retry.
-            <b-button
-              size="sm"
-              variant="link"
-              class="px-0 pl-2 info-button"
-              v-b-toggle.collapse-2
-            >
-              <b-icon-info-circle aria-hidden="true"></b-icon-info-circle>
-            </b-button>
+            <v-btn icon small class="info-button" @click="showDetail = !showDetail">
+              <v-icon>mdi-information</v-icon>
+            </v-btn>
 
-            <v-collapse id="collapse-2">
-              <b-card bg-variant="warning" text-variant="white">
-                <code class="error-detail">{{ errorDetail }}</code>
-              </b-card>
-            </v-collapse>
+            <v-expand-transition>
+              <div v-show="showDetail">
+                <v-card color="amber darken-2" dark>
+                  <code class="error-detail">{{ errorDetail }}</code>
+                </v-card>
+              </div>
+            </v-expand-transition>
           </p>
         </div>
-        <div v-else>
-          <p class="pt-3">Please adjust your search and retry.</p>
-        </div>
-      </b-card-text>
-
-      <b-button @click="refreshPage()" class="float-right" variant="primary"
-        >Retry</b-button
-      >
-    </b-card>
-  </div>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-  import { logMessage } from "../helpers/logger";
-  import { mapState } from "vuex";
-
   export default {
-    mounted() {
-      // If this component is called, we're showing an error message
-      // Logging the error text and form data which contains the detail of the user's
-      // search
-      logMessage(`${this.errorMessage}, ${this.errorDetail}`);
+    data() {
+      return {
+        showDetail: false,
+      };
     },
-    methods: {
-      refreshPage() {
-        location.reload();
-      },
-    },
-
-    computed: {
-      ...mapState(["apiErrorDetail", "form"]),
-
-      errorMessage() {
-        return this.apiErrorDetail[1].detail.errorMessage;
-      },
-
-      errorDetail() {
-        return this.apiErrorDetail[1].detail.errorData;
-      },
+    props: {
+      errorMessage: String,
+      errorDetail: String,
     },
   };
 </script>
 
-<style lang="scss">
-  @import "../assets/app_style.scss";
-
-  // Mobile portrait
-  @include media-breakpoint-down(sm) {
-    .error-card {
-      width: 80vw;
-    }
+<style scoped>
+  .error-card {
+    /* Add any specific styling for the error card here */
   }
-
-  // Everything larger than mobile portrait
-  @include media-breakpoint-up(sm) {
-    .error-card {
-      width: 40vw;
-    }
-  }
-
-  .error-message {
-    font-size: 1.1rem;
-  }
-
-  .error-detail {
-    color: #fff;
-    font-family: $font-family-monospace;
-    font-size: 1.1rem;
-    letter-spacing: -0.03rem;
-  }
-
   .info-button {
-    color: #fff !important;
+    /* Style adjustments for the info button if needed */
   }
 </style>

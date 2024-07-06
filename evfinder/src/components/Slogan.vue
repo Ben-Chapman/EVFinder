@@ -1,34 +1,34 @@
 <template>
-  <v-container fluid>
-    <v-row align-h="center">
-      <!-- Small displays (mobile portrait) -->
-      <h1
-        class="slogan-small-display text-center d-flex d-md-none mt-0"
-        :class="sloganTextColor"
-        id="slogan-small-display"
-      >
-        Find Your New {{ this.displayName }}<br />With The EV Finder
-      </h1>
+  <!-- <v-container fluid> -->
+  <v-row align-h="center">
+    <!-- Small displays (mobile portrait) -->
+    <h1
+      class="slogan-small-display text-center d-flex d-md-none mt-0"
+      :class="sloganTextColor"
+      id="slogan-small-display"
+    >
+      Find Your New {{ this.displayName }}<br />With The EV Finder
+    </h1>
 
-      <!-- Medium displays (mobile landscape, iPad portrait) -->
-      <h1
-        class="slogan-small-display d-none d-md-block d-lg-none"
-        :class="sloganTextColor"
-        id="slogan-medium-display"
-      >
-        Find Your New {{ this.displayName }} With The EV Finder
-      </h1>
+    <!-- Medium displays (mobile landscape, iPad portrait) -->
+    <h1
+      class="slogan-small-display d-none d-md-block d-lg-none"
+      :class="sloganTextColor"
+      id="slogan-medium-display"
+    >
+      Find Your New {{ this.displayName }} With The EV Finder
+    </h1>
 
-      <!-- Show this version on all other displays (Desktop, iPad landscape)-->
-      <h1
-        class="slogan-large-display d-none d-lg-block"
-        :class="sloganTextColor"
-        id="slogan-large-display"
-      >
-        Find Your New {{ this.displayName }} With The EV Finder
-      </h1>
-    </v-row>
-  </v-container>
+    <!-- Show this version on all other displays (Desktop, iPad landscape)-->
+    <h1
+      class="slogan-large-display d-none d-lg-block"
+      :class="sloganTextColor"
+      id="slogan-large-display"
+    >
+      Find Your New {{ this.displayName }} With The EV Finder
+    </h1>
+  </v-row>
+  <!-- </v-container> -->
 </template>
 
 <script>

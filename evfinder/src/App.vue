@@ -1,3 +1,39 @@
+<template>
+  <v-container
+    fluid
+    class="d-flex flex-column justify-content-center min-vh-100"
+    :style="heroImageStyle"
+    id="background"
+  >
+    <!-- Search form -->
+    <div flex class="justify-content-center">
+      <!-- <SearchForm /> -->
+    </div>
+
+    <!-- Slogan Text -->
+    <v-row class="flex-fill">
+      <transition name="slide-fade" mode="out-in">
+        <!-- <Slogan
+          v-if="!this.showTable"
+          :display-name="this.heroImage['displayName']"
+          :text-color="this.heroImage['textColor']"
+        /> -->
+        <Foo />
+      </transition>
+
+      <!-- Inventory Table -->
+      <transition name="fade" mode="out-in">
+        <InventoryTable v-if="this.showTable" />
+      </transition>
+    </v-row>
+
+    <!-- Footer -->
+    <v-row>
+      <Footer />
+    </v-row>
+  </v-container>
+</template>
+
 <!-- <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
@@ -7,11 +43,10 @@ import HelloWorld from './components/HelloWorld.vue'
   import { version } from "../package.json";
 
   import Footer from "./components/Footer.vue";
-  // import InventoryTable from './components/InventoryTable.vue'
+  // import InventoryTable from "./components/InventoryTable.vue";
   // import SearchForm from "./components/SearchForm.vue";
   // import Slogan from "./components/Slogan.vue";
-  // import Foo from "./components/Foo.vue";
-  // import WelcomeItem from "./components/WelcomeItem.vue";
+  import Foo from "./components/Foo.vue";
 
   import { isValidUrlPath, segmentUrlPath } from "./helpers/libs";
   import { getHeroImage, preloadBlurredImage } from "./helpers/heroImages";
@@ -37,7 +72,7 @@ The EVFinder release version ${version}
       // SearchForm,
       // Slogan,
       // WelcomeItem,
-      // Foo,
+      Foo,
     },
 
     data() {
@@ -147,19 +182,6 @@ The EVFinder release version ${version}
     }, // watch
   };
 </script>
-<template>
-  <v-container
-    fluid
-    class="d-flex flex-column justify-center"
-    :style="heroImageStyle"
-    id="background"
-  >
-    <!-- Search form -->
-    <div flex class="justify-center">
-      <Footer />
-    </div>
-  </v-container>
-</template>
 
 <style scoped>
   header {
