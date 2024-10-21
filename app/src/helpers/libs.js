@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { camelCase } from 'lodash'
-import { logMessage } from './logger'
-import { modelOptions, yearOptions } from './formOptions'
+import { camelCase } from "lodash";
+import { logMessage } from "./logger";
+import { modelOptions, yearOptions } from "./formOptions";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
@@ -39,38 +39,38 @@ import { modelOptions, yearOptions } from './formOptions'
  *   prefixNameKey1ChildKey2: 'value'
  * }
  */
-let flattendObj = {}
+let flattendObj = {};
 export function flattenObject(obj, keyPrefix) {
   Object.keys(obj).forEach((key) => {
-    var newKey = camelCase(`${keyPrefix}-${key}`)
-    if (typeof obj[key] === 'object') {
+    var newKey = camelCase(`${keyPrefix}-${key}`);
+    if (typeof obj[key] === "object") {
       if (obj[key] != null) {
         // Recurse
-        flattenObject(obj[key], newKey)
+        flattenObject(obj[key], newKey);
       }
     } else {
-      flattendObj[newKey] = obj[key]
+      flattendObj[newKey] = obj[key];
     }
-  })
-  return flattendObj
+  });
+  return flattendObj;
 }
 
 function normalizeObjectKeys(inputObject, keyMap) {
-  let tmp = {}
+  let tmp = {};
   Object.entries(keyMap).forEach(([key, value]) => {
     if (Object.keys(inputObject).includes(value)) {
-      tmp[key] = inputObject[value]
+      tmp[key] = inputObject[value];
     }
-  })
-  return { ...tmp, ...inputObject }
+  });
+  return { ...tmp, ...inputObject };
 }
 
 export function normalizeJson(inputJson, keyMap) {
-  var result = []
+  var result = [];
   inputJson.forEach((i) => {
-    result.push(normalizeObjectKeys(flattenObject(i, ''), keyMap))
-  })
-  return result
+    result.push(normalizeObjectKeys(flattenObject(i, ""), keyMap));
+  });
+  return result;
 }
 /**
  * Helper function which converts a Number to a USD-formatted string.
@@ -79,16 +79,16 @@ export function normalizeJson(inputJson, keyMap) {
  * @returns {String} A USD-formatted string of the input Number. 123 -> $1.23, 24.99 -> $25
  */
 export function convertToCurrency(item) {
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     // minimumFractionDigits must also be set when maximumFractionDigits is < 2
     // This is needed to support Safari <15 on iOS
     //https://stackoverflow.com/a/41045289
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  })
-  return formatter.format(item)
+  });
+  return formatter.format(item);
 }
 
 /**
@@ -97,7 +97,7 @@ export function convertToCurrency(item) {
  * @returns {Number} A Number equivalent in value to the input string.
  */
 export function priceStringToNumber(priceString) {
-  return Number(parseFloat(priceString.replace('$', '').replaceAll(',', '')))
+  return Number(parseFloat(priceString.replace("$", "").replaceAll(",", "")));
 }
 
 /**
@@ -107,18 +107,18 @@ export function priceStringToNumber(priceString) {
  */
 export function titleCase(str) {
   function capitalize(str) {
-    if (str.length == 0) return str
-    return str[0].toUpperCase() + str.slice(1)
+    if (str.length == 0) return str;
+    return str[0].toUpperCase() + str.slice(1);
   }
   // If the input string is undefined, return an empty string, if the input string is
   // ALL CAPS, lowercase it first so capitalize() can actually Title Case the string
   const returnStr = !str
     ? []
     : str === str.toUpperCase()
-    ? str.toLowerCase().split(' ')
-    : str.split(' ')
+    ? str.toLowerCase().split(" ")
+    : str.split(" ");
 
-  return returnStr.map(capitalize).join(' ')
+  return returnStr.map(capitalize).join(" ");
 }
 
 /**
@@ -127,17 +127,17 @@ export function titleCase(str) {
  * @returns {Object} An Object whose keys are in alphabetical order
  */
 export function sortObjectByKey(item) {
-  return Object.fromEntries(Object.entries(item).sort())
+  return Object.fromEntries(Object.entries(item).sort());
 }
 /**
  * A helper function to log to console.log
  * @param {*} whatToLog Any Javascript type which is to be logged to console.log.
  */
 export function cl(whatToLog) {
-  if (typeof whatToLog === 'object' && whatToLog != null) {
-    console.log(JSON.stringify(whatToLog))
+  if (typeof whatToLog === "object" && whatToLog != null) {
+    console.log(JSON.stringify(whatToLog));
   } else {
-    console.log(whatToLog)
+    console.log(whatToLog);
   }
 }
 /**
@@ -147,8 +147,8 @@ export function cl(whatToLog) {
  */
 export function stripHTML(html) {
   // https://stackoverflow.com/a/47140708
-  const doc = new DOMParser().parseFromString(html, 'text/html')
-  return doc.body.textContent || ''
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
 }
 
 export function generateUrlQueryParams(item, sliceLength) {
@@ -158,22 +158,22 @@ export function generateUrlQueryParams(item, sliceLength) {
    * we have to loop through that object, and only generate query params for
    * Object keys which have a value (user selected a filter item).
    */
-  var url = new URL(window.location.href)
+  var url = new URL(window.location.href);
   Object.keys(item).forEach((key) => {
-    const queryParam = key.slice(0, sliceLength)
-    const queryValue = item[key].join(',')
+    const queryParam = key.slice(0, sliceLength);
+    const queryValue = item[key].join(",");
 
     // Only generate a query param, if the user has selected a filter item
     if (item[key].length > 0) {
-      url.searchParams.set(queryParam, queryValue)
+      url.searchParams.set(queryParam, queryValue);
     }
     // When a user deselects a filter item, remove it from the list of query params
     else if (item[key].length == 0 && url.searchParams.has(queryParam)) {
-      url.searchParams.delete(queryParam)
+      url.searchParams.delete(queryParam);
     }
-  })
+  });
   // Push query param changes to the URL
-  window.history.replaceState({}, '', url.search)
+  window.history.replaceState({}, "", url.search);
 }
 /**
  *
@@ -182,7 +182,24 @@ export function generateUrlQueryParams(item, sliceLength) {
  * @returns {Array} An error message which is consumed by the EV Finder Vue app
  */
 export function generateErrorMessage(errorText) {
-  return ['ERROR', errorText]
+  return ["ERROR", errorText];
+}
+
+/**
+ *
+ * @param {String} infoText A informational message String which is to be shown as
+ * an Info in the EV Finder UI.
+ * @returns {Array} An info message which is consumed by the EV Finder Vue app
+ */
+export function generateInfoMessage(messageTitle, messageBody) {
+  // return ['INFO', infoText]
+  return [
+    "INFO", //messageType
+    {
+      messageTitle: messageTitle,
+      messageBody: messageBody,
+    },
+  ];
 }
 
 /**
@@ -193,25 +210,25 @@ export function generateErrorMessage(errorText) {
  */
 export function queryParamStringToObject(input) {
   // Validate input looks like a query param
-  if (!input.includes('=')) {
-    throw new Error('Input is not a valid query parameter')
+  if (!input.includes("=")) {
+    throw new Error("Input is not a valid query parameter");
   }
 
   // If input has the leading ?, strip it
-  if (input.includes('?')) {
-    input = input.split('?')[1]
+  if (input.includes("?")) {
+    input = input.split("?")[1];
   }
 
-  const res = {}
+  const res = {};
   // Split the string into individual query parameters
-  input.split('&').forEach((element) => {
+  input.split("&").forEach((element) => {
     // Split each query param into it's name / value pair
-    const kv = element.split('=')
-    const name = kv[0]
-    const value = kv[1]
-    res[name] = value
-  })
-  return res
+    const kv = element.split("=");
+    const name = kv[0];
+    const value = kv[1];
+    res[name] = value;
+  });
+  return res;
 }
 
 /**
@@ -224,7 +241,7 @@ export function queryParamStringToObject(input) {
 export function doesObjectContainValue(inputObject, valueToSearchFor) {
   return inputObject.filter((obj) =>
     Object.keys(obj).some((key) => obj[key].includes(valueToSearchFor))
-  )
+  );
 }
 
 /**
@@ -234,9 +251,9 @@ export function doesObjectContainValue(inputObject, valueToSearchFor) {
  */
 export function segmentUrlPath(urlPath) {
   return urlPath
-    .split('?')[0]
-    .split('/')
-    .filter((segment) => segment)
+    .split("?")[0]
+    .split("/")
+    .filter((segment) => segment);
 }
 
 /**
@@ -249,13 +266,13 @@ export function segmentUrlPath(urlPath) {
  * expected order.
  */
 export function isValidUrlPath(urlPath) {
-  const segments = segmentUrlPath(urlPath)
+  const segments = segmentUrlPath(urlPath);
 
   // A valid URL scheme is the following: /inventory/year/manufacturer/model
   // If the length of our segments is less than this, bypass the URL validation as we
   // have an incomplete URL path
   if (segments.length < 4) {
-    return null
+    return null;
   } else {
     // Define the values which make up a valid URL. This includes api endpoints, models and years
     const validValues = {
@@ -263,33 +280,35 @@ export function isValidUrlPath(urlPath) {
       manufacturer: [],
       modelNameForUrl: [],
       requestYear: [],
-    }
+    };
 
     Object.keys(modelOptions).forEach((model) => {
       // Manufacturer name
-      validValues['manufacturer'].push(modelOptions[model].label.toLowerCase())
+      validValues["manufacturer"].push(modelOptions[model].label.toLowerCase());
 
       // Model names for this manufacturer
       modelOptions[model].options.forEach((option) => {
-        validValues['modelNameForUrl'].push(option.value.toLowerCase())
-      })
-    })
+        validValues["modelNameForUrl"].push(option.value.toLowerCase());
+      });
+    });
 
     // Valid years
-    Object.values(yearOptions).forEach((year) => validValues['requestYear'].push(year.text))
+    Object.values(yearOptions).forEach((year) =>
+      validValues["requestYear"].push(year.text)
+    );
     // A valid URL scheme is the following: /inventory|vin/year/manufacturer/model
-    let validUrl = false
+    let validUrl = false;
     if (validValues.requestType.test(segments[0])) {
       if (validValues.requestYear.includes(segments[1])) {
         if (validValues.manufacturer.includes(segments[2].toLowerCase())) {
           if (validValues.modelNameForUrl.includes(segments[3].toLowerCase())) {
-            validUrl = true
+            validUrl = true;
           }
         }
       }
     }
 
-    return validUrl
+    return validUrl;
   }
 }
 
@@ -299,22 +318,22 @@ export function isValidUrlPath(urlPath) {
  * @returns {Object} An Object containing the latitude and longitude of the provided ZIP Code
  */
 export async function getGeoFromZipcode(zip) {
-  const osmApi = 'https://nominatim.openstreetmap.org/search?'
+  const osmApi = "https://nominatim.openstreetmap.org/search?";
 
   const geo = await fetch(
-    osmApi + new URLSearchParams({ postalcode: zip, country: 'US', format: 'json' }),
-    { method: 'GET', mode: 'cors' }
-  )
+    osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
+    { method: "GET", mode: "cors" }
+  );
 
   if (geo.ok) {
-    const mapData = await geo.json()
+    const mapData = await geo.json();
     return {
       zipcode: zip,
       lat: mapData[0].lat,
       lon: mapData[0].lon,
-    }
+    };
   } else {
-    logMessage(`Geo Lookup Failure for ${zip} (${geo.status}): ${geo.text}`)
+    logMessage(`Geo Lookup Failure for ${zip} (${geo.status}): ${geo.text}`);
   }
 }
 
@@ -325,5 +344,7 @@ export async function getGeoFromZipcode(zip) {
  * @returns {Object} If found, the Object containing the searchKey
  */
 export function searchArrayOfObjects(arrayToSearch, searchKey) {
-  return arrayToSearch.filter((obj) => Object.keys(obj).some((key) => obj[key].includes(searchKey)))
+  return arrayToSearch.filter((obj) =>
+    Object.keys(obj).some((key) => obj[key].includes(searchKey))
+  );
 }
