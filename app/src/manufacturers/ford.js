@@ -35,7 +35,7 @@ export async function getFordInventory(zip, year, model, radius, manufacturer) {
   if (model === "f-150 lightning") {
     return generateInfoMessage(
       "Inventory Not Available",
-      'Inventory information for the Ford F-150 Lightning® is not available at this time.<br><br>Please visit <a href="https://www.ford.com/finder/2024/f150-lightning" target="_blank">https://shop.ford.com</a> for more information.'
+      'Inventory information for the Ford F-150 Lightning® is not available at this time.<br><br>Please visit <a href="https://www.ford.com/finder/2024/f150-lightning" target="_blank">https://shop.ford.com</a> for more detail.'
     );
   }
 
