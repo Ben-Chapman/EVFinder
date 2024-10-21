@@ -36,11 +36,11 @@
         </b-form-group>
       </b-col>
 
-      <!-- Zip Code -->
+      <!-- ZIP Code -->
       <b-col cols="4" md="2">
-        <b-form-group id="form-zipcode" invalid-feedback="Please enter a valid US ZIP code" tooltip>
+        <b-form-group id="form-zipcode" invalid-feedback="Please enter a valid US ZIP Code" tooltip>
           <b-form-input
-            placeholder="Zip Code"
+            placeholder="ZIP Code"
             autocomplete="off"
             name="searchzip"
             id="form-zipcode"
@@ -207,11 +207,11 @@ export default {
     invalidFormMessage() {
       if (this.isValidZipCode != true) {
         if (this.isValidRadius != true) {
-          return 'a valid US zip code and a search radius between 1 and 500 miles.'
+          return 'a valid US ZIP Code and a search radius between 1 and 500 miles.'
         }
       }
       if (this.isValidZipCode != true) {
-        return 'a valid US zip code.'
+        return 'a valid US ZIP Code.'
       }
       if (this.isValidRadius != true) {
         return 'a search radius between 1 and 500 miles.'
@@ -410,15 +410,15 @@ ${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.
         return null
       }
       // https://facts.usps.com/42000-zip-codes/
-      const validZipCodes = [501, 99950] // Starting zip code is 00501
+      const validZipCodes = [501, 99950] // Starting ZIP Code is 00501
 
-      // Is the input zip code a 5 digit number between 501 and 99950
+      // Is the input ZIP Code a 5 digit number between 501 and 99950
       if (
         /^\d{5}$/.test(zipCode) &&
         parseInt(zipCode) >= validZipCodes[0] &&
         parseInt(zipCode) <= validZipCodes[1]
       ) {
-        // If we have a valid zip code, call out to this function which will
+        // If we have a valid ZIP Code, call out to this function which will
         // prefetch geo coordinates needed for Audi
         this.prefetchGeoCoordinatesForAudi(zipCode)
         return true
