@@ -115,8 +115,8 @@ export function titleCase(str) {
   const returnStr = !str
     ? []
     : str === str.toUpperCase()
-    ? str.toLowerCase().split(" ")
-    : str.split(" ");
+      ? str.toLowerCase().split(" ")
+      : str.split(" ");
 
   return returnStr.map(capitalize).join(" ");
 }
@@ -240,7 +240,7 @@ export function queryParamStringToObject(input) {
  */
 export function doesObjectContainValue(inputObject, valueToSearchFor) {
   return inputObject.filter((obj) =>
-    Object.keys(obj).some((key) => obj[key].includes(valueToSearchFor))
+    Object.keys(obj).some((key) => obj[key].includes(valueToSearchFor)),
   );
 }
 
@@ -294,7 +294,7 @@ export function isValidUrlPath(urlPath) {
 
     // Valid years
     Object.values(yearOptions).forEach((year) =>
-      validValues["requestYear"].push(year.text)
+      validValues["requestYear"].push(year.text),
     );
     // A valid URL scheme is the following: /inventory|vin/year/manufacturer/model
     let validUrl = false;
@@ -322,7 +322,7 @@ export async function getGeoFromZipcode(zip) {
 
   const geo = await fetch(
     osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
-    { method: "GET", mode: "cors" }
+    { method: "GET", mode: "cors" },
   );
 
   if (geo.ok) {
@@ -345,6 +345,6 @@ export async function getGeoFromZipcode(zip) {
  */
 export function searchArrayOfObjects(arrayToSearch, searchKey) {
   return arrayToSearch.filter((obj) =>
-    Object.keys(obj).some((key) => obj[key].includes(searchKey))
+    Object.keys(obj).some((key) => obj[key].includes(searchKey)),
   );
 }
