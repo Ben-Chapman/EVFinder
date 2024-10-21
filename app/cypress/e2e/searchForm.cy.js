@@ -8,7 +8,7 @@ describe("Validation of the Input Form", () => {
     cy.percySnapshot("Submit button is disabled with empty form");
   });
 
-  it("Form Indicates Error with Invalid Zip Code", () => {
+  it("Form Indicates Error with Invalid ZIP Code", () => {
     ["00000", "-100", "00500"].forEach((invalidZip) => {
       cy.get(".form-group > div > #form-zipcode")
         .clear()
@@ -19,7 +19,7 @@ describe("Validation of the Input Form", () => {
   });
 
   it("Form Indicates Error with Invalid Search Radius", () => {
-    ["0", "-100", "9999"].forEach((invalidSearchRadius) => {
+    ["0", "-100", "501", "9999"].forEach((invalidSearchRadius) => {
       cy.get(".form-group > div > #form-radius")
         .clear()
         .type(`${invalidSearchRadius}`)
@@ -29,7 +29,7 @@ describe("Validation of the Input Form", () => {
     cy.percySnapshot("Form shows error with invalid radius and invalid zipcode");
   });
 
-  it("Form Indicates Success with Valid Zip Code", () => {
+  it("Form Indicates Success with Valid ZIP Code", () => {
     ["90210", "10036", "01010"].forEach((validZip) => {
       cy.get(".form-group > div > #form-zipcode")
         .clear()
@@ -41,7 +41,7 @@ describe("Validation of the Input Form", () => {
   });
 
   it("Form Indicates Success with Valid Search Radius", () => {
-    ["1", "100", "999"].forEach((validSearchRadius) => {
+    ["1", "100", "500"].forEach((validSearchRadius) => {
       cy.get(".form-group > div > #form-radius")
         .clear()
         .type(`${validSearchRadius}`)

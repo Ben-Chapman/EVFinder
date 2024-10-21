@@ -16,7 +16,7 @@ proxy, which aids in dissecting, understanding and debugging web traffic.
 A popular and powerful cross-platform choice is [Charles Web Proxy](https://www.charlesproxy.com/), I can also recommend [Proxyman](https://proxyman.io/) for macOS. You _can_ investigate
 and debug APIs using the Developer Tools built into browsers like Firefox,
 Chrome or Brave but the purpose-built debugging proxies like Charles or Proxyman
-provide many advanced features (like editing and re-sending a request, or 
+provide many advanced features (like editing and re-sending a request, or
 sniffing traffic from a mobile device or mobile device simulator) which is
 extremely helpful.
 
@@ -25,13 +25,13 @@ and have them running to capture HTTP traffic.
 
 
 ## Finding and Understanding a Manufacturer’s Inventory API
-This is usually as simple as performing a web search for something like 
-"\<manufacturer\> inventory search". Follow the search results until you end up on 
+This is usually as simple as performing a web search for something like
+"\<manufacturer\> inventory search". Follow the search results until you end up on
 a manufacturer's website, which enables you to search for their vehicles given
-a zip code and ideally a search radius. Ensure you have a web proxy application
+a ZIP Code and ideally a search radius. Ensure you have a web proxy application
 running, or DevTools is open and capturing traffic.
 
-Perform a few inventory searches, adjusting parameters like zip code, vehicle
+Perform a few inventory searches, adjusting parameters like ZIP Code, vehicle
 model and/or search radius. These multiple searches will be extremely helpful
 in understanding how the manufacturer's inventory API works.
 
@@ -40,7 +40,7 @@ or DevTools and start to analyze the traffic. You'll be looking for request/resp
 from the manufacturer's domain. Once you've identified the interesting traffic
 I find it helpful to search the response bodies for something unique like a MSRP
 or VIN number. This will quickly help to identify the API call which actually
-returns the inventory data. 
+returns the inventory data.
 
 ![](images/dealer-website.png)
 ![](images/inventory-api-results.png)

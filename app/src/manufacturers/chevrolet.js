@@ -85,7 +85,7 @@ export async function getChevroletVinDetail(vin) {
     totalVehiclePrice: convertToCurrency(
       vinData.data.prices?.summary
         .find((item) => item.type == "total_vehicle_price")
-        .value.toString() ?? "0"
+        .value.toString() ?? "0",
     ),
     trimName: vinData.data.trim?.name,
     extColorOptionCode: vinData.data.extColor?.optionCode,

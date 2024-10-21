@@ -26,8 +26,8 @@ import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
 
 export async function getAudiInventory(zip, year, model, radius, manufacturer, geo) {
   /**
-   * The Audi API requires the zip code to be provided as latitude_longitude. When a
-   * user selects an Audi vehicle and provides a valid zip code in the search form
+   * The Audi API requires the ZIP Code to be provided as latitude_longitude. When a
+   * user selects an Audi vehicle and provides a valid ZIP Code in the search form
    * a request is fired to Open Street Map to get the geo coordinates. If for some reason
    * that request failed, detect that here and send a new request to get the coords.
    */
@@ -97,11 +97,11 @@ function formatAudiInventoryResults(input, modelYear) {
      */
     vehicle["vehicleOrderStatus"] === null
       ? (tmp["deliveryDate"] = titleCase(
-          vehicle["vehicleInventoryType"].replace("-", " ")
+          vehicle["vehicleInventoryType"].replace("-", " "),
         ))
       : (tmp["deliveryDate"] = titleCase(vehicle["vehicleOrderStatus"]).replace(
           "Intransit",
-          "In Transit"
+          "In Transit",
         ));
 
     // Populating the Availability filter
@@ -164,7 +164,7 @@ function formatAudiVinResults(input) {
         techSpecs.push(`${titleCase(key)}: ${value}`);
       }
       vinFormattedData["Technical Specifications"] = techSpecs.join(",  ");
-    }
+    },
   );
 
   /**
@@ -180,13 +180,13 @@ function formatAudiVinResults(input) {
           input.data.getVehicleInfoForWormwood.equipments[equipmentType].forEach(
             (e) => {
               equipment.push(e["headline"]);
-            }
+            },
           );
         }
         // Standard equipment
         else if (equipmentType == "standardEquipments") {
           Object.keys(
-            input.data.getVehicleInfoForWormwood.equipments[equipmentType]
+            input.data.getVehicleInfoForWormwood.equipments[equipmentType],
           ).forEach((e) => {
             if (
               e != "__typename" &&
@@ -196,7 +196,7 @@ function formatAudiVinResults(input) {
                 0
             ) {
               Object.keys(
-                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e]
+                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e],
               ).forEach((key) => {
                 const value =
                   input.data.getVehicleInfoForWormwood.equipments[equipmentType][e][
@@ -211,7 +211,7 @@ function formatAudiVinResults(input) {
           vinFormattedData[titleCase(equipmentType)] = equipment.join(",  ");
         }
       }
-    }
+    },
   );
   return vinFormattedData;
 }

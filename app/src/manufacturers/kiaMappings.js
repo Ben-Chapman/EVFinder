@@ -46,7 +46,7 @@ export const kiaVinMapping = {
   trimDesc: "Trim Description",
   drivetrainDesc: "Drivetrain",
   price: "MSRP",
-  distance: "Miles from Zip Code",
+  distance: "Miles from ZIP Code",
   bodyDescription: "Body Description",
   dealerCode: "Dealer Code",
   dealerPrice: "Dealer Price",

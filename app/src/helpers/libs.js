@@ -187,6 +187,23 @@ export function generateErrorMessage(errorText) {
 
 /**
  *
+ * @param {String} infoText A informational message String which is to be shown as
+ * an Info in the EV Finder UI.
+ * @returns {Array} An info message which is consumed by the EV Finder Vue app
+ */
+export function generateInfoMessage(messageTitle, messageBody) {
+  // return ['INFO', infoText]
+  return [
+    "INFO", //messageType
+    {
+      messageTitle: messageTitle,
+      messageBody: messageBody,
+    },
+  ];
+}
+
+/**
+ *
  * @param {String} input A string containing valid HTML query parameter(s). An example
  * would be: "name=value&name1=value1"
  * @returns {Object} The query parameter as an Object
@@ -296,9 +313,9 @@ export function isValidUrlPath(urlPath) {
 }
 
 /**
- * Obtain latitude and longitude information for a given zip code.
- * @param {String} zip A US zip code which is used to determine it's geographic location
- * @returns {Object} An Object containing the latitude and longitude of the provided zip code
+ * Obtain latitude and longitude information for a given ZIP Code.
+ * @param {String} zip A US ZIP Code which is used to determine it's geographic location
+ * @returns {Object} An Object containing the latitude and longitude of the provided ZIP Code
  */
 export async function getGeoFromZipcode(zip) {
   const osmApi = "https://nominatim.openstreetmap.org/search?";

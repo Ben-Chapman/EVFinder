@@ -32,7 +32,7 @@ const genesisVinMapping = {
   VIN: "VIN",
   DealerCd: "Dealer Code",
   DlrName: "Dealer Name",
-  DlrZipCode: "Dealer Zip Code",
+  DlrZipCode: "Dealer ZIP Code",
   deliveryDate: "Planned Delivery Date",
   PresaleVehicleFlag: "Presale Vehicle Flag",
   Model: "Model",

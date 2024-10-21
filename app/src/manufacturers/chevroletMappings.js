@@ -47,7 +47,7 @@ const chevroletVinMapping = {
   vin: "VIN",
   dealerBac: "Dealer Code",
   dealerName: "Dealer Name",
-  dealerPostalCode: "Dealer Zip Code",
+  dealerPostalCode: "Dealer ZIP Code",
   stock: "Stock Number",
   totalVehiclePrice: "MSRP", // prices.summary[].type == total_vehicle_price
   model: "Model",

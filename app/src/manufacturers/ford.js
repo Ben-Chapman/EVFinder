@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 Ben Chapman
+ * Copyright 2023 - 2024 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -19,6 +19,7 @@ import { apiRequest } from "../helpers/request";
 import {
   convertToCurrency,
   generateErrorMessage,
+  generateInfoMessage,
   normalizeJson,
   sortObjectByKey,
   titleCase,
@@ -26,13 +27,25 @@ import {
 import { fordInventoryMapping, fordVinMapping } from "./fordMappings";
 
 export async function getFordInventory(zip, year, model, radius, manufacturer) {
+  /**
+   * Ford has a different(?) API for 2024 and newer model years, and only for the
+   * F-150 Lightning. When calling the standard inventory API for the F-150 Lightning
+   * a 500 response is returned. So we're handling that here by returning an info message
+   */
+  if (model === "f-150 lightning") {
+    return generateInfoMessage(
+      "Inventory Not Available",
+      'Inventory information for the Ford F-150 Lightning® is not available at this time.<br><br>Please visit <a href="https://www.ford.com/finder/2024/f150-lightning" target="_blank">https://shop.ford.com</a> for more detail.'
+    );
+  }
+
   try {
     const invResponse = await apiRequest(
       "inventory",
       manufacturer,
       [...arguments],
       [],
-      45000,
+      45000
     );
     return formatFordInventoryResults(invResponse, year);
   } catch (error) {
@@ -47,7 +60,7 @@ export async function getFordVinDetail(
   year,
   paCode,
   zip,
-  manufacturer,
+  manufacturer
 ) {
   if (dealerSlug === undefined) {
     const errorMessage = `Additional information could not be be retrieved for VIN ${vin}`;
@@ -176,8 +189,9 @@ function formatFordVinResults(input) {
   });
 
   // Provide dealer details
-  vinFormattedData["Dealer Address"] =
-    `${v["dealerName"]}\n${v["dealerDealerAddressStreet1"]} ${v["dealerDealerAddressStreet2"]} ${v["dealerDealerAddressStreet3"]}\n${v["dealerAddressCity"]}, ${v["dealerAddressState"]} ${v["dealerAddressZipCode"]}`;
+  vinFormattedData[
+    "Dealer Address"
+  ] = `${v["dealerName"]}\n${v["dealerDealerAddressStreet1"]} ${v["dealerDealerAddressStreet2"]} ${v["dealerDealerAddressStreet3"]}\n${v["dealerAddressCity"]}, ${v["dealerAddressState"]} ${v["dealerAddressZipCode"]}`;
 
   vinFormattedData["Dealer Phone"] = v["dealerDealerPhone"];
 

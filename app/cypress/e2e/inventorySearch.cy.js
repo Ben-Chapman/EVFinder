@@ -85,3 +85,33 @@ describe("Search for Unavailable Vehicle Inventory", () => {
     cy.percySnapshot("No Inventory Found");
   });
 });
+
+describe("Search for F-150 Inventory and receive info message", () => {
+  before(() => {
+    cy.visit("/index.html");
+    cy.get(".form-group > div > #form-model").select("F-150 Lightning®");
+    cy.get(".form-group > div > #form-zipcode").clear().type("90210");
+    cy.get(".form-group > div > #form-radius").clear().type("100");
+    cy.get(".form-group > div > #form-year").select("2024");
+    cy.wait(500);
+    cy.get('[id="submit-button"]').click();
+  });
+
+  it("Page title is correct", () => {
+    cy.title().should("eq", "Ford F-150 Lightning® Inventory | The EV Finder");
+  });
+
+  it("Page description is correct", () => {
+    cy.get('meta[name="description"]').should(
+      "have.attr",
+      "content",
+      "Easily search hundreds of car dealers in your area to find your perfect new Ford F-150 Lightning® with the EV Finder.",
+    );
+  });
+
+  it("Confirms Unavailable Vehicle Inventory Message", () => {
+    cy.get(".no-inventory", { timeout: 60000 });
+    cy.get(".h4").contains("Inventory Not Available");
+    cy.percySnapshot("Ford F-150 Lightning Inventory Not Available");
+  });
+});

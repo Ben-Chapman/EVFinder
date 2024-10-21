@@ -41,20 +41,22 @@
         </b-form-group>
       </b-col>
 
-      <!-- Zip Code -->
+      <!-- ZIP Code -->
       <b-col cols="4" md="2">
-        <b-form-group id="form-zipcode">
+        <b-form-group
+          id="form-zipcode"
+          invalid-feedback="Please enter a valid US ZIP Code"
+          tooltip
+        >
           <b-form-input
-            placeholder="Zip Code"
-            oninvalid="this.setCustomValidity('Please Enter valid email')"
-            oninput="setCustomValidity('')"
+            placeholder="ZIP Code"
             autocomplete="off"
             name="searchzip"
             id="form-zipcode"
             v-model="localForm.zipcode"
             :state="isValidZipCode"
             trim
-            debounce="250"
+            debounce="750"
             required
             inputmode="numeric"
             pattern="[0-9]*"
@@ -65,7 +67,11 @@
 
       <!-- Radius -->
       <b-col cols="4" md="2">
-        <b-form-group id="form-radius" variant="dark">
+        <b-form-group
+          id="form-radius"
+          invalid-feedback="Please enter a search radius between 1 and 500 miles"
+          tooltip
+        >
           <!-- name="search" autocomplete="off" was recommended to hint to
             1Password that this field isn't a password  -->
           <b-form-input
@@ -213,14 +219,14 @@
       invalidFormMessage() {
         if (this.isValidZipCode != true) {
           if (this.isValidRadius != true) {
-            return "a valid US zip code and a search distance between 1 and 999 miles.";
+            return "a valid US ZIP Code and a search radius between 1 and 500 miles.";
           }
         }
         if (this.isValidZipCode != true) {
-          return "a valid US zip code.";
+          return "a valid US ZIP Code.";
         }
         if (this.isValidRadius != true) {
-          return "a search distance between 1 and 999 miles.";
+          return "a search radius between 1 and 500 miles.";
         }
       },
 
@@ -248,6 +254,9 @@
         // before proceeding
         if (this.apiErrorDetail.length > 0) {
           this.updateStore({ apiErrorDetail: [] });
+        }
+        if (this.apiInfoDetail.length > 0) {
+          this.updateStore({ apiInfoDetail: [] });
         }
 
         const inventories = {
@@ -335,7 +344,19 @@
 
         try {
           const inv = await inventories[this.localForm.manufacturer.toLowerCase()]();
-          this.updateStore({ inventory: inv });
+
+          /**
+           * If we have an Info message, catch that and display it first. Also setting
+           * the inventory array to empty, so that the table doesn't display anything
+           */
+          if (inv[0] === "INFO") {
+            this.updateStore({
+              apiInfoDetail: inv,
+              inventory: [],
+            });
+          } else {
+            this.updateStore({ inventory: inv });
+          }
         } catch (error) {
           this.updateStore({ apiErrorDetail: error });
         }
@@ -402,6 +423,7 @@ ${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.
       // Vuex
       ...mapState([
         "apiErrorDetail",
+        "apiInfoDetail",
         "form",
         "inventory",
         "inventoryCount",
@@ -416,15 +438,15 @@ ${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.
           return null;
         }
         // https://facts.usps.com/42000-zip-codes/
-        const validZipCodes = [501, 99950]; // Starting zip code is 00501
+        const validZipCodes = [501, 99950]; // Starting ZIP Code is 00501
 
-        // Is the input zip code a 5 digit number between 501 and 99950
+        // Is the input ZIP Code a 5 digit number between 501 and 99950
         if (
           /^\d{5}$/.test(zipCode) &&
           parseInt(zipCode) >= validZipCodes[0] &&
           parseInt(zipCode) <= validZipCodes[1]
         ) {
-          // If we have a valid zip code, call out to this function which will
+          // If we have a valid ZIP Code, call out to this function which will
           // prefetch geo coordinates needed for Audi
           this.prefetchGeoCoordinatesForAudi(zipCode);
           return true;
@@ -438,7 +460,11 @@ ${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.
         if (this.localForm.radius.length == 0) {
           return null;
         }
-        return this.localForm.radius > 0 && /^\d{1,3}$/.test(this.localForm.radius);
+        return (
+          this.localForm.radius > 0 &&
+          this.localForm.radius <= 500 &&
+          /^\d{1,3}$/.test(this.localForm.radius)
+        );
       },
 
       validateSubmitButton() {
