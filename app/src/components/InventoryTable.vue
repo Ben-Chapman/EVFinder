@@ -133,7 +133,7 @@
                       variant="light"
                       @click="
                         openUrlInNewWindow(
-                          vinDetail[row.item.vin]['DI']['DealerVDPURL']
+                          vinDetail[row.item.vin]['DI']['DealerVDPURL'],
                         )
                       "
                       class="mr-2 align-middle"
@@ -156,7 +156,7 @@
                     variant="light"
                     @click="
                       openUrlInNewWindow(
-                        generateGenesisWindowStickerUrl(row.item.vin, form.model)
+                        generateGenesisWindowStickerUrl(row.item.vin, form.model),
                       )
                     "
                     class="mr-2 align-middle"
@@ -453,7 +453,7 @@
               // A lot of additional detail is included in the inventory data, so
               // passing the inventory API response into getVinDetail to display in the
               // VIN detail section
-              this.item
+              this.item,
             );
           },
           async hyundai() {
@@ -461,7 +461,7 @@
               this.item.vin,
               this.manufacturer,
               this.model,
-              this.year
+              this.year,
             );
           },
           async kia() {
@@ -477,7 +477,7 @@
             return await getVolkswagenVinDetail(
               this.zipcode,
               this.item.vin,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async ford() {
@@ -488,7 +488,7 @@
               this.item.modelYear,
               this.item.dealerPaCode,
               this.zipcode,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async audi() {
@@ -575,7 +575,7 @@
       filterFunction(rowRecord, filterSelections) {
         // selectedCategories looks like ['trimDesc', ['LIMITED', 'SEL']]
         var selectedCategories = Object.entries(filterSelections).filter(
-          (f) => f[1].length > 0
+          (f) => f[1].length > 0,
         );
         var selectedCategoriesCount = selectedCategories.length;
         var isMatch = [];
@@ -590,7 +590,7 @@
             return this.filterByPrice(rowRecord, selectedPrice);
           } else {
             return selectedCategories[0][1].some((val) =>
-              Object.values(rowRecord).includes(val)
+              Object.values(rowRecord).includes(val),
             );
           }
         } else if (selectedCategoriesCount > 1) {
@@ -605,7 +605,7 @@
               // Each loop is a category. Do we have an OR match for the selected filter items?
               // e.g. Blue OR Black OR White
               isMatch.push(
-                selectedItems.some((s) => Object.values(rowRecord).includes(s))
+                selectedItems.some((s) => Object.values(rowRecord).includes(s)),
               );
             }
           }
@@ -647,7 +647,7 @@
           (field) =>
             (field.showFor.includes("all") ||
               field.showFor.includes(this.form.manufacturer)) &&
-            !field.hideFor.includes(this.form.manufacturer)
+            !field.hideFor.includes(this.form.manufacturer),
         );
 
         return f;

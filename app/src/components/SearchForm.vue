@@ -273,7 +273,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async hyundai() {
@@ -282,7 +282,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async kia() {
@@ -291,7 +291,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async chevrolet() {
@@ -300,7 +300,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async genesis() {
@@ -309,7 +309,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async volkswagen() {
@@ -318,7 +318,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async ford() {
@@ -327,7 +327,7 @@
               this.year,
               this.model,
               this.radius,
-              this.manufacturer
+              this.manufacturer,
             );
           },
           async audi() {
@@ -337,7 +337,7 @@
               this.model,
               this.radius,
               this.manufacturer,
-              this.geo
+              this.geo,
             );
           },
         };
@@ -414,7 +414,7 @@ Inventory | The EV Finder`;
         document.querySelector('meta[name="description"]').setAttribute(
           "content",
           `Easily search hundreds of car dealers in your area to find your perfect new \
-${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.`
+${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.`,
         );
       },
     }, //methods
