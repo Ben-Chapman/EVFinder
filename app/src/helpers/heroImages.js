@@ -55,6 +55,17 @@ const heroImages = [
   },
   {
     imageNames: [
+      ["2025-vw-id.buzz-1.jpg", "-18rem center", "light"],
+      ["2025-vw-id.buzz-2.jpg", "-25rem center", "light"],
+      ["2025-vw-id.buzz-3.jpg", "-20rem center", "light"],
+      ["2025-vw-id.buzz-4.jpg", "-10rem center", "light"],
+      ["2025-vw-id.buzz-5.jpg", "-30rem center", "light"],
+    ],
+    displayName: "Volkswagen ID. Buzz",
+    modelName: "id.buzz",
+  },
+  {
+    imageNames: [
       ["2023-ioniq5-1.jpg", "-20rem center", "light"],
       ["2023-ioniq5-2.jpg", "-44.5rem center", "light"],
       ["2023-ioniq5-3.jpg", "-58rem center", "dark"],
