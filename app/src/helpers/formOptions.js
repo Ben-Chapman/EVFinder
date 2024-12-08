@@ -92,7 +92,10 @@ const modelOptions = [
   },
   {
     label: "Volkswagen",
-    options: [{ value: "id.4", text: "ID.4", api: "ID.4" }],
+    options: [
+      { value: "id.4", text: "ID.4", api: "ID.4" },
+      { value: "id.buzz", text: "ID. Buzz", api: "ID. Buzz" },
+    ],
   },
 ];
 
