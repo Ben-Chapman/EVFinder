@@ -59,7 +59,7 @@ jobs:
           --data-raw '{"fight_mode":true}'
 
       - name: Upload Screenshots and Video on Failure
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Only trigger if the previous step failed
         if: failure()
         with:
