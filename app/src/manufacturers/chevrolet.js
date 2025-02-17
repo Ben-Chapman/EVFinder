@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 Joel Gomez, 2023 - 2024 Ben Chapman
+ * Copyright 2023 Joel Gomez, 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { convertToCurrency, generateErrorMessage, titleCase } from "../helpers/libs";
+import { generateErrorMessage, titleCase } from "../helpers/libs";
 import { apiRequest } from "../helpers/request";
 import { chevroletVinMapping } from "./chevroletMappings";
 
@@ -52,8 +52,8 @@ function formatChevroletInventoryResults(input) {
       dealerName: titleCase(vehicle.dealer.name),
       deliveryDate: vehicle.stockDetails.estimatedDeliveryDate,
       drivetrainDesc: vehicle.driveType,
-      distance: vehicle.dealer.distance.value,
-      price: vehicle.pricing.cash.msrp.value,
+      distance: vehicle.dealer.distance?.value,
+      price: vehicle.pricing.cash.msrp?.value,
       exteriorColor: vehicle.baseExteriorColor,
       interiorColor: vehicle.baseInteriorColor,
       vin: vehicle.id,
@@ -78,24 +78,16 @@ export async function getChevroletVinDetail(vin) {
   const vinFormattedData = {};
 
   const enhancedResult = {
-    ...vinData.data,
-    dealerBac: vinData.data.dealer?.bac,
-    dealerName: vinData.data.dealer?.name,
-    dealerPostalCode: vinData.data.dealer?.postalCode,
-    totalVehiclePrice: convertToCurrency(
-      vinData.data.prices?.summary
-        .find((item) => item.type == "total_vehicle_price")
-        .value.toString() ?? "0",
-    ),
-    trimName: vinData.data.trim?.name,
-    extColorOptionCode: vinData.data.extColor?.optionCode,
-    extColorDescription: vinData.data.extColor?.description,
-    intColorOptionCode: vinData.data.intColor?.optionCode,
-    intColorDescription: vinData.data.intColor?.description,
-    epaElectricRange:
-      vinData.data.keyFeatures
-        .find((item) => item.iconKey == "icon-epa-electric-range")
-        ?.value.match(/\d+ miles/i)[0] ?? "Unavailable",
+    ...vinData,
+    dealerBac: vinData.dealer?.bac,
+    dealerName: titleCase(vinData.dealer?.name),
+    dealerPostalCode: vinData.dealer?.postalCode.substring(0, 5),
+    trimName: vinData.variant?.name,
+    extColorOptionCode: vinData.extColor?.optionCode,
+    extColorDescription: vinData.extColor?.name,
+    intColorOptionCode: vinData.intColor?.optionCode,
+    intColorDescription: vinData.intColor?.name,
+    epaElectricRange: `${vinData.techSpecs?.fuel?.performance?.batteryRange?.min} - ${vinData.techSpecs?.fuel?.performance?.batteryRange?.max} miles`,
   };
 
   Object.keys(enhancedResult).forEach((vinKey) => {
