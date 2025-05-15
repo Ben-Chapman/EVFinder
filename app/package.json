@@ -2,7 +2,6 @@
   "name": "evfinder",
   "version": "1.27.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "serve": "export NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --mode production  --dest /workspace/dist",

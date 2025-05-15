@@ -45,6 +45,9 @@
   import { isValidUrlPath, segmentUrlPath } from "./helpers/libs";
   import { getHeroImage, preloadBlurredImage } from "./helpers/heroImages";
 
+  // Store version globally so it's accessible to the error reporting page
+  window.__EVFINDER_VERSION__ = version;
+
   console.log(`
 The EVFinder release version ${version}
 

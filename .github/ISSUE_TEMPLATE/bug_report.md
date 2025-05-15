@@ -11,7 +11,7 @@ assignees: Ben-Chapman
 A clear and concise description of what the bug is.
 
 ** The EV Finder Version and Debug Information:**
-- Visit https://theevfinder.com/debug
+- Visit https://theevfinder.com/debug.html
 - Copy and paste the information presented on that page here:
 ```
 ```
