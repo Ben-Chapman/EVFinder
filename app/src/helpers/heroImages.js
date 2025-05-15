@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 - 2024 Ben Chapman
+ * Copyright 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -282,6 +282,31 @@ const heroImages = [
     ],
     displayName: "Ford F-150 Lightning®",
     modelName: "f-150-lightning",
+  },
+  {
+    imageNames: [
+      ["2025-gmc-hummer-ev-pickup-1.jpg", "-35rem center", "light"],
+      ["2025-gmc-hummer-ev-pickup-2.jpg", "-28rem center", "light"],
+    ],
+    displayName: "GMC HUMMER EV Pickup",
+    modelName: "hummer-ev-pickup",
+  },
+  {
+    imageNames: [
+      ["2025-gmc-hummer-ev-suv-1.jpg", "-32rem center", "light"],
+      ["2025-gmc-hummer-ev-suv-2.jpg", "-36rem center", "light"],
+    ],
+    displayName: "GMC HUMMER EV SUV",
+    modelName: "hummer-ev-suv",
+  },
+  {
+    imageNames: [
+      ["2025-gmc-sierra-ev-at4-1.jpg", "-26rem center", "dark"],
+      ["2025-gmc-sierra-ev-denali-1.jpg", "-35rem center", "light"],
+      ["2025-gmc-sierra-ev-denali-2.jpg", "-20rem center", "light"],
+    ],
+    displayName: "GMC Sierra EV",
+    modelName: "sierra-ev",
   },
 ];
 
