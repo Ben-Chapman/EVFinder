@@ -132,6 +132,7 @@
   import { getFordInventory } from "../manufacturers/ford";
   import { getChevroletInventory } from "../manufacturers/chevrolet";
   import { getGenesisInventory } from "../manufacturers/genesis";
+  import { getGMCInventory } from "../manufacturers/gmc";
   import { getHyundaiInventory } from "../manufacturers/hyundai";
   import { getKiaInventory } from "../manufacturers/kia";
   import { getVolkswagenInventory } from "../manufacturers/volkswagen";
@@ -305,6 +306,15 @@
           },
           async genesis() {
             return await getGenesisInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            );
+          },
+          async gmc() {
+            return await getGMCInventory(
               this.zipcode,
               this.year,
               this.model,

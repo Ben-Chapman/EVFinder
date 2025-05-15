@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 - 2024 Ben Chapman
+ * Copyright 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -80,6 +80,18 @@ const modelOptions = [
       { value: "electrified-g80", text: "Electrified G80", api: "ELECTRIFIED-G80" },
       { value: "gv60", text: "GV60", api: "GV60" },
       { value: "electrified-gv70", text: "Electrified GV70", api: "ELECTRIFIED-GV70" },
+    ],
+  },
+  {
+    label: "GMC",
+    options: [
+      {
+        value: "hummer-ev-pickup",
+        text: "HUMMER EV Pickup",
+        api: "hummer ev pickup",
+      },
+      { value: "hummer-ev-suv", text: "HUMMER EV SUV", api: "hummer ev suv" },
+      { value: "sierra-ev", text: "Sierra EV Denali", api: "sierra ev" },
     ],
   },
   {

@@ -103,22 +103,32 @@ export function priceStringToNumber(priceString) {
 /**
  * Helper function which converts a string to Title Case
  * @param {String} str An input string which is to be Title Cased
- * @returns {String} A Title Cased string
+ * @returns {String} A Title Cased string with specific words kept uppercase
  */
 export function titleCase(str) {
-  function capitalize(str) {
-    if (str.length == 0) return str;
-    return str[0].toUpperCase() + str.slice(1);
-  }
-  // If the input string is undefined, return an empty string, if the input string is
-  // ALL CAPS, lowercase it first so capitalize() can actually Title Case the string
-  const returnStr = !str
-    ? []
-    : str === str.toUpperCase()
-      ? str.toLowerCase().split(" ")
-      : str.split(" ");
+  // List of words to keep in all caps
+  const keepUppercase = ["BMW", "GMC", "VW"];
 
-  return returnStr.map(capitalize).join(" ");
+  function capitalize(word) {
+    if (word.length === 0) return word;
+
+    // Check if this word should be kept uppercase
+    const uppercaseWord = word.toUpperCase();
+    if (keepUppercase.includes(uppercaseWord)) {
+      return uppercaseWord;
+    }
+
+    // Otherwise, just capitalize the first letter
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  // If the input string is undefined, return an empty string
+  if (!str) return "";
+
+  // Split into words and normalize case
+  const words = str.toLowerCase().split(" ");
+
+  return words.map(capitalize).join(" ");
 }
 
 /**

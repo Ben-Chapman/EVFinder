@@ -285,6 +285,7 @@
   import { getBMWVinDetail } from "../manufacturers/bmw";
   import { getFordVinDetail } from "../manufacturers/ford";
   import { getGenesisVinDetail } from "../manufacturers/genesis";
+  import { getGMCVinDetail } from "../manufacturers/gmc";
   import { getChevroletVinDetail } from "../manufacturers/chevrolet";
   import { getHyundaiVinDetail } from "../manufacturers/hyundai";
   import { getKiaVinDetail } from "../manufacturers/kia";
@@ -472,6 +473,9 @@
           },
           async genesis() {
             return getGenesisVinDetail(this.item.vin, this.zipcode, this.manufacturer);
+          },
+          async gmc() {
+            return getGMCVinDetail(this.item.vin, this.zipcode, this.manufacturer);
           },
           async volkswagen() {
             return await getVolkswagenVinDetail(
