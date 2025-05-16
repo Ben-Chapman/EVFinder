@@ -1,18 +1,13 @@
 <template>
   <b-container fluid class="footer frosted-bg">
     <b-row align-h="center" class="d-flex justify-content-center py-2 footer-text">
-      <span>©2022 &ndash; {{ this.currentYear }} The EV Finder</span>
+      <span>©2022 &ndash; {{ this.currentYear }}</span>
 
-      <span>
+      <span class="px-1">
         <GithubLogo />
       </span>
 
-      <span
-        >Licensed under&nbsp;
-        <a href="https://github.com/Ben-Chapman/EVFinder/blob/main/LICENSE">
-          <u>GNU GPLv3</u>
-        </a>
-      </span>
+      <span>The EV Finder</span>
     </b-row>
   </b-container>
 </template>

@@ -38,7 +38,7 @@ describe("Homepage Background is Correct", () => {
         cy.get("#background")
           .should("have.css", "background-color", "rgba(0, 0, 0, 0)")
           .should("have.css", "background-image")
-          .should("match", /hero_images\/mobile\/[0-9a-z\-]+.jpg/);
+          .should("match", /hero_images\/mobile\/[0-9a-z(\-|\.)]+.jpg/);
 
         cy.get("#background")
           .should("have.css", "background-position")
