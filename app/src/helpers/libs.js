@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 - 2024 Ben Chapman
+ * Copyright 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -357,4 +357,24 @@ export function searchArrayOfObjects(arrayToSearch, searchKey) {
   return arrayToSearch.filter((obj) =>
     Object.keys(obj).some((key) => obj[key].includes(searchKey)),
   );
+}
+
+// Helper function to convert date string to ISO 8601 format
+export function convertToISODate(dateString) {
+  if (!dateString) return null;
+
+  try {
+    // Parse the date string (e.g., "June 10, 2025")
+    const date = new Date(dateString);
+
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+
+    // Return ISO 8601 format with time set to 00:00:00
+    return date.toISOString().split("T")[0] + "T00:00:00";
+  } catch (error) {
+    return null;
+  }
 }
