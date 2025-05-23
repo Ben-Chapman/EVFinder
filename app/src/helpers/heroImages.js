@@ -308,6 +308,40 @@ const heroImages = [
     displayName: "GMC Sierra EV",
     modelName: "sierra-ev",
   },
+  {
+    imageNames: [
+      ["2025-cadillac-escalade-iq-sport-1.jpg", "-39rem center", "light"],
+      ["2025-cadillac-escalade-iq-sport-2.jpg", "-38rem center", "light"],
+      ["2026-cadillac-escalade-iql-1.jpg", "-36rem center", "dark"],
+    ],
+    displayName: "Cadillac ESCALADE IQ",
+    modelName: "escalade-iq",
+  },
+  {
+    imageNames: [
+      ["2025-cadillac-lyriq-1.jpg", "-25rem center", "light"],
+      ["2025-cadillac-lyriq-2.jpg", "-22rem center", "light"],
+      ["2026-cadillac-lyriq-v-1.jpg", "-29rem center", "light"],
+      ["2026-cadillac-lyriq-v-2.jpg", "-20rem center", "light"],
+    ],
+    displayName: "Cadillac LYRIQ",
+    modelName: "lyriq",
+  },
+  {
+    imageNames: [
+      ["2025-cadillac-optiq-1.jpg", "-26rem center", "light"],
+      ["2025-cadillac-optiq-2.jpg", "-21rem center", "light"],
+      ["2025-cadillac-optiq-3.jpg", "-29rem center", "dark"],
+      ["2025-cadillac-optiq-4.jpg", "-20rem center", "light"],
+    ],
+    displayName: "Cadillac OPTIQ",
+    modelName: "optiq",
+  },
+  {
+    imageNames: [["2026-cadillac-vistiq-1.jpg", "-20rem center", "dark"]],
+    displayName: "Cadillac VISTIQ",
+    modelName: "vistiq",
+  },
 ];
 
 export function getHeroImage(modelName) {

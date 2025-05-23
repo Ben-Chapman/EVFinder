@@ -118,14 +118,16 @@ function isInteriorColorCode(code, facetsMapping = {}) {
   // First check if it's in the facets interior color mapping
   if (facetsMapping && Object.keys(facetsMapping).length > 0) {
     // Check if this code exists in interior colors from facets
-    return Object.keys(facetsMapping).some(key => 
-      key === code && facetsMapping[key].type === 'interior'
+    return Object.keys(facetsMapping).some(
+      (key) => key === code && facetsMapping[key].type === "interior",
     );
   }
-  
+
   // Fallback: Interior color codes for Cadillac often start with '1S' or 'E'
-  return (code.startsWith("1S") && code.length === 3) || 
-         (code.startsWith("E") && code.length === 3);
+  return (
+    (code.startsWith("1S") && code.length === 3) ||
+    (code.startsWith("E") && code.length === 3)
+  );
 }
 
 // Extract color codes from facets data to build dynamic mapping
@@ -139,7 +141,7 @@ function buildColorMappingFromFacets(input) {
       if (color.values && color.values[0] && color.displayValue) {
         const code = color.values[0];
         colorMapping[code] = color.displayValue;
-        facetsMapping[code] = { type: 'exterior', displayValue: color.displayValue };
+        facetsMapping[code] = { type: "exterior", displayValue: color.displayValue };
       }
     });
   }
@@ -150,7 +152,7 @@ function buildColorMappingFromFacets(input) {
       if (color.values && color.values[0] && color.displayValue) {
         const code = color.values[0];
         colorMapping[code] = color.displayValue;
-        facetsMapping[code] = { type: 'interior', displayValue: color.displayValue };
+        facetsMapping[code] = { type: "interior", displayValue: color.displayValue };
       }
     });
   }
@@ -172,7 +174,7 @@ function getCadillacColorsFromPackageCodes(
   // Build dynamic color mapping from JSON response if available
   let colorMapping = { ...cadillacColorMapping };
   let facetsMapping = {};
-  
+
   if (input) {
     const mappingResult = buildColorMappingFromFacets(input);
     colorMapping = { ...colorMapping, ...mappingResult.colorMapping };
@@ -182,25 +184,25 @@ function getCadillacColorsFromPackageCodes(
   // Function to search for color codes in the facets data
   function findColorInFacets(searchCode) {
     if (!input?.facets?.data) return null;
-    
+
     // Search in exterior colors
     if (input.facets.data.exteriorColor) {
       for (const color of input.facets.data.exteriorColor) {
         if (color.values && color.values.includes(searchCode)) {
-          return { type: 'exterior', color: color.displayValue };
+          return { type: "exterior", color: color.displayValue };
         }
       }
     }
-    
+
     // Search in interior colors
     if (input.facets.data.interiorColor) {
       for (const color of input.facets.data.interiorColor) {
         if (color.values && color.values.includes(searchCode)) {
-          return { type: 'interior', color: color.displayValue };
+          return { type: "interior", color: color.displayValue };
         }
       }
     }
-    
+
     return null;
   }
 
@@ -210,9 +212,9 @@ function getCadillacColorsFromPackageCodes(
       // First check facets data
       const facetResult = findColorInFacets(code);
       if (facetResult) {
-        if (facetResult.type === 'exterior') {
+        if (facetResult.type === "exterior") {
           exteriorColor = facetResult.color;
-        } else if (facetResult.type === 'interior') {
+        } else if (facetResult.type === "interior") {
           interiorColor = facetResult.color;
         }
       }
@@ -234,9 +236,9 @@ function getCadillacColorsFromPackageCodes(
       // First check facets data
       const facetResult = findColorInFacets(code);
       if (facetResult) {
-        if (facetResult.type === 'exterior') {
+        if (facetResult.type === "exterior") {
           exteriorColor = facetResult.color;
-        } else if (facetResult.type === 'interior') {
+        } else if (facetResult.type === "interior") {
           interiorColor = facetResult.color;
         }
       }
