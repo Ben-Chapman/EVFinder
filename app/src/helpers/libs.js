@@ -107,7 +107,7 @@ export function priceStringToNumber(priceString) {
  */
 export function titleCase(str) {
   // List of words to keep in all caps
-  const keepUppercase = ["BMW", "GMC", "VW"];
+  const keepUppercase = ["AWD", "BMW", "GMC", "RWD", "VW"];
 
   function capitalize(word) {
     if (word.length === 0) return word;
