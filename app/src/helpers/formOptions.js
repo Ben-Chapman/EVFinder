@@ -49,6 +49,15 @@ const modelOptions = [
     ],
   },
   {
+    label: "Cadillac",
+    options: [
+      { value: "escalade-iq", text: "ESCALADE IQ", api: "escalade iq" },
+      { value: "lyriq", text: "LYRIQ", api: "lyriq" },
+      { value: "optiq", text: "OPTIQ", api: "optiq" },
+      { value: "vestiq", text: "VESTIQ", api: "vestiq" },
+    ],
+  },
+  {
     label: "Chevrolet",
     options: [
       { value: "blazer-ev", text: "Blazer EV", api: "Blazer EV" },
