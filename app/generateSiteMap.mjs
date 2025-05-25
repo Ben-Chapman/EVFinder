@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import pkg from './src/helpers/formOptions.js';
-const { modelOptions, yearOptions } = pkg;
 
 // Get the directory path of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +16,8 @@ if (!fs.existsSync(outputDir)) {
 }
 
 // Generate sitemap content
-const generateSitemap = () => {
+const generateSitemap = async () => {
+  const { modelOptions, yearOptions } = await import('./src/helpers/formOptions.js');
   const lastMod = new Date().toISOString().slice(0, 10);
   
   let sitemap = `<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
@@ -52,7 +51,7 @@ const generateSitemap = () => {
 
 // Write sitemap to file
 try {
-  const sitemap = generateSitemap();
+  const sitemap = await generateSitemap();
   fs.writeFileSync(outputPath, sitemap);
   console.log(`Sitemap successfully generated at ${outputPath}`);
 } catch (error) {
