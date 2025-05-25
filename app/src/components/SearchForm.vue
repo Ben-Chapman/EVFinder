@@ -130,6 +130,7 @@
   import { getAudiInventory } from "../manufacturers/audi";
   import { getBMWInventory } from "../manufacturers/bmw";
   import { getFordInventory } from "../manufacturers/ford";
+  import { getCadillacInventory } from "../manufacturers/cadillac";
   import { getChevroletInventory } from "../manufacturers/chevrolet";
   import { getGenesisInventory } from "../manufacturers/genesis";
   import { getGMCInventory } from "../manufacturers/gmc";
@@ -270,6 +271,15 @@
 
           async bmw() {
             return await getBMWInventory(
+              this.zipcode,
+              this.year,
+              this.model,
+              this.radius,
+              this.manufacturer,
+            );
+          },
+          async cadillac() {
+            return await getCadillacInventory(
               this.zipcode,
               this.year,
               this.model,

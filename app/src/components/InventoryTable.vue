@@ -283,6 +283,7 @@
 
   import { getAudiVinDetail } from "../manufacturers/audi";
   import { getBMWVinDetail } from "../manufacturers/bmw";
+  import { getCadillacVinDetail } from "../manufacturers/cadillac";
   import { getFordVinDetail } from "../manufacturers/ford";
   import { getGenesisVinDetail } from "../manufacturers/genesis";
   import { getGMCVinDetail } from "../manufacturers/gmc";
@@ -455,6 +456,14 @@
               // passing the inventory API response into getVinDetail to display in the
               // VIN detail section
               this.item,
+            );
+          },
+          async cadillac() {
+            return await getCadillacVinDetail(
+              this.item.vin,
+              this.model,
+              this.year,
+              this.manufacturer,
             );
           },
           async hyundai() {
