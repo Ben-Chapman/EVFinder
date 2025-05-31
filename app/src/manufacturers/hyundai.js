@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 Ben Chapman
+ * Copyright 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -56,6 +56,16 @@ export async function getHyundaiVinDetail(vin, manufacturer, model, year) {
 
 function formatHyundaiInventoryResults(input) {
   const res = [];
+
+  // If the API response does not have a data key, there is no inventory.
+  // Return an empty array for the UI to display the no inventory message.
+  // This most commonly occurs when the user selects a year that is not valid for a
+  // selected model.
+  if (!input.data) {
+    console.log("No data returned from Hyundai API");
+    return [];
+  }
+
   if (input["data"][0]["dealerInfo"] !== null) {
     // If the API returned vehicles in inventory
     input["data"][0]["dealerInfo"].forEach((dealer) => {
