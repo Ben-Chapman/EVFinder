@@ -71,6 +71,7 @@ const modelOptions = [
       { value: "ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
       { value: "ioniq-5n", text: "Ioniq 5 N", api: "Ioniq-5-N" },
       { value: "ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
+      { value: "ioniq-9", text: "Ioniq 9", api: "Ioniq%209" },
       { value: "kona-ev", text: "Kona Electric", api: "Kona%20Ev" },
     ],
   },
@@ -116,6 +117,7 @@ const yearOptions = [
   { value: "2023", text: "2023" },
   { value: "2024", text: "2024" },
   { value: "2025", text: "2025" },
+  { value: "2026", text: "2026" },
 ];
 
 export { modelOptions, yearOptions };
