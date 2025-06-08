@@ -80,6 +80,7 @@ const modelOptions = [
       { value: "ioniq-5", text: "Ioniq 5", api: "Ioniq%205" },
       { value: "ioniq-5n", text: "Ioniq 5 N", api: "Ioniq-5-N" },
       { value: "ioniq-6", text: "Ioniq 6", api: "Ioniq%206" },
+      { value: "ioniq-9", text: "Ioniq 9", api: "Ioniq%209" },
       { value: "kona-ev", text: "Kona Electric", api: "Kona%20Ev" },
     ],
   },

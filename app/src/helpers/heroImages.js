@@ -342,6 +342,15 @@ const heroImages = [
     displayName: "Cadillac VISTIQ",
     modelName: "vistiq",
   },
+  {
+    imageNames: [
+      ["2026-hyundai-ioniq9-1.jpg", "-42rem center", "light"],
+      ["2026-hyundai-ioniq9-2.jpg", "-30rem center", "dark"],
+      ["2026-hyundai-ioniq9-3.jpg", "-30rem center", "light"],
+    ],
+    displayName: "Hyundai Ioniq 9",
+    modelName: "ioniq-9",
+  },
 ];
 
 export function getHeroImage(modelName) {
