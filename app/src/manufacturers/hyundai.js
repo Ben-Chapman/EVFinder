@@ -62,7 +62,6 @@ function formatHyundaiInventoryResults(input) {
   // This most commonly occurs when the user selects a year that is not valid for a
   // selected model.
   if (!input.data) {
-    console.log("No data returned from Hyundai API");
     return [];
   }
 
