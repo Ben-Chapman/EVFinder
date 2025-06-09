@@ -15,17 +15,6 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * This file is used to map API-specific JSON key descriptions to normalized key
- * descriptions used throughout the site.
- *
- * The structure of the jsonMapping object is:
- * {
- *   'apiSpecificKey': 'normalizedKey'
- * }
- *
- */
-
 const cadillacVinMapping = {
   destinationCharge: "Destination Charge",
   driveType: "Drivetrain",
@@ -57,28 +46,70 @@ const cadillacColorMapping = {
   G1U: "Satin Steel Metallic",
   G1E: "Electric Blue",
   GAG: "Monarch Orange",
+  // Additional ESCALADE IQ exterior colors
+  G9K: "Manhattan Noir Metallic",
+  GAZ: "Zeus Bronze Metallic",
+  G0U: "Summit White",
+  G1L: "Radiant Silver Metallic",
+  // ESCALADE IQ exterior colors from facets (remove duplicate GBA)
+  GAB: "Black Cherry Tintcoat",
+  GAI: "Deep Space Metallic",
+  GSJ: "Flare Metallic",
+  GLG: "Midnight Steel Frost",
   // Interior Colors - these correspond to trim levels and specific interior configs
-  "1SC": "Noir with Santorini Blue Accents", // Luxury trim
-  "1SF": "Noir with Santorini Blue Accents", // Sport trim
-  "1SD": "Noir with Santorini Blue Accents", // Luxury 2 trim
-  "1SJ": "Sky Cool Gray with Santorini Blue Accents", // Sport 2 trim
-  "1SK": "Noir with Sky Cool Gray Accents", // Sport 3 trim
-  E4T: "Sky Cool Gray with Santorini Blue Accents", // Premium Luxury trim
+  "1SC": "Noir with Santorini Blue Accents", // LYRIQ Luxury trim
+  "1SF": "Noir with Santorini Blue Accents", // LYRIQ Sport trim
+  "1SD": "Noir with Santorini Blue Accents", // LYRIQ Luxury 2 trim
+  "1SJ": "Sky Cool Gray with Santorini Blue Accents", // LYRIQ Sport 2 trim
+  "1SK": "Noir with Sky Cool Gray Accents", // LYRIQ Sport 3 trim
+  E4T: "Sky Cool Gray with Santorini Blue Accents", // LYRIQ Premium Luxury trim
   EGW: "Noir",
+  // ESCALADE IQ specific interior color codes from facets
+  EMY: "Camelia with Backen Black accents", // ESCALADE IQ
+  ENK: "Harbor Blue with Backen Black accents", // ESCALADE IQ
+  ENB: "Sheer Gray with Dark Medium Cinder accents", // ESCALADE IQ
+  H7D: "Backen Black with Santorini Accents", // ESCALADE IQ
+  // Additional interior color codes
+  "1SA": "Jet Black",
+  "1SB": "Jet Black with Red Accents",
+  "1SE": "Sky Cool Gray",
+  E38: "Semi-Aniline Leather in Jet Black",
+  E72: "Semi-Aniline Leather in Sky Cool Gray",
 };
 
 // Function to extract option codes from Cadillac image URL
 function extractCadillacOptionCodes(imageUrl) {
   if (!imageUrl) return [];
 
-  // Extract the option codes section from the URL
+  // Extract the long option codes string after the model/trim part
   const urlParts = imageUrl.split("/");
-  const optionString = urlParts.find((part) => part.includes("_") && part.length > 10);
+  let optionString = "";
+
+  // Find the part with the long option codes (usually after the model/trim part)
+  for (let i = 0; i < urlParts.length; i++) {
+    const part = urlParts[i];
+    // Look for the part that starts with an option code and has many underscores
+    if (part.includes("_") && part.length > 50) {
+      // Remove file extension and query parameters
+      optionString = part.split(".")[0].split("?")[0];
+      break;
+    }
+  }
+
+  if (!optionString) {
+    // Fallback to the original logic
+    const fallbackString = urlParts.find(
+      (part) => part.includes("_") && part.length > 10,
+    );
+    if (fallbackString) {
+      optionString = fallbackString.split(".")[0].split("?")[0];
+    }
+  }
 
   if (!optionString) return [];
 
-  // Split by underscore and filter out empty strings
-  return optionString.split("_").filter((code) => code.length > 0);
+  // Split by underscore and filter out empty strings and very short codes
+  return optionString.split("_").filter((code) => code.length >= 2);
 }
 
 // Function to get exterior color from option codes
@@ -123,10 +154,39 @@ function isInteriorColorCode(code, facetsMapping = {}) {
     );
   }
 
-  // Fallback: Interior color codes for Cadillac often start with '1S' or 'E'
+  // Known interior color codes for Cadillac
+  const interiorCodes = [
+    // LYRIQ codes
+    "1SC",
+    "1SF",
+    "1SD",
+    "1SJ",
+    "1SK",
+    // ESCALADE IQ codes
+    "1SA",
+    "1SB",
+    "1SE",
+    "1SG",
+    // Other interior codes
+    "E4T",
+    "EGW",
+    "EMY",
+    "ENK",
+    "ENB",
+    "H7D",
+    "E38",
+    "E72",
+  ];
+
+  if (interiorCodes.includes(code)) {
+    return true;
+  }
+
+  // Fallback: Interior color codes for Cadillac often start with '1S' or 'E' or 'H'
   return (
     (code.startsWith("1S") && code.length === 3) ||
-    (code.startsWith("E") && code.length === 3)
+    (code.startsWith("E") && code.length === 3) ||
+    (code.startsWith("H") && code.length === 3)
   );
 }
 
@@ -138,10 +198,26 @@ function buildColorMappingFromFacets(input) {
   // Extract exterior color mappings from facets data
   if (input?.facets?.data?.exteriorColor) {
     input.facets.data.exteriorColor.forEach((color) => {
-      if (color.values && color.values[0] && color.displayValue) {
-        const code = color.values[0];
-        colorMapping[code] = color.displayValue;
-        facetsMapping[code] = { type: "exterior", displayValue: color.displayValue };
+      // Handle different possible structures for color values
+      let colorValues = [];
+      if (Array.isArray(color.values)) {
+        colorValues = color.values;
+      } else if (color.values && typeof color.values === "string") {
+        colorValues = [color.values];
+      } else if (color.value) {
+        colorValues = Array.isArray(color.value) ? color.value : [color.value];
+      } else if (color.code) {
+        colorValues = Array.isArray(color.code) ? color.code : [color.code];
+      }
+
+      const displayValue = color.displayValue || color.name || color.label;
+
+      if (colorValues.length > 0 && displayValue) {
+        // Map all codes for this color
+        colorValues.forEach((code) => {
+          colorMapping[code] = displayValue;
+          facetsMapping[code] = { type: "exterior", displayValue: displayValue };
+        });
       }
     });
   }
@@ -149,10 +225,26 @@ function buildColorMappingFromFacets(input) {
   // Extract interior color mappings from facets data
   if (input?.facets?.data?.interiorColor) {
     input.facets.data.interiorColor.forEach((color) => {
-      if (color.values && color.values[0] && color.displayValue) {
-        const code = color.values[0];
-        colorMapping[code] = color.displayValue;
-        facetsMapping[code] = { type: "interior", displayValue: color.displayValue };
+      // Handle different possible structures for color values
+      let colorValues = [];
+      if (Array.isArray(color.values)) {
+        colorValues = color.values;
+      } else if (color.values && typeof color.values === "string") {
+        colorValues = [color.values];
+      } else if (color.value) {
+        colorValues = Array.isArray(color.value) ? color.value : [color.value];
+      } else if (color.code) {
+        colorValues = Array.isArray(color.code) ? color.code : [color.code];
+      }
+
+      const displayValue = color.displayValue || color.name || color.label;
+
+      if (colorValues.length > 0 && displayValue) {
+        // Map all codes for this color
+        colorValues.forEach((code) => {
+          colorMapping[code] = displayValue;
+          facetsMapping[code] = { type: "interior", displayValue: displayValue };
+        });
       }
     });
   }
@@ -188,8 +280,25 @@ function getCadillacColorsFromPackageCodes(
     // Search in exterior colors
     if (input.facets.data.exteriorColor) {
       for (const color of input.facets.data.exteriorColor) {
-        if (color.values && color.values.includes(searchCode)) {
-          return { type: "exterior", color: color.displayValue };
+        // Handle different possible structures for color values
+        let colorValues = [];
+        if (Array.isArray(color.values)) {
+          colorValues = color.values;
+        } else if (color.values && typeof color.values === "string") {
+          colorValues = [color.values];
+        } else if (color.value) {
+          // Some APIs might use 'value' instead of 'values'
+          colorValues = Array.isArray(color.value) ? color.value : [color.value];
+        } else if (color.code) {
+          // Some APIs might use 'code' field
+          colorValues = Array.isArray(color.code) ? color.code : [color.code];
+        }
+
+        if (colorValues.includes(searchCode)) {
+          return {
+            type: "exterior",
+            color: color.displayValue || color.name || color.label || searchCode,
+          };
         }
       }
     }
@@ -197,8 +306,25 @@ function getCadillacColorsFromPackageCodes(
     // Search in interior colors
     if (input.facets.data.interiorColor) {
       for (const color of input.facets.data.interiorColor) {
-        if (color.values && color.values.includes(searchCode)) {
-          return { type: "interior", color: color.displayValue };
+        // Handle different possible structures for color values
+        let colorValues = [];
+        if (Array.isArray(color.values)) {
+          colorValues = color.values;
+        } else if (color.values && typeof color.values === "string") {
+          colorValues = [color.values];
+        } else if (color.value) {
+          // Some APIs might use 'value' instead of 'values'
+          colorValues = Array.isArray(color.value) ? color.value : [color.value];
+        } else if (color.code) {
+          // Some APIs might use 'code' field
+          colorValues = Array.isArray(color.code) ? color.code : [color.code];
+        }
+
+        if (colorValues.includes(searchCode)) {
+          return {
+            type: "interior",
+            color: color.displayValue || color.name || color.label || searchCode,
+          };
         }
       }
     }
@@ -211,6 +337,7 @@ function getCadillacColorsFromPackageCodes(
     for (const code of packageOemCodes) {
       // First check facets data
       const facetResult = findColorInFacets(code);
+
       if (facetResult) {
         if (facetResult.type === "exterior") {
           exteriorColor = facetResult.color;
@@ -232,6 +359,7 @@ function getCadillacColorsFromPackageCodes(
   // Then try image URL parsing for both exterior and interior
   if (imageUrl) {
     const optionCodes = extractCadillacOptionCodes(imageUrl);
+
     for (const code of optionCodes) {
       // First check facets data
       const facetResult = findColorInFacets(code);
