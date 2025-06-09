@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { modelOptions, yearOptions } from './src/helpers/formOptions.js';
+import { modelOptions, yearOptions } from './src/helpers/formOptions.mjs';
 
 // Get the directory path of the current module
 const __filename = fileURLToPath(import.meta.url);

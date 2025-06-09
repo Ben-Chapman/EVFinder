@@ -17,7 +17,7 @@
 
 import { camelCase } from "lodash";
 import { logMessage } from "./logger";
-import { modelOptions, yearOptions } from "./formOptions";
+import { modelOptions, yearOptions } from "./formOptions.mjs";
 
 /**
  * Helper function which flattens a nested Object to an Object containing only key: value pairs
