@@ -13,7 +13,7 @@ describe("Cadillac Mappings Tests", () => {
     test("should contain all required VIN mapping keys", () => {
       const expectedKeys = [
         "destinationCharge",
-        "driveType", 
+        "driveType",
         "baseExteriorColor",
         "fuelType",
         "make",
@@ -26,8 +26,8 @@ describe("Cadillac Mappings Tests", () => {
         "bodyStyle",
         "vehicleType",
       ];
-      
-      expectedKeys.forEach(key => {
+
+      expectedKeys.forEach((key) => {
         expect(cadillacVinMapping).toHaveProperty(key);
         expect(typeof cadillacVinMapping[key]).toBe("string");
       });
@@ -43,7 +43,7 @@ describe("Cadillac Mappings Tests", () => {
   describe("cadillacColorMapping", () => {
     test("should contain exterior color codes", () => {
       const exteriorCodes = ["GBA", "GAB", "GAI", "GB8", "GXD"];
-      exteriorCodes.forEach(code => {
+      exteriorCodes.forEach((code) => {
         expect(cadillacColorMapping).toHaveProperty(code);
         expect(typeof cadillacColorMapping[code]).toBe("string");
       });
@@ -51,7 +51,7 @@ describe("Cadillac Mappings Tests", () => {
 
     test("should contain interior color codes", () => {
       const interiorCodes = ["1SC", "1SF", "1SD", "EMY", "ENK", "H7D"];
-      interiorCodes.forEach(code => {
+      interiorCodes.forEach((code) => {
         expect(cadillacColorMapping).toHaveProperty(code);
         expect(typeof cadillacColorMapping[code]).toBe("string");
       });
@@ -72,10 +72,11 @@ describe("Cadillac Mappings Tests", () => {
     });
 
     test("should extract codes from ESCALADE IQ image URL", () => {
-      const escaladeUrl = "https://cgi.cadillac.com/mmgprod-us/dynres/prove/image.gen?i=2025/6T35726/6T35726__1SF/GAB_0ST_1NF_1SF_1SZ_2NF_2ST_3ST_41T_4NK_4ST_5A7_5AV_5FC_5RC_5ST_5ZC_65C_6X1_7X1_8X2_9L3_9X2_A2X_A45_A7K_AGG_AHV_AKO_AL0_AQ9_ARU_AS1_AS2_AS8_ASD_ATH_ATN_AU3_AVI_AVK_AVU_AXP_AZA_B30_B7K_BKL_BOY_BTT_BTV_C24_C25_C49_C69_C7G_CAV_CE1_CLR_CMO_CPL_CTB_CTT_CWA_D07_D75_DEA_DEH_DRZ_EF7_EMI_EN0_EPH_ETN_F47_FJP_FX3_GIC_H7D_HD7_HS1_IKP_IVE_J26_J77_JAD_JCF_JL1_JSZ_K28_K6J_K7B_KAM_KCD_KD4_KEJ_KI3_KI4_KPB_KRV_KSG_KTI_KU9_KV9_KWP_LHD_LPA_MAH_MF1_N06_N38_N50_NAM_NCG_NDC_NF6_NKF_NKR_NWM_NYS_NYU_P8N_PDB_PDF_PSC_PZ8_QMP_R6Y_R9M_R9N_RFD_RIA_RIK_RJJ_RSR_RYO_S0M_S3I_S80_SF7_SFE_SLM_SP9_T7Z_T87_T95_TAU_TCP_TDM_TGC_TLG_TQ5_TR7_U2K_U5G_UBC_UCB_UCV_UE1_UEN_UEU_UFB_UG1_UGN_UH5_UH6_UJN_UK3_UKI_UKK_UKL_UKT_UKZ_ULM_UMN_UOW_UQP_URB_URX_USK_UTJ_UTR_UTU_UTV_UTW_UUQ_UV2_UV6_UVX_UVZ_UW9_V8D_VGC_VK3_VRD_VRF_VRG_VRH_VRK_VRL_VRM_VRN_VRR_VSX_VV4_WLE_WMI_WNO_XFD_XL8_XRJ_YF5_YM8_Z75_Z82_Z95gmds4.jpg&v=deg43&std=true&country=US";
-      
+      const escaladeUrl =
+        "https://cgi.cadillac.com/mmgprod-us/dynres/prove/image.gen?i=2025/6T35726/6T35726__1SF/GAB_0ST_1NF_1SF_1SZ_2NF_2ST_3ST_41T_4NK_4ST_5A7_5AV_5FC_5RC_5ST_5ZC_65C_6X1_7X1_8X2_9L3_9X2_A2X_A45_A7K_AGG_AHV_AKO_AL0_AQ9_ARU_AS1_AS2_AS8_ASD_ATH_ATN_AU3_AVI_AVK_AVU_AXP_AZA_B30_B7K_BKL_BOY_BTT_BTV_C24_C25_C49_C69_C7G_CAV_CE1_CLR_CMO_CPL_CTB_CTT_CWA_D07_D75_DEA_DEH_DRZ_EF7_EMI_EN0_EPH_ETN_F47_FJP_FX3_GIC_H7D_HD7_HS1_IKP_IVE_J26_J77_JAD_JCF_JL1_JSZ_K28_K6J_K7B_KAM_KCD_KD4_KEJ_KI3_KI4_KPB_KRV_KSG_KTI_KU9_KV9_KWP_LHD_LPA_MAH_MF1_N06_N38_N50_NAM_NCG_NDC_NF6_NKF_NKR_NWM_NYS_NYU_P8N_PDB_PDF_PSC_PZ8_QMP_R6Y_R9M_R9N_RFD_RIA_RIK_RJJ_RSR_RYO_S0M_S3I_S80_SF7_SFE_SLM_SP9_T7Z_T87_T95_TAU_TCP_TDM_TGC_TLG_TQ5_TR7_U2K_U5G_UBC_UCB_UCV_UE1_UEN_UEU_UFB_UG1_UGN_UH5_UH6_UJN_UK3_UKI_UKK_UKL_UKT_UKZ_ULM_UMN_UOW_UQP_URB_URX_USK_UTJ_UTR_UTU_UTV_UTW_UUQ_UV2_UV6_UVX_UVZ_UW9_V8D_VGC_VK3_VRD_VRF_VRG_VRH_VRK_VRL_VRM_VRN_VRR_VSX_VV4_WLE_WMI_WNO_XFD_XL8_XRJ_YF5_YM8_Z75_Z82_Z95gmds4.jpg&v=deg43&std=true&country=US";
+
       const codes = extractCadillacOptionCodes(escaladeUrl);
-      
+
       expect(codes).toContain("GAB"); // Exterior color
       expect(codes).toContain("1SF"); // Interior/trim code
       expect(codes).toContain("H7D"); // Interior color
@@ -85,7 +86,7 @@ describe("Cadillac Mappings Tests", () => {
     test("should extract codes from shorter URL format", () => {
       const shortUrl = "https://example.com/image/6T35726_1SC_GBA_H7D_test.jpg";
       const codes = extractCadillacOptionCodes(shortUrl);
-      
+
       expect(codes).toContain("6T35726");
       expect(codes).toContain("1SC");
       expect(codes).toContain("GBA");
@@ -95,7 +96,7 @@ describe("Cadillac Mappings Tests", () => {
     test("should filter out very short codes", () => {
       const url = "https://example.com/test_A_BC_DEF_GHIJ.jpg";
       const codes = extractCadillacOptionCodes(url);
-      
+
       expect(codes).not.toContain("A"); // Too short
       expect(codes).toContain("BC");
       expect(codes).toContain("DEF");
@@ -156,24 +157,24 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 values: ["GBA"],
-                displayValue: "Black Raven"
+                displayValue: "Black Raven",
               },
               {
                 values: ["GAB"],
-                displayValue: "Black Cherry Tintcoat"
-              }
-            ]
-          }
-        }
+                displayValue: "Black Cherry Tintcoat",
+              },
+            ],
+          },
+        },
       };
 
       const result = buildColorMappingFromFacets(input);
-      
+
       expect(result.colorMapping["GBA"]).toBe("Black Raven");
       expect(result.colorMapping["GAB"]).toBe("Black Cherry Tintcoat");
       expect(result.facetsMapping["GBA"]).toEqual({
         type: "exterior",
-        displayValue: "Black Raven"
+        displayValue: "Black Raven",
       });
     });
 
@@ -184,24 +185,24 @@ describe("Cadillac Mappings Tests", () => {
             interiorColor: [
               {
                 values: ["H7D"],
-                displayValue: "Backen Black with Santorini Accents"
+                displayValue: "Backen Black with Santorini Accents",
               },
               {
                 values: ["EMY"],
-                displayValue: "Camelia with Backen Black accents"
-              }
-            ]
-          }
-        }
+                displayValue: "Camelia with Backen Black accents",
+              },
+            ],
+          },
+        },
       };
 
       const result = buildColorMappingFromFacets(input);
-      
+
       expect(result.colorMapping["H7D"]).toBe("Backen Black with Santorini Accents");
       expect(result.colorMapping["EMY"]).toBe("Camelia with Backen Black accents");
       expect(result.facetsMapping["H7D"]).toEqual({
         type: "interior",
-        displayValue: "Backen Black with Santorini Accents"
+        displayValue: "Backen Black with Santorini Accents",
       });
     });
 
@@ -212,23 +213,23 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 values: "GBA", // String instead of array
-                displayValue: "Black Raven"
+                displayValue: "Black Raven",
               },
               {
                 value: ["GAB"], // 'value' instead of 'values'
-                displayValue: "Black Cherry Tintcoat"
+                displayValue: "Black Cherry Tintcoat",
               },
               {
                 code: "GAI", // 'code' field
-                name: "Deep Space Metallic"
-              }
-            ]
-          }
-        }
+                name: "Deep Space Metallic",
+              },
+            ],
+          },
+        },
       };
 
       const result = buildColorMappingFromFacets(input);
-      
+
       expect(result.colorMapping["GBA"]).toBe("Black Raven");
       expect(result.colorMapping["GAB"]).toBe("Black Cherry Tintcoat");
       expect(result.colorMapping["GAI"]).toBe("Deep Space Metallic");
@@ -241,15 +242,15 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 values: ["GBA", "GB8"], // Multiple codes for same color
-                displayValue: "Black Raven"
-              }
-            ]
-          }
-        }
+                displayValue: "Black Raven",
+              },
+            ],
+          },
+        },
       };
 
       const result = buildColorMappingFromFacets(input);
-      
+
       expect(result.colorMapping["GBA"]).toBe("Black Raven");
       expect(result.colorMapping["GB8"]).toBe("Black Raven");
     });
@@ -267,7 +268,7 @@ describe("Cadillac Mappings Tests", () => {
         [],
         null,
         "Custom Exterior",
-        "Custom Interior"
+        "Custom Interior",
       );
       expect(result.exteriorColor).toBe("Custom Exterior");
       expect(result.interiorColor).toBe("Custom Interior");
@@ -276,16 +277,16 @@ describe("Cadillac Mappings Tests", () => {
     test("should extract colors from packageOemCodes", () => {
       const packageOemCodes = ["1SF", "PDB"];
       const result = getCadillacColorsFromPackageCodes(packageOemCodes);
-      
+
       expect(result.interiorColor).toBe("Noir with Santorini Blue Accents");
     });
 
     test("should extract colors from image URL when packageOemCodes fail", () => {
       const packageOemCodes = ["UNKNOWN"];
       const imageUrl = "https://example.com/image/GBA_H7D_test.jpg";
-      
+
       const result = getCadillacColorsFromPackageCodes(packageOemCodes, imageUrl);
-      
+
       expect(result.exteriorColor).toBe("Black Raven");
       expect(result.interiorColor).toBe("Backen Black with Santorini Accents");
     });
@@ -298,11 +299,11 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 values: ["TEST_CODE"],
-                displayValue: "Dynamic Color From Facets"
-              }
-            ]
-          }
-        }
+                displayValue: "Dynamic Color From Facets",
+              },
+            ],
+          },
+        },
       };
 
       const result = getCadillacColorsFromPackageCodes(
@@ -310,9 +311,9 @@ describe("Cadillac Mappings Tests", () => {
         null,
         "N/A",
         "N/A",
-        input
+        input,
       );
-      
+
       expect(result.exteriorColor).toBe("Dynamic Color From Facets");
     });
 
@@ -326,17 +327,17 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 values: ["GAB"],
-                displayValue: "Black Cherry Tintcoat"
-              }
+                displayValue: "Black Cherry Tintcoat",
+              },
             ],
             interiorColor: [
               {
                 values: ["H7D"],
-                displayValue: "Backen Black with Santorini Accents"
-              }
-            ]
-          }
-        }
+                displayValue: "Backen Black with Santorini Accents",
+              },
+            ],
+          },
+        },
       };
 
       const result = getCadillacColorsFromPackageCodes(
@@ -344,7 +345,7 @@ describe("Cadillac Mappings Tests", () => {
         imageUrl,
         "Red", // fallback exterior from API
         "N/A",
-        input
+        input,
       );
 
       // Should get interior from image URL parsing since H7D is in the facets
@@ -360,8 +361,8 @@ describe("Cadillac Mappings Tests", () => {
         packageOemCodes,
         imageUrl,
         "N/A",
-        "N/A", 
-        null // No facets data
+        "N/A",
+        null, // No facets data
       );
 
       // Should use static mapping since no facets data
@@ -372,19 +373,19 @@ describe("Cadillac Mappings Tests", () => {
     test("should combine multiple color sources correctly", () => {
       const packageOemCodes = ["1SC"]; // Interior from static
       const imageUrl = "https://example.com/image/GBA_test.jpg"; // Exterior from image
-      
+
       const result = getCadillacColorsFromPackageCodes(packageOemCodes, imageUrl);
-      
+
       expect(result.exteriorColor).toBe("Black Raven"); // From image URL
       expect(result.interiorColor).toBe("Noir with Santorini Blue Accents"); // From packageOemCodes
     });
 
     test("should handle null/undefined packageOemCodes gracefully", () => {
       const imageUrl = "https://example.com/image/GBA_1SC_test.jpg";
-      
+
       const result1 = getCadillacColorsFromPackageCodes(null, imageUrl);
       const result2 = getCadillacColorsFromPackageCodes(undefined, imageUrl);
-      
+
       // Should still extract from image URL
       expect(result1.exteriorColor).toBe("Black Raven");
       expect(result1.interiorColor).toBe("Noir with Santorini Blue Accents");
@@ -399,17 +400,17 @@ describe("Cadillac Mappings Tests", () => {
             exteriorColor: [
               {
                 value: "GBA", // singular 'value' instead of 'values' array
-                name: "Black Raven" // 'name' instead of 'displayValue'
-              }
+                name: "Black Raven", // 'name' instead of 'displayValue'
+              },
             ],
             interiorColor: [
               {
                 code: ["H7D"], // 'code' array
-                label: "Backen Black with Santorini Accents" // 'label' instead of 'displayValue'
-              }
-            ]
-          }
-        }
+                label: "Backen Black with Santorini Accents", // 'label' instead of 'displayValue'
+              },
+            ],
+          },
+        },
       };
 
       const result = getCadillacColorsFromPackageCodes(
@@ -417,7 +418,7 @@ describe("Cadillac Mappings Tests", () => {
         null,
         "N/A",
         "N/A",
-        input
+        input,
       );
 
       expect(result.exteriorColor).toBe("Black Raven");

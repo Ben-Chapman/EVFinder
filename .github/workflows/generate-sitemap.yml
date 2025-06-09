@@ -3,7 +3,7 @@ name: Generate Sitemap
 on:
   # Schedule weekly run (Sunday at midnight)
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
   # Allow manual trigger
   workflow_dispatch:
   # Run on push to main branch
@@ -11,7 +11,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/helpers/formOptions.js'
+      - "src/helpers/formOptions.js"
 
 jobs:
   generate-sitemap:
@@ -24,9 +24,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: 'app/package-lock.json'
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "app/package-lock.json"
 
       - name: Install dependencies
         run: npm ci

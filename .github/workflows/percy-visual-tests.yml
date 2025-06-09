@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-    - main
+      - main
     paths:
-      - 'app/**'
+      - "app/**"
 
 jobs:
   run-visual-tests:
