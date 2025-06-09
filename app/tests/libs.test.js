@@ -1,10 +1,11 @@
 import * as libs from "../src/helpers/libs";
+import { log } from "console";
 
 describe("Helper Tests", () => {
   test("Input should be Title Cased", () => {
     expect(libs.titleCase("title case here")).toBe("Title Case Here");
 
-    expect(libs.titleCase("the EVFinder")).toBe("The EVFinder");
+    log(expect(libs.titleCase("the EVFinder")).toBe("The EVFinder"));
 
     expect(libs.titleCase("this sHould be a Title")).toBe("This SHould Be A Title");
 
