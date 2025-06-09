@@ -28,3 +28,17 @@ repos:
         pass_filenames: true
         always_run: false
         stages: [pre-commit, manual]
+
+      - id: validate-sitemap
+        name: Validate sitemap.xml
+        language: system
+        entry: bash -c
+        args:
+          - |
+            TMPDIR=$(mktemp -d)
+            curl -s -o ${TMPDIR}/sitemap.xsd https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+            xmllint --noout --schema ${TMPDIR}/sitemap.xsd app/public/sitemap.xml
+        files: app/public/sitemap.xml
+        pass_filenames: false
+        always_run: false
+        stages: [pre-commit, manual]
