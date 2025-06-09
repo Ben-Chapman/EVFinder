@@ -1,4 +1,5 @@
 # Adding a New Vehicle to The EV Finder
+
 The EV Finder uses a manufacturer's public inventory API as the source of data for
 the site. This means adding a new vehicle to the site likely involves some amount
 of web traffic analysis to understand how the manufacturer's API works, and to
@@ -8,8 +9,8 @@ Thus, the guidance provided here is higher-level and requires a solid
 understanding of debugging and troubleshooting HTTP-based traffic, and a general
 understanding of REST-based APIs.
 
-
 ## Getting Started
+
 To get started I recommend you invest in obtaining and learning a web debugging
 proxy, which aids in dissecting, understanding and debugging web traffic.
 
@@ -23,8 +24,8 @@ extremely helpful.
 The rest of this guide assumes that you are using a debugging proxy or DevTools
 and have them running to capture HTTP traffic.
 
-
 ## Finding and Understanding a Manufacturer’s Inventory API
+
 This is usually as simple as performing a web search for something like
 "\<manufacturer\> inventory search". Follow the search results until you end up on
 a manufacturer's website, which enables you to search for their vehicles given
@@ -55,6 +56,7 @@ Once you have a solid understanding of how the manufacturer's API works, you
 can move on to building the EV Finder API for that manufacturer.
 
 ## Building the EV Finder API for a New Manufacturer
+
 Currently, the EV Finder [inventory API](../api/) is a
 [Python Flask](https://flask.palletsprojects.com/en/2.2.x/) application which
 accepts inventory requests from the EV Finder web app, makes a call to the
@@ -71,20 +73,17 @@ and some of the helper libraries in use.
 
 The following is a simple checklist for getting the initial scaffolding setup
 for a new manufacturer:
+
 1. Create a new blueprint for the manufacturer, with the filename identical to the
-manufacturer by copying an existing blueprint.
-    - Search and replace within the new manufacturer file, replacing the existing
-  manufacturer's name with the new manufacturer's name.
+   manufacturer by copying an existing blueprint. - Search and replace within the new manufacturer file, replacing the existing
+   manufacturer's name with the new manufacturer's name.
 2. Edit [app.py](../api/src/app.py) adding a new `import` and `register` for the
-new manufacturer:
-    - `from blueprints.manufacturer import manufacturer`
-    - `app.register_blueprint(manufacturer)`
+   new manufacturer: - `from blueprints.manufacturer import manufacturer` - `app.register_blueprint(manufacturer)`
 3. Now, within your new blueprint file and under the
-`@manufacturer.route('/api/inventory/manufacturer', methods=['GET'])`
-decorator, you need to write the code which makes an HTTP request to the
-manufacturer's API (in whatever form that is), to return a JSON object containing
-the inventory results.
-    - A simple example is the [Hyundai API](../api/src/blueprints/hyundai.py),
-    a slightly more complex example is the [Volkswagen API.](../api/src/blueprints/volkswagen.py)
+   `@manufacturer.route('/api/inventory/manufacturer', methods=['GET'])`
+   decorator, you need to write the code which makes an HTTP request to the
+   manufacturer's API (in whatever form that is), to return a JSON object containing
+   the inventory results. - A simple example is the [Hyundai API](../api/src/blueprints/hyundai.py),
+   a slightly more complex example is the [Volkswagen API.](../api/src/blueprints/volkswagen.py)
 
 ## Building the EV Finder Web Interface for a New Manufacturer

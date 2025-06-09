@@ -1,5 +1,5 @@
 /**
- * Copyright 2023 - 2024 Ben Chapman
+ * Copyright 2023 - 2025 Ben Chapman
  *
  * This file is part of The EV Finder.
  *
@@ -106,27 +106,40 @@ export function priceStringToNumber(priceString) {
  * @returns {String} A Title Cased string with specific words kept uppercase
  */
 export function titleCase(str) {
-  // List of words to keep in all caps
-  const keepUppercase = ["BMW", "GMC", "VW"];
+  // List of words to keep in specific case (map lowercase to desired case)
+  const specialCasing = {
+    awd: "AWD",
+    bmw: "BMW",
+    evfinder: "EVFinder",
+    gmc: "GMC",
+    rwd: "RWD",
+    vw: "VW",
+  };
 
   function capitalize(word) {
     if (word.length === 0) return word;
 
-    // Check if this word should be kept uppercase
-    const uppercaseWord = word.toUpperCase();
-    if (keepUppercase.includes(uppercaseWord)) {
-      return uppercaseWord;
+    // Check if this word has special casing
+    const lowerWord = word.toLowerCase();
+    if (specialCasing[lowerWord]) {
+      return specialCasing[lowerWord];
     }
 
-    // Otherwise, just capitalize the first letter
-    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+    // Check if the word is all uppercase (like "AWD" or "VW")
+    if (word === word.toUpperCase() && word.length > 1) {
+      // Convert to lowercase and then capitalize first letter
+      return word[0].toUpperCase() + word.slice(1).toLowerCase();
+    }
+
+    // Otherwise, capitalize the first letter and preserve the rest (mixed case like "sHould")
+    return word[0].toUpperCase() + word.slice(1);
   }
 
   // If the input string is undefined, return an empty string
   if (!str) return "";
 
-  // Split into words and normalize case
-  const words = str.toLowerCase().split(" ");
+  // Split into words without changing case initially
+  const words = str.split(" ");
 
   return words.map(capitalize).join(" ");
 }
@@ -357,4 +370,24 @@ export function searchArrayOfObjects(arrayToSearch, searchKey) {
   return arrayToSearch.filter((obj) =>
     Object.keys(obj).some((key) => obj[key].includes(searchKey)),
   );
+}
+
+// Helper function to convert date string to ISO 8601 format
+export function convertToISODate(dateString) {
+  if (!dateString) return null;
+
+  try {
+    // Parse the date string (e.g., "June 10, 2025")
+    const date = new Date(dateString);
+
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+
+    // Return ISO 8601 format with time set to 00:00:00
+    return date.toISOString().split("T")[0] + "T00:00:00";
+  } catch (error) {
+    return null;
+  }
 }
