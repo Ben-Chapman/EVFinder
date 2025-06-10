@@ -280,6 +280,7 @@ function formatChevroletInventoryResults(input) {
     results.push({
       dealerName: titleCase(vehicle.dealer.name),
       deliveryDate: vehicle.status.value,
+      inventoryStatus: vehicle.status.value,
       drivetrainDesc: vehicle.driveType,
       distance: vehicle.dealer.distance?.value,
       price: vehicle.pricing.cash.msrp?.value,
