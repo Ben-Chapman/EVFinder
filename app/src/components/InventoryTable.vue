@@ -353,7 +353,7 @@
             sortable: true,
             sortDirection: "desc",
             showFor: ["all"],
-            hideFor: ["Chevrolet"],
+            hideFor: [],
           },
           {
             key: "drivetrainDesc",

@@ -55,16 +55,39 @@ function extractColorCodeFromImageUrl(imageUrl) {
 }
 
 /**
+ * Extracts interior color code from Chevrolet image URL.
+ *
+ * @param {String} imageUrl The vehicle image URL
+ * @returns {String|null} The interior color code or null if not found
+ */
+function extractInteriorColorCodeFromImageUrl(imageUrl) {
+  if (!imageUrl) return null;
+
+  // Interior color codes appear in the long string after exterior color
+  // Looking for patterns like ESU (Black with Red Accents), EKD (Sky Cool Gray), H9F (Black with Blue Accents)
+  const codes = ["ESU", "EKD", "H9F", "EKV", "EPJ"];
+
+  for (const code of codes) {
+    if (imageUrl.includes(`_${code}_`) || imageUrl.includes(`_${code}g`)) {
+      return code;
+    }
+  }
+
+  return null;
+}
+
+/**
  * Maps color code to actual color name using facets data.
  *
  * @param {String} colorCode The color code (e.g., "GAG")
  * @param {Object} facetsData The facets data from API response
+ * @param {String} colorType Either "exteriorColor" or "interiorColor"
  * @returns {String} The actual color name or the color code if not found
  */
-function mapColorCodeToName(colorCode, facetsData) {
-  if (!colorCode || !facetsData?.facets?.data?.exteriorColor) return colorCode;
+function mapColorCodeToName(colorCode, facetsData, colorType = "exteriorColor") {
+  if (!colorCode || !facetsData?.facets?.data?.[colorType]) return colorCode;
 
-  const colorMapping = facetsData.facets.data.exteriorColor.find(
+  const colorMapping = facetsData.facets.data[colorType].find(
     (color) => color.values && color.values.includes(colorCode),
   );
 
@@ -83,8 +106,20 @@ function formatChevroletInventoryResults(input) {
 
   input?.data?.hits.forEach((vehicle) => {
     const imageUrl = vehicle.images?.[0]?.url;
-    const colorCode = extractColorCodeFromImageUrl(imageUrl);
-    const actualColorName = mapColorCodeToName(colorCode, facetsData);
+    const exteriorColorCode = extractColorCodeFromImageUrl(imageUrl);
+    const interiorColorCode = extractInteriorColorCodeFromImageUrl(imageUrl);
+    const actualExteriorColorName = mapColorCodeToName(
+      exteriorColorCode,
+      facetsData,
+      "exteriorColor",
+    );
+    const actualInteriorColorName = mapColorCodeToName(
+      interiorColorCode,
+      facetsData,
+      "interiorColor",
+    )
+      .split(" seat trim")[0]
+      .trim();
 
     results.push({
       dealerName: titleCase(vehicle.dealer.name),
@@ -92,8 +127,8 @@ function formatChevroletInventoryResults(input) {
       drivetrainDesc: vehicle.driveType,
       distance: vehicle.dealer.distance?.value,
       price: vehicle.pricing.cash.msrp?.value,
-      exteriorColor: actualColorName || vehicle.baseExteriorColor,
-      interiorColor: vehicle.baseInteriorColor,
+      exteriorColor: actualExteriorColorName || vehicle.baseExteriorColor,
+      interiorColor: actualInteriorColorName || vehicle.baseInteriorColor,
       vin: vehicle.id,
       trimDesc: vehicle.variant.name,
     });
