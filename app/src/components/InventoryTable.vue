@@ -353,7 +353,7 @@
             sortable: true,
             sortDirection: "desc",
             showFor: ["all"],
-            hideFor: ["Chevrolet"],
+            hideFor: [],
           },
           {
             key: "drivetrainDesc",
@@ -374,7 +374,7 @@
           },
           {
             key: "deliveryDate",
-            label: "Delivery Date",
+            label: "Availability",
             formatter: "formatDate",
             sortable: true,
             sortByFormatted: true,
