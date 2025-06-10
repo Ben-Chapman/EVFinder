@@ -374,7 +374,7 @@
           },
           {
             key: "deliveryDate",
-            label: "Delivery Date",
+            label: "Availability",
             formatter: "formatDate",
             sortable: true,
             sortByFormatted: true,
