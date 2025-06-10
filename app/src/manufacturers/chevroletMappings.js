@@ -15,23 +15,6 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * This file is used to map API-specific JSON key descriptions to normalized key
- * descriptions used throughout the site.
- *
- * The structure of the jsonMapping object is:
- * {
- *   'apiSpecificKey': 'normalizedKey'
- * }
- *
- * And more specifically:
- * {
- *   'colorOfTheOutsideOfTheCar': 'exteriorColor',
- *   'modelYear': 'year'
- *   'powerLevelAsMeasuredByHorses': 'horsepower'
- * }
- */
-
 const chevroletInventoryMapping = {
   intColor: "interiorColor",
   extColor: "exteriorColor",
@@ -60,6 +43,35 @@ const chevroletVinMapping = {
   intColorOptionCode: "Interior Color Code",
   intColorDescription: "Interior Color",
   epaElectricRange: "EPA Estimated MPG Rating", // keyFeatures[].iconKey == icon_epa_electric_range
+
+  // Enhanced VIN data mappings
+  features: "Features",
+  warranty: "Warranty Information",
+  keyFeatures: "Key Features",
+  installedOptions: "Installed Options",
+  specifications: "Technical Specifications",
+  pricing: "Pricing Details",
+  availability: "Availability",
+  vehicleDescription: "Description",
+  modelYear: "Model Year",
+  makeName: "Make",
+  modelName: "Model Name",
+  bodyStyle: "Body Style",
+  driveType: "Drive Type",
+  transmission: "Transmission",
+  engine: "Engine",
+  fuelType: "Fuel Type",
+  mpgCity: "MPG City",
+  mpgHighway: "MPG Highway",
+  mpgCombined: "MPG Combined",
+  cargoCapacity: "Cargo Capacity",
+  dimensions: "Dimensions",
+  weight: "Weight",
+  performance: "Performance",
+  safety: "Safety Features",
+  technology: "Technology Features",
+  comfort: "Comfort Features",
+  convenience: "Convenience Features",
 };
 
 export { chevroletInventoryMapping, chevroletVinMapping };
