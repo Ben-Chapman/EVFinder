@@ -40,6 +40,38 @@ export async function getChevroletInventory(zip, year, model, radius, manufactur
 }
 
 /**
+ * Extracts color code from Chevrolet image URL.
+ *
+ * @param {String} imageUrl The vehicle image URL
+ * @returns {String|null} The color code or null if not found
+ */
+function extractColorCodeFromImageUrl(imageUrl) {
+  if (!imageUrl) return null;
+
+  // Extract from the 'i' parameter: i=2025/1MM48/1MM48__2RS/GNT_0ST_1MP_...
+  // The color code is after the last slash and before the first underscore
+  const match = imageUrl.match(/i=[^/]+\/[^/]+\/[^/]+\/([A-Z0-9]+)_/);
+  return match ? match[1] : null;
+}
+
+/**
+ * Maps color code to actual color name using facets data.
+ *
+ * @param {String} colorCode The color code (e.g., "GAG")
+ * @param {Object} facetsData The facets data from API response
+ * @returns {String} The actual color name or the color code if not found
+ */
+function mapColorCodeToName(colorCode, facetsData) {
+  if (!colorCode || !facetsData?.facets?.data?.exteriorColor) return colorCode;
+
+  const colorMapping = facetsData.facets.data.exteriorColor.find(
+    (color) => color.values && color.values.includes(colorCode),
+  );
+
+  return colorMapping ? colorMapping.displayValue : colorCode;
+}
+
+/**
  * Aggregates and flattens API response data for convenient frontend rendering.
  *
  * @param {Object} input a response object from the inventory API
@@ -47,14 +79,20 @@ export async function getChevroletInventory(zip, year, model, radius, manufactur
  */
 function formatChevroletInventoryResults(input) {
   const results = [];
+  const facetsData = input;
+
   input?.data?.hits.forEach((vehicle) => {
+    const imageUrl = vehicle.images?.[0]?.url;
+    const colorCode = extractColorCodeFromImageUrl(imageUrl);
+    const actualColorName = mapColorCodeToName(colorCode, facetsData);
+
     results.push({
       dealerName: titleCase(vehicle.dealer.name),
-      deliveryDate: vehicle.stockDetails.estimatedDeliveryDate,
+      deliveryDate: vehicle.status.value,
       drivetrainDesc: vehicle.driveType,
       distance: vehicle.dealer.distance?.value,
       price: vehicle.pricing.cash.msrp?.value,
-      exteriorColor: vehicle.baseExteriorColor,
+      exteriorColor: actualColorName || vehicle.baseExteriorColor,
       interiorColor: vehicle.baseInteriorColor,
       vin: vehicle.id,
       trimDesc: vehicle.variant.name,
