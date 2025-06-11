@@ -177,15 +177,6 @@ const heroImages = [
   },
   {
     imageNames: [
-      ["2022-audi-etron-1.jpg", "-26rem center", "dark"],
-      ["2022-audi-etron-s-1.jpg", "-16rem center", "dark"],
-      ["2022-audi-etron-s-sportback-1.jpg", "-13rem center", "light"],
-    ],
-    displayName: "Audi e-tron®",
-    modelName: "etron",
-  },
-  {
-    imageNames: [
       ["2022-audi-etron-gt-1.jpg", "-25rem center", "dark"],
       ["2022-audi-etron-gt-2.jpg", "-10rem center", "light"],
       ["2022-audi-etron-gt-3.jpg", "-10rem center", "dark"],
@@ -350,6 +341,27 @@ const heroImages = [
     ],
     displayName: "Hyundai Ioniq 9",
     modelName: "ioniq-9",
+  },
+  {
+    imageNames: [
+      ["2025-audi-q6-etron-1.jpg", "-35rem center", "light"],
+      ["2025-audi-q6-etron-2.jpg", "-24rem center", "light"],
+    ],
+    displayName: "Audi Q6 e-tron®",
+    modelName: "q6-etron",
+  },
+  {
+    imageNames: [["2025-audi-sq6-etron-1.jpg", "-12rem center", "light"]],
+    displayName: "Audi SQ6 e-tron®",
+    modelName: "sq6-etron",
+  },
+  {
+    imageNames: [
+      ["2025-audi-rs-etron-gt-1.jpg", "-30rem center", "light"],
+      ["2025-audi-rs-etron-gt-2.jpg", "-30rem center", "light"],
+    ],
+    displayName: "Audi RS e-tron® GT",
+    modelName: "rs-etron-gt",
   },
 ];
 

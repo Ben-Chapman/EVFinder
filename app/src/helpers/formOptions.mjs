@@ -32,10 +32,12 @@ const modelOptions = [
   {
     label: "Audi",
     options: [
-      { value: "etron", text: "e-tron®", api: "etron" },
       { value: "etron-gt", text: "e-tron® GT", api: "etrongt" },
+      { value: "rs-etron-gt", text: "RS e-tron® GT", api: "rsetrongt" },
       { value: "q4-etron", text: "Q4 e-tron®", api: "q4" },
+      { value: "q6-etron", text: "Q6 e-tron®", api: "q6etron" },
       { value: "q8-etron", text: "Q8 e-tron®", api: "q8etron" },
+      { value: "sq6-etron", text: "SQ6 e-tron®", api: "sq6etron" },
       { value: "sq8-etron", text: "SQ8 e-tron®", api: "sq8etron" },
     ],
   },
