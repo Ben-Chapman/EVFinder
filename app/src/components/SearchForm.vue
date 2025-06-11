@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keydown.enter="submitWithEnterKey">
     <!-- Only show this version of the logo on xs screens -->
     <b-row class="d-flex py-2 d-sm-none" align-h="center">
       <a href="/">
@@ -436,6 +436,12 @@ Inventory | The EV Finder`;
           `Easily search hundreds of car dealers in your area to find your perfect new \
 ${this.localForm.manufacturer} ${this.localForm.vehicleName} with the EV Finder.`,
         );
+      },
+
+      submitWithEnterKey() {
+        if (this.validateSubmitButton) {
+          this.routePushandGo();
+        }
       },
     }, //methods
 
