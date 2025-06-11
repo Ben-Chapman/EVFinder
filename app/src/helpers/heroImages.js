@@ -177,15 +177,6 @@ const heroImages = [
   },
   {
     imageNames: [
-      ["2022-audi-etron-1.jpg", "-26rem center", "dark"],
-      ["2022-audi-etron-s-1.jpg", "-16rem center", "dark"],
-      ["2022-audi-etron-s-sportback-1.jpg", "-13rem center", "light"],
-    ],
-    displayName: "Audi e-tron®",
-    modelName: "etron",
-  },
-  {
-    imageNames: [
       ["2022-audi-etron-gt-1.jpg", "-25rem center", "dark"],
       ["2022-audi-etron-gt-2.jpg", "-10rem center", "light"],
       ["2022-audi-etron-gt-3.jpg", "-10rem center", "dark"],
