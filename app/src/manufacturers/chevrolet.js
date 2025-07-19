@@ -35,6 +35,7 @@ export async function getChevroletInventory(zip, year, model, radius, manufactur
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatChevroletInventoryResults(invResponse);
   } catch (error) {
+    console.log("error here" + error);
     throw generateErrorMessage(error);
   }
 }
@@ -269,13 +270,22 @@ function formatChevroletInventoryResults(input) {
       facetsData,
       "exteriorColor",
     );
-    const actualInteriorColorName = mapColorCodeToName(
+    
+    // Try to get interior color from extracted code first, then fallback to first available option
+    let interiorColorResult = mapColorCodeToName(
       interiorColorCode,
       facetsData,
       "interiorColor",
-    )
-      .split(" seat trim")[0]
-      .trim(); // Remove " seat trim" suffix if present
+    );
+    
+    // If no result from extracted code, use the first available interior color
+    if (!interiorColorResult && facetsData?.facets?.data?.interiorColor?.[0]?.displayValue) {
+      interiorColorResult = facetsData.facets.data.interiorColor[0].displayValue;
+    }
+    
+    const actualInteriorColorName = interiorColorResult
+      ? interiorColorResult.split(" seat trim")[0].trim()
+      : null;
 
     results.push({
       dealerName: titleCase(vehicle.dealer.name),
