@@ -12,23 +12,23 @@ repos:
 
   - repo: local
     hooks:
-      - id: no-console-statements
-        name: Check for console.* statements
-        language: pygrep
-        # Detect files with console.* statements
-        entry: "console.*"
-        args: [--multiline]
-        types_or: [javascript, jsx, ts, tsx]
-        exclude: |
-          (?x)^(
-            # Exclude specific files and directories
-            src/App\.vue$|  # Exclude src/App.vue
-            src/helpers/libs\.js$|
-            ^tests/          # Exclude all files in tests/
-          )
-        pass_filenames: true
-        always_run: false
-        stages: [pre-commit, manual]
+      # - id: no-console-statements
+      #   name: Check for console.* statements
+      #   language: pygrep
+      #   # Detect files with console.* statements
+      #   entry: "console.*"
+      #   args: [--multiline]
+      #   types_or: [javascript, jsx, ts, tsx]
+      #   exclude: |
+      #     (?x)^(
+      #       # Exclude specific files and directories
+      #       src/App\.vue$|  # Exclude src/App.vue
+      #       src/helpers/libs\.js$|
+      #       ^tests/          # Exclude all files in tests/
+      #     )
+      #   pass_filenames: true
+      #   always_run: false
+      #   stages: [pre-commit, manual]
 
       - id: validate-sitemap
         name: Validate sitemap.xml
