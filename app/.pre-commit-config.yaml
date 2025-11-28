@@ -23,6 +23,7 @@ repos:
           (?x)^(
             # Exclude specific files and directories
             src/App\.vue$|  # Exclude src/App.vue
+            src/helpers/libs\.js$|
             ^tests/          # Exclude all files in tests/
           )
         pass_filenames: true
