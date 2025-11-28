@@ -93,7 +93,28 @@ test("Nested Object should be flattened", () => {
 
 test("Should return error text Array", () => {
   const errorText = "This is error text";
-  expect(libs.generateErrorMessage(errorText)).toStrictEqual(["ERROR", errorText]);
+  expect(libs.generateErrorMessage(errorText)).toStrictEqual([
+    "ERROR",
+    {
+      detail: {
+        errorMessage: errorText,
+        errorData: null,
+      },
+    },
+  ]);
+});
+
+test("Should handle error objects with message property", () => {
+  const errorObj = { message: "Error occurred", code: 500 };
+  expect(libs.generateErrorMessage(errorObj)).toStrictEqual([
+    "ERROR",
+    {
+      detail: {
+        errorMessage: "Error occurred",
+        errorData: null,
+      },
+    },
+  ]);
 });
 
 test("console.log the text this is a test", () => {
