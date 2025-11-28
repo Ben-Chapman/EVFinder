@@ -35,7 +35,6 @@ export async function getChevroletInventory(zip, year, model, radius, manufactur
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatChevroletInventoryResults(invResponse);
   } catch (error) {
-    console.log("error here" + error);
     throw generateErrorMessage(error);
   }
 }
@@ -56,18 +55,29 @@ function extractColorCodeFromImageUrl(imageUrl) {
 }
 
 /**
- * Extracts interior color code from Chevrolet image URL.
+ * Extracts interior color code from Chevrolet image URL using facets data.
  *
  * @param {String} imageUrl The vehicle image URL
+ * @param {Object} facetsData The facets data from API response containing available color codes
  * @returns {String|null} The interior color code or null if not found
  */
-function extractInteriorColorCodeFromImageUrl(imageUrl) {
+function extractInteriorColorCodeFromImageUrl(imageUrl, facetsData = null) {
   if (!imageUrl) return null;
 
-  // Interior color codes appear in the long string after exterior color
-  // Looking for patterns like ESU (Black with Red Accents), EKD (Sky Cool Gray), H9F (Black with Blue Accents)
-  const codes = ["ESU", "EKD", "H9F", "EKV", "EPJ"];
+  // If facetsData is provided, dynamically extract all interior color codes from the API response
+  // This automatically adapts to new color codes without code changes
+  let codes = [];
+  if (facetsData?.facets?.data?.interiorColor) {
+    codes = facetsData.facets.data.interiorColor.map((color) => color.values).flat();
+  }
 
+  // Fallback to legacy codes if facetsData is not available
+  // This ensures backwards compatibility and handles edge cases
+  if (codes.length === 0) {
+    codes = ["ESU", "EKD", "H9F", "H7D", "EKV", "E2H", "EMJ", "EMG", "EPJ"];
+  }
+
+  // Search for color codes in the image URL
   for (const code of codes) {
     if (imageUrl.includes(`_${code}_`) || imageUrl.includes(`_${code}g`)) {
       return code;
@@ -264,36 +274,34 @@ function formatChevroletInventoryResults(input) {
   input?.data?.hits.forEach((vehicle) => {
     const imageUrl = vehicle.images?.[0]?.url;
     const exteriorColorCode = extractColorCodeFromImageUrl(imageUrl);
-    const interiorColorCode = extractInteriorColorCodeFromImageUrl(imageUrl);
+    const interiorColorCode = extractInteriorColorCodeFromImageUrl(
+      imageUrl,
+      facetsData,
+    );
     const actualExteriorColorName = mapColorCodeToName(
       exteriorColorCode,
       facetsData,
       "exteriorColor",
     );
-    
-    // Try to get interior color from extracted code first, then fallback to first available option
-    let interiorColorResult = mapColorCodeToName(
+    const interiorColorMapped = mapColorCodeToName(
       interiorColorCode,
       facetsData,
       "interiorColor",
     );
-    
-    // If no result from extracted code, use the first available interior color
-    if (!interiorColorResult && facetsData?.facets?.data?.interiorColor?.[0]?.displayValue) {
-      interiorColorResult = facetsData.facets.data.interiorColor[0].displayValue;
-    }
-    
-    const actualInteriorColorName = interiorColorResult
-      ? interiorColorResult.split(" seat trim")[0].trim()
-      : null;
+    const actualInteriorColorName = interiorColorMapped
+      ? interiorColorMapped.split(" seat trim")[0].trim()
+      : null; // Remove " seat trim" suffix if present
+
+    // Handle recalled vehicles that don't have status property
+    const statusValue = vehicle.status?.value || vehicle.recall?.value;
 
     results.push({
       dealerName: titleCase(vehicle.dealer.name),
-      deliveryDate: vehicle.status.value,
-      inventoryStatus: vehicle.status.value,
+      deliveryDate: statusValue,
+      inventoryStatus: statusValue,
       drivetrainDesc: vehicle.driveType,
       distance: vehicle.dealer.distance?.value,
-      price: vehicle.pricing.cash.msrp?.value,
+      price: vehicle.pricing?.cash?.msrp?.value,
       exteriorColor: actualExteriorColorName || vehicle.baseExteriorColor,
       interiorColor: actualInteriorColorName || vehicle.baseInteriorColor,
       vin: vehicle.id,
