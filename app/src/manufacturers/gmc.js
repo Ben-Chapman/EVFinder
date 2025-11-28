@@ -54,8 +54,8 @@ function formatGMCInventoryResults(input) {
         : "0.00";
     }
 
-    // Pricing information
-    tmp["price"] = vehicle.pricing.totalVehiclePrice.price || "N/A";
+    // Pricing information (use optional chaining for recalled/unavailable vehicles)
+    tmp["price"] = vehicle.pricing?.totalVehiclePrice?.price || "0";
 
     // Inventory status
     tmp["inTransit"] = vehicle["intransit"];

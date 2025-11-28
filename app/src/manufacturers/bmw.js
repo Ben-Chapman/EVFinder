@@ -66,10 +66,16 @@ function formatBMWInventoryResults(input) {
       // The BMW API does not provide an actual vehicle color except embedded in a URL
       // Pulling the query params from initialCOSYURL, and using bmwColorMapping to
       // derive the actual interior and exterior colors.
-      const colorMap = queryParamStringToObject(vehicle?.initialCOSYURL);
-
-      tmp["exteriorColor"] = bmwColorMapping[colorMap["paint"]];
-      tmp["interiorColor"] = bmwColorMapping[colorMap["fabric"]];
+      // Note: BMW's URL format may change (encrypted URLs vs plain query params)
+      try {
+        const colorMap = queryParamStringToObject(vehicle?.initialCOSYURL);
+        tmp["exteriorColor"] = bmwColorMapping[colorMap["paint"]] || "N/A";
+        tmp["interiorColor"] = bmwColorMapping[colorMap["fabric"]] || "N/A";
+      } catch (error) {
+        // Handle cases where URL doesn't contain query parameters (encrypted URLs)
+        tmp["exteriorColor"] = "N/A";
+        tmp["interiorColor"] = "N/A";
+      }
     });
 
     res.push({ ...tmp, ...vehicle });

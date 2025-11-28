@@ -200,12 +200,32 @@ export function generateUrlQueryParams(item, sliceLength) {
 }
 /**
  *
- * @param {String} errorText A error message String which is to be shown as an Error in
- * the EV Finder UI.
+ * @param {String|Object} errorText A error message String or Object which is to be shown as an Error in
+ * the EV Finder UI. If an Object is passed, it will be stringified.
+ * @param {String} errorData Optional. Additional error details to display in a collapsible section.
  * @returns {Array} An error message which is consumed by the EV Finder Vue app
  */
-export function generateErrorMessage(errorText) {
-  return ["ERROR", errorText];
+export function generateErrorMessage(errorText, errorData = null) {
+  // If errorText is an object, try to extract a meaningful error message
+  let errorMessage = errorText;
+  if (typeof errorText === "object" && errorText !== null) {
+    // Try common error message properties
+    errorMessage =
+      errorText.message ||
+      errorText.errorMessage ||
+      errorText.error ||
+      JSON.stringify(errorText);
+  }
+
+  return [
+    "ERROR",
+    {
+      detail: {
+        errorMessage: String(errorMessage),
+        errorData: errorData,
+      },
+    },
+  ];
 }
 
 /**
