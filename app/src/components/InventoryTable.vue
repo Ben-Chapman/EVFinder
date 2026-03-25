@@ -505,7 +505,7 @@
             );
           },
           async audi() {
-            return await getAudiVinDetail(this.item.id, this.manufacturer);
+            return await getAudiVinDetail(this.item.vin, this.manufacturer);
           },
         };
         try {
