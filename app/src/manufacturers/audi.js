@@ -22,7 +22,7 @@ import {
   stripHTML,
   titleCase,
 } from "../helpers/libs";
-import { audiInventoryMapping, audiVinMapping } from "./audiMappings";
+import { audiVinMapping } from "./audiMappings";
 
 export async function getAudiInventory(zip, year, model, radius, manufacturer, geo) {
   /**
@@ -59,57 +59,33 @@ export async function getAudiVinDetail(vehicleId, manufacturer) {
   }
 }
 
-function formatAudiInventoryResults(input, modelYear) {
+export function formatAudiInventoryResults(input, modelYear) {
   const res = [];
 
-  input.data?.getFilteredVehiclesForWormwood?.vehicles?.forEach((vehicle) => {
+  input.data?.stockCarSearch?.results?.cars?.forEach((car) => {
+    const stockCar = car.stockCar;
+
     // The Audi inventory API does not support filtering by model year. Doing that here.
-    if (vehicle.modelYear == modelYear) {
-      var tmp = {};
-      Object.keys(vehicle).forEach((key) => {
-        Object.keys(audiInventoryMapping).includes(key)
-          ? (tmp[audiInventoryMapping[key]] = vehicle[key])
-          : null;
-      });
-    } else {
-      return [];
+    if (stockCar.model?.salesModelyear != modelYear) {
+      return;
     }
-    /**
-     * The interiorColor value returned from the Audi API is something like
-     * "Black-Gray, Black, Flint Gray with Orange piping, Black", where Flint Gray...
-     * is the actual interior color. Extracting the actual interiorColor here
-     */
-    const interiorColors = vehicle["interiorColor"]
-      ? vehicle["interiorColor"].split(",")
-      : "Unknown";
 
-    // The real interior color is the second-to-last element in the array
-    vehicle["interiorColor"] = interiorColors[interiorColors.length - 2];
-
-    // The Audi MSRP is provided as $12,345.00. Stripping the cents, and removing non-digits.
-    // If the API-provided price is null, write 0 for the price.
-    tmp["price"] = tmp["price"] ? tmp["price"].split(".")[0].replace(/\D/g, "") : 0;
+    // Extract MSRP from the carPrices array
+    const msrpEntry = stockCar.carPrices?.find((p) => p.type === "MSRP");
+    const price = msrpEntry?.price?.value || 0;
 
     /**
-     * Vehicles in transit have more specific availability data in 'vehicleOrderStatus'.
-     * Vehicles in stock at the dealer only have availability info in `vehicleInventoryType
-     * So dealing with that here
+     * Vehicles in transit have more specific availability data in 'orderStatusText'.
+     * Vehicles in stock at the dealer only have availability info in 'saleOrderTypeText'.
      */
-    vehicle["vehicleOrderStatus"] === null
-      ? (tmp["deliveryDate"] = titleCase(
-          vehicle["vehicleInventoryType"].replace("-", " "),
-        ))
-      : (tmp["deliveryDate"] = titleCase(vehicle["vehicleOrderStatus"]).replace(
-          "Intransit",
-          "In Transit",
-        ));
-
-    // Populating the Availability filter
-    tmp["inventoryStatus"] = tmp["deliveryDate"];
+    const rawStatus = stockCar.salesInfo?.orderStatusText
+      ? stockCar.salesInfo.orderStatusText
+      : (stockCar.salesInfo?.saleOrderTypeText || "").replace("-", " ");
+    const deliveryDate = titleCase(rawStatus);
 
     /**
      * Extracting and formatting the various model names.
-     * 2023 Audi e-tron Sportback -> e-tron Sportback
+     * "2026 Audi Q4 e-tron" -> "Q4 e-tron"
      *
      * Quick note for future me, I would have named this modelDesc. In doing so though,
      * there's some bug in the buildFilterOptions() function in the Filters component
@@ -118,9 +94,24 @@ function formatAudiInventoryResults(input, modelYear) {
      * names, and thus display 0 vehicles in the Inventory table. Debugging was fruitless.
      * Hence, vehicleDesc and a TODO: to figure this out when I have more time.
      */
-    tmp["vehicleDesc"] = vehicle["modelName"].replace(/\d{4}\sAudi\s/, "");
+    const vehicleDesc = stockCar.titleText?.replace(/\d{4}\sAudi\s/, "") || "";
 
-    res.push({ ...tmp, ...vehicle });
+    const tmp = {
+      distance: car.geoDistance?.value?.number,
+      drivetrainDesc: stockCar.driveText,
+      price,
+      trimDesc: stockCar.subtitleText,
+      deliveryDate,
+      inventoryStatus: deliveryDate,
+      exteriorColor: stockCar.colorInfo?.exteriorColor?.colorInfo?.text,
+      interiorColor: stockCar.colorInfo?.interiorColor?.colorInfo?.text,
+      vehicleDesc,
+      dealerName: stockCar.dealer?.name,
+      vin: stockCar.vin,
+      id: stockCar.id,
+    };
+
+    res.push({ ...tmp, ...stockCar });
   });
 
   return res;

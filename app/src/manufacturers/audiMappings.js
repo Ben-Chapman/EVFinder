@@ -31,14 +31,6 @@
  *   'powerLevelAsMeasuredByHorses': 'horsepower'
  * }
  */
-const audiInventoryMapping = {
-  distanceFromUser: "distance",
-  driveType: "drivetrainDesc",
-  modelPrice: "price",
-  trimName: "trimDesc",
-  vehicleOrderStatus: "deliveryDate",
-};
-
 const audiVinMapping = {
   bodyType: "Body Type",
   dealerName: "Dealer Name",
@@ -59,4 +51,4 @@ const audiVinMapping = {
   vehicleType: "Vehicle Type",
 };
 
-export { audiInventoryMapping, audiVinMapping };
+export { audiVinMapping };
