@@ -68,8 +68,9 @@ export function formatAudiInventoryResults(input, modelYear) {
       return;
     }
 
-    // Extract MSRP from the carPrices array
-    const msrpEntry = stockCar.carPrices?.find((p) => p.type === "MSRP");
+    // Extract the list (manufacturer) price from the carPrices array.
+    // The Audi API uses type "list" for the sticker price, not "MSRP".
+    const msrpEntry = stockCar.carPrices?.find((p) => p.type === "list");
     const price = msrpEntry?.price?.value || 0;
 
     /**
@@ -95,7 +96,9 @@ export function formatAudiInventoryResults(input, modelYear) {
     const vehicleDesc = stockCar.titleText?.replace(/\d{4}\sAudi\s/, "") || "";
 
     const tmp = {
-      distance: car.geoDistance?.value?.number,
+      // Use the pre-formatted value ("16.22") rather than the raw float to avoid
+      // excessive decimal places in the distance column.
+      distance: parseFloat(car.geoDistance?.value?.formatted),
       drivetrainDesc: stockCar.driveText,
       price,
       trimDesc: stockCar.subtitleText,
@@ -105,6 +108,9 @@ export function formatAudiInventoryResults(input, modelYear) {
       interiorColor: stockCar.colorInfo?.interiorColor?.colorInfo?.text,
       vehicleDesc,
       dealerName: stockCar.dealer?.name,
+      // weblink is a per-vehicle URL on the dealer's site. Strip the protocol
+      // prefix so the template can prepend https:// uniformly across manufacturers.
+      dealerUrl: stockCar.weblink?.replace(/^https?:\/\//i, ""),
       vin: stockCar.vin,
       id: stockCar.id,
     };
