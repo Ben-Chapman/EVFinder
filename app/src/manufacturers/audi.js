@@ -22,8 +22,6 @@ import {
   stripHTML,
   titleCase,
 } from "../helpers/libs";
-import { audiVinMapping } from "./audiMappings";
-
 export async function getAudiInventory(zip, year, model, radius, manufacturer, geo) {
   /**
    * The Audi API requires the ZIP Code to be provided as latitude_longitude. When a
@@ -117,92 +115,53 @@ export function formatAudiInventoryResults(input, modelYear) {
   return res;
 }
 
-function formatAudiVinResults(input) {
+export function formatAudiVinResults(input) {
+  const stockCar = input.data?.stockCarSearch?.results?.cars?.[0]?.stockCar;
+  if (!stockCar) return {};
+
   const vinFormattedData = {};
-  const vinData = input.data.getVehicleInfoForWormwood;
 
-  // Replace Audi JSON keys with EV Finder JSON keys
-  Object.keys(vinData).forEach((vinKey) => {
-    Object.keys(audiVinMapping).includes(vinKey)
-      ? (vinFormattedData[audiVinMapping[vinKey]] = vinData[vinKey])
-      : null;
+  vinFormattedData["Model Name"] = stockCar.titleText;
+  vinFormattedData["Trim Name"] = stockCar.subtitleText;
+  vinFormattedData["Model Year"] = stockCar.modelInfo?.modelyear;
+  vinFormattedData["Body Type"] = stockCar.cartypeText;
+  vinFormattedData["Dealer Name"] = stockCar.dealer?.name;
+  // The dealer description is provided as raw HTML. Stripping to display plain text.
+  vinFormattedData["Dealer Note"] = stripHTML(stockCar.descriptionByDealer || "");
+  vinFormattedData["Exterior Color"] =
+    stockCar.colorInfo?.exteriorColor?.colorInfo?.text;
+  vinFormattedData["Interior Color"] =
+    stockCar.colorInfo?.interiorColor?.colorInfo?.text;
+  vinFormattedData["Fuel Type"] = stockCar.engineInfo?.fuel?.text;
+  // New vehicles have no mileage
+  vinFormattedData["Vehicle Mileage"] = "N/A";
+
+  // Build technical specifications from the structured techDataGroups array
+  const techSpecs = [];
+  stockCar.techDataGroups?.forEach((group) => {
+    group.techDataList?.forEach((item) => {
+      if (item.text) {
+        techSpecs.push(`${item.label}: ${item.text}`);
+      }
+    });
   });
-
-  // The dealer note is provided as raw HTML. Stripping the HTML to display plain text
-  vinFormattedData["Dealer Note"] = stripHTML(vinFormattedData["Dealer Note"]);
-
-  // It appears for new vehicles, 'vehicleMilage' is null. Replacing with something descriptive
-  if (!vinFormattedData["Vehicle Mileage"]) {
-    vinFormattedData["Vehicle Mileage"] = "N/A";
+  if (techSpecs.length > 0) {
+    vinFormattedData["Technical Specifications"] = techSpecs.join(",  ");
   }
 
-  // Adjust Market: us -> US
-  vinFormattedData["Market"] = vinFormattedData["Market"].toUpperCase();
+  // Build equipment sections from manufacturer-specific category data
+  stockCar.manufacturerSpecificItems?.cdbCategories?.forEach((category) => {
+    if (!category.label) return;
+    const features = [];
+    category.categories?.forEach((subCategory) => {
+      subCategory.features?.forEach((feature) => {
+        if (feature.text) features.push(feature.text);
+      });
+    });
+    if (features.length > 0) {
+      vinFormattedData[category.label] = features.join(",  ");
+    }
+  });
 
-  // Titlecase Vehicle Type
-  vinFormattedData["Vehicle Type"] = titleCase(vinFormattedData["Vehicle Type"]);
-
-  // Building the technical specification and equipments data
-  // vinFormattedData["Technical Specifications"] = "";
-  let techSpecs = [];
-  Object.keys(input.data.getVehicleInfoForWormwood.technicalSpecifications).forEach(
-    (key) => {
-      let value = input.data.getVehicleInfoForWormwood.technicalSpecifications[key];
-      if (value === null) value = "N/A";
-
-      // excluding this metadata-related key
-      if (key != "__typename") {
-        techSpecs.push(`${titleCase(key)}: ${value}`);
-      }
-      vinFormattedData["Technical Specifications"] = techSpecs.join(",  ");
-    },
-  );
-
-  /**
-   * Audi provide two types of equipment data, standard and optional with slightly
-   * different data structures, hence the logic here to deal with that.
-   */
-  Object.keys(input.data.getVehicleInfoForWormwood.equipments).forEach(
-    (equipmentType) => {
-      if (equipmentType != "__typename") {
-        let equipment = [];
-        // Optional equipment
-        if (equipmentType == "optionalEquipments") {
-          input.data.getVehicleInfoForWormwood.equipments[equipmentType].forEach(
-            (e) => {
-              equipment.push(e["headline"]);
-            },
-          );
-        }
-        // Standard equipment
-        else if (equipmentType == "standardEquipments") {
-          Object.keys(
-            input.data.getVehicleInfoForWormwood.equipments[equipmentType],
-          ).forEach((e) => {
-            if (
-              e != "__typename" &&
-              input.data.getVehicleInfoForWormwood.equipments[equipmentType][e] !==
-                null &&
-              input.data.getVehicleInfoForWormwood.equipments[equipmentType][e].length >
-                0
-            ) {
-              Object.keys(
-                input.data.getVehicleInfoForWormwood.equipments[equipmentType][e],
-              ).forEach((key) => {
-                const value =
-                  input.data.getVehicleInfoForWormwood.equipments[equipmentType][e][
-                    key
-                  ];
-                equipment.push(value["headline"]);
-              });
-            }
-          });
-        }
-        if (equipment.length > 0) {
-          vinFormattedData[titleCase(equipmentType)] = equipment.join(",  ");
-        }
-      }
-    },
-  );
   return vinFormattedData;
 }

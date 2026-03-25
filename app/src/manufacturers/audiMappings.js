@@ -16,39 +16,7 @@
  */
 
 /**
- * This file is used to map API-specific JSON key descriptions to normalized key
- * descriptions used throughout the site.
- *
- * The structure of the jsonMapping object is:
- * {
- *   'apiSpecificKey': 'normalizedKey'
- * }
- *
- * And more specifically:
- * {
- *   'colorOfTheOutsideOfTheCar': 'exteriorColor',
- *   'modelYear': 'year'
- *   'powerLevelAsMeasuredByHorses': 'horsepower'
- * }
+ * The Audi onegraph API returns deeply nested objects for both inventory and VIN
+ * detail responses. Field extraction is handled directly in audi.js rather than
+ * through a flat key mapping.
  */
-const audiVinMapping = {
-  bodyType: "Body Type",
-  dealerName: "Dealer Name",
-  dealerNote: "Dealer Note",
-  driveType: "Drivetrain",
-  //'equipments': '', //nested object
-  exteriorColor: "Exterior Color",
-  fuelType: "Fuel Type",
-  gearType: "Gear Type",
-  market: "Market",
-  modelMileage: "Vehicle Mileage",
-  modelName: "Model Name",
-  modelYear: "Model Year",
-  // 'technicalSpecifications': '',  //object
-  trimName: "Trim Name",
-  trimline: "Trim Line",
-  upholsteryColor: "Interior Color",
-  vehicleType: "Vehicle Type",
-};
-
-export { audiVinMapping };

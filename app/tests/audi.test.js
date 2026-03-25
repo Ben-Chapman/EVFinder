@@ -1,4 +1,7 @@
-import { formatAudiInventoryResults } from "../src/manufacturers/audi";
+import {
+  formatAudiInventoryResults,
+  formatAudiVinResults,
+} from "../src/manufacturers/audi";
 
 const makeCar = (overrides = {}) => ({
   geoDistance: {
@@ -201,6 +204,182 @@ describe("formatAudiInventoryResults", () => {
       });
       const result = formatAudiInventoryResults(makeResponse([car]), 2026)[0];
       expect(result.deliveryDate).toBe("In Stock");
+    });
+  });
+});
+
+const makeVinStockCar = (overrides = {}) => ({
+  id: "vin-test-id",
+  vin: "WAUJ8BFW5S7901084",
+  titleText: "2025 Audi e-tron GT",
+  subtitleText: "Premium Plus",
+  cartypeText: "Sedan",
+  model: { id: { year: 2025, code: "FW" }, name: "e-tron GT" },
+  modelInfo: { modelyear: 2025, genericModel: { code: "FW", text: "e-tron GT" } },
+  dealer: { id: "dealer-001", name: "Audi Beverly Hills" },
+  descriptionByDealer: "<p>Great car!</p>",
+  colorInfo: {
+    exteriorColor: {
+      colorInfo: { text: "Kemora Gray Metallic", code: "GY" },
+      baseColorInfo: { text: "Gray", code: "GY" },
+    },
+    interiorColor: {
+      colorInfo: { text: "Black", code: "BK" },
+      baseColorInfo: { text: "Black", code: "BK" },
+    },
+  },
+  salesInfo: { availableFromDateInfo: { value: "2025-01-15" } },
+  engineInfo: { fuel: { text: "Electric" } },
+  techDataGroups: [
+    {
+      id: "performance",
+      label: "Performance",
+      techDataList: [
+        { id: "topSpeed", text: "152 mph", label: "Top Speed" },
+        { id: "acceleration", text: "3.1 sec", label: "0-60 mph" },
+      ],
+    },
+  ],
+  manufacturerSpecificItems: {
+    cdbCategories: [
+      {
+        id: "comfort",
+        label: "Comfort & Convenience",
+        categories: [
+          {
+            id: "seats",
+            label: "Seats",
+            features: [{ text: "Heated Front Seats", featureType: "standard" }],
+          },
+        ],
+      },
+    ],
+  },
+  ...overrides,
+});
+
+const makeVinResponse = (stockCar) => ({
+  data: {
+    stockCarSearch: {
+      resultNumber: 1,
+      results: { cars: [{ stockCar }] },
+    },
+  },
+});
+
+describe("formatAudiVinResults", () => {
+  describe("basic field extraction", () => {
+    let result;
+    beforeEach(() => {
+      result = formatAudiVinResults(makeVinResponse(makeVinStockCar()));
+    });
+
+    test("extracts Model Name from titleText", () => {
+      expect(result["Model Name"]).toBe("2025 Audi e-tron GT");
+    });
+
+    test("extracts Trim Name from subtitleText", () => {
+      expect(result["Trim Name"]).toBe("Premium Plus");
+    });
+
+    test("extracts Model Year from modelInfo", () => {
+      expect(result["Model Year"]).toBe(2025);
+    });
+
+    test("extracts Body Type from cartypeText", () => {
+      expect(result["Body Type"]).toBe("Sedan");
+    });
+
+    test("extracts Dealer Name from nested dealer object", () => {
+      expect(result["Dealer Name"]).toBe("Audi Beverly Hills");
+    });
+
+    test("strips HTML from Dealer Note", () => {
+      expect(result["Dealer Note"]).toBe("Great car!");
+    });
+
+    test("extracts Exterior Color from colorInfo", () => {
+      expect(result["Exterior Color"]).toBe("Kemora Gray Metallic");
+    });
+
+    test("extracts Interior Color from colorInfo", () => {
+      expect(result["Interior Color"]).toBe("Black");
+    });
+
+    test("extracts Fuel Type from engineInfo", () => {
+      expect(result["Fuel Type"]).toBe("Electric");
+    });
+
+    test("sets Vehicle Mileage to N/A for new vehicles", () => {
+      expect(result["Vehicle Mileage"]).toBe("N/A");
+    });
+  });
+
+  describe("technical specifications", () => {
+    test("builds Technical Specifications from techDataGroups", () => {
+      const result = formatAudiVinResults(makeVinResponse(makeVinStockCar()));
+      expect(result["Technical Specifications"]).toContain("Top Speed: 152 mph");
+      expect(result["Technical Specifications"]).toContain("0-60 mph: 3.1 sec");
+    });
+
+    test("handles empty techDataGroups gracefully", () => {
+      const car = makeVinStockCar({ techDataGroups: [] });
+      const result = formatAudiVinResults(makeVinResponse(car));
+      expect(result["Technical Specifications"]).toBeUndefined();
+    });
+
+    test("skips tech data entries with no text value", () => {
+      const car = makeVinStockCar({
+        techDataGroups: [
+          {
+            id: "group",
+            label: "Group",
+            techDataList: [
+              { id: "empty", text: null, label: "Empty Field" },
+              { id: "filled", text: "100 kW", label: "Power" },
+            ],
+          },
+        ],
+      });
+      const result = formatAudiVinResults(makeVinResponse(car));
+      expect(result["Technical Specifications"]).toBe("Power: 100 kW");
+    });
+  });
+
+  describe("equipment sections", () => {
+    test("builds equipment section from cdbCategories", () => {
+      const result = formatAudiVinResults(makeVinResponse(makeVinStockCar()));
+      expect(result["Comfort & Convenience"]).toContain("Heated Front Seats");
+    });
+
+    test("handles missing manufacturerSpecificItems gracefully", () => {
+      const car = makeVinStockCar({ manufacturerSpecificItems: null });
+      expect(() => formatAudiVinResults(makeVinResponse(car))).not.toThrow();
+    });
+
+    test("skips empty equipment categories", () => {
+      const car = makeVinStockCar({
+        manufacturerSpecificItems: {
+          cdbCategories: [{ id: "empty", label: "Empty Section", categories: [] }],
+        },
+      });
+      const result = formatAudiVinResults(makeVinResponse(car));
+      expect(result["Empty Section"]).toBeUndefined();
+    });
+  });
+
+  describe("null safety", () => {
+    test("returns empty object when no cars in response", () => {
+      const input = {
+        data: { stockCarSearch: { resultNumber: 0, results: { cars: [] } } },
+      };
+      expect(formatAudiVinResults(input)).toEqual({});
+    });
+
+    test("handles null descriptionByDealer", () => {
+      const car = makeVinStockCar({ descriptionByDealer: null });
+      const result = formatAudiVinResults(makeVinResponse(car));
+      expect(result["Dealer Note"]).toBe("");
     });
   });
 });
