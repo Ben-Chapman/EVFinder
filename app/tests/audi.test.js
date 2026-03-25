@@ -16,11 +16,13 @@ const makeCar = (overrides = {}) => ({
     dealer: { id: "dealer-001", name: "Audi Beverly Hills", region: "West" },
     carPrices: [
       {
-        label: "MSRP",
-        price: { value: 48900, valueAsText: "$48,900", formattedValue: "$48,900.00" },
-        type: "MSRP",
+        label: null,
+        price: { value: 48900, valueAsText: "48,900.00", formattedValue: "$48,900.00" },
+        type: "list",
       },
     ],
+    weblink:
+      "https://www.audibeverlyhills.com/en/inventory/vehicle/?vehicleId=WAUZZZ4MXND123456",
     salesInfo: {
       availableFromDateInfo: { type: "DATE", value: "2026-03-01" },
       orderStatusText: "In Transit",
@@ -95,8 +97,14 @@ describe("formatAudiInventoryResults", () => {
       result = formatAudiInventoryResults(makeResponse([makeCar()]), 2026)[0];
     });
 
-    test("extracts distance from geoDistance", () => {
+    test("extracts distance from geoDistance formatted value", () => {
       expect(result.distance).toBe(12.5);
+    });
+
+    test("extracts dealerUrl from weblink with protocol stripped", () => {
+      expect(result.dealerUrl).toBe(
+        "www.audibeverlyhills.com/en/inventory/vehicle/?vehicleId=WAUZZZ4MXND123456",
+      );
     });
 
     test("extracts drivetrainDesc from driveText", () => {
@@ -129,7 +137,7 @@ describe("formatAudiInventoryResults", () => {
   });
 
   describe("price extraction", () => {
-    test("extracts MSRP price as a number", () => {
+    test("extracts list price as a number", () => {
       const result = formatAudiInventoryResults(makeResponse([makeCar()]), 2026)[0];
       expect(result.price).toBe(48900);
     });
@@ -142,11 +150,11 @@ describe("formatAudiInventoryResults", () => {
       expect(result.price).toBe(0);
     });
 
-    test("returns 0 when no MSRP entry exists in carPrices", () => {
+    test("returns 0 when no list entry exists in carPrices", () => {
       const car = makeCar({
         stockCar: {
           ...makeCar().stockCar,
-          carPrices: [{ label: "Other", price: { value: 500 }, type: "DESTINATION" }],
+          carPrices: [{ label: null, price: { value: 500 }, type: "dealerDiscount" }],
         },
       });
       const result = formatAudiInventoryResults(makeResponse([car]), 2026)[0];
@@ -204,6 +212,21 @@ describe("formatAudiInventoryResults", () => {
       });
       const result = formatAudiInventoryResults(makeResponse([car]), 2026)[0];
       expect(result.deliveryDate).toBe("In Stock");
+    });
+  });
+
+  describe("dealerUrl extraction", () => {
+    test("strips https:// protocol from weblink", () => {
+      const result = formatAudiInventoryResults(makeResponse([makeCar()]), 2026)[0];
+      expect(result.dealerUrl).not.toMatch(/^https?:\/\//);
+    });
+
+    test("returns undefined dealerUrl when weblink is absent", () => {
+      const car = makeCar({
+        stockCar: { ...makeCar().stockCar, weblink: undefined },
+      });
+      const result = formatAudiInventoryResults(makeResponse([car]), 2026)[0];
+      expect(result.dealerUrl).toBeUndefined();
     });
   });
 });
