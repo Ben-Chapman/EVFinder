@@ -19,10 +19,9 @@ import { apiRequest } from "../helpers/request";
 import {
   convertToCurrency,
   generateErrorMessage,
-  queryParamStringToObject,
   sortObjectByKey,
 } from "../helpers/libs";
-import { bmwColorMapping, bmwInventoryMapping, bmwVinMapping } from "./bmwMappings";
+import { bmwInventoryMapping, bmwVinMapping } from "./bmwMappings";
 
 export async function getBMWInventory(zip, year, model, radius, manufacturer) {
   try {
@@ -62,20 +61,17 @@ function formatBMWInventoryResults(input) {
         "",
       );
 
-      // Populate descriptive color names
-      // The BMW API does not provide an actual vehicle color except embedded in a URL
-      // Pulling the query params from initialCOSYURL, and using bmwColorMapping to
-      // derive the actual interior and exterior colors.
-      // Note: BMW's URL format may change (encrypted URLs vs plain query params)
-      try {
-        const colorMap = queryParamStringToObject(vehicle?.initialCOSYURL);
-        tmp["exteriorColor"] = bmwColorMapping[colorMap["paint"]] || "N/A";
-        tmp["interiorColor"] = bmwColorMapping[colorMap["fabric"]] || "N/A";
-      } catch (error) {
-        // Handle cases where URL doesn't contain query parameters (encrypted URLs)
-        tmp["exteriorColor"] = "N/A";
-        tmp["interiorColor"] = "N/A";
-      }
+      // Populate descriptive color names from the options array, which carries
+      // full paint and upholstery names via isPaint/isUpholstery flags. Falls
+      // back to the generic color fields if options are unavailable.
+      tmp["exteriorColor"] =
+        vehicle?.options?.find((o) => o.isPaint)?.name ||
+        vehicle?.exteriorGenericColor ||
+        "N/A";
+      tmp["interiorColor"] =
+        vehicle?.options?.find((o) => o.isUpholstery)?.name ||
+        vehicle?.interiorGenericColor ||
+        "N/A";
     });
 
     res.push({ ...tmp, ...vehicle });
