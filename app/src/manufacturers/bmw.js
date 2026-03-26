@@ -32,7 +32,7 @@ export async function getBMWInventory(zip, year, model, radius, manufacturer) {
   }
 }
 
-function formatBMWInventoryResults(input) {
+export function formatBMWInventoryResults(input) {
   const res = [];
   var tmp = {};
   input?.data?.getInventory?.result.forEach((vehicle) => {
@@ -47,8 +47,9 @@ function formatBMWInventoryResults(input) {
         .toFixed(2)
         .toString();
 
-      // Extract the drivetrain description
-      tmp["drivetrainDesc"] = vehicle?.engineDriveType?.name;
+      // The BMW API returns drivetrain as "RWD/sDrive" or "AWD/xDrive".
+      // Replacing "/" with " " preserves BMW's branding while improving readability.
+      tmp["drivetrainDesc"] = vehicle?.engineDriveType?.name?.replace("/", " ");
 
       // Lookup and populate dealer information
       const dealerDetail = input.data.getInventory.dealerInfo.find(
