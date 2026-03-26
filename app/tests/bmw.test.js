@@ -25,8 +25,14 @@ const makeCar = (overrides = {}) => ({
   bodyStyle: { name: "Gran Coupe" },
   series: { code: "i4", name: "4 Series" },
   interiorGenericColor: "Black",
+  exteriorGenericColor: "Black",
   dealerEstArrivalDate: null,
-  initialCOSYURL: "https://www.bmwusa.com/cosy?paint=P0668&fabric=FSASW",
+  initialCOSYURL: "https://prod.cosy.bmw.cloud/vsr/cosySec?COSY-EU-100-encrypted",
+  options: [
+    { name: "Jet Black", isPaint: true, isUpholstery: false },
+    { name: "Black Perforated SensaTec", isPaint: false, isUpholstery: true },
+    { name: "Navigation System", isPaint: false, isUpholstery: false },
+  ],
   ...overrides,
 });
 
@@ -80,8 +86,11 @@ describe("formatBMWInventoryResults", () => {
       expect(result.trimDesc).toBe("i4 eDrive40 Gran Coupe");
     });
 
-    test("extracts interiorColor via COSY URL color mapping", () => {
-      // initialCOSYURL has fabric=FSASW which maps to "Black Perforated SensaTec"
+    test("extracts exteriorColor from isPaint option", () => {
+      expect(result.exteriorColor).toBe("Jet Black");
+    });
+
+    test("extracts interiorColor from isUpholstery option", () => {
       expect(result.interiorColor).toBe("Black Perforated SensaTec");
     });
 
@@ -95,6 +104,31 @@ describe("formatBMWInventoryResults", () => {
 
     test("extracts dealerUrl with protocol stripped", () => {
       expect(result.dealerUrl).toBe("www.bmwofbeverlyhills.com");
+    });
+  });
+
+  describe("color fallback", () => {
+    test("falls back to exteriorGenericColor when no isPaint option present", () => {
+      const car = makeCar({ options: [] });
+      const result = formatBMWInventoryResults(makeResponse([car]))[0];
+      expect(result.exteriorColor).toBe("Black");
+    });
+
+    test("falls back to interiorGenericColor when no isUpholstery option present", () => {
+      const car = makeCar({ options: [] });
+      const result = formatBMWInventoryResults(makeResponse([car]))[0];
+      expect(result.interiorColor).toBe("Black");
+    });
+
+    test("falls back to N/A when no options and no generic color present", () => {
+      const car = makeCar({
+        options: [],
+        exteriorGenericColor: null,
+        interiorGenericColor: null,
+      });
+      const result = formatBMWInventoryResults(makeResponse([car]))[0];
+      expect(result.exteriorColor).toBe("N/A");
+      expect(result.interiorColor).toBe("N/A");
     });
   });
 });
