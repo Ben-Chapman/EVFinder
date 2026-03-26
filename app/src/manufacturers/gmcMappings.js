@@ -54,4 +54,25 @@ const gmcVinMapping = {
   vin: "VIN",
 };
 
-export { gmcVinMapping };
+// Maps variant.name (trim level) to interior color description. Each GMC EV trim
+// ships with exactly one interior, so this can be determined without a VIN lookup.
+// Verified against live VIN data. Update when new model years introduce new trims.
+const gmcInteriorByTrim = {
+  // Sierra EV
+  "Elevation Standard Range": "After Dark (Black), CoreTec seat trim",
+  "Elevation Extended Range": "After Dark (Black), CoreTec seat trim",
+  "Denali Standard Range":
+    "After Dark (Black), Premium leather alternative seating surfaces",
+  "Extended Range Denali":
+    "After Dark (Black), Premium leather alternative seating surfaces",
+  "Max Range Denali":
+    "After Dark (Black), Premium leather alternative seating surfaces",
+  "AT4 Extended Range": "Forest Storm, CoreTec seat trim",
+  "AT4 Max Range": "Forest Storm, CoreTec seat trim",
+  "Denali Max Range": "Desert Dune, Premium leather alternative seating surfaces",
+  // HUMMER EV Pickup
+  "2X": "Granite Drift, Premium leather-alternative seating surfaces",
+  "3X": "Lunar Horizon (Jet Black/Light Grey), Premium leather-alternative seating surfaces",
+};
+
+export { gmcVinMapping, gmcInteriorByTrim };
