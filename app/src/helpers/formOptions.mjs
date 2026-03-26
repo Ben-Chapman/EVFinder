@@ -129,6 +129,7 @@ const yearOptions = [
   { value: "2024", text: "2024" },
   { value: "2025", text: "2025" },
   { value: "2026", text: "2026" },
+  { value: "2027", text: "2027" },
 ];
 
 export { modelOptions, yearOptions };
