@@ -17,7 +17,7 @@
 
 import { apiRequest } from "../helpers/request";
 import { convertToCurrency, generateErrorMessage, titleCase } from "../helpers/libs";
-import { gmcVinMapping } from "./gmcMappings";
+import { gmcVinMapping, gmcInteriorByTrim } from "./gmcMappings";
 
 export async function getGMCInventory(zip, year, model, radius, manufacturer) {
   try {
@@ -28,63 +28,65 @@ export async function getGMCInventory(zip, year, model, radius, manufacturer) {
   }
 }
 
-function formatGMCInventoryResults(input) {
-  const res = [];
+// Build a map of paint code -> display name from the facets data, e.g. {"GBA": "Onyx Black"}
+function buildColorMap(facets, facetKey) {
+  const map = {};
+  for (const entry of facets?.data?.[facetKey] ?? []) {
+    for (const code of entry.values ?? []) {
+      map[code] = entry.displayValue;
+    }
+  }
+  return map;
+}
 
-  // Process each vehicle in the response
-  input["vehicles"].forEach((vehicle) => {
-    // Create a temporary object to build the normalized data
+// Extract the GMC paint code (G-prefix, e.g. "GBA") from a vehicle image URL.
+// The URL encodes all option codes as a slash-delimited segment: .../GBA_0ST_1NF_...
+function extractPaintCode(imageUrl) {
+  const match = imageUrl?.match(/\/(G[A-Z0-9]{2})_/);
+  return match ? match[1] : null;
+}
+
+export function formatGMCInventoryResults(input) {
+  const res = [];
+  const exteriorColorMap = buildColorMap(input["facets"], "exteriorColor");
+
+  input["data"]["hits"].forEach((vehicle) => {
     const tmp = {};
 
-    // Basic vehicle info
-    tmp["vin"] = vehicle["vin"];
+    tmp["vin"] = vehicle["id"];
     tmp["year"] = vehicle["year"];
     tmp["model"] = vehicle["model"];
-    tmp["trimDesc"] = vehicle["trim"];
+    tmp["trimDesc"] = vehicle["variant"]?.["name"] || "N/A";
 
-    // Color information
-    tmp["exteriorColor"] = vehicle["exteriorcolor"] || "N/A";
-    tmp["interiorColor"] = vehicle["interior"].split(",")[0] || "N/A";
+    const paintCode = extractPaintCode(vehicle.images?.[0]?.url);
+    tmp["exteriorColor"] =
+      (paintCode && exteriorColorMap[paintCode]) ||
+      vehicle["baseExteriorColor"] ||
+      "N/A";
+    tmp["interiorColor"] =
+      gmcInteriorByTrim[vehicle["variant"]?.["name"]]?.split(",")[0] || "N/A";
 
-    // Dealer information
-    if (vehicle["location"]) {
-      tmp["dealerName"] = titleCase(vehicle["location"]["name"]) || "N/A";
-      tmp["distance"] = vehicle["location"]["distanceaway"]
-        ? parseFloat(vehicle["location"]["distanceaway"]).toFixed(2)
-        : "0.00";
+    if (vehicle["dealer"]) {
+      tmp["dealerName"] = titleCase(vehicle["dealer"]["name"]) || "N/A";
+      tmp["distance"] =
+        vehicle["dealer"]["distance"]?.["value"] != null
+          ? parseFloat(vehicle["dealer"]["distance"]["value"]).toFixed(2)
+          : "0.00";
     }
 
-    // Pricing information (use optional chaining for recalled/unavailable vehicles)
-    tmp["price"] = vehicle.pricing?.totalVehiclePrice?.price || "0";
+    tmp["price"] = vehicle.pricing?.cash?.msrp?.value || "0";
 
-    // Inventory status
-    tmp["inTransit"] = vehicle["intransit"];
+    tmp["drivetrainDesc"] = vehicle["driveType"] || "N/A";
 
-    tmp["drivetrainDesc"] = vehicle["drive"] || "N/A";
-
-    // Set inventory status and delivery date
-    if (vehicle["intransit"] === true) {
-      tmp["deliveryDate"] = "In Transit";
-      if (vehicle["estimatedDeliveryDate"]) {
-        tmp["deliveryDate"] = `In Transit (Est: ${vehicle["estimatedDeliveryDate"]})`;
-      }
-    } else if (
-      vehicle["inventoryStatus"] &&
-      vehicle["inventoryStatus"]["description"]
-    ) {
-      tmp["deliveryDate"] = vehicle["inventoryStatus"]["description"];
+    const statusValue = vehicle["status"]?.["value"];
+    if (statusValue) {
+      tmp["deliveryDate"] = statusValue;
     } else {
       tmp["deliveryDate"] = "Check With Dealer";
     }
 
     tmp["inventoryStatus"] = tmp["deliveryDate"];
 
-    // Set dealer website URL if available (brandDomain can work as a fallback)
-    if (vehicle["brandDomain"]) {
-      tmp["dealerUrl"] = vehicle["brandDomain"].replace("https://", "");
-    }
-
-    // Create a clean object with only the required fields
     const cleanVehicle = {
       price: tmp["price"],
       inventoryStatus: tmp["inventoryStatus"],
@@ -93,8 +95,6 @@ function formatGMCInventoryResults(input) {
       drivetrainDesc: tmp["drivetrainDesc"],
       deliveryDate: tmp["deliveryDate"],
       dealerName: tmp["dealerName"],
-
-      // Keep additional fields that might be needed for display
       distance: tmp["distance"],
       dealerUrl: tmp["dealerUrl"],
       vin: tmp["vin"],
