@@ -11,7 +11,10 @@ on:
     branches:
       - main
     paths:
-      - "src/helpers/formOptions.js"
+      - "app/src/helpers/formOptions.mjs"
+
+permissions:
+  contents: write
 
 jobs:
   generate-sitemap:

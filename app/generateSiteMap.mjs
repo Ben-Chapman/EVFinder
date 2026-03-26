@@ -20,33 +20,31 @@ if (!fs.existsSync(outputDir)) {
 const generateSitemap = () => {
   const lastMod = new Date().toISOString().slice(0, 10);
 
-  let sitemap = `<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`;
+  const urls = [];
 
   // Include the homepage
-  sitemap += `
-<url>
+  urls.push(`<url>
   <loc>https://theevfinder.com/</loc>
   <lastmod>${lastMod}</lastmod>
   <priority>1.0</priority>
-</url>`;
+</url>`);
 
   yearOptions.forEach((year) => {
     modelOptions.forEach((m) => {
       const manufacturer = m.label.toLowerCase();
       m.options.forEach((option) => {
-        sitemap += `
-<url>
+        urls.push(`<url>
   <loc>https://theevfinder.com/inventory/${year.value}/${manufacturer}/${option.value}/</loc>
   <lastmod>${lastMod}</lastmod>
-</url>`;
+</url>`);
       });
     });
   });
 
-  sitemap += "\n</urlset>";
-  return sitemap;
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join("\n")}
+</urlset>`;
 };
 
 // Write sitemap to file
