@@ -14,7 +14,8 @@ on:
       - "app/src/helpers/formOptions.mjs"
 
 permissions:
-  contents: write
+  contents: read
+  id-token: write
 
 jobs:
   generate-sitemap:
@@ -39,10 +40,17 @@ jobs:
         run: npm run generate:sitemap
         working-directory: app
 
-      - name: Commit and push sitemap
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git add app/public/sitemap.xml
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update sitemap.xml"
-          git push
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Upload sitemap to GCS
+        uses: google-github-actions/upload-cloud-storage@v2
+        with:
+          path: app/public/sitemap.xml
+          destination: ${{ secrets.GCS_SITEMAP_BUCKET }}
+          headers: |-
+            content-type: application/xml
+            cache-control: no-cache
