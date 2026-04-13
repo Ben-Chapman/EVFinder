@@ -22,8 +22,8 @@ repos:
         exclude: |
           (?x)^(
             # Exclude specific files and directories
-            src/App\.vue$|  # Exclude src/App.vue
-            ^tests/          # Exclude all files in tests/
+            src/App\.vue$|   # Exclude src/App.vue
+            tests/|          # Exclude all files in tests/
             generateSiteMap\.mjs
           )
         pass_filenames: true
