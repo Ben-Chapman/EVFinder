@@ -1,11 +1,10 @@
 import * as libs from "../src/helpers/libs";
-import { log } from "console";
 
 describe("Helper Tests", () => {
   test("Input should be Title Cased", () => {
     expect(libs.titleCase("title case here")).toBe("Title Case Here");
 
-    log(expect(libs.titleCase("the EVFinder")).toBe("The EVFinder"));
+    expect(libs.titleCase("the EVFinder")).toBe("The EVFinder");
 
     expect(libs.titleCase("this sHould be a Title")).toBe("This SHould Be A Title");
 
@@ -155,14 +154,6 @@ test("Invalid query param should throw error", () => {
 });
 
 test("Searching for a key in this Object should return true", () => {
-  const testData = [
-    {
-      apple: 2,
-      banana: 4,
-      mango: 30,
-    },
-    { foo: "bar", fiz: "buz" },
-  ];
   const yearOptions = [
     { value: "2022", text: "2022" },
     { value: "2023", text: "2023" },

@@ -33,7 +33,7 @@ export async function getCadillacInventory(zip, year, model, radius, manufacture
     const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
     return formatCadillacInventoryResults(invResponse);
   } catch (error) {
-    if ("404" in error?.detail?.errorData) {
+    if (error?.detail?.errorData && "404" in error.detail.errorData) {
       return [];
     }
     throw generateErrorMessage("error");

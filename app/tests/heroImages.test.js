@@ -41,7 +41,7 @@ describe("Hero Images", () => {
   test("Every vehicle available on the site has a hero image", () => {
     modelOptions.forEach((vehicle) => {
       vehicle.options.forEach((model) => {
-        modelName = model.value;
+        const modelName = model.value;
         expect(getHeroImage(modelName)["displayName"]).not.toBeNull;
       });
     });
