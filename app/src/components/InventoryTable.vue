@@ -126,16 +126,14 @@
               <!-- Vin Details List Group -->
               <!-- Dealer Website Button -->
               <div v-if="form.model != 'N'">
-                <div v-if="hasHyundaiVinDetail(vinDetail[row.item.vin])">
+                <!-- Only show the dealer link when the vehicle has a non-empty VDP
+                URL (in-transit vehicles have no dealer page yet) -->
+                <div v-if="row.item.dealerVDPURL">
                   <b-row class="py-2" align-h="center">
                     <b-button
                       size="md"
                       variant="light"
-                      @click="
-                        openUrlInNewWindow(
-                          vinDetail[row.item.vin]['DI']['DealerVDPURL'],
-                        )
-                      "
+                      @click="openUrlInNewWindow(row.item.dealerVDPURL)"
                       class="mr-2 align-middle"
                     >
                       Dealer's Website for This Vehicle
@@ -277,7 +275,6 @@
   import InfoMessage from "./InfoMessage.vue";
 
   import { mapActions, mapState } from "vuex";
-  import { has } from "lodash";
 
   import { convertToCurrency, priceStringToNumber } from "../helpers/libs";
 
@@ -633,10 +630,6 @@
 
       filterByPrice(rowRecord, selectedPrice) {
         return priceStringToNumber(rowRecord.price) < selectedPrice;
-      },
-
-      hasHyundaiVinDetail(item) {
-        return has(item, "DI") && has(item["DI"], "DealerVDPURL");
       },
 
       generateGenesisWindowStickerUrl(vin, genesisModel) {

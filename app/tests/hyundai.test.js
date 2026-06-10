@@ -17,6 +17,7 @@ const makeVehicle = (overrides = {}) => ({
   inventoryStatusCode: "DS",
   dealerName: "Ontario Hyundai",
   dealerAddress: "1307 Kettering Drive",
+  dealerVDPURL: "https://www.ontariohyundai.com/inventory/new-2026-hyundai-ioniq-5/",
   distanceFromOrigin: "4.2",
   ...overrides,
 });
@@ -43,6 +44,9 @@ describe("formatHyundaiInventoryResults", () => {
       inventoryStatus: "Dealer Stock",
       distance: "4.2",
       dealerName: "Ontario Hyundai",
+      // Passed through for the "Dealer's Website for This Vehicle" button
+      dealerVDPURL:
+        "https://www.ontariohyundai.com/inventory/new-2026-hyundai-ioniq-5/",
     });
   });
 
