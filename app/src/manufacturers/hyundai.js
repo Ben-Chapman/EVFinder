@@ -16,11 +16,7 @@
  */
 
 import { convertToCurrency, titleCase } from "../helpers/libs";
-import {
-  hyundaiVinDetailMapping,
-  hyundaiTransitStatus,
-  hyundaiInteriorColors,
-} from "./hyundaiMappings";
+import { hyundaiVinDetailMapping, hyundaiTransitStatus } from "./hyundaiMappings";
 import { apiRequest } from "../helpers/request";
 import { generateErrorMessage } from "../helpers/libs";
 
@@ -54,7 +50,7 @@ export async function getHyundaiVinDetail(vin, manufacturer, model, year) {
   }
 }
 
-function formatHyundaiInventoryResults(input) {
+export function formatHyundaiInventoryResults(input) {
   const res = [];
 
   // If the API response does not have a data key, there is no inventory.
@@ -65,42 +61,40 @@ function formatHyundaiInventoryResults(input) {
     return [];
   }
 
-  if (input["data"][0]["dealerInfo"] !== null) {
-    // If the API returned vehicles in inventory
-    input["data"][0]["dealerInfo"].forEach((dealer) => {
-      dealer["vehicles"]?.forEach((vehicle) => {
-        res.push({ ...dealer, ...vehicle });
-      });
-    });
-  }
-  if (res.length > 0) {
-    res.forEach((vehicle) => {
-      // Because we just merged the dealer and vehicle Objects, deleting the vehicles
-      // array from each vehicle (which was carried over from the dealer object)
-      delete vehicle["vehicles"];
+  // The BSI search API returns a flat list of vehicles, each already carrying the
+  // dealer detail and every field the inventory table renders.
+  input["data"].forEach((vehicle) => {
+    res.push({
+      ...vehicle,
 
-      // Replace the $xx,xxx.xx string with a value which can be cast to float
-      vehicle["price"] = vehicle["price"].replace("$", "").replace(",", "");
+      // MSRP is already a numeric value the UI can format directly
+      price: vehicle["msrp"],
+
+      // Trim
+      trimDesc: vehicle["trim"],
 
       // Translate inventory status codes to something meaningful
-      vehicle["inventoryStatus"] = hyundaiTransitStatus[vehicle["inventoryStatus"]];
+      inventoryStatus: hyundaiTransitStatus[vehicle["inventoryStatusCode"]],
 
-      // Translate interior color codes to something meaningful
-      vehicle["interiorColor"] = hyundaiInteriorColors[vehicle["interiorColorCd"]];
+      // Exterior and interior colors arrive as display names; title case format
+      exteriorColor: titleCase(vehicle["exteriorColor"] || ""),
+      interiorColor: titleCase(vehicle["interiorColor"] || ""),
 
-      // Pull the Exterior Color Name up from a nested Object, and title case format
-      vehicle["exteriorColor"] = titleCase(vehicle["colors"][0]["ExtColorLongDesc"]);
+      // Title case format the full drivetrain description (e.g. "REAR WHEEL DRIVE")
+      drivetrainDesc: titleCase(vehicle["drivetrain"] || ""),
 
-      // Title case format
-      vehicle["drivetrainDesc"] = titleCase(vehicle["drivetrainDesc"]);
+      // Availability: in-transit vehicles report a planned delivery date, while
+      // dealer-stock vehicles are already on the lot (and report no date), so show
+      // them as available now.
+      deliveryDate:
+        vehicle["plannedDeliveryDate"] ||
+        (vehicle["inventoryStatusCode"] === "DS" ? "Available Now" : null),
 
-      // Delivery Date
-      vehicle["deliveryDate"] = vehicle["PlannedDeliveryDate"];
-
-      // Dealer Name
-      vehicle["dealerName"] = vehicle["dealerNm"];
+      // Distance from the searched zip code
+      distance: vehicle["distanceFromOrigin"],
     });
-  }
+  });
+
   return res;
 }
 
@@ -138,6 +132,16 @@ function formatVinDetails(input) {
         );
       }
       tmp["Accessories"] = aTmp.join(",  ");
+    } else if (key == "WebDCSAccessories") {
+      // Dealer-installed accessories now arrive in WebDCSAccessories (Part/PartPrice)
+      // rather than the legacy accessories field.
+      const accessoryList = input[key].map(
+        (accessory) =>
+          `${titleCase(accessory["Part"])}: ${convertToCurrency(
+            accessory["PartPrice"],
+          )}`,
+      );
+      tmp["Accessories"] = accessoryList.join(",  ");
     } else if (key == "inventoryStatus") {
       // Translate status codes to something meaningful
       const transitStatus = {
@@ -147,11 +151,18 @@ function formatVinDetails(input) {
         IT: "🚛 In Transit",
         PA: "Port Arrival",
         TN: "Ready for Shipment",
+        // TODO: Confirm the meaning of the "VA" status code returned by the API
+        VA: "🚛 In Transit",
       };
       tmp["Inventory Status"] = transitStatus[value];
     } else if (needsCurrencyConversion.includes(key)) {
       tmp[hyundaiVinDetailMapping[key]] = convertToCurrency(value);
-    } else if (keysToDelete.includes(key) == false) {
+    } else if (
+      keysToDelete.includes(key) == false &&
+      hyundaiVinDetailMapping[key] != undefined
+    ) {
+      // Only surface fields we have a friendly label for. Unmapped fields (e.g.
+      // WebDCSAccessories) would otherwise render under an "undefined" title.
       tmp[hyundaiVinDetailMapping[key]] = value;
     }
   });

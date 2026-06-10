@@ -37,6 +37,8 @@ const hyundaiTransitStatus = {
   IT: "In Transit",
   PA: "Port Arrival",
   TN: "Ready for Shipment",
+  // TODO: Confirm the meaning of the "VA" status code returned by the BSI search API
+  VA: "In Transit",
 };
 
 const hyundaiVinDetailMapping = {
