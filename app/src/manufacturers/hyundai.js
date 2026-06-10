@@ -83,8 +83,12 @@ export function formatHyundaiInventoryResults(input) {
       // Title case format the full drivetrain description (e.g. "REAR WHEEL DRIVE")
       drivetrainDesc: titleCase(vehicle["drivetrain"] || ""),
 
-      // Delivery Date
-      deliveryDate: vehicle["plannedDeliveryDate"],
+      // Availability: in-transit vehicles report a planned delivery date, while
+      // dealer-stock vehicles are already on the lot (and report no date), so show
+      // them as available now.
+      deliveryDate:
+        vehicle["plannedDeliveryDate"] ||
+        (vehicle["inventoryStatusCode"] === "DS" ? "Available Now" : null),
 
       // Distance from the searched zip code
       distance: vehicle["distanceFromOrigin"],

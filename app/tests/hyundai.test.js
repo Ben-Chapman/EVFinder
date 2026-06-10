@@ -63,6 +63,38 @@ describe("formatHyundaiInventoryResults", () => {
     expect(results[1].inventoryStatus).toBe("In Transit");
   });
 
+  it("reports dealer stock with no delivery date as available now", () => {
+    const [vehicle] = formatHyundaiInventoryResults({
+      status: "SUCCESS",
+      data: [makeVehicle({ inventoryStatusCode: "DS", plannedDeliveryDate: null })],
+    });
+
+    expect(vehicle.deliveryDate).toBe("Available Now");
+  });
+
+  it("uses the planned delivery date for in-transit vehicles", () => {
+    const [vehicle] = formatHyundaiInventoryResults({
+      status: "SUCCESS",
+      data: [
+        makeVehicle({
+          inventoryStatusCode: "TN",
+          plannedDeliveryDate: "2026-06-30 07:00:00",
+        }),
+      ],
+    });
+
+    expect(vehicle.deliveryDate).toBe("2026-06-30 07:00:00");
+  });
+
+  it("leaves availability empty for non-stock vehicles with no delivery date", () => {
+    const [vehicle] = formatHyundaiInventoryResults({
+      status: "SUCCESS",
+      data: [makeVehicle({ inventoryStatusCode: "IR", plannedDeliveryDate: null })],
+    });
+
+    expect(vehicle.deliveryDate).toBeNull();
+  });
+
   it("formats every vehicle in the list", () => {
     const results = formatHyundaiInventoryResults({
       status: "SUCCESS",
