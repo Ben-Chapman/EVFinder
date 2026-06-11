@@ -1,13 +1,13 @@
 import Vue from "vue";
 
-import { startCase, camelCase } from "lodash";
+import { titleCase } from "./helpers/libs";
 
 Vue.filter("myFilter", (value) => {
   return value.toUpperCase();
 });
 
 Vue.filter("titleCase", (value) => {
-  return startCase(camelCase(value));
+  return titleCase(value);
 });
 
 Vue.filter("convertToCurrency", (value) => {
