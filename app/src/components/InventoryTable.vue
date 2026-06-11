@@ -472,7 +472,7 @@
             );
           },
           async kia() {
-            return getKiaVinDetail(this.item);
+            return getKiaVinDetail(this.item.vin, this.zipcode, this.manufacturer);
           },
           async chevrolet() {
             return await getChevroletVinDetail(this.item.vin);

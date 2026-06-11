@@ -15,9 +15,14 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { normalizeJson, generateErrorMessage } from "../helpers/libs";
+import {
+  normalizeJson,
+  generateErrorMessage,
+  convertToCurrency,
+  titleCase,
+} from "../helpers/libs";
 import { apiRequest } from "../helpers/request";
-import { kiaInventoryMapping, kiaVinMapping } from "./kiaMappings";
+import { kiaInventoryMapping } from "./kiaMappings";
 
 export async function getKiaInventory(zip, year, model, radius, manufacturer) {
   try {
@@ -28,7 +33,7 @@ export async function getKiaInventory(zip, year, model, radius, manufacturer) {
   }
 }
 
-function formatKiaInventoryResults(input) {
+export function formatKiaInventoryResults(input) {
   const r = input;
   if ("inventoryVehicles" in r) {
     var n = normalizeJson(r["inventoryVehicles"], kiaInventoryMapping); // Normalized results
@@ -69,31 +74,11 @@ function formatKiaInventoryResults(input) {
         vehicle["drivetrainDesc"] = "Unknown";
       }
 
-      /**
-       * Kia stores the exterior color name under a top-level object called
-       * exteriorImages{}, which we need to pull out for display in the UI.
-       * So, regex matching the hex value provided with each vehicle description
-       * and looping through the top-level object to find the hex value and
-       * extract the actual color name.
-       */
-      try {
-        const extColor =
-          vehicle["exteriorImagesExteriorProfile"].match(/[0-9a-fA-F]{6}/)[0];
-        // Looping through the non-flattened API response object to get exterior color
-        r["filterSet"]["criteriaGroups"].forEach((group) => {
-          if (group.groupName === "Colors") {
-            group["groupCriteria"].forEach((criteria) => {
-              criteria["elements"].forEach((element) => {
-                if (element["baseHex"] === extColor) {
-                  vehicle["exteriorColor"] = element["name"];
-                }
-              });
-            });
-          }
-        });
-      } catch {
-        vehicle["exteriorColor"] = "Unknown";
-      }
+      // The inventory API provides readable exterior and interior color names
+      // directly on each vehicle (extColor/intColor, mapped to exteriorColor and
+      // interiorColor). Fall back to "Unknown" when a value is absent.
+      vehicle["exteriorColor"] = vehicle["exteriorColor"] || "Unknown";
+      vehicle["interiorColor"] = vehicle["interiorColor"] || "Unknown";
     });
   } else {
     n = [];
@@ -102,27 +87,106 @@ function formatKiaInventoryResults(input) {
   return n;
 }
 
-export function getKiaVinDetail(input) {
-  /** The KIA API response contains all publicly available information
-   * about the vehicle, so there's no additional VIN API call needed. Thus
-   * storing the /inventory API data directly in the vinDetail local store.
+export async function getKiaVinDetail(vin, zip, manufacturer) {
+  /** The inventory API now returns a slim record per vehicle, so the rich detail
+   * (engine, options, features, full color objects) is fetched from the EV Finder
+   * /vin/kia endpoint, which passes through Kia's vinInfo response.
    */
+  try {
+    const vinResponse = await apiRequest("vin", manufacturer, [...arguments], {
+      zip: zip,
+    });
+
+    if (vinResponse?.vehicles?.length > 0) {
+      return formatKiaVinDetails(vinResponse);
+    } else {
+      return generateErrorMessage("An error occurred fetching detail for this VIN");
+    }
+  } catch (error) {
+    throw generateErrorMessage(error);
+  }
+}
+
+export function formatKiaVinDetails(input) {
+  const vehicle = input?.vehicles?.[0];
+  const dealer = input?.dealers?.[0];
+  if (!vehicle) return {};
+
   const k = {};
-  Object.keys(input).forEach((key) => {
-    if (Object.keys(kiaVinMapping).includes(key)) {
-      k[kiaVinMapping[key]] = input[key];
+
+  k["VIN"] = vehicle.vin;
+  k["Year"] = vehicle.year?.year;
+  k["Model"] = vehicle.model?.model;
+  k["Model Code"] = vehicle.modelCode;
+  k["Trim"] = vehicle.trim?.name;
+  k["Series ID"] = vehicle.seriesId;
+
+  // Pricing is returned as a plain number string; format it as USD for display.
+  if (vehicle.msrp) k["MSRP"] = convertToCurrency(vehicle.msrp);
+  if (vehicle.dealerPrice) k["Dealer Price"] = convertToCurrency(vehicle.dealerPrice);
+
+  if (vehicle.exteriorColor) {
+    k["Exterior Color"] = vehicle.exteriorColor.name;
+    if (vehicle.exteriorColor.code) {
+      k["Exterior Color Code"] = vehicle.exteriorColor.code;
     }
-    // The Kia API returns individual elements for each feature, so
-    // concatenating into a single string for display
-    if (key.indexOf("features0Options") >= 0) {
-      // Does the key contain features0Options
-      if (k["Top Features"]) {
-        k["Top Features"] = `${k["Top Features"]}, ${input[key]}`;
-      } else {
-        k["Top Features"] = input[key];
-      }
+  }
+  if (vehicle.interiorColor) {
+    k["Interior Color"] =
+      vehicle.interiorColor.description || vehicle.interiorColor.name;
+    if (vehicle.interiorColor.code) {
+      k["Interior Color Code"] = vehicle.interiorColor.code;
     }
-  });
+  }
+
+  // The inventory API omits a discrete drivetrain field, so derive it from the trim
+  // description (e.g. "LT LR AWD") as the inventory formatter does.
+  const drivetrainMatch = vehicle.edwTrim?.match(/RWD|AWD/);
+  k["Drivetrain"] = drivetrainMatch ? drivetrainMatch[0] : "Unknown";
+
+  if (vehicle.transmission?.transmission) {
+    k["Transmission"] = vehicle.transmission.transmission;
+  }
+  if (vehicle.engineCylinders?.engineCylinders) {
+    k["Engine Cylinders"] = vehicle.engineCylinders.engineCylinders;
+  }
+  if (vehicle.engineDisplacement) k["Engine Displacement"] = vehicle.engineDisplacement;
+  if (vehicle.mileage) k["Mileage"] = vehicle.mileage;
+  if (vehicle.bodyDescription) k["Body Description"] = vehicle.bodyDescription;
+  if (vehicle.optionPackageCode) k["Option Package Code"] = vehicle.optionPackageCode;
+
+  if (vehicle.status === "DS") {
+    k["Inventory Status"] = "Available";
+  } else if (vehicle.status === "IT") {
+    k["Inventory Status"] = "Arriving Soon";
+  }
+
+  if (Array.isArray(vehicle.options) && vehicle.options.length > 0) {
+    k["Options"] = vehicle.options.join(", ");
+  }
+
+  // Kia groups features by section; the first group holds the headline features.
+  const topFeatures = vehicle.features?.[0]?.options;
+  if (Array.isArray(topFeatures) && topFeatures.length > 0) {
+    k["Top Features"] = topFeatures.join(", ");
+  }
+
+  // Dealer details come from the response's dealers array (authoritative), rather
+  // than the vehicle record which carries only a dealer code.
+  if (dealer) {
+    k["Dealer Code"] = dealer.code;
+    k["Dealer Name"] = titleCase(dealer.name);
+    if (dealer.location) {
+      k["City"] = titleCase(dealer.location.city);
+      k["State"] = dealer.location.state;
+    }
+    if (dealer.distance) {
+      k["Miles from ZIP Code"] = parseFloat(dealer.distance).toFixed(2).toString();
+    }
+    if (dealer.url) {
+      k["Dealer Website"] = dealer.url.replace(/http(s)?:\/\//i, "");
+    }
+  }
 
   return k;
 }
