@@ -36,34 +36,63 @@ export async function getGenesisInventory(zip, year, model, radius, manufacturer
   }
 }
 
-function formatGenesisInventoryResults(input, radius, year) {
+/**
+ * Derive an availability status for a Genesis vehicle. The v2 inventory feed does not
+ * include an inventory status field, so it is inferred from the planned delivery date:
+ * a date in the past means the vehicle is already on the lot, while a future date means
+ * it is still arriving. Used to populate the "Availability" filter.
+ * @param {String} plannedDeliveryDate An ISO date string, or null/empty.
+ * @returns {String} "In Stock" or "In Transit".
+ */
+function deriveGenesisAvailability(plannedDeliveryDate) {
+  // With no delivery date the vehicle is assumed to be on the lot.
+  if (!plannedDeliveryDate) {
+    return "In Stock";
+  }
+  return new Date(plannedDeliveryDate) > new Date() ? "In Transit" : "In Stock";
+}
+
+export function formatGenesisInventoryResults(input, radius, year) {
   const res = [];
-  input?.data?.Vehicles.forEach((vehicle) => {
+
+  // If the API response does not have a data key, there is no inventory.
+  // Return an empty array for the UI to display the no inventory message.
+  if (!input.data) {
+    return [];
+  }
+
+  // The v2 search API returns a flat list of vehicles (no "Veh" wrapper), each
+  // already carrying the dealer detail and every field the inventory table renders.
+  input.data.forEach((vehicle) => {
     const k = {};
-    Object.keys(vehicle["Veh"]).forEach((key) => {
+    Object.keys(vehicle).forEach((key) => {
       // Remap the Genesis-specific key into the EV Finder specific key
       if (Object.keys(genesisInventoryMapping).includes(key)) {
         if (key == "SortablePrice") {
           // For now, 'price' needs to be a string
-          k[genesisInventoryMapping[key]] = vehicle["Veh"][key].toString();
+          k[genesisInventoryMapping[key]] = vehicle[key].toString();
         } else {
-          k[genesisInventoryMapping[key]] = vehicle["Veh"][key];
+          k[genesisInventoryMapping[key]] = vehicle[key];
         }
 
         if (key == "IntColor") {
-          k[genesisInventoryMapping[key]] = titleCase(vehicle["Veh"][key]);
+          k[genesisInventoryMapping[key]] = titleCase(vehicle[key]);
+        }
+
+        // Dealer names arrive in all caps (e.g. "GENESIS SANTA MONICA")
+        if (key == "DlrName") {
+          k[genesisInventoryMapping[key]] = titleCase(vehicle[key]);
         }
       } else {
         // If there's no EV Finder-specific key, just use the Genesis key
-        k[key] = vehicle["Veh"][key];
-      }
-
-      if (vehicle["Veh"]["Model"].match(/GV?[7,8]0/)) {
-        k["trimDesc"] = vehicle["Veh"]["Package"]
-          ? vehicle["Veh"]["Package"]
-          : "Standard";
+        k[key] = vehicle[key];
       }
     });
+
+    // The v2 inventory feed carries no status field; derive availability from the
+    // planned delivery date so the "Availability" filter has values to offer.
+    k["inventoryStatus"] = deriveGenesisAvailability(vehicle["PlannedDeliveryDate"]);
+
     // The Genesis Inventory API does not seem to provide a way to limit results by distance
     // So after receiving all inventory results, filtering out the results which are >
     // the radius selected by the user
