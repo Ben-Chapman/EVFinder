@@ -16,57 +16,95 @@
  */
 
 import { apiRequest } from "../helpers/request";
-import { convertToCurrency, generateErrorMessage } from "../helpers/libs";
-import { volkswagenInventoryMapping } from "./volkswagenMappings";
+import {
+  convertToCurrency,
+  generateErrorMessage,
+  getGeoFromZipcode,
+  titleCase,
+} from "../helpers/libs";
 import { volkswagenVinMapping } from "./volkswagenMappings";
 
-export async function getVolkswagenInventory(zip, year, model, radius, manufacturer) {
+export async function getVolkswagenInventory(
+  zip,
+  year,
+  model,
+  radius,
+  manufacturer,
+  geo,
+) {
+  /**
+   * The Volkswagen inventory BFF is geo-based and expects the search origin as
+   * latitude_longitude. The search form geocodes the zip code, but if that lookup
+   * failed, do it here before making the request (mirrors the Audi flow).
+   */
+  if (!geo || !geo.lat || !geo.lon) {
+    geo = await getGeoFromZipcode(zip); // eslint-disable-line no-param-reassign
+  }
+
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, [...arguments]);
+    const invResponse = await apiRequest("inventory", manufacturer, [...arguments], {
+      geo: `${geo.lat}_${geo.lon}`,
+    });
     return formatVolkswagenInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
   }
 }
 
-function formatVolkswagenInventoryResults(input) {
+export function formatVolkswagenInventoryResults(input) {
   /**
-   * Volkswagen has an amazingly sane GraphQL-powered inventory API!
+   * The backend returns a slimmed list of vehicles under the "cars" key. Map each
+   * vehicle onto the column keys the inventory table renders. An empty response (the
+   * no-inventory signal) has no "cars" key and yields an empty array.
    */
   const res = [];
-  input["data"]["inventory"]["vehicles"].forEach((vehicle) => {
-    // Pulling the dealer info up to the top-level object
-    const tmp = { ...vehicle, ...vehicle["dealer"] };
-    delete tmp["dealer"]; // Don't need the nested object, so deleting
+  (input.cars || []).forEach((car) => {
+    const dealer = car.dealer || {};
 
-    // Map VW-specific keys to EVFinder-specific keys
-    Object.keys(tmp).forEach((key) => {
-      Object.keys(volkswagenInventoryMapping).includes(key)
-        ? (tmp[volkswagenInventoryMapping[key]] = tmp[key])
-        : null;
+    // VW does not expose a drivetrain code, so derive it from the human drive string.
+    const driveText = car.drive?.value || "";
+    let drivetrainDesc = driveText;
+    if (/all.?wheel|awd/i.test(driveText)) drivetrainDesc = "AWD";
+    else if (/rear.?wheel|rwd/i.test(driveText)) drivetrainDesc = "RWD";
+    else if (/front.?wheel|fwd/i.test(driveText)) drivetrainDesc = "FWD";
+
+    // Dealer-stock vehicles are on the lot; anything else is incoming inventory.
+    const inventoryStatus =
+      car.businessModel === "dealer_stock"
+        ? "In Stock"
+        : titleCase((car.businessModel || "In Transit").replace(/_/g, " "));
+
+    // The interior color is not present in the inventory feed; it is only available
+    // from the VIN detail call.
+    const interior = car.color?.in?.[0]?.value;
+
+    // The trim is the title with the leading "<year> <model> " stripped, e.g.
+    // "2025 Volkswagen ID. Buzz Pro S" -> "Pro S". The subtitle field holds a verbose
+    // marketing description (drivetrain, power, wheelbase) rather than the trim, so it
+    // is only a fallback when the title is not in the expected form.
+    const trimPrefix = `${car.modelyear?.value} ${car.model?.value} `;
+    const trimDesc = car.title?.startsWith(trimPrefix)
+      ? car.title.slice(trimPrefix.length)
+      : car.subtitle?.value;
+
+    res.push({
+      vin: car.vin,
+      modelYear: car.modelyear?.value,
+      model: car.model?.value,
+      trimDesc,
+      exteriorColor: titleCase(car.color?.out?.value || ""),
+      interiorColor: interior ? titleCase(interior) : "N/A",
+      drivetrainDesc,
+      // price is a number; the table formats it as currency via convertToCurrency.
+      price: car.parsedPrice?.value,
+      deliveryDate: car.availableFrom || inventoryStatus,
+      inventoryStatus,
+      dealerName: titleCase(dealer.name || ""),
+      distance: car.distance,
+      // The per-vehicle VDP on the dealer's site, used by the "Dealer's Website for
+      // This Vehicle" button.
+      onlineSalesURL: car.buildMyDealLinks?.onlineSalesUrl || "",
     });
-
-    // Distance to 2 decimal places
-    tmp["distance"] = tmp["distance"].toFixed(2);
-
-    // price needs to be a string
-    tmp["price"] = String(tmp["price"]);
-    res.push(tmp);
-
-    // VW does not expose the drivetrain directly, so inferring from the trim level
-    tmp["trimDesc"].includes("AWD")
-      ? (tmp["drivetrainDesc"] = "AWD")
-      : (tmp["drivetrainDesc"] = "RWD");
-
-    // Inventory Status
-    tmp["inTransit"] === true
-      ? (tmp["deliveryDate"] = "In Transit")
-      : (tmp["deliveryDate"] = "Check With Dealer");
-    tmp["inventoryStatus"] = tmp["deliveryDate"];
-
-    // VW provides a FQDN for the dealer URL. Some manufacturers don't so the
-    // scheme is inserted in the table template. So removing the scheme here
-    tmp["dealerUrl"] = tmp["dealerUrl"].replace("https://", "");
   });
 
   return res;

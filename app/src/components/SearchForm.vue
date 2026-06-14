@@ -339,6 +339,7 @@
               this.model,
               this.radius,
               this.manufacturer,
+              this.geo,
             );
           },
           async ford() {
