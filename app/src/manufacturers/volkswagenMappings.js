@@ -32,17 +32,6 @@
  * }
  */
 
-const volkswagenInventoryMapping = {
-  interiorColorDescription: "interiorColor",
-  exteriorColorDescription: "exteriorColor",
-  trimLevel: "trimDesc",
-  msrp: "price",
-  status: "inTransit",
-  name: "dealerName",
-  url: "dealerUrl",
-  PlannedDeliveryDate: "deliveryDate",
-};
-
 const volkswagenVinMapping = {
   carlineKey: "",
   dealerEnrollmentStatusInd: "",
@@ -71,4 +60,4 @@ const volkswagenVinMapping = {
   vin: "VIN",
 };
 
-export { volkswagenInventoryMapping, volkswagenVinMapping };
+export { volkswagenVinMapping };

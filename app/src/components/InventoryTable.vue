@@ -170,7 +170,11 @@
                 </b-row>
               </div>
               <!-- Direct Dealer URL for Volkswagen -->
-              <div v-if="form.model == 'ID.4' && row.item.onlineSalesURL != ''">
+              <div
+                v-if="
+                  form.manufacturer == 'Volkswagen' && row.item.onlineSalesURL != ''
+                "
+              >
                 <b-row class="py-2" align-h="center">
                   <b-button
                     size="md"
