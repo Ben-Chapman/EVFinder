@@ -25,7 +25,7 @@ repos:
             src/App\.vue$|   # Exclude src/App.vue
             tests/|          # Exclude all files in tests/
             generateSiteMap\.mjs|
-            libs\.js
+            src/helpers/libs\.js$
           )
         pass_filenames: true
         always_run: false
