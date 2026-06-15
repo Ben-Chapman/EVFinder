@@ -114,6 +114,7 @@ export function titleCase(str) {
     gmc: "GMC",
     rwd: "RWD",
     vw: "VW",
+    "n/a": "N/A",
   };
 
   function capitalize(word) {
@@ -364,7 +365,8 @@ export async function getGeoFromZipcode(zip) {
   const osmApi = "https://nominatim.openstreetmap.org/search?";
 
   const geo = await fetch(
-    osmApi + new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
+    osmApi +
+      new URLSearchParams({ postalcode: zip, country: "US", format: "json" }),
     { method: "GET", mode: "cors" },
   );
 
