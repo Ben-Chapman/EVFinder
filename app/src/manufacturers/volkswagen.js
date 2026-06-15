@@ -42,9 +42,14 @@ export async function getVolkswagenInventory(
   }
 
   try {
-    const invResponse = await apiRequest("inventory", manufacturer, [...arguments], {
-      geo: `${geo.lat}_${geo.lon}`,
-    });
+    const invResponse = await apiRequest(
+      "inventory",
+      manufacturer,
+      [...arguments],
+      {
+        geo: `${geo.lat}_${geo.lon}`,
+      },
+    );
     return formatVolkswagenInventoryResults(invResponse);
   } catch (error) {
     throw generateErrorMessage(error);
@@ -116,6 +121,16 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
       zip: zip,
       vin: vin,
     });
+
+    // VW returns a null vehicle when it has no detail for this VIN (e.g. a brand-new
+    // arrival not yet indexed). Show a friendly message rather than failing.
+    if (!vinData?.data?.vehicle) {
+      return {
+        "Vehicle Details":
+          "Detailed information is not available for this vehicle.",
+      };
+    }
+
     const needsCurrencyConversion = ["destinationCharge", "msrp"];
     const vinFormattedData = {};
     Object.keys(vinData.data.vehicle).forEach((vinKey) => {
@@ -140,7 +155,8 @@ export async function getVolkswagenVinDetail(zip, vin, manufacturer) {
         `${acc["optionDescription"]}: ${convertToCurrency(acc["price"])}`,
       );
     });
-    vinFormattedData["Dealer Installed Accessories"] = dealerAccessory.join(",  ");
+    vinFormattedData["Dealer Installed Accessories"] =
+      dealerAccessory.join(",  ");
 
     // Highlighted features
     const highlightFeatures = [];
